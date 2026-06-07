@@ -7,9 +7,9 @@ project_uuid = "73aa4919-db8e-4cf3-b133-42049086c1cc"
 project_name = "specweave"
 
 # Taskledger branch-scoped state. This block is intentionally safe to commit.
-ledger_ref = 'main'
-ledger_parent_ref = ''
-ledger_next_task_number = 1
+ledger_ref = "main"
+ledger_parent_ref = ""
+ledger_next_task_number = 2
 ledger_branch_guard = "off"
 
 # Project-local taskledger overrides.

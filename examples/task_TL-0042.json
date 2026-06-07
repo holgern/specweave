@@ -1,0 +1,10 @@
+{
+  "task_id": "TL-0042",
+  "title": "Password login",
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "text": "Reject login with an invalid password and do not create a session."
+    }
+  ]
+}

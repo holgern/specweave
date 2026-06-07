@@ -7,7 +7,7 @@ where = ["."]
 include = ["specweave*"]
 
 [tool.setuptools.package-data]
-taskledger = [
+specweave = [
     "py.typed",
 ]
 
@@ -17,19 +17,19 @@ python_files = "test_*.py"
 
 [project]
 name = "specweave"
-description = "Durable project-state storage and CLI for coding workflows"
+description = "Translate between Python tests, Gherkin behavior specs, and BDD execution evidence"
 authors = [{name = "SpecWeave Contributors"}]
 maintainers = [{name = "Holger Nahrstaedt"}]
 requires-python = ">=3.10"
 readme = "README.md"
 license = "Apache-2.0"
-keywords = ["cli", "durable-state", "project-state", "developer-tools", "workflows"]
+keywords = ["bdd", "gherkin", "cucumber", "pytest", "testing", "developer-tools", "cli"]
 dependencies = [
     "typer",
     "click",
 ]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 3 - Alpha",
     "Environment :: Console",
     "Intended Audience :: Developers",
     "Operating System :: POSIX :: Linux",
