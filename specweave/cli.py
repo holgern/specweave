@@ -659,6 +659,57 @@ def _task_id(report):  # type: ignore[no-untyped-def]
     return task_id_from_report(report)
 
 
+
+@app.command("convert")
+def convert(
+    ctx: typer.Context,
+    feature: Annotated[Path, typer.Argument(help="Feature file to convert.")],
+    out: Annotated[
+        Path | None, typer.Option("--out", help="Output feature path.")
+    ] = None,
+    to_format: Annotated[
+        str | None,
+        typer.Option("--to", help="Target format: markdown or classic."),
+    ] = None,
+    from_format: Annotated[
+        str,
+        typer.Option("--from", help="Source format: auto, markdown, or classic."),
+    ] = "auto",
+    force: Annotated[bool, typer.Option("--force")] = False,
+    dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
+    validate: Annotated[
+        bool,
+        typer.Option(
+            "--validate/--no-validate", help="Validate with gherkin-official."
+        ),
+    ] = True,
+) -> None:
+    """Convert classic .feature and Markdown .feature.md files."""
+    from specweave.gherkin.convert import convert_feature_file
+
+    cli_ctx: CliContext = ctx.obj
+    try:
+        result = convert_feature_file(
+            source_path=feature,
+            out_path=out,
+            target_format=to_format,
+            source_format=from_format,
+            force=force,
+            dry_run=dry_run,
+            validate=validate,
+            config=cli_ctx.config,
+        )
+    except ValueError as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=3) from exc
+
+    if cli_ctx.json_output:
+        typer.echo(_dump_json(result))
+    else:
+        typer.echo(f"{result['status']}: {result['output_path']}")
+        typer.echo(f"{result['source_format']} -> {result['target_format']}")
+
+
 # --- review subcommands ----------------------------------------------------
 
 
@@ -801,10 +852,16 @@ def create_feature(
     r = Rule(title=rule or title, scenarios=(s,), tags=rule_tags)
     f = Feature(title=title, rules=(r,), tags=feature_tags)
 
-    feature_text = write_feature(f)
+    feature_text = write_feature(
+        f, document_format=cli_ctx.config.gherkin.document_format
+    )
     if out is None:
         features_dir = cli_ctx.config.paths.features_dir
-        out = features_dir / area / f"{feature_slug}.feature"
+        out = (
+            features_dir
+            / area
+            / f"{feature_slug}{cli_ctx.config.gherkin.feature_extension}"
+        )
 
     if out.exists() and not force:
         typer.echo(f"Error: {out} already exists. Use --force to overwrite.", err=True)

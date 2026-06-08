@@ -1,0 +1,3002 @@
+{
+  "features": [
+    {
+      "area": "behavior",
+      "description": "specweave behavior coverage checks the mapping between behavior feature\nfiles and plain pytest test files. It reports missing bindings, stale\nbindings, deprecated paths, and forbidden pytest-bdd usage.",
+      "feature_slug": "coverage",
+      "path": "specs/behavior/features/behavior/coverage.feature",
+      "rules": [
+        {
+          "id": "Coverage identifies bound and unbound scenarios",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_coverage.py"
+              },
+              "id": "bdd-coverage-bound-scenario",
+              "line": 10,
+              "tags": [
+                "bdd-coverage-bound-scenario"
+              ],
+              "title": "Coverage marks bound scenarios"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_coverage.py"
+              },
+              "id": "bdd-coverage-unbound-scenario",
+              "line": 17,
+              "tags": [
+                "bdd-coverage-unbound-scenario"
+              ],
+              "title": "Coverage reports missing bindings"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_coverage.py"
+              },
+              "id": "bdd-coverage-missing-test-file",
+              "line": 24,
+              "tags": [
+                "bdd-coverage-missing-test-file"
+              ],
+              "title": "Coverage reports missing test files"
+            }
+          ],
+          "tags": [],
+          "title": "Coverage identifies bound and unbound scenarios"
+        },
+        {
+          "id": "Coverage detects stale bindings",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_coverage.py"
+              },
+              "id": "bdd-coverage-stale-binding",
+              "line": 32,
+              "tags": [
+                "bdd-coverage-stale-binding"
+              ],
+              "title": "Coverage reports bindings to non-existent features"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_coverage.py"
+              },
+              "id": "bdd-coverage-stale-scenario",
+              "line": 39,
+              "tags": [
+                "bdd-coverage-stale-scenario"
+              ],
+              "title": "Coverage reports bindings to non-existent scenarios"
+            }
+          ],
+          "tags": [],
+          "title": "Coverage detects stale bindings"
+        },
+        {
+          "id": "Coverage detects deprecated paths",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_coverage.py"
+              },
+              "id": "bdd-coverage-deprecated-paths",
+              "line": 47,
+              "tags": [
+                "bdd-coverage-deprecated-paths"
+              ],
+              "title": "Coverage reports deprecated feature paths"
+            }
+          ],
+          "tags": [],
+          "title": "Coverage detects deprecated paths"
+        },
+        {
+          "id": "Coverage detects forbidden pytest-bdd usage",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_coverage.py"
+              },
+              "id": "bdd-coverage-forbidden-pytest-bdd",
+              "line": 55,
+              "tags": [
+                "bdd-coverage-forbidden-pytest-bdd"
+              ],
+              "title": "Coverage reports pytest-bdd imports in test files"
+            }
+          ],
+          "tags": [],
+          "title": "Coverage detects forbidden pytest-bdd usage"
+        },
+        {
+          "id": "Coverage skips manual and waived scenarios",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_coverage.py"
+              },
+              "id": "bdd-coverage-manual-scenario",
+              "line": 63,
+              "tags": [
+                "bdd-coverage-manual-scenario"
+              ],
+              "title": "Coverage skips scenarios tagged @manual"
+            }
+          ],
+          "tags": [],
+          "title": "Coverage skips manual and waived scenarios"
+        }
+      ],
+      "tags": [
+        "area-behavior",
+        "feature-coverage"
+      ],
+      "title": "Static behavior coverage checks"
+    },
+    {
+      "area": "behavior",
+      "description": "specweave behavior generate-tests creates plain pytest test skeletons\nfrom canonical behavior feature files. Each scenario becomes a test\nfunction with specweave markers and a NotImplementedError stub.",
+      "feature_slug": "generation",
+      "path": "specs/behavior/features/behavior/generation.feature",
+      "rules": [
+        {
+          "id": "Generation creates pytest skeletons",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_generation.py"
+              },
+              "id": "bdd-generate-single-feature",
+              "line": 10,
+              "tags": [
+                "bdd-generate-single-feature"
+              ],
+              "title": "Generation creates a test file for a feature"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_generation.py"
+              },
+              "id": "bdd-generate-scenario-function",
+              "line": 18,
+              "tags": [
+                "bdd-generate-scenario-function"
+              ],
+              "title": "Each scenario becomes a test function"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_generation.py"
+              },
+              "id": "bdd-generate-specweave-markers",
+              "line": 26,
+              "tags": [
+                "bdd-generate-specweave-markers"
+              ],
+              "title": "Test functions have correct specweave markers"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_generation.py"
+              },
+              "id": "bdd-generate-docstring",
+              "line": 33,
+              "tags": [
+                "bdd-generate-docstring"
+              ],
+              "title": "Test functions have docstrings with scenario details"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_generation.py"
+              },
+              "id": "bdd-generate-step-comments",
+              "line": 40,
+              "tags": [
+                "bdd-generate-step-comments"
+              ],
+              "title": "Test functions have step comments"
+            }
+          ],
+          "tags": [],
+          "title": "Generation creates pytest skeletons"
+        },
+        {
+          "id": "Generation derives canonical test paths",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_generation.py"
+              },
+              "id": "bdd-generate-canonical-path",
+              "line": 50,
+              "tags": [
+                "bdd-generate-canonical-path"
+              ],
+              "title": "Test path is derived from feature path"
+            }
+          ],
+          "tags": [],
+          "title": "Generation derives canonical test paths"
+        },
+        {
+          "id": "Generation handles rules",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_generation.py"
+              },
+              "id": "bdd-generate-rules",
+              "line": 58,
+              "tags": [
+                "bdd-generate-rules"
+              ],
+              "title": "Scenarios in rules get rule markers"
+            }
+          ],
+          "tags": [],
+          "title": "Generation handles rules"
+        },
+        {
+          "id": "Generation supports batch mode",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_generation.py"
+              },
+              "id": "bdd-generate-batch",
+              "line": 66,
+              "tags": [
+                "bdd-generate-batch"
+              ],
+              "title": "Generation processes all features in a directory"
+            }
+          ],
+          "tags": [],
+          "title": "Generation supports batch mode"
+        }
+      ],
+      "tags": [
+        "area-behavior",
+        "feature-generation"
+      ],
+      "title": "Plain pytest skeleton generation"
+    },
+    {
+      "area": "behavior",
+      "description": "specweave behavior index generates a Markdown index and JSON manifest\nfrom canonical behavior feature files. The manifest maps scenarios to\ntheir test bindings and evidence status.",
+      "feature_slug": "index",
+      "path": "specs/behavior/features/behavior/index.feature",
+      "rules": [
+        {
+          "id": "Index generation scans feature files",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_index.py"
+              },
+              "id": "bdd-index-generates-markdown",
+              "line": 10,
+              "tags": [
+                "bdd-index-generates-markdown"
+              ],
+              "title": "Index generates Markdown with feature listing"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_index.py"
+              },
+              "id": "bdd-index-generates-manifest",
+              "line": 17,
+              "tags": [
+                "bdd-index-generates-manifest"
+              ],
+              "title": "Index generates JSON manifest with scenario mappings"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_index.py"
+              },
+              "id": "bdd-index-scenario-entries",
+              "line": 25,
+              "tags": [
+                "bdd-index-scenario-entries"
+              ],
+              "title": "Manifest includes scenario entries with automation status"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_index.py"
+              },
+              "id": "bdd-index-unbound-scenario",
+              "line": 32,
+              "tags": [
+                "bdd-index-unbound-scenario"
+              ],
+              "title": "Manifest marks unbound scenarios as missing"
+            }
+          ],
+          "tags": [],
+          "title": "Index generation scans feature files"
+        },
+        {
+          "id": "Index reflects evidence status",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_index.py"
+              },
+              "id": "bdd-index-evidence-status",
+              "line": 40,
+              "tags": [
+                "bdd-index-evidence-status"
+              ],
+              "title": "Manifest includes latest evidence status when available"
+            }
+          ],
+          "tags": [],
+          "title": "Index reflects evidence status"
+        },
+        {
+          "id": "Index supports rule blocks",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_index.py"
+              },
+              "id": "bdd-index-rules",
+              "line": 48,
+              "tags": [
+                "bdd-index-rules"
+              ],
+              "title": "Manifest preserves Rule structure"
+            }
+          ],
+          "tags": [],
+          "title": "Index supports rule blocks"
+        }
+      ],
+      "tags": [
+        "area-behavior",
+        "feature-index"
+      ],
+      "title": "Behavior index and manifest generation"
+    },
+    {
+      "area": "behavior",
+      "description": "specweave behavior import-report imports pytest/JUnit XML reports into\nbehavior evidence JSON. It maps test results to scenarios using specweave\nmarkers and the manifest.",
+      "feature_slug": "reporting",
+      "path": "specs/behavior/features/behavior/reporting.feature",
+      "rules": [
+        {
+          "id": "Import maps test results to scenarios",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_reporting.py"
+              },
+              "id": "bdd-import-maps-by-nodeid",
+              "line": 10,
+              "tags": [
+                "bdd-import-maps-by-nodeid"
+              ],
+              "title": "Import maps results by normalized nodeid"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_reporting.py"
+              },
+              "id": "bdd-import-maps-by-function-name",
+              "line": 18,
+              "tags": [
+                "bdd-import-maps-by-function-name"
+              ],
+              "title": "Import falls back to function name matching"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_reporting.py"
+              },
+              "id": "bdd-import-maps-by-manifest",
+              "line": 25,
+              "tags": [
+                "bdd-import-maps-by-manifest"
+              ],
+              "title": "Import uses manifest mappings when available"
+            }
+          ],
+          "tags": [],
+          "title": "Import maps test results to scenarios"
+        },
+        {
+          "id": "Import reports unmapped tests",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_reporting.py"
+              },
+              "id": "bdd-import-unmapped-tests",
+              "line": 34,
+              "tags": [
+                "bdd-import-unmapped-tests"
+              ],
+              "title": "Import reports tests without specweave markers"
+            }
+          ],
+          "tags": [],
+          "title": "Import reports unmapped tests"
+        },
+        {
+          "id": "Import writes evidence JSON",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_behavior_reporting.py"
+              },
+              "id": "bdd-import-writes-evidence",
+              "line": 43,
+              "tags": [
+                "bdd-import-writes-evidence"
+              ],
+              "title": "Import writes evidence to the target path"
+            }
+          ],
+          "tags": [],
+          "title": "Import writes evidence JSON"
+        }
+      ],
+      "tags": [
+        "area-behavior",
+        "feature-reporting"
+      ],
+      "title": "Behavior evidence import from pytest reports"
+    },
+    {
+      "area": "cli",
+      "description": "The SpecWeave CLI provides commands for behavior-driven development\nworkflows. It supports root options for config path and JSON output,\nand preserves stable exit codes.",
+      "feature_slug": "cli-contract",
+      "path": "specs/behavior/features/cli/cli-contract.feature",
+      "rules": [
+        {
+          "id": "Root options work across all commands",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-config-option",
+              "line": 10,
+              "tags": [
+                "bdd-cli-config-option"
+              ],
+              "title": "--config selects an explicit config path"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-json-output",
+              "line": 16,
+              "tags": [
+                "bdd-cli-json-output"
+              ],
+              "title": "--json produces machine-readable output"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-json-init",
+              "line": 25,
+              "tags": [
+                "bdd-cli-json-init"
+              ],
+              "title": "init --json produces machine-readable output"
+            }
+          ],
+          "tags": [],
+          "title": "Root options work across all commands"
+        },
+        {
+          "id": "Behavior subcommands work correctly",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-behavior-check",
+              "line": 36,
+              "tags": [
+                "bdd-cli-behavior-check"
+              ],
+              "title": "behavior check lints feature files"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-behavior-index",
+              "line": 42,
+              "tags": [
+                "bdd-cli-behavior-index"
+              ],
+              "title": "behavior index generates index and manifest"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-behavior-generate-tests",
+              "line": 49,
+              "tags": [
+                "bdd-cli-behavior-generate-tests"
+              ],
+              "title": "behavior generate-tests creates pytest skeletons"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-behavior-coverage",
+              "line": 55,
+              "tags": [
+                "bdd-cli-behavior-coverage"
+              ],
+              "title": "behavior coverage checks spec-to-test mapping"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-behavior-import-report",
+              "line": 61,
+              "tags": [
+                "bdd-cli-behavior-import-report"
+              ],
+              "title": "behavior import-report imports JUnit XML"
+            }
+          ],
+          "tags": [],
+          "title": "Behavior subcommands work correctly"
+        },
+        {
+          "id": "BDD compatibility aliases work",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-bdd-check-alias",
+              "line": 69,
+              "tags": [
+                "bdd-cli-bdd-check-alias"
+              ],
+              "title": "bdd check is an alias for behavior check"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-bdd-index-alias",
+              "line": 75,
+              "tags": [
+                "bdd-cli-bdd-index-alias"
+              ],
+              "title": "bdd index is an alias for behavior index"
+            }
+          ],
+          "tags": [],
+          "title": "BDD compatibility aliases work"
+        },
+        {
+          "id": "Create subcommands work correctly",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-create-feature",
+              "line": 83,
+              "tags": [
+                "bdd-cli-create-feature"
+              ],
+              "title": "create feature writes a new Gherkin feature file"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-create-gherkin",
+              "line": 91,
+              "tags": [
+                "bdd-cli-create-gherkin"
+              ],
+              "title": "create gherkin generates features from tests"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-create-plan",
+              "line": 97,
+              "tags": [
+                "bdd-cli-create-plan"
+              ],
+              "title": "create plan generates an implementation plan"
+            }
+          ],
+          "tags": [],
+          "title": "Create subcommands work correctly"
+        },
+        {
+          "id": "Exit codes reflect result status",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-exit-doctor-failed",
+              "line": 105,
+              "tags": [
+                "bdd-cli-exit-doctor-failed"
+              ],
+              "title": "doctor exits non-zero when errors found"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-exit-check-errors",
+              "line": 111,
+              "tags": [
+                "bdd-cli-exit-check-errors"
+              ],
+              "title": "behavior check exits non-zero on lint errors"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_cli_cli_contract.py"
+              },
+              "id": "bdd-cli-exit-normalize-failed",
+              "line": 117,
+              "tags": [
+                "bdd-cli-exit-normalize-failed"
+              ],
+              "title": "report normalize exits non-zero when report failed"
+            }
+          ],
+          "tags": [],
+          "title": "Exit codes reflect result status"
+        }
+      ],
+      "tags": [
+        "area-cli",
+        "feature-cli-contract"
+      ],
+      "title": "SpecWeave CLI contract"
+    },
+    {
+      "area": "common",
+      "description": "The behavior.common module provides shared helpers for slugification,\nfeature identity extraction, canonical test path derivation, and\nscenario iteration.",
+      "feature_slug": "behavior-helpers",
+      "path": "specs/behavior/features/common/behavior-helpers.feature",
+      "rules": [
+        {
+          "id": "Slugification produces stable lowercase slugs",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_common_behavior_helpers.py"
+              },
+              "id": "bdd-slugify-basic",
+              "line": 10,
+              "tags": [
+                "bdd-slugify-basic"
+              ],
+              "title": "Slugify converts text to lowercase slug"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_common_behavior_helpers.py"
+              },
+              "id": "bdd-slugify-special-chars",
+              "line": 17,
+              "tags": [
+                "bdd-slugify-special-chars"
+              ],
+              "title": "Slugify replaces special characters with hyphens"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_common_behavior_helpers.py"
+              },
+              "id": "bdd-slugify-empty",
+              "line": 24,
+              "tags": [
+                "bdd-slugify-empty"
+              ],
+              "title": "Slugify returns \"behavior\" for empty input"
+            }
+          ],
+          "tags": [],
+          "title": "Slugification produces stable lowercase slugs"
+        },
+        {
+          "id": "Feature identity extracts area and slug",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_common_behavior_helpers.py"
+              },
+              "id": "bdd-feature-identity-from-path",
+              "line": 33,
+              "tags": [
+                "bdd-feature-identity-from-path"
+              ],
+              "title": "Feature identity derives area from parent directory"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_common_behavior_helpers.py"
+              },
+              "id": "bdd-feature-identity-no-area",
+              "line": 40,
+              "tags": [
+                "bdd-feature-identity-no-area"
+              ],
+              "title": "Feature identity uses \"behavior\" when no area directory"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_common_behavior_helpers.py"
+              },
+              "id": "bdd-feature-stem-markdown",
+              "line": 47,
+              "tags": [
+                "bdd-feature-stem-markdown"
+              ],
+              "title": "feature_stem handles .feature.md suffix"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_common_behavior_helpers.py"
+              },
+              "id": "bdd-feature-stem-classic",
+              "line": 54,
+              "tags": [
+                "bdd-feature-stem-classic"
+              ],
+              "title": "feature_stem handles .feature suffix"
+            }
+          ],
+          "tags": [],
+          "title": "Feature identity extracts area and slug"
+        },
+        {
+          "id": "Canonical test path derivation",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_common_behavior_helpers.py"
+              },
+              "id": "bdd-canonical-test-path",
+              "line": 63,
+              "tags": [
+                "bdd-canonical-test-path"
+              ],
+              "title": "Test path is derived from feature path"
+            }
+          ],
+          "tags": [],
+          "title": "Canonical test path derivation"
+        },
+        {
+          "id": "Scenario iteration yields all scenarios",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_common_behavior_helpers.py"
+              },
+              "id": "bdd-iter-scenarios-top-level",
+              "line": 71,
+              "tags": [
+                "bdd-iter-scenarios-top-level"
+              ],
+              "title": "Iterator yields top-level scenarios"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_common_behavior_helpers.py"
+              },
+              "id": "bdd-iter-scenarios-in-rules",
+              "line": 77,
+              "tags": [
+                "bdd-iter-scenarios-in-rules"
+              ],
+              "title": "Iterator yields scenarios from rules"
+            }
+          ],
+          "tags": [],
+          "title": "Scenario iteration yields all scenarios"
+        },
+        {
+          "id": "Scenario ID extraction",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_common_behavior_helpers.py"
+              },
+              "id": "bdd-scenario-id-value",
+              "line": 85,
+              "tags": [
+                "bdd-scenario-id-value"
+              ],
+              "title": "scenario_id_value returns first @bdd-* tag"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_common_behavior_helpers.py"
+              },
+              "id": "bdd-scenario-id-missing",
+              "line": 91,
+              "tags": [
+                "bdd-scenario-id-missing"
+              ],
+              "title": "scenario_id_value returns empty string when no @bdd-* tag"
+            }
+          ],
+          "tags": [],
+          "title": "Scenario ID extraction"
+        }
+      ],
+      "tags": [
+        "area-common",
+        "feature-behavior-helpers"
+      ],
+      "title": "Behavior helper functions"
+    },
+    {
+      "area": "config",
+      "description": "SpecWeave loads project configuration from TOML files, discovers config\nby walking parent directories, and renders deterministic defaults.",
+      "feature_slug": "configuration",
+      "path": "specs/behavior/features/config/configuration.feature",
+      "rules": [
+        {
+          "id": "Config discovery walks parent directories",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_config_configuration.py"
+              },
+              "id": "bdd-config-discovery-finds-dotfile",
+              "line": 9,
+              "tags": [
+                "bdd-config-discovery-finds-dotfile"
+              ],
+              "title": "Discovery finds .specweave.toml in current directory"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_config_configuration.py"
+              },
+              "id": "bdd-config-discovery-finds-public",
+              "line": 15,
+              "tags": [
+                "bdd-config-discovery-finds-public"
+              ],
+              "title": "Discovery finds specweave.toml in current directory"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_config_configuration.py"
+              },
+              "id": "bdd-config-discovery-prefers-dotfile",
+              "line": 21,
+              "tags": [
+                "bdd-config-discovery-prefers-dotfile"
+              ],
+              "title": "Discovery prefers .specweave.toml over specweave.toml"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_config_configuration.py"
+              },
+              "id": "bdd-config-discovery-walks-parents",
+              "line": 27,
+              "tags": [
+                "bdd-config-discovery-walks-parents"
+              ],
+              "title": "Discovery walks parent directories when not found locally"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_config_configuration.py"
+              },
+              "id": "bdd-config-discovery-returns-none",
+              "line": 33,
+              "tags": [
+                "bdd-config-discovery-returns-none"
+              ],
+              "title": "Discovery returns None when no config exists"
+            }
+          ],
+          "tags": [],
+          "title": "Config discovery walks parent directories"
+        },
+        {
+          "id": "Config loading returns defaults when no file exists",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_config_configuration.py"
+              },
+              "id": "bdd-config-load-defaults",
+              "line": 41,
+              "tags": [
+                "bdd-config-load-defaults"
+              ],
+              "title": "Loading with no file returns default config"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_config_configuration.py"
+              },
+              "id": "bdd-config-load-from-file",
+              "line": 49,
+              "tags": [
+                "bdd-config-load-from-file"
+              ],
+              "title": "Loading reads values from a valid TOML file"
+            }
+          ],
+          "tags": [],
+          "title": "Config loading returns defaults when no file exists"
+        },
+        {
+          "id": "Config rejects unsupported schema versions",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_config_configuration.py"
+              },
+              "id": "bdd-config-rejects-unsupported-schema",
+              "line": 58,
+              "tags": [
+                "bdd-config-rejects-unsupported-schema"
+              ],
+              "title": "Loading fails for schema_version 2"
+            }
+          ],
+          "tags": [],
+          "title": "Config rejects unsupported schema versions"
+        },
+        {
+          "id": "Default config rendering is deterministic",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_config_configuration.py"
+              },
+              "id": "bdd-config-render-behavior",
+              "line": 66,
+              "tags": [
+                "bdd-config-render-behavior"
+              ],
+              "title": "Default config renders behavior spelling"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_config_configuration.py"
+              },
+              "id": "bdd-config-render-behaviour",
+              "line": 74,
+              "tags": [
+                "bdd-config-render-behaviour"
+              ],
+              "title": "Default config renders behaviour spelling"
+            }
+          ],
+          "tags": [],
+          "title": "Default config rendering is deterministic"
+        }
+      ],
+      "tags": [
+        "area-config",
+        "feature-configuration"
+      ],
+      "title": "SpecWeave configuration management"
+    },
+    {
+      "area": "doctor",
+      "description": "specweave doctor checks the project setup, config, paths, and feature\nfiles for problems. It can optionally fix missing directories.",
+      "feature_slug": "diagnostics",
+      "path": "specs/behavior/features/doctor/diagnostics.feature",
+      "rules": [
+        {
+          "id": "Doctor checks config presence and schema",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_doctor_diagnostics.py"
+              },
+              "id": "bdd-doctor-missing-config",
+              "line": 9,
+              "tags": [
+                "bdd-doctor-missing-config"
+              ],
+              "title": "Doctor warns when no config file exists"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_doctor_diagnostics.py"
+              },
+              "id": "bdd-doctor-unsupported-schema",
+              "line": 16,
+              "tags": [
+                "bdd-doctor-unsupported-schema"
+              ],
+              "title": "Doctor errors on unsupported schema version"
+            }
+          ],
+          "tags": [],
+          "title": "Doctor checks config presence and schema"
+        },
+        {
+          "id": "Doctor checks directory existence",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_doctor_diagnostics.py"
+              },
+              "id": "bdd-doctor-missing-directories",
+              "line": 25,
+              "tags": [
+                "bdd-doctor-missing-directories"
+              ],
+              "title": "Doctor warns about missing directories"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_doctor_diagnostics.py"
+              },
+              "id": "bdd-doctor-fix-creates-directories",
+              "line": 32,
+              "tags": [
+                "bdd-doctor-fix-creates-directories"
+              ],
+              "title": "Doctor --fix creates missing directories"
+            }
+          ],
+          "tags": [],
+          "title": "Doctor checks directory existence"
+        },
+        {
+          "id": "Doctor checks for deprecated paths",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_doctor_diagnostics.py"
+              },
+              "id": "bdd-doctor-deprecated-paths",
+              "line": 41,
+              "tags": [
+                "bdd-doctor-deprecated-paths"
+              ],
+              "title": "Doctor warns about deprecated feature paths"
+            }
+          ],
+          "tags": [],
+          "title": "Doctor checks for deprecated paths"
+        },
+        {
+          "id": "Doctor checks for duplicate bdd tags",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_doctor_diagnostics.py"
+              },
+              "id": "bdd-doctor-duplicate-bdd-tags",
+              "line": 49,
+              "tags": [
+                "bdd-doctor-duplicate-bdd-tags"
+              ],
+              "title": "Doctor errors on duplicate @bdd-* tags"
+            }
+          ],
+          "tags": [],
+          "title": "Doctor checks for duplicate bdd tags"
+        },
+        {
+          "id": "Doctor validates feature files",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_doctor_diagnostics.py"
+              },
+              "id": "bdd-doctor-validates-features",
+              "line": 58,
+              "tags": [
+                "bdd-doctor-validates-features"
+              ],
+              "title": "Doctor reports feature lint errors"
+            }
+          ],
+          "tags": [],
+          "title": "Doctor validates feature files"
+        }
+      ],
+      "tags": [
+        "area-doctor",
+        "feature-diagnostics"
+      ],
+      "title": "SpecWeave project diagnostics"
+    },
+    {
+      "area": "gherkin",
+      "description": "The linter checks canonical behavior feature files for structural problems,\nmissing tags, deprecated paths, and duplicate identifiers.",
+      "feature_slug": "lint",
+      "path": "specs/behavior/features/gherkin/lint.feature",
+      "rules": [
+        {
+          "id": "Lint checks feature structure",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_lint.py"
+              },
+              "id": "bdd-lint-single-feature",
+              "line": 9,
+              "tags": [
+                "bdd-lint-single-feature"
+              ],
+              "title": "Lint errors on multiple Feature lines"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_lint.py"
+              },
+              "id": "bdd-lint-empty-feature-title",
+              "line": 16,
+              "tags": [
+                "bdd-lint-empty-feature-title"
+              ],
+              "title": "Lint errors on empty feature title"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_lint.py"
+              },
+              "id": "bdd-lint-empty-scenario-title",
+              "line": 22,
+              "tags": [
+                "bdd-lint-empty-scenario-title"
+              ],
+              "title": "Lint errors on empty scenario title"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_lint.py"
+              },
+              "id": "bdd-lint-missing-given-when-then",
+              "line": 28,
+              "tags": [
+                "bdd-lint-missing-given-when-then"
+              ],
+              "title": "Lint errors when Given/When/Then are missing"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_lint.py"
+              },
+              "id": "bdd-lint-empty-rule",
+              "line": 34,
+              "tags": [
+                "bdd-lint-empty-rule"
+              ],
+              "title": "Lint errors on Rule without scenarios"
+            }
+          ],
+          "tags": [],
+          "title": "Lint checks feature structure"
+        },
+        {
+          "id": "Lint checks tag conventions",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_lint.py"
+              },
+              "id": "bdd-lint-duplicate-bdd-tags",
+              "line": 42,
+              "tags": [
+                "bdd-lint-duplicate-bdd-tags"
+              ],
+              "title": "Lint errors on duplicate @bdd-* tags"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_lint.py"
+              },
+              "id": "bdd-lint-missing-bdd-tag",
+              "line": 48,
+              "tags": [
+                "bdd-lint-missing-bdd-tag"
+              ],
+              "title": "Lint warns when scenario lacks @bdd-* tag"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_lint.py"
+              },
+              "id": "bdd-lint-task-tags-discouraged",
+              "line": 54,
+              "tags": [
+                "bdd-lint-task-tags-discouraged"
+              ],
+              "title": "Lint warns on task-specific tags in features"
+            }
+          ],
+          "tags": [],
+          "title": "Lint checks tag conventions"
+        },
+        {
+          "id": "Lint checks file paths",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_lint.py"
+              },
+              "id": "bdd-lint-canonical-path",
+              "line": 62,
+              "tags": [
+                "bdd-lint-canonical-path"
+              ],
+              "title": "Lint errors on features outside canonical path"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_lint.py"
+              },
+              "id": "bdd-lint-area-subdirectory",
+              "line": 68,
+              "tags": [
+                "bdd-lint-area-subdirectory"
+              ],
+              "title": "Lint warns when feature is not in area subdirectory"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_lint.py"
+              },
+              "id": "bdd-lint-deprecated-path",
+              "line": 74,
+              "tags": [
+                "bdd-lint-deprecated-path"
+              ],
+              "title": "Lint warns on deprecated feature paths"
+            }
+          ],
+          "tags": [],
+          "title": "Lint checks file paths"
+        },
+        {
+          "id": "Strict mode reports unsupported constructs",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_lint.py"
+              },
+              "id": "bdd-lint-strict-unsupported",
+              "line": 82,
+              "tags": [
+                "bdd-lint-strict-unsupported"
+              ],
+              "title": "Strict mode warns on Scenario Outline"
+            }
+          ],
+          "tags": [],
+          "title": "Strict mode reports unsupported constructs"
+        }
+      ],
+      "tags": [
+        "area-gherkin",
+        "feature-lint"
+      ],
+      "title": "Gherkin feature file linting"
+    },
+    {
+      "area": "gherkin",
+      "description": "The Gherkin parser reads feature text and produces Feature/Rule/Scenario/Step\ndataclass instances. It supports classic .feature and markdown .feature.md\nformats.",
+      "feature_slug": "parser",
+      "path": "specs/behavior/features/gherkin/parser.feature",
+      "rules": [
+        {
+          "id": "Classic Gherkin parsing extracts structure",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_parser.py"
+              },
+              "id": "bdd-parser-classic-feature",
+              "line": 10,
+              "tags": [
+                "bdd-parser-classic-feature"
+              ],
+              "title": "Parser extracts feature title and scenarios"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_parser.py"
+              },
+              "id": "bdd-parser-classic-rules",
+              "line": 18,
+              "tags": [
+                "bdd-parser-classic-rules"
+              ],
+              "title": "Parser extracts Rule blocks"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_parser.py"
+              },
+              "id": "bdd-parser-classic-tags",
+              "line": 25,
+              "tags": [
+                "bdd-parser-classic-tags"
+              ],
+              "title": "Parser preserves tags on features, rules, and scenarios"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_parser.py"
+              },
+              "id": "bdd-parser-classic-description",
+              "line": 33,
+              "tags": [
+                "bdd-parser-classic-description"
+              ],
+              "title": "Parser preserves feature and scenario descriptions"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_parser.py"
+              },
+              "id": "bdd-parser-classic-top-level-scenarios",
+              "line": 40,
+              "tags": [
+                "bdd-parser-classic-top-level-scenarios"
+              ],
+              "title": "Parser handles top-level scenarios outside rules"
+            }
+          ],
+          "tags": [],
+          "title": "Classic Gherkin parsing extracts structure"
+        },
+        {
+          "id": "Markdown Gherkin parsing",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_parser.py"
+              },
+              "id": "bdd-parser-markdown-feature",
+              "line": 49,
+              "tags": [
+                "bdd-parser-markdown-feature"
+              ],
+              "title": "Parser extracts structure from markdown format"
+            }
+          ],
+          "tags": [],
+          "title": "Markdown Gherkin parsing"
+        },
+        {
+          "id": "Parser dispatches by format",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_parser.py"
+              },
+              "id": "bdd-parser-dispatch-by-suffix",
+              "line": 58,
+              "tags": [
+                "bdd-parser-dispatch-by-suffix"
+              ],
+              "title": "Parser selects markdown parser for .feature.md files"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_parser.py"
+              },
+              "id": "bdd-parser-dispatch-classic",
+              "line": 64,
+              "tags": [
+                "bdd-parser-dispatch-classic"
+              ],
+              "title": "Parser selects classic parser for .feature files"
+            }
+          ],
+          "tags": [],
+          "title": "Parser dispatches by format"
+        },
+        {
+          "id": "Parser requires Feature line",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_parser.py"
+              },
+              "id": "bdd-parser-requires-feature-line",
+              "line": 72,
+              "tags": [
+                "bdd-parser-requires-feature-line"
+              ],
+              "title": "Parser raises ValueError without Feature line"
+            }
+          ],
+          "tags": [],
+          "title": "Parser requires Feature line"
+        }
+      ],
+      "tags": [
+        "area-gherkin",
+        "feature-parser"
+      ],
+      "title": "Gherkin feature file parsing"
+    },
+    {
+      "area": "gherkin",
+      "description": "The Gherkin writer serializes Feature dataclass instances back to\ncanonical Gherkin text. It preserves tags, rules, scenarios, and steps.",
+      "feature_slug": "writer",
+      "path": "specs/behavior/features/gherkin/writer.feature",
+      "rules": [
+        {
+          "id": "Writer produces canonical Gherkin output",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_writer.py"
+              },
+              "id": "bdd-writer-basic-feature",
+              "line": 9,
+              "tags": [
+                "bdd-writer-basic-feature"
+              ],
+              "title": "Writer serializes a feature with scenarios"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_writer.py"
+              },
+              "id": "bdd-writer-rules",
+              "line": 17,
+              "tags": [
+                "bdd-writer-rules"
+              ],
+              "title": "Writer serializes Rule blocks"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_writer.py"
+              },
+              "id": "bdd-writer-tags",
+              "line": 24,
+              "tags": [
+                "bdd-writer-tags"
+              ],
+              "title": "Writer preserves tags at all levels"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_writer.py"
+              },
+              "id": "bdd-writer-descriptions",
+              "line": 32,
+              "tags": [
+                "bdd-writer-descriptions"
+              ],
+              "title": "Writer preserves descriptions"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_gherkin_writer.py"
+              },
+              "id": "bdd-writer-roundtrip",
+              "line": 39,
+              "tags": [
+                "bdd-writer-roundtrip"
+              ],
+              "title": "Parsing then writing produces equivalent output"
+            }
+          ],
+          "tags": [],
+          "title": "Writer produces canonical Gherkin output"
+        }
+      ],
+      "tags": [
+        "area-gherkin",
+        "feature-writer"
+      ],
+      "title": "Gherkin feature file writing"
+    },
+    {
+      "area": "init",
+      "description": "specweave init creates the config file and directory layout for a new\nSpecWeave project. It is idempotent and supports dry-run mode.",
+      "feature_slug": "initialization",
+      "path": "specs/behavior/features/init/initialization.feature",
+      "rules": [
+        {
+          "id": "Init creates config and directories",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_init_initialization.py"
+              },
+              "id": "bdd-init-creates-dotfile",
+              "line": 9,
+              "tags": [
+                "bdd-init-creates-dotfile"
+              ],
+              "title": "Init creates .specweave.toml by default"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_init_initialization.py"
+              },
+              "id": "bdd-init-creates-public-config",
+              "line": 18,
+              "tags": [
+                "bdd-init-creates-public-config"
+              ],
+              "title": "Init creates specweave.toml with --public-config"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_init_initialization.py"
+              },
+              "id": "bdd-init-creates-readme",
+              "line": 25,
+              "tags": [
+                "bdd-init-creates-readme"
+              ],
+              "title": "Init creates a managed README in specs root"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_init_initialization.py"
+              },
+              "id": "bdd-init-creates-gitkeep",
+              "line": 32,
+              "tags": [
+                "bdd-init-creates-gitkeep"
+              ],
+              "title": "Init creates .gitkeep in features directory"
+            }
+          ],
+          "tags": [],
+          "title": "Init creates config and directories"
+        },
+        {
+          "id": "Init is idempotent",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_init_initialization.py"
+              },
+              "id": "bdd-init-idempotent",
+              "line": 40,
+              "tags": [
+                "bdd-init-idempotent"
+              ],
+              "title": "Running init twice does not fail"
+            }
+          ],
+          "tags": [],
+          "title": "Init is idempotent"
+        },
+        {
+          "id": "Init supports British spelling",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_init_initialization.py"
+              },
+              "id": "bdd-init-british-spelling",
+              "line": 49,
+              "tags": [
+                "bdd-init-british-spelling"
+              ],
+              "title": "Init creates behaviour layout with --spelling behaviour"
+            }
+          ],
+          "tags": [],
+          "title": "Init supports British spelling"
+        },
+        {
+          "id": "Init supports dry-run mode",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_init_initialization.py"
+              },
+              "id": "bdd-init-dry-run",
+              "line": 59,
+              "tags": [
+                "bdd-init-dry-run"
+              ],
+              "title": "Dry-run reports paths without writing"
+            }
+          ],
+          "tags": [],
+          "title": "Init supports dry-run mode"
+        },
+        {
+          "id": "Init refuses to overwrite non-managed README",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_init_initialization.py"
+              },
+              "id": "bdd-init-refuses-overwrite-readme",
+              "line": 68,
+              "tags": [
+                "bdd-init-refuses-overwrite-readme"
+              ],
+              "title": "Init skips non-SpecWeave README"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_init_initialization.py"
+              },
+              "id": "bdd-init-force-overwrites-readme",
+              "line": 75,
+              "tags": [
+                "bdd-init-force-overwrites-readme"
+              ],
+              "title": "Init overwrites managed README with --force"
+            }
+          ],
+          "tags": [],
+          "title": "Init refuses to overwrite non-managed README"
+        },
+        {
+          "id": "Init warns about existing config",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_init_initialization.py"
+              },
+              "id": "bdd-init-warns-existing-config",
+              "line": 83,
+              "tags": [
+                "bdd-init-warns-existing-config"
+              ],
+              "title": "Init warns when config already exists"
+            }
+          ],
+          "tags": [],
+          "title": "Init warns about existing config"
+        }
+      ],
+      "tags": [
+        "area-init",
+        "feature-initialization"
+      ],
+      "title": "SpecWeave project initialization"
+    },
+    {
+      "area": "integrations",
+      "description": "SpecWeave generates Archledger candidate markdown for scenarios that are\narchitecturally important. Candidates are written only when explicitly\nrequested.",
+      "feature_slug": "archledger",
+      "path": "specs/behavior/features/integrations/archledger.feature",
+      "rules": [
+        {
+          "id": "Archledger candidate generation",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_integrations_archledger.py"
+              },
+              "id": "bdd-archledger-candidate",
+              "line": 10,
+              "tags": [
+                "bdd-archledger-candidate"
+              ],
+              "title": "archledger command renders candidate markdown"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_integrations_archledger.py"
+              },
+              "id": "bdd-archledger-unknown-bdd",
+              "line": 18,
+              "tags": [
+                "bdd-archledger-unknown-bdd"
+              ],
+              "title": "archledger errors on unknown @bdd-* id"
+            }
+          ],
+          "tags": [],
+          "title": "Archledger candidate generation"
+        },
+        {
+          "id": "Archledger does not write accepted records by default",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_integrations_archledger.py"
+              },
+              "id": "bdd-archledger-candidate-only",
+              "line": 27,
+              "tags": [
+                "bdd-archledger-candidate-only"
+              ],
+              "title": "archledger produces candidates, not accepted records"
+            }
+          ],
+          "tags": [],
+          "title": "Archledger does not write accepted records by default"
+        }
+      ],
+      "tags": [
+        "area-integrations",
+        "feature-archledger"
+      ],
+      "title": "Archledger integration"
+    },
+    {
+      "area": "integrations",
+      "description": "SpecWeave exchanges files with Taskledger for task drafts and behavior\nimports. The integration is file-based and does not require Taskledger\nas a runtime dependency.",
+      "feature_slug": "taskledger",
+      "path": "specs/behavior/features/integrations/taskledger.feature",
+      "rules": [
+        {
+          "id": "Taskledger task draft generation",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_integrations_taskledger.py"
+              },
+              "id": "bdd-taskledger-draft",
+              "line": 10,
+              "tags": [
+                "bdd-taskledger-draft"
+              ],
+              "title": "create taskledger-task generates a draft JSON"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_integrations_taskledger.py"
+              },
+              "id": "bdd-taskledger-draft-ac-mapping",
+              "line": 18,
+              "tags": [
+                "bdd-taskledger-draft-ac-mapping"
+              ],
+              "title": "Draft maps @ac-* tags to acceptance criteria"
+            }
+          ],
+          "tags": [],
+          "title": "Taskledger task draft generation"
+        },
+        {
+          "id": "Taskledger behavior import",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_integrations_taskledger.py"
+              },
+              "id": "bdd-taskledger-import",
+              "line": 26,
+              "tags": [
+                "bdd-taskledger-import"
+              ],
+              "title": "import-taskledger creates a feature from Taskledger export"
+            }
+          ],
+          "tags": [],
+          "title": "Taskledger behavior import"
+        },
+        {
+          "id": "Taskledger evidence generation",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_integrations_taskledger.py"
+              },
+              "id": "bdd-taskledger-evidence",
+              "line": 35,
+              "tags": [
+                "bdd-taskledger-evidence"
+              ],
+              "title": "report normalize generates Taskledger-compatible evidence"
+            }
+          ],
+          "tags": [],
+          "title": "Taskledger evidence generation"
+        }
+      ],
+      "tags": [
+        "area-integrations",
+        "feature-taskledger"
+      ],
+      "title": "Taskledger integration"
+    },
+    {
+      "area": "reports",
+      "description": "SpecWeave enforces fail-closed semantics for acceptance criteria. A\ncriterion is passed only when every linked scenario passed. Skipped,\npending, undefined, ambiguous, errored, or failed scenarios block\nthe criterion.",
+      "feature_slug": "fail-closed",
+      "path": "specs/behavior/features/reports/fail-closed.feature",
+      "rules": [
+        {
+          "id": "Blocking statuses fail linked criteria",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_fail_closed.py"
+              },
+              "id": "bdd-fail-closed-failed-scenario",
+              "line": 11,
+              "tags": [
+                "bdd-fail-closed-failed-scenario"
+              ],
+              "title": "Failed scenario fails the linked criterion"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_fail_closed.py"
+              },
+              "id": "bdd-fail-closed-skipped-scenario",
+              "line": 17,
+              "tags": [
+                "bdd-fail-closed-skipped-scenario"
+              ],
+              "title": "Skipped scenario fails the criterion by default"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_fail_closed.py"
+              },
+              "id": "bdd-fail-closed-undefined-scenario",
+              "line": 23,
+              "tags": [
+                "bdd-fail-closed-undefined-scenario"
+              ],
+              "title": "Undefined scenario fails the criterion"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_fail_closed.py"
+              },
+              "id": "bdd-fail-closed-pending-scenario",
+              "line": 29,
+              "tags": [
+                "bdd-fail-closed-pending-scenario"
+              ],
+              "title": "Pending scenario fails the criterion"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_fail_closed.py"
+              },
+              "id": "bdd-fail-closed-ambiguous-scenario",
+              "line": 35,
+              "tags": [
+                "bdd-fail-closed-ambiguous-scenario"
+              ],
+              "title": "Ambiguous scenario fails the criterion"
+            }
+          ],
+          "tags": [],
+          "title": "Blocking statuses fail linked criteria"
+        },
+        {
+          "id": "Only passing scenarios satisfy criteria",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_fail_closed.py"
+              },
+              "id": "bdd-fail-closed-passed-scenario",
+              "line": 43,
+              "tags": [
+                "bdd-fail-closed-passed-scenario"
+              ],
+              "title": "Passed scenario satisfies the criterion"
+            }
+          ],
+          "tags": [],
+          "title": "Only passing scenarios satisfy criteria"
+        },
+        {
+          "id": "Unlinked scenarios do not affect criteria",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_fail_closed.py"
+              },
+              "id": "bdd-fail-closed-unlinked-scenario",
+              "line": 51,
+              "tags": [
+                "bdd-fail-closed-unlinked-scenario"
+              ],
+              "title": "Unlinked scenario does not satisfy any criterion"
+            }
+          ],
+          "tags": [],
+          "title": "Unlinked scenarios do not affect criteria"
+        },
+        {
+          "id": "Multiple scenarios for one criterion",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_fail_closed.py"
+              },
+              "id": "bdd-fail-closed-multiple-scenarios",
+              "line": 59,
+              "tags": [
+                "bdd-fail-closed-multiple-scenarios"
+              ],
+              "title": "One failed scenario fails the whole criterion"
+            }
+          ],
+          "tags": [],
+          "title": "Multiple scenarios for one criterion"
+        },
+        {
+          "id": "Exit code alone is not sufficient evidence",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_fail_closed.py"
+              },
+              "id": "bdd-fail-closed-exit-code-not-evidence",
+              "line": 67,
+              "tags": [
+                "bdd-fail-closed-exit-code-not-evidence"
+              ],
+              "title": "Passing exit code does not override failed scenarios"
+            }
+          ],
+          "tags": [],
+          "title": "Exit code alone is not sufficient evidence"
+        }
+      ],
+      "tags": [
+        "area-reports",
+        "feature-fail-closed"
+      ],
+      "title": "Fail-closed evidence semantics"
+    },
+    {
+      "area": "reports",
+      "description": "The reports.mapping module extracts BDD and acceptance criterion IDs\nfrom scenario tags and summarizes acceptance criterion coverage from\nnormalized scenario results.",
+      "feature_slug": "mapping",
+      "path": "specs/behavior/features/reports/mapping.feature",
+      "rules": [
+        {
+          "id": "Tag extraction identifies BDD and AC IDs",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_mapping.py"
+              },
+              "id": "bdd-tag-extraction-bdd",
+              "line": 10,
+              "tags": [
+                "bdd-tag-extraction-bdd"
+              ],
+              "title": "Extraction finds @bdd-* tags"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_mapping.py"
+              },
+              "id": "bdd-tag-extraction-ac",
+              "line": 16,
+              "tags": [
+                "bdd-tag-extraction-ac"
+              ],
+              "title": "Extraction finds @ac-* tags"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_mapping.py"
+              },
+              "id": "bdd-tag-extraction-empty",
+              "line": 22,
+              "tags": [
+                "bdd-tag-extraction-empty"
+              ],
+              "title": "Extraction returns empty lists when no matching tags"
+            }
+          ],
+          "tags": [],
+          "title": "Tag extraction identifies BDD and AC IDs"
+        },
+        {
+          "id": "Criteria summarization groups by AC ID",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_mapping.py"
+              },
+              "id": "bdd-criteria-summary",
+              "line": 31,
+              "tags": [
+                "bdd-criteria-summary"
+              ],
+              "title": "Summarization groups scenarios by acceptance criterion"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_mapping.py"
+              },
+              "id": "bdd-criteria-fail-closed",
+              "line": 38,
+              "tags": [
+                "bdd-criteria-fail-closed"
+              ],
+              "title": "Failed scenarios fail the linked criterion"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_mapping.py"
+              },
+              "id": "bdd-criteria-missing-coverage",
+              "line": 44,
+              "tags": [
+                "bdd-criteria-missing-coverage"
+              ],
+              "title": "Expected AC with no scenarios fails coverage"
+            }
+          ],
+          "tags": [],
+          "title": "Criteria summarization groups by AC ID"
+        }
+      ],
+      "tags": [
+        "area-reports",
+        "feature-mapping"
+      ],
+      "title": "Report tag mapping and acceptance coverage"
+    },
+    {
+      "area": "reports",
+      "description": "specweave report normalize parses runner-native reports (JUnit XML,\nCucumber JSON) and produces a normalized JSON report. It enforces\nfail-closed semantics for acceptance criteria.",
+      "feature_slug": "normalization",
+      "path": "specs/behavior/features/reports/normalization.feature",
+      "rules": [
+        {
+          "id": "Normalization parses supported formats",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_normalization.py"
+              },
+              "id": "bdd-normalize-junit-xml",
+              "line": 10,
+              "tags": [
+                "bdd-normalize-junit-xml"
+              ],
+              "title": "Normalization parses JUnit XML reports"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_normalization.py"
+              },
+              "id": "bdd-normalize-cucumber-json",
+              "line": 17,
+              "tags": [
+                "bdd-normalize-cucumber-json"
+              ],
+              "title": "Normalization parses Cucumber JSON reports"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_normalization.py"
+              },
+              "id": "bdd-normalize-unsupported-format",
+              "line": 24,
+              "tags": [
+                "bdd-normalize-unsupported-format"
+              ],
+              "title": "Normalization rejects unsupported formats"
+            }
+          ],
+          "tags": [],
+          "title": "Normalization parses supported formats"
+        },
+        {
+          "id": "Normalization computes overall status",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_normalization.py"
+              },
+              "id": "bdd-normalize-all-passed",
+              "line": 32,
+              "tags": [
+                "bdd-normalize-all-passed"
+              ],
+              "title": "Report status is passed when all scenarios pass"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_normalization.py"
+              },
+              "id": "bdd-normalize-any-failed",
+              "line": 39,
+              "tags": [
+                "bdd-normalize-any-failed"
+              ],
+              "title": "Report status is failed when any scenario fails"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_normalization.py"
+              },
+              "id": "bdd-normalize-skipped-fails-by-default",
+              "line": 46,
+              "tags": [
+                "bdd-normalize-skipped-fails-by-default"
+              ],
+              "title": "Skipped scenarios fail the report by default"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_normalization.py"
+              },
+              "id": "bdd-normalize-allow-skipped",
+              "line": 52,
+              "tags": [
+                "bdd-normalize-allow-skipped"
+              ],
+              "title": "Skipped scenarios pass with --allow-skipped"
+            }
+          ],
+          "tags": [],
+          "title": "Normalization computes overall status"
+        },
+        {
+          "id": "Normalization enforces acceptance criteria coverage",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_normalization.py"
+              },
+              "id": "bdd-normalize-missing-ac-coverage",
+              "line": 60,
+              "tags": [
+                "bdd-normalize-missing-ac-coverage"
+              ],
+              "title": "Report fails when expected AC has no passing scenario"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_normalization.py"
+              },
+              "id": "bdd-normalize-ac-covered",
+              "line": 66,
+              "tags": [
+                "bdd-normalize-ac-covered"
+              ],
+              "title": "Report passes when expected AC has a passing scenario"
+            }
+          ],
+          "tags": [],
+          "title": "Normalization enforces acceptance criteria coverage"
+        },
+        {
+          "id": "Normalization generates evidence JSON",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_normalization.py"
+              },
+              "id": "bdd-normalize-evidence-json",
+              "line": 74,
+              "tags": [
+                "bdd-normalize-evidence-json"
+              ],
+              "title": "Normalization writes Taskledger evidence JSON"
+            }
+          ],
+          "tags": [],
+          "title": "Normalization generates evidence JSON"
+        }
+      ],
+      "tags": [
+        "area-reports",
+        "feature-normalization"
+      ],
+      "title": "Report normalization and evidence generation"
+    },
+    {
+      "area": "reports",
+      "description": "SpecWeave parses JUnit XML and Cucumber JSON reports into ScenarioResult\ninstances. Each parser extracts scenario name, status, tags, and evidence.",
+      "feature_slug": "parsers",
+      "path": "specs/behavior/features/reports/parsers.feature",
+      "rules": [
+        {
+          "id": "JUnit XML parser extracts test cases",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_parsers.py"
+              },
+              "id": "bdd-junit-parse-cases",
+              "line": 9,
+              "tags": [
+                "bdd-junit-parse-cases"
+              ],
+              "title": "Parser extracts test cases from JUnit XML"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_parsers.py"
+              },
+              "id": "bdd-junit-parse-statuses",
+              "line": 16,
+              "tags": [
+                "bdd-junit-parse-statuses"
+              ],
+              "title": "Parser maps JUnit statuses correctly"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_parsers.py"
+              },
+              "id": "bdd-junit-parse-duration",
+              "line": 24,
+              "tags": [
+                "bdd-junit-parse-duration"
+              ],
+              "title": "Parser extracts test duration"
+            }
+          ],
+          "tags": [],
+          "title": "JUnit XML parser extracts test cases"
+        },
+        {
+          "id": "Cucumber JSON parser extracts scenarios",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_parsers.py"
+              },
+              "id": "bdd-cucumber-parse-scenarios",
+              "line": 32,
+              "tags": [
+                "bdd-cucumber-parse-scenarios"
+              ],
+              "title": "Parser extracts scenarios from Cucumber JSON"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_reports_parsers.py"
+              },
+              "id": "bdd-cucumber-parse-tags",
+              "line": 39,
+              "tags": [
+                "bdd-cucumber-parse-tags"
+              ],
+              "title": "Parser extracts tags from Cucumber scenarios"
+            }
+          ],
+          "tags": [],
+          "title": "Cucumber JSON parser extracts scenarios"
+        }
+      ],
+      "tags": [
+        "area-reports",
+        "feature-parsers"
+      ],
+      "title": "Report format parsers"
+    },
+    {
+      "area": "review",
+      "description": "specweave review specs aggregates lint, coverage, and convention findings\nto report on the health of the behavior specification suite.",
+      "feature_slug": "spec-review",
+      "path": "specs/behavior/features/review/spec-review.feature",
+      "rules": [
+        {
+          "id": "Review reports feature and scenario counts",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_review_spec_review.py"
+              },
+              "id": "bdd-review-counts",
+              "line": 9,
+              "tags": [
+                "bdd-review-counts"
+              ],
+              "title": "Review reports feature and scenario statistics"
+            }
+          ],
+          "tags": [],
+          "title": "Review reports feature and scenario counts"
+        },
+        {
+          "id": "Review reports missing bindings",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_review_spec_review.py"
+              },
+              "id": "bdd-review-missing-bindings",
+              "line": 19,
+              "tags": [
+                "bdd-review-missing-bindings"
+              ],
+              "title": "Review warns about unbound scenarios"
+            }
+          ],
+          "tags": [],
+          "title": "Review reports missing bindings"
+        },
+        {
+          "id": "Review reports needs-review tags",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_review_spec_review.py"
+              },
+              "id": "bdd-review-needs-review",
+              "line": 28,
+              "tags": [
+                "bdd-review-needs-review"
+              ],
+              "title": "Review warns about @needs-review scenarios"
+            }
+          ],
+          "tags": [],
+          "title": "Review reports needs-review tags"
+        },
+        {
+          "id": "Review reports deprecated paths",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_review_spec_review.py"
+              },
+              "id": "bdd-review-deprecated-paths",
+              "line": 36,
+              "tags": [
+                "bdd-review-deprecated-paths"
+              ],
+              "title": "Review warns about deprecated paths"
+            }
+          ],
+          "tags": [],
+          "title": "Review reports deprecated paths"
+        },
+        {
+          "id": "Review reports forbidden pytest-bdd usage",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_review_spec_review.py"
+              },
+              "id": "bdd-review-forbidden-pytest-bdd",
+              "line": 44,
+              "tags": [
+                "bdd-review-forbidden-pytest-bdd"
+              ],
+              "title": "Review errors on pytest-bdd usage"
+            }
+          ],
+          "tags": [],
+          "title": "Review reports forbidden pytest-bdd usage"
+        },
+        {
+          "id": "Review aggregates lint findings",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_review_spec_review.py"
+              },
+              "id": "bdd-review-lint-findings",
+              "line": 53,
+              "tags": [
+                "bdd-review-lint-findings"
+              ],
+              "title": "Review includes lint errors and warnings"
+            }
+          ],
+          "tags": [],
+          "title": "Review aggregates lint findings"
+        }
+      ],
+      "tags": [
+        "area-review",
+        "feature-spec-review"
+      ],
+      "title": "Behavior spec review"
+    },
+    {
+      "area": "translation",
+      "description": "specweave create gherkin generates draft Gherkin feature files from\nexisting pytest test files. It uses AST-based discovery and groups\nfeatures by file.",
+      "feature_slug": "pytest-to-gherkin",
+      "path": "specs/behavior/features/translation/pytest-to-gherkin.feature",
+      "rules": [
+        {
+          "id": "Generation discovers tests via AST",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_translation_pytest_to_gherkin.py"
+              },
+              "id": "bdd-translate-discovers-tests",
+              "line": 10,
+              "tags": [
+                "bdd-translate-discovers-tests"
+              ],
+              "title": "Generation finds test functions in pytest files"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_translation_pytest_to_gherkin.py"
+              },
+              "id": "bdd-translate-group-by-file",
+              "line": 17,
+              "tags": [
+                "bdd-translate-group-by-file"
+              ],
+              "title": "Generation groups scenarios by test file"
+            }
+          ],
+          "tags": [],
+          "title": "Generation discovers tests via AST"
+        },
+        {
+          "id": "Generation preserves existing features",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_translation_pytest_to_gherkin.py"
+              },
+              "id": "bdd-translate-preserve-manual",
+              "line": 26,
+              "tags": [
+                "bdd-translate-preserve-manual"
+              ],
+              "title": "Generation does not overwrite manual feature files"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_translation_pytest_to_gherkin.py"
+              },
+              "id": "bdd-translate-force-overwrite",
+              "line": 33,
+              "tags": [
+                "bdd-translate-force-overwrite"
+              ],
+              "title": "Generation overwrites with --force"
+            }
+          ],
+          "tags": [],
+          "title": "Generation preserves existing features"
+        },
+        {
+          "id": "Generation marks drafts appropriately",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_translation_pytest_to_gherkin.py"
+              },
+              "id": "bdd-translate-marks-generated",
+              "line": 41,
+              "tags": [
+                "bdd-translate-marks-generated"
+              ],
+              "title": "Generated features have @generated tag"
+            }
+          ],
+          "tags": [],
+          "title": "Generation marks drafts appropriately"
+        },
+        {
+          "id": "Generation supports dry-run mode",
+          "scenarios": [
+            {
+              "automation": {
+                "backend": "pytest",
+                "nodeid": "",
+                "status": "missing",
+                "test_file": "tests/test_translation_pytest_to_gherkin.py"
+              },
+              "id": "bdd-translate-dry-run",
+              "line": 50,
+              "tags": [
+                "bdd-translate-dry-run"
+              ],
+              "title": "Dry-run reports without writing files"
+            }
+          ],
+          "tags": [],
+          "title": "Generation supports dry-run mode"
+        }
+      ],
+      "tags": [
+        "area-translation",
+        "feature-pytest-to-gherkin"
+      ],
+      "title": "Brownfield pytest-to-Gherkin generation"
+    }
+  ],
+  "schema_version": 1
+}

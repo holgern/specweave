@@ -271,7 +271,10 @@ def lint_feature_files(
         text = path.read_text(encoding="utf-8")
         findings.extend(_feature_path_findings(path))
         feature_count = sum(
-            1 for line in text.splitlines() if line.strip().startswith("Feature:")
+            1
+            for line in text.splitlines()
+            if line.strip().startswith("Feature:")
+            or line.strip().startswith("# Feature:")
         )
         if feature_count != 1:
             findings.append(

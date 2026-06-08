@@ -8,6 +8,7 @@ It is not a task ledger, architecture ledger, or CI system.
 ## Canonical layout
 
 ```text
+specs/behavior/features/<area>/<feature>.feature.md
 specs/behavior/features/<area>/<feature>.feature
 tests/test_<area>_<feature>.py
 reports/behavior/*.xml
@@ -16,7 +17,15 @@ reports/behavior/*.xml
 .specweave/mappings/taskledger/*.json
 ```
 
-Canonical behavior specs live under `specs/behavior/features`. Executable
+Canonical behavior specs live under `specs/behavior/features`. When
+`[gherkin].document_format = "markdown"` (the default), agents must create
+`.feature.md` files. If a classic `.feature` file is produced, run:
+
+```bash
+specweave convert <file> --to markdown
+```
+
+and review the resulting `.feature.md` before committing. Executable
 enforcement is plain pytest directly under `tests/`.
 
 SpecWeave does **not** require:
@@ -110,6 +119,21 @@ specweave bdd coverage
 
 Legacy `draft`, `bind`, `report`, and other bridge commands remain available
 for older experiments, but they are not the canonical SpecWeave workflow.
+
+
+## Converting feature files
+
+Convert between classic `.feature` and Markdown `.feature.md` formats:
+
+```bash
+specweave convert specs/behavior/features/auth/login.feature
+specweave --json convert specs/behavior/features/auth/login.feature
+specweave convert login.feature.md --to classic
+specweave convert login.feature --dry-run
+```
+
+The source file is never deleted. Use `--force` to overwrite an existing
+output file.
 
 ## Installation
 

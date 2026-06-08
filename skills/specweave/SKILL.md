@@ -52,6 +52,7 @@ specweave init
 Default canonical locations:
 
 ```text
+specs/behavior/features/<area>/<feature>.feature.md
 specs/behavior/features/<area>/<feature>.feature
 tests/test_<area>_<feature>.py
 reports/behavior/*.xml
@@ -68,6 +69,11 @@ reports/behaviour/*.xml
 ```
 
 Use the configured paths; do not hard-code either spelling.
+
+When `[gherkin].document_format = "markdown"` (the default), agents must
+create `.feature.md` files. If a classic `.feature` file is produced, run
+`specweave convert <file> --to markdown` and review the resulting `.feature.md`
+before committing.
 
 ## Package commands
 
@@ -88,8 +94,8 @@ specweave behavior coverage --features specs/behavior/features --tests tests
 specweave behavior import-report REPORT --format junit-xml
 specweave behavior import-taskledger SOURCE --out FEATURE
 specweave report normalize REPORT --format junit-xml|cucumber-json
+specweave convert FEATURE [--out OUT] [--to markdown|classic] [--from auto|markdown|classic] [--force] [--dry-run] [--validate/--no-validate]
 ```
-
 ## Target Gherkin shape
 
 Prefer this generated format:
@@ -143,8 +149,8 @@ Agent should:
 1. draft a concrete Gherkin feature from the request;
 2. write it using `specweave create feature` if the inputs can be expressed
    as flags;
-3. otherwise write the `.feature` file directly in the configured feature
-   directory;
+3. otherwise write the `.feature.md` file (or `.feature` when the config
+   uses classic format) directly in the configured feature directory;
 4. run `specweave doctor PATH` or `specweave behavior check PATH`;
 5. report the created file and scenario IDs.
 
