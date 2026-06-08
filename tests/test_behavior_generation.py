@@ -47,7 +47,13 @@ def test_generate_single_feature(tmp_path: Path) -> None:
     features_dir = tmp_path / "features"
     feature_path = _write_feature(
         features_dir / "auth" / "login.feature",
-        "Feature: Login\n  Rule: Auth\n    @bdd-login-valid\n    Example: Valid\n      Given x\n",
+        (
+            "Feature: Login\n"
+            "  Rule: Auth\n"
+            "    @bdd-login-valid\n"
+            "    Example: Valid\n"
+            "      Given x\n"
+        ),
     )
     tests_dir = tmp_path / "tests"
     result = generate_from_paths(
@@ -131,11 +137,25 @@ def test_generate_batch(tmp_path: Path) -> None:
     area = features_dir / "auth"
     f1 = _write_feature(
         area / "login.feature",
-        "Feature: Login\n  @bdd-login\n  Example: Login\n    Given x\n    When y\n    Then z\n",
+        (
+            "Feature: Login\n"
+            "  @bdd-login\n"
+            "  Example: Login\n"
+            "    Given x\n"
+            "    When y\n"
+            "    Then z\n"
+        ),
     )
     f2 = _write_feature(
         area / "logout.feature",
-        "Feature: Logout\n  @bdd-logout\n  Example: Logout\n    Given x\n    When y\n    Then z\n",
+        (
+            "Feature: Logout\n"
+            "  @bdd-logout\n"
+            "  Example: Logout\n"
+            "    Given x\n"
+            "    When y\n"
+            "    Then z\n"
+        ),
     )
     tests_dir = tmp_path / "tests"
     r1 = generate_from_paths(feature_path=f1, tests_dir=tests_dir)

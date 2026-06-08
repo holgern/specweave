@@ -121,7 +121,14 @@ def test_lint_task_tags_discouraged(tmp_path: Path) -> None:
     d = _canonical_dir(tmp_path)
     _write_feature(
         d / "test.feature",
-        "Feature: F\n  @bdd-s1 @task-001\n  Example: E\n    Given x\n    When y\n    Then z\n",
+        (
+            "Feature: F\n"
+            "  @bdd-s1 @task-001\n"
+            "  Example: E\n"
+            "    Given x\n"
+            "    When y\n"
+            "    Then z\n"
+        ),
     )
     findings = lint_feature_files([d / "test.feature"])
     assert any(f.code == "SWBEH013" for f in findings)

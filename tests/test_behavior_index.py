@@ -23,7 +23,14 @@ def _setup_project(tmp_path: Path) -> dict:
     evidence_dir.mkdir(parents=True)
     _write_feature(
         features_dir / "auth" / "login.feature",
-        "Feature: Login\n  @bdd-login-valid\n  Example: Valid login\n    Given x\n    When y\n    Then z\n",
+        (
+            "Feature: Login\n"
+            "  @bdd-login-valid\n"
+            "  Example: Valid login\n"
+            "    Given x\n"
+            "    When y\n"
+            "    Then z\n"
+        ),
     )
     (tests_dir / "test_auth_login.py").write_text(
         "# specweave: feature=specs/behavior/features/auth/login.feature\n"
@@ -90,7 +97,14 @@ def test_index_unbound_scenario(tmp_path: Path) -> None:
     evidence_dir.mkdir(parents=True)
     _write_feature(
         features_dir / "auth" / "login.feature",
-        "Feature: Login\n  @bdd-login-valid\n  Example: Valid login\n    Given x\n    When y\n    Then z\n",
+        (
+            "Feature: Login\n"
+            "  @bdd-login-valid\n"
+            "  Example: Valid login\n"
+            "    Given x\n"
+            "    When y\n"
+            "    Then z\n"
+        ),
     )
     result, _ = build_behavior_index(
         features_dir=features_dir,
@@ -124,7 +138,15 @@ def test_index_rules(tmp_path: Path) -> None:
     evidence_dir.mkdir(parents=True)
     _write_feature(
         features_dir / "auth" / "login.feature",
-        "Feature: Login\n  Rule: Auth\n    @bdd-login-valid\n    Example: Valid\n      Given x\n      When y\n      Then z\n",
+        (
+            "Feature: Login\n"
+            "  Rule: Auth\n"
+            "    @bdd-login-valid\n"
+            "    Example: Valid\n"
+            "      Given x\n"
+            "      When y\n"
+            "      Then z\n"
+        ),
     )
     result, _ = build_behavior_index(
         features_dir=features_dir,

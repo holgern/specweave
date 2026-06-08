@@ -308,7 +308,13 @@ def test_parser_dispatch_markdown_suffix(tmp_path: Path) -> None:
     """Parser selects markdown parser for .feature.md files."""
     md_path = tmp_path / "test.feature.md"
     md_path.write_text(
-        "`@area-test`\n# Feature: Test\n\n`@bdd-s1`\n### Example: Scenario\n- Given x\n- When y\n- Then z\n",
+        (
+            "`@area-test`\n"
+            "# Feature: Test\n\n"
+            "`@bdd-s1`\n"
+            "### Example: Scenario\n"
+            "- Given x\n- When y\n- Then z\n"
+        ),
         encoding="utf-8",
     )
     text = md_path.read_text(encoding="utf-8")
@@ -322,7 +328,14 @@ def test_parser_dispatch_classic_suffix(tmp_path: Path) -> None:
     """Parser selects classic parser for .feature files."""
     classic_path = tmp_path / "test.feature"
     classic_path.write_text(
-        "Feature: Test\n  @bdd-s1\n  Example: Scenario\n    Given x\n    When y\n    Then z\n",
+        (
+            "Feature: Test\n"
+            "  @bdd-s1\n"
+            "  Example: Scenario\n"
+            "    Given x\n"
+            "    When y\n"
+            "    Then z\n"
+        ),
         encoding="utf-8",
     )
     text = classic_path.read_text(encoding="utf-8")

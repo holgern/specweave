@@ -23,7 +23,8 @@ def _junit_with_nodeid() -> str:
         '<testcase classname="tests.test_auth_login" file="tests/test_auth_login.py" '
         'name="test_valid_login">'
         "<properties>"
-        '<property name="specweave_feature" value="specs/behavior/features/auth/login.feature"/>'
+        '<property name="specweave_feature" '
+        'value="specs/behavior/features/auth/login.feature"/>'
         '<property name="specweave_scenario" value="@bdd-login-valid"/>'
         "</properties>"
         "</testcase></testsuite></testsuites>"

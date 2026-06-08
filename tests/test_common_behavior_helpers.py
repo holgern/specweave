@@ -74,9 +74,7 @@ class TestFeatureIdentity:
     # specweave: scenario=@bdd-feature-identity-no-area
     def test_no_area(self) -> None:
         """Feature identity uses \"behavior\" when no area directory."""
-        area, slug = feature_identity(
-            Path("specs/behavior/features/login.feature")
-        )
+        area, slug = feature_identity(Path("specs/behavior/features/login.feature"))
         assert area == "behavior"
         assert slug == "login"
 
@@ -86,9 +84,7 @@ class TestCanonicalTestPath:
     # specweave: scenario=@bdd-canonical-test-path
     def test_derives_path(self) -> None:
         """Test path is derived from feature path."""
-        result = canonical_test_path(
-            Path("specs/behavior/features/auth/login.feature")
-        )
+        result = canonical_test_path(Path("specs/behavior/features/auth/login.feature"))
         assert result == Path("tests/test_auth_login.py")
 
 
@@ -101,9 +97,7 @@ class TestIterFeatureScenarios:
                     title="Top level",
                     keyword="Example",
                     tags=("bdd-top",),
-                    steps=(
-                        Step(keyword="Given", text="something"),
-                    ),
+                    steps=(Step(keyword="Given", text="something"),),
                 ),
             ),
             rules=(
@@ -114,9 +108,7 @@ class TestIterFeatureScenarios:
                             title="In rule",
                             keyword="Example",
                             tags=("bdd-in-rule",),
-                            steps=(
-                                Step(keyword="Given", text="something"),
-                            ),
+                            steps=(Step(keyword="Given", text="something"),),
                         ),
                     ),
                 ),
