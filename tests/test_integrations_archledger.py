@@ -13,6 +13,9 @@ from specweave.integrations.archledger import (
 )
 
 
+FEATURE = "specs/behavior/features/integrations/archledger.feature.md"
+
+
 def _feature_spec() -> TaskBddSpec:
     return TaskBddSpec(
         task_id="task-0123",
@@ -34,7 +37,10 @@ def _feature_spec() -> TaskBddSpec:
     )
 
 
+# specweave: feature=specs/behavior/features/integrations/archledger.feature.md
+# specweave: scenario=@bdd-archledger-candidate
 def test_render_candidate_markdown() -> None:
+    """archledger command renders candidate markdown."""
     feature = task_bdd_to_feature(_feature_spec())
     markdown = render_archledger_candidate(feature, "bdd-0001")
     assert "# Candidate behavior record: Agent cannot start implementation" in markdown
@@ -50,7 +56,10 @@ def test_render_candidate_markdown() -> None:
     assert markdown.endswith("\n")
 
 
+# specweave: feature=specs/behavior/features/integrations/archledger.feature.md
+# specweave: scenario=@bdd-archledger-candidate
 def test_render_candidate_from_parsed_feature(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """archledger command renders candidate markdown from parsed feature."""
     feature_path = tmp_path / "tests/bdd/features/task-0123-lifecycle.feature"
     feature = task_bdd_to_feature(_feature_spec())
     feature_path.parent.mkdir(parents=True, exist_ok=True)
@@ -62,7 +71,10 @@ def test_render_candidate_from_parsed_feature(tmp_path) -> None:  # type: ignore
     assert f"- Feature file: {feature_path}" in markdown
 
 
+# specweave: feature=specs/behavior/features/integrations/archledger.feature.md
+# specweave: scenario=@bdd-archledger-unknown-bdd
 def test_unknown_bdd_id_raises() -> None:
+    """archledger errors on unknown @bdd-* id."""
     feature = task_bdd_to_feature(_feature_spec())
     try:
         render_archledger_candidate(feature, "bdd-9999")
@@ -72,7 +84,10 @@ def test_unknown_bdd_id_raises() -> None:
         raise AssertionError("expected ValueError for unknown bdd id")
 
 
+# specweave: feature=specs/behavior/features/integrations/archledger.feature.md
+# specweave: scenario=@bdd-archledger-candidate-only
 def test_write_candidate_file(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """archledger produces candidates, not accepted records."""
     feature = task_bdd_to_feature(_feature_spec())
     out = tmp_path / ".archledger/candidates/al_runtime_task_0123_bdd_0001.md"
     write_archledger_candidate(feature, "bdd-0001", out)

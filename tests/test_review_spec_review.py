@@ -10,6 +10,9 @@ from specweave.gherkin.writer import write_feature
 from specweave.review import run_review
 
 
+FEATURE = "specs/behavior/features/review/spec-review.feature.md"
+
+
 def _write_feature(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
@@ -38,7 +41,10 @@ def _write_markdown_feature(path: Path, *, scenario_id: str, title: str) -> None
 
 
 class TestReviewReportsMissingBindings:
+    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: scenario=@bdd-review-counts
     def test_no_features(self, tmp_path: Path) -> None:
+        """Review reports feature and scenario statistics."""
         config = SpecWeaveConfig(
             paths=SpecWeavePaths(
                 features_dir=tmp_path / "specs" / "behavior" / "features",
@@ -49,7 +55,10 @@ class TestReviewReportsMissingBindings:
         result = run_review(config=config)
         assert result["summary"]["features"] == 0
 
+    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: scenario=@bdd-review-missing-bindings
     def test_feature_with_no_test(self, tmp_path: Path) -> None:
+        """Review warns about unbound scenarios."""
         features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
         _write_feature(
             features_dir / "login.feature",
@@ -70,7 +79,10 @@ class TestReviewReportsMissingBindings:
 
 
 class TestReviewReportsNeedsReview:
+    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: scenario=@bdd-review-needs-review
     def test_needs_review_flagged(self, tmp_path: Path) -> None:
+        """Review warns about @needs-review scenarios."""
         features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
         _write_feature(
             features_dir / "login.feature",
@@ -95,7 +107,10 @@ class TestReviewReportsNeedsReview:
 
 
 class TestReviewJsonShape:
+    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: scenario=@bdd-review-counts
     def test_json_shape(self, tmp_path: Path) -> None:
+        """Review reports feature and scenario statistics (JSON shape)."""
         (tmp_path / "tests").mkdir()
         config = SpecWeaveConfig(
             paths=SpecWeavePaths(
@@ -117,7 +132,10 @@ class TestReviewJsonShape:
 
 
 class TestReviewAggregatesCoverage:
+    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: scenario=@bdd-review-deprecated-paths
     def test_stale_mapping_causes_failed_review(self, tmp_path: Path) -> None:
+        """Review warns about deprecated paths (stale mapping)."""
         features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
         tests_dir = tmp_path / "tests"
         _write_markdown_feature(

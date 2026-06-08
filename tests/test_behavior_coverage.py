@@ -9,6 +9,9 @@ from specweave.gherkin.model import Feature, Scenario, Step
 from specweave.gherkin.writer import write_feature
 
 
+FEATURE = "specs/behavior/features/behavior/coverage.feature.md"
+
+
 def _write_markdown_feature(
     path: Path,
     *,
@@ -45,9 +48,12 @@ def _write_test(path: Path, content: str) -> Path:
     return path
 
 
+# specweave: feature=specs/behavior/features/behavior/coverage.feature.md
+# specweave: scenario=@bdd-coverage-bound-scenario
 def test_behavior_coverage_feature_md_bound_by_comment(
     tmp_path: Path, monkeypatch
 ) -> None:
+    """Coverage marks bound scenarios."""
     monkeypatch.chdir(tmp_path)
     features_dir = tmp_path / "specs" / "behavior" / "features"
     tests_dir = tmp_path / "tests"
@@ -73,7 +79,10 @@ def test_rejects_invalid_password() -> None:
     assert result["missing_bindings"] == []
 
 
+# specweave: feature=specs/behavior/features/behavior/coverage.feature.md
+# specweave: scenario=@bdd-coverage-unbound-scenario
 def test_behavior_coverage_does_not_match_by_title(tmp_path: Path, monkeypatch) -> None:
+    """Coverage reports missing bindings."""
     monkeypatch.chdir(tmp_path)
     features_dir = tmp_path / "specs" / "behavior" / "features"
     tests_dir = tmp_path / "tests"
@@ -100,9 +109,12 @@ def test_reject_invalid_password() -> None:
     )
 
 
+# specweave: feature=specs/behavior/features/behavior/coverage.feature.md
+# specweave: scenario=@bdd-coverage-stale-scenario
 def test_behavior_coverage_reports_stale_markdown_mapping(
     tmp_path: Path, monkeypatch
 ) -> None:
+    """Coverage reports bindings to non-existent scenarios."""
     monkeypatch.chdir(tmp_path)
     features_dir = tmp_path / "specs" / "behavior" / "features"
     tests_dir = tmp_path / "tests"
@@ -128,9 +140,12 @@ def test_rejects_invalid_password() -> None:
     assert result["stale_bindings"][0]["reason"] == "missing_scenario"
 
 
+# specweave: feature=specs/behavior/features/behavior/coverage.feature.md
+# specweave: scenario=@bdd-coverage-forbidden-pytest-bdd
 def test_behavior_coverage_reports_forbidden_pytest_bdd_usage(
     tmp_path: Path, monkeypatch
 ) -> None:
+    """Coverage reports pytest-bdd imports in test files."""
     monkeypatch.chdir(tmp_path)
     features_dir = tmp_path / "specs" / "behavior" / "features"
     tests_dir = tmp_path / "tests"

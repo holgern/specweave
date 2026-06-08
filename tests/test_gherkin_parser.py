@@ -8,8 +8,13 @@ from specweave.gherkin.parser import parse_feature
 from specweave.gherkin.writer import write_feature
 
 
+FEATURE = "specs/behavior/features/gherkin/parser.feature.md"
+
+
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-feature
 def test_parse_simple_feature() -> None:
-    """Parse a basic feature with tags and steps."""
+    """Parser extracts feature title and scenarios."""
     text = """@taskledger:TL-0042
 Feature: Password login
 
@@ -35,8 +40,10 @@ Feature: Password login
     assert scenario.steps[2].text == "login is rejected"
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-feature
 def test_parse_ignores_comments_and_blanks() -> None:
-    """Blank lines and comments are ignored."""
+    """Parser extracts feature title and scenarios (comments/blanks)."""
     text = """# This is a comment
 Feature: With comments
 
@@ -50,8 +57,10 @@ Feature: With comments
     assert feature.scenarios[0].steps[0].text == "something"
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-tags
 def test_parse_no_tags() -> None:
-    """Feature without tags parses correctly."""
+    """Parser preserves tags on features, rules, and scenarios."""
     text = """Feature: No tags
   Scenario: Simple
     Given a step
@@ -60,14 +69,18 @@ def test_parse_no_tags() -> None:
     assert feature.tags == ()
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-requires-feature-line
 def test_parse_missing_feature_raises() -> None:
-    """Missing Feature: line raises ValueError."""
+    """Parser raises ValueError without Feature line."""
     with pytest.raises(ValueError, match="Expected 'Feature:'"):
         parse_feature("Scenario: Orphan\n    Given x")
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-feature
 def test_parse_multiple_scenarios() -> None:
-    """Multiple scenarios are parsed."""
+    """Parser extracts feature title and scenarios (multiple)."""
     text = """Feature: Two scenarios
   Scenario: First
     Given step a
@@ -80,8 +93,10 @@ def test_parse_multiple_scenarios() -> None:
     assert feature.scenarios[1].title == "Second"
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-feature
 def test_parse_and_but_keywords() -> None:
-    """And/But steps are accepted."""
+    """Parser extracts feature title and scenarios (And/But)."""
     text = """Feature: And/But
   Scenario: Full flow
     Given a user
@@ -97,8 +112,10 @@ def test_parse_and_but_keywords() -> None:
     assert steps[4].keyword == "But"
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-tags
 def test_parse_multi_tag_line() -> None:
-    """Multiple tags on one line are all captured."""
+    """Parser preserves tags on features, rules, and scenarios (multi-tag)."""
     text = """Feature: Multi tag
   @bdd-0001 @task-0123 @rule-0001 @ac-0001
   Scenario: Tagged
@@ -113,8 +130,10 @@ def test_parse_multi_tag_line() -> None:
     )
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-tags
 def test_parse_mixed_tag_styles() -> None:
-    """One-tag-per-line and multi-tag-per-line both work and accumulate."""
+    """Parser preserves tags on features, rules, and scenarios (mixed styles)."""
     text = """Feature: Mixed
   @ac-0001
   @bdd-0001 @rule-0001
@@ -125,8 +144,10 @@ def test_parse_mixed_tag_styles() -> None:
     assert feature.scenarios[0].tags == ("ac-0001", "bdd-0001", "rule-0001")
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-rules
 def test_parse_rule_block() -> None:
-    """Rule: blocks group scenarios and carry tags."""
+    """Parser extracts Rule blocks."""
     text = """@task-0123
 Feature: Task lifecycle gates
 
@@ -156,8 +177,10 @@ Feature: Task lifecycle gates
     assert [s.keyword for s in scenario.steps] == ["Given", "When", "Then"]
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-rules
 def test_parse_multiple_rules_and_scenarios() -> None:
-    """Several rules each group their own scenarios."""
+    """Parser extracts Rule blocks (multiple rules)."""
     text = """Feature: Many rules
 
   Rule: First rule
@@ -174,12 +197,10 @@ def test_parse_multiple_rules_and_scenarios() -> None:
     assert feature.rules[1].scenarios[0].title == "S2"
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-rules
 def test_scenario_after_rule_belongs_to_rule() -> None:
-    """Standard Gherkin: a scenario after a Rule belongs to that Rule.
-
-    A rule absorbs following scenarios until the next Rule/Feature/EOF, matching
-    Cucumber semantics. Use a new ``Rule:`` to start a separate group.
-    """
+    """Parser extracts Rule blocks (scenario after rule)."""
     text = """Feature: Absorbed
 
   Rule: R1
@@ -194,8 +215,10 @@ def test_scenario_after_rule_belongs_to_rule() -> None:
     assert feature.scenarios == ()
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-top-level-scenarios
 def test_top_level_scenario_before_rule_stays_top_level() -> None:
-    """A top-level scenario that appears before any rule stays top-level."""
+    """Parser handles top-level scenarios outside rules."""
     text = """Feature: Before rule
 
   Scenario: Top
@@ -211,8 +234,10 @@ def test_top_level_scenario_before_rule_stays_top_level() -> None:
     assert feature.rules[0].scenarios[0].title == "Inside"
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-description
 def test_parse_feature_description() -> None:
-    """Free-text description after Feature: is captured."""
+    """Parser preserves feature and scenario descriptions."""
     text = """Feature: Documented
 
   As a developer
@@ -227,8 +252,10 @@ def test_parse_feature_description() -> None:
     assert "I want rules" in feature.description
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-feature
 def test_parse_target_example_round_trip() -> None:
-    """The guide target example round-trips through writer + parser."""
+    """Parser extracts feature title and scenarios (round trip)."""
     text = """@task-0123
 Feature: Task lifecycle gates
 
@@ -255,7 +282,10 @@ Feature: Task lifecycle gates
     assert reparsed.rules[0].scenarios[0].steps == feature.rules[0].scenarios[0].steps
 
 
+# specweave: feature=specs/behavior/features/gherkin/parser.feature.md
+# specweave: scenario=@bdd-parser-classic-feature
 def test_parse_example_keyword_and_line_numbers() -> None:
+    """Parser extracts feature title and scenarios (example keyword)."""
     text = """@area-task-management @feature-plan-gates
 Feature: Plan gates
 

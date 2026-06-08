@@ -7,8 +7,13 @@ from specweave.gherkin.parser import parse_feature
 from specweave.gherkin.writer import write_feature
 
 
+FEATURE = "specs/behavior/features/gherkin/writer.feature.md"
+
+
+# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
+# specweave: scenario=@bdd-writer-basic-feature
 def test_writes_tags_feature_scenario_steps() -> None:
-    """Writer produces tags, Feature, Scenario, steps, and final newline."""
+    """Writer serializes a feature with scenarios."""
     feature = Feature(
         title="Authentication",
         tags=("taskledger:TL-0042",),
@@ -37,8 +42,10 @@ def test_writes_tags_feature_scenario_steps() -> None:
     assert output.endswith("\n")
 
 
+# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
+# specweave: scenario=@bdd-writer-tags
 def test_scenario_without_tags() -> None:
-    """Scenario tags are omitted when empty."""
+    """Writer preserves tags at all levels."""
     feature = Feature(
         title="Minimal",
         scenarios=(
@@ -53,8 +60,10 @@ def test_scenario_without_tags() -> None:
     assert "    Given a precondition" in output
 
 
+# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
+# specweave: scenario=@bdd-writer-basic-feature
 def test_multiple_scenarios() -> None:
-    """Multiple scenarios are rendered correctly."""
+    """Writer serializes a feature with scenarios (multiple)."""
     feature = Feature(
         title="Multi",
         scenarios=(
@@ -73,8 +82,10 @@ def test_multiple_scenarios() -> None:
     assert output.index("Scenario: First") < output.index("Scenario: Second")
 
 
+# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
+# specweave: scenario=@bdd-writer-tags
 def test_multi_tag_scenario_on_one_line() -> None:
-    """Multiple scenario tags render on a single space-joined line."""
+    """Writer preserves tags at all levels (multi-tag)."""
     feature = Feature(
         title="Multi tag",
         scenarios=(
@@ -91,8 +102,10 @@ def test_multi_tag_scenario_on_one_line() -> None:
     assert output.count("@bdd-0001") == 1
 
 
+# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
+# specweave: scenario=@bdd-writer-rules
 def test_writes_rule_block() -> None:
-    """Rule blocks render with rule tags, header, and indented scenarios."""
+    """Writer serializes Rule blocks."""
     feature = Feature(
         title="Task lifecycle gates",
         tags=("task-0123",),
@@ -135,8 +148,10 @@ def test_writes_rule_block() -> None:
     assert "      Then taskledger rejects the transition" in output
 
 
+# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
+# specweave: scenario=@bdd-writer-roundtrip
 def test_rule_round_trips() -> None:
-    """A feature with a rule round-trips through writer + parser."""
+    """Parsing then writing produces equivalent output."""
     feature = Feature(
         title="RT",
         tags=("task-0001",),
@@ -167,8 +182,10 @@ def test_rule_round_trips() -> None:
     )
 
 
+# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
+# specweave: scenario=@bdd-writer-descriptions
 def test_feature_description_rendered() -> None:
-    """Feature description is indented under Feature:."""
+    """Writer preserves descriptions."""
     feature = Feature(
         title="Documented",
         description="As a user\nI want docs",

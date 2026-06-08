@@ -27,6 +27,9 @@ from specweave.reports.normalize import (
 )
 
 
+FEATURE = "specs/behavior/features/reports/fail-closed.feature.md"
+
+
 def _scenario(name: str, status: str, tags: tuple[str, ...]) -> ScenarioResult:  # type: ignore[no-untyped-def]
     return ScenarioResult(
         name=name, status=status, tags=tags, evidence=("./reports/bdd/x.json",)
@@ -48,7 +51,10 @@ def _write_report(tmp_path, elements):  # type: ignore[no-untyped-def]
     return path
 
 
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: scenario=@bdd-fail-closed-undefined-scenario
 def test_criterion_requires_passing_native_result(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Undefined scenario fails the criterion."""
     path = _write_report(
         tmp_path,
         [
@@ -64,7 +70,10 @@ def test_criterion_requires_passing_native_result(tmp_path) -> None:  # type: ig
     assert report.criteria[0].status == "failed"
 
 
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: scenario=@bdd-fail-closed-multiple-scenarios
 def test_criterion_fails_when_sibling_undefined(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """One failed scenario fails the whole criterion."""
     path = _write_report(
         tmp_path,
         [
@@ -85,7 +94,10 @@ def test_criterion_fails_when_sibling_undefined(tmp_path) -> None:  # type: igno
     assert report.criteria[0].status == "failed"
 
 
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: scenario=@bdd-fail-closed-unlinked-scenario
 def test_missing_expected_coverage_fails(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Unlinked scenario does not satisfy any criterion."""
     path = _write_report(
         tmp_path,
         [
@@ -102,8 +114,10 @@ def test_missing_expected_coverage_fails(tmp_path) -> None:  # type: ignore[no-u
     assert report.status == "failed"  # ac-0002 never covered
 
 
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: scenario=@bdd-fail-closed-unlinked-scenario
 def test_scenario_without_bdd_tag_is_unlinked(tmp_path) -> None:  # type: ignore[no-untyped-def]
-    """A passing scenario with only an ac-* tag and no bdd-* is not AC evidence."""
+    """Unlinked scenario does not satisfy any criterion (no bdd tag)."""
     path = _write_report(
         tmp_path,
         [
@@ -127,8 +141,10 @@ def test_scenario_without_bdd_tag_is_unlinked(tmp_path) -> None:  # type: ignore
     assert evidence["scenarios"][0]["bdd_id"] == ""
 
 
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: scenario=@bdd-fail-closed-unlinked-scenario
 def test_title_only_never_drives_matching() -> None:  # type: ignore[no-untyped-def]
-    """Identical titles with different tags must map to different criteria."""
+    """Unlinked scenario does not satisfy any criterion (title matching)."""
     results = (
         _scenario("Same title", "passed", ("bdd-0001", "ac-0001")),
         _scenario("Same title", "failed", ("bdd-0002", "ac-0002")),
@@ -137,7 +153,10 @@ def test_title_only_never_drives_matching() -> None:  # type: ignore[no-untyped-
     assert criteria == {"ac-0001": "passed", "ac-0002": "failed"}
 
 
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: scenario=@bdd-fail-closed-passed-scenario
 def test_evidence_records_command_source_and_paths(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Passed scenario satisfies the criterion."""
     path = _write_report(
         tmp_path,
         [
@@ -166,8 +185,10 @@ def test_evidence_records_command_source_and_paths(tmp_path) -> None:  # type: i
     assert normalized["source_report"] == str(path)
 
 
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: scenario=@bdd-fail-closed-passed-scenario
 def test_passing_report_only_when_all_gates_pass(tmp_path) -> None:  # type: ignore[no-untyped-def]
-    """The whole report passes only when every scenario passes and coverage holds."""
+    """Passed scenario satisfies the criterion (all gates pass)."""
     path = _write_report(
         tmp_path,
         [
