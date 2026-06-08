@@ -10,7 +10,9 @@ metadata:
 
 # SpecWeave Skill
 
-Use this skill when working on BDD/Gherkin behavior specifications, Python test translation, step-definition skeleton generation, or BDD runner evidence normalization for the `specweave` package.
+Use this skill when working on BDD/Gherkin behavior specifications, Python
+test translation, step-definition skeleton generation, or BDD runner evidence
+normalization for the `specweave` package.
 
 ## Purpose
 
@@ -28,72 +30,83 @@ It is not a task lifecycle ledger, architecture ledger, or CI system.
 
 Use these boundaries when designing changes:
 
-- Taskledger owns task lifecycle, plans, acceptance criteria, validation state, and persisted validation evidence.
-- SpecWeave owns BDD conversion, Gherkin files, step skeletons, external runner delegation, and normalized report/evidence generation.
-- Archledger owns durable architecture/spec behavior records after a behavior is accepted as architecturally important.
+- Taskledger owns task lifecycle, plans, acceptance criteria, validation
+  state, and persisted validation evidence.
+- SpecWeave owns BDD conversion, Gherkin files, step skeletons, external
+  runner delegation, and normalized report/evidence generation.
+- Archledger owns durable architecture/spec behavior records after a behavior
+  is accepted as architecturally important.
 
-Do not add Taskledger lifecycle commands to SpecWeave. Do not make SpecWeave write accepted Archledger records by default. Candidate generation is acceptable.
+Do not add Taskledger lifecycle commands to SpecWeave. Do not make SpecWeave
+write accepted Archledger records by default. Candidate generation is
+acceptable.
 
-## Preferred file locations
+## Canonical file locations
 
-Store executable BDD assets in the project repository:
-
-```text
-tests/bdd/features/<task-id>-<slug>.feature
-tests/bdd/steps/<slug>_steps.py
-reports/bdd/<task-id>-cucumber.json
-.specweave/reports/summary.json
-.specweave/evidence/<task-id>.bdd-evidence.json
-```
-
-Do not store executable `.feature` files only inside Taskledger state or Archledger records. Taskledger and Archledger should store metadata, evidence references, and durable summaries.
-
-## Current package commands
-
-Existing CLI commands:
+Read `.specweave.toml` or `specweave.toml` first. If no config exists, run:
 
 ```bash
-specweave explain PATH...
-specweave draft --from-json task.json --out tests/bdd/features/task.feature
-specweave bind tests/bdd/features/task.feature --backend behave --out tests/bdd/steps
-specweave run --runner behave -- behave tests/bdd/features --format json -o reports/bdd/task.json
-specweave version
+specweave init
 ```
 
-Current backend support for `bind` is `behave` only.
+Default canonical locations:
 
-## Current implementation gaps
+```text
+specs/behavior/features/<area>/<feature>.feature
+tests/test_<area>_<feature>.py
+reports/behavior/*.xml
+.specweave/reports/*.json
+.specweave/evidence/*.json
+.specweave/mappings/taskledger/*.json
+```
 
-Before claiming full Taskledger/Archledger workflow support, verify these are implemented:
+Some projects configure British path spelling:
 
-- `Rule:` support in Gherkin model/parser/writer;
-- multiple tags on a single tag line;
-- canonical tags: `@task-*`, `@rule-*`, `@bdd-*`, `@ac-*`;
-- task-BDD model with rules and examples;
-- stable BDD example IDs;
-- Cucumber JSON normalization;
-- JUnit XML normalization;
-- scenario-to-acceptance-criterion mapping by tags;
-- fail-closed treatment for skipped, pending, undefined, ambiguous, and failed scenarios;
-- Taskledger-compatible evidence JSON output;
-- Archledger candidate markdown generation.
+```text
+specs/behaviour/features/<area>/<feature>.feature
+reports/behaviour/*.xml
+```
+
+Use the configured paths; do not hard-code either spelling.
+
+## Package commands
+
+```bash
+specweave init [--spelling behavior|behaviour] [--public-config] [--force] [--dry-run]
+specweave --json version
+specweave --json doctor
+specweave --json review specs
+specweave create gherkin --from-tests tests --out specs/behavior/features --mode update
+specweave update specs --from-tests tests
+specweave create feature --area AREA --title TITLE --scenario SCENARIO --given G --when W --then T
+specweave create plan --feature FEATURE --out plan.md
+specweave create taskledger-task --feature FEATURE --out .specweave/mappings/taskledger/draft.json
+specweave behavior check [--strict]
+specweave behavior index --features specs/behavior/features
+specweave behavior generate-tests --features specs/behavior/features
+specweave behavior coverage --features specs/behavior/features --tests tests
+specweave behavior import-report REPORT --format junit-xml
+specweave behavior import-taskledger SOURCE --out FEATURE
+specweave report normalize REPORT --format junit-xml|cucumber-json
+```
 
 ## Target Gherkin shape
 
 Prefer this generated format:
 
 ```gherkin
-@task-0123
-Feature: Task lifecycle gates
+@area-<area> @feature-<feature>
+Feature: <Readable feature title>
+  <Short behavior intent, not implementation details.>
 
-  @rule-0001
-  Rule: Implementation requires an accepted plan
+  @rule-<rule>
+  Rule: <Business rule title>
 
-    @bdd-0001 @task-0123 @rule-0001 @ac-0001
-    Scenario: Agent cannot start implementation without an accepted plan
-      Given a task has a proposed plan
-      When the agent starts implementation
-      Then taskledger rejects the transition
+    @bdd-<stable-id> [@ac-<id>]
+    Example: <Observable scenario title>
+      Given <initial state/context>
+      When <actor/action/event>
+      Then <observable outcome>
 ```
 
 Matching rules:
@@ -103,16 +116,64 @@ Matching rules:
 - use scenario titles only for display/debugging;
 - never rely on scenario title as the primary validation key.
 
-## Recommended implementation order
+## Harness translation examples
 
-1. Add `Rule` model plus parser/writer support.
-2. Add multi-tag-line parsing/writing.
-3. Add task-BDD JSON model and Feature conversion.
-4. Add Cucumber JSON and JUnit XML report normalizers.
-5. Add acceptance-criterion coverage/mapping.
-6. Add Taskledger-compatible evidence JSON output.
-7. Add Archledger candidate markdown rendering.
-8. Expand step backend support after the core evidence flow is reliable.
+User says:
+
+```text
+update @specs from @tests using $specweave
+```
+
+Agent should run:
+
+```bash
+specweave --json update specs --from-tests @tests --out @specs
+specweave --json doctor
+specweave --json review specs
+```
+
+User says:
+
+```text
+$specweave, i want a new feature which is doing this when this happens.
+```
+
+Agent should:
+
+1. draft a concrete Gherkin feature from the request;
+2. write it using `specweave create feature` if the inputs can be expressed
+   as flags;
+3. otherwise write the `.feature` file directly in the configured feature
+   directory;
+4. run `specweave doctor PATH` or `specweave behavior check PATH`;
+5. report the created file and scenario IDs.
+
+User says:
+
+```text
+$specweave create a plan.md to implement @new_feature.feature
+```
+
+Agent should run:
+
+```bash
+specweave create plan --feature @new_feature.feature --out plan.md
+```
+
+User says:
+
+```text
+$specweave create a new $taskledger task to implement new_feature.feature with unit tests.
+```
+
+Agent should run the SpecWeave draft first:
+
+```bash
+specweave create taskledger-task --feature new_feature.feature --out .specweave/mappings/taskledger/<slug>.task-draft.json
+```
+
+Then, only if the project/harness permits Taskledger mutation, use the
+external Taskledger workflow to create the task from that draft.
 
 ## Validation commands
 
@@ -129,4 +190,6 @@ At minimum, run focused tests for changed modules and then the full suite.
 
 ## Safety rule
 
-Fail closed. Do not mark acceptance criteria as passed when a linked scenario is skipped, pending, undefined, ambiguous, errored, or failed. Do not treat exit code alone as sufficient validation when a native BDD report is available.
+Fail closed. Do not mark acceptance criteria as passed when a linked scenario
+is skipped, pending, undefined, ambiguous, errored, or failed. Do not treat
+exit code alone as sufficient validation when a native BDD report is available.
