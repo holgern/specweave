@@ -126,7 +126,16 @@ specweave behavior import-taskledger \
   --out specs/behavior/features/task-management/plan-gates.feature
 ```
 
-This does not make Taskledger the canonical owner of the behavior file.
+This does not make Taskledger the canonical owner of the behavior file. Taskledger exports are input artifacts. SpecWeave evidence JSON is output artifact data. Taskledger remains responsible for importing that evidence into task validation state.
+
+Trace and cross-ledger diagnostics are read-only:
+
+```bash
+specweave trace @bdd-login-success --format json
+specweave combi check --json .specweave/reports/combi-check.json
+```
+
+Archledger integration renders draft candidate markdown only. SpecWeave does not accept or persist Archledger records. Shared file contracts are documented as JSON Schema under `specweave/schemas/`.
 
 ## Compatibility aliases
 

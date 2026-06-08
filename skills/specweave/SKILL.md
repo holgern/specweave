@@ -37,9 +37,7 @@ Use these boundaries when designing changes:
 - Archledger owns durable architecture/spec behavior records after a behavior
   is accepted as architecturally important.
 
-Do not add Taskledger lifecycle commands to SpecWeave. Do not make SpecWeave
-write accepted Archledger records by default. Candidate generation is
-acceptable.
+Do not add Taskledger lifecycle commands to SpecWeave. Taskledger exports are input artifacts. SpecWeave normalized evidence is output artifact data, and Taskledger remains responsible for importing it into task state. Do not make SpecWeave write accepted Archledger records by default. Candidate generation is draft-only.
 
 ## Canonical file locations
 
@@ -97,6 +95,8 @@ specweave behavior import-taskledger SOURCE --out FEATURE
 specweave report normalize REPORT --format junit-xml|cucumber-json
 specweave convert FEATURE_OR_DIR... [--all] [--out OUT] [--to markdown|classic] [--from auto|markdown|classic] [--force] [--dry-run] [--replace-source] [--validate/--no-validate]
 ```
+specweave trace BDD_ID_OR_FEATURE --format json
+specweave combi check --json .specweave/reports/combi-check.json
 ## Target Gherkin shape
 
 Prefer this generated format:

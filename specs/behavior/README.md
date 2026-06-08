@@ -323,8 +323,7 @@ Generated from `specs/behavior/features`.
 
 ### Archledger integration
 - Path: `specs/behavior/features/integrations/archledger.feature`
-- Summary: SpecWeave generates Archledger candidate markdown for scenarios that are
-
+- Summary: SpecWeave generates draft Archledger candidate markdown for scenarios that are selected for durable traceability. It does not write accepted Archledger records.
 #### Rule: Archledger candidate generation
 
 - `bdd-archledger-candidate` archledger command renders candidate markdown -> `tests/test_integrations_archledger.py` (missing)
@@ -336,8 +335,7 @@ Generated from `specs/behavior/features`.
 
 ### Taskledger integration
 - Path: `specs/behavior/features/integrations/taskledger.feature`
-- Summary: SpecWeave exchanges files with Taskledger for task drafts and behavior
-
+- Summary: SpecWeave treats Taskledger exports as input artifacts and writes evidence as output artifact data. Taskledger remains responsible for importing validation evidence into task state.
 #### Rule: Taskledger task draft generation
 
 - `bdd-taskledger-draft` create taskledger-task generates a draft JSON -> `tests/test_integrations_taskledger.py` (missing)
@@ -350,6 +348,11 @@ Generated from `specs/behavior/features`.
 #### Rule: Taskledger evidence generation
 
 - `bdd-taskledger-evidence` report normalize generates Taskledger-compatible evidence -> `tests/test_integrations_taskledger.py` (missing)
+
+#### Rule: Cross-ledger trace diagnostics
+
+- `bdd-trace-json` trace emits a behavior-centered trace bundle -> `tests/test_trace.py`
+- `bdd-combi-check` combi check audits Taskledger, SpecWeave, pytest, evidence, and Archledger links without mutating ledgers -> `tests/test_combi_check.py`
 
 ## reports
 

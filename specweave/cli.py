@@ -52,6 +52,11 @@ review_app_cli = typer.Typer(
 )
 app.add_typer(review_app_cli, name="review")
 
+combi_app = typer.Typer(
+    no_args_is_help=True, help="Read-only cross-ledger integration diagnostics."
+)
+app.add_typer(combi_app, name="combi")
+
 
 @app.command()
 def explain(paths: list[Path]) -> None:
@@ -747,6 +752,79 @@ def archledger(
         typer.echo(str(exc), err=True)
         raise typer.Exit(code=1) from exc
     typer.echo(f"Wrote candidate to {out}")
+
+
+@app.command("trace")
+def trace_command(
+    target: str,
+    format_name: Annotated[str, typer.Option("--format")] = "json",
+    features: Annotated[Path, typer.Option("--features")] = Path(
+        "specs/behavior/features"
+    ),
+    tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
+    evidence: Annotated[Path, typer.Option("--evidence")] = Path(".specweave/evidence"),
+    taskledger_mappings: Annotated[Path, typer.Option("--taskledger-mappings")] = Path(
+        ".specweave/mappings/taskledger"
+    ),
+) -> None:
+    """Emit a normalized behavior-centered trace bundle."""
+
+    from specweave.trace import build_trace_bundle
+
+    if format_name != "json":
+        typer.echo("Only --format json is supported.", err=True)
+        raise typer.Exit(code=1)
+    typer.echo(
+        _dump_json(
+            build_trace_bundle(
+                target,
+                features_dir=features,
+                tests_dir=tests,
+                evidence_dir=evidence,
+                taskledger_mappings=taskledger_mappings,
+            )
+        )
+    )
+
+
+@combi_app.command("check")
+def combi_check(
+    features: Annotated[Path, typer.Option("--features")] = Path(
+        "specs/behavior/features"
+    ),
+    tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
+    taskledger_mappings: Annotated[Path, typer.Option("--taskledger-mappings")] = Path(
+        ".specweave/mappings/taskledger"
+    ),
+    evidence: Annotated[Path, typer.Option("--evidence")] = Path(".specweave/evidence"),
+    archledger: Annotated[Path, typer.Option("--archledger")] = Path(".archledger"),
+    json_path: Annotated[Path | None, typer.Option("--json")] = None,
+    strict: Annotated[bool, typer.Option("--strict")] = False,
+) -> None:
+    """Audit SpecWeave links without mutating external ledgers."""
+
+    from specweave.integrations.combi import run_combi_check
+
+    result = run_combi_check(
+        features_dir=features,
+        tests_dir=tests,
+        taskledger_mappings=taskledger_mappings,
+        evidence_dir=evidence,
+        archledger_dir=archledger,
+    )
+    if json_path is not None:
+        json_path.parent.mkdir(parents=True, exist_ok=True)
+        json_path.write_text(_dump_json(result) + "\n", encoding="utf-8")
+    typer.echo(
+        "Combi check: "
+        f"{result['summary']['scenario_count']} scenarios, "
+        f"{result['summary']['gap_count']} gaps"
+    )
+    for gap in result["gaps"]:
+        ref = f" {gap['ref']}" if gap.get("ref") else ""
+        typer.echo(f"{gap['severity'].upper()} {gap['code']}{ref}: {gap['message']}")
+    if strict and result["summary"]["error_count"]:
+        raise typer.Exit(code=1)
 
 
 # --- helpers ---------------------------------------------------------------
