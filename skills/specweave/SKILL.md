@@ -1,3 +1,13 @@
+---
+name: specweave
+description: Use this skill when working on BDD/Gherkin behavior specifications, Python test translation, step-definition skeleton generation, or BDD runner evidence normalization for the `specweave` package.
+license: Apache-2.0
+compatibility: opencode
+metadata:
+  audience: coding-agents
+  workflow: task-management
+---
+
 # SpecWeave Skill
 
 Use this skill when working on BDD/Gherkin behavior specifications, Python test translation, step-definition skeleton generation, or BDD runner evidence normalization for the `specweave` package.
