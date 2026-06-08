@@ -72,8 +72,8 @@ Use the configured paths; do not hard-code either spelling.
 
 When `[gherkin].document_format = "markdown"` (the default), agents must
 create `.feature.md` files. If a classic `.feature` file is produced, run
-`specweave convert <file> --to markdown` and review the resulting `.feature.md`
-before committing.
+`specweave convert <file> --to markdown` or `specweave convert --all --to markdown`
+and review the resulting `.feature.md` files before committing.
 
 ## Package commands
 
@@ -90,11 +90,12 @@ specweave create taskledger-task --feature FEATURE --out .specweave/mappings/tas
 specweave behavior check [--strict]
 specweave behavior index --features specs/behavior/features
 specweave behavior generate-tests --features specs/behavior/features
-specweave behavior coverage --features specs/behavior/features --tests tests
+specweave behavior coverage --features specs/behavior/features --tests tests [--format json|text|markdown] [--show all|missing|bound|stale|waived]
+specweave behavior mappings --tests tests [--format text|json]
 specweave behavior import-report REPORT --format junit-xml
 specweave behavior import-taskledger SOURCE --out FEATURE
 specweave report normalize REPORT --format junit-xml|cucumber-json
-specweave convert FEATURE [--out OUT] [--to markdown|classic] [--from auto|markdown|classic] [--force] [--dry-run] [--validate/--no-validate]
+specweave convert FEATURE_OR_DIR... [--all] [--out OUT] [--to markdown|classic] [--from auto|markdown|classic] [--force] [--dry-run] [--replace-source] [--validate/--no-validate]
 ```
 ## Target Gherkin shape
 
@@ -121,6 +122,28 @@ Matching rules:
 - map to `@ac-*` second;
 - use scenario titles only for display/debugging;
 - never rely on scenario title as the primary validation key.
+
+## Explicit pytest mapping workflow
+
+Use explicit mapping only. Do not infer behavior coverage from similar test
+names or scenario titles.
+
+Preferred loop:
+
+```bash
+specweave convert --all --to markdown
+specweave behavior coverage --features specs/behavior/features --tests tests --format text --show missing
+specweave behavior mappings --tests tests --format text
+specweave review specs
+```
+
+Map pytest functions with one of:
+
+- `@pytest.mark.specweave(feature=..., scenario=..., rule=...)`
+- `# specweave: feature=...` plus `# specweave: scenario=...`
+- a docstring that contains the feature path and `@bdd-*` id
+
+Coverage must count only those explicit mappings.
 
 ## Harness translation examples
 

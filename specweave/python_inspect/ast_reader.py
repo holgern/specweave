@@ -14,6 +14,9 @@ from specweave.python_inspect.assertions import describe_assert
 _SPECWEAVE_COMMENT_RE = re.compile(
     r"#\s*specweave:\s*(feature|scenario)\s*=\s*(.+?)\s*$"
 )
+_SPECWEAVE_FEATURE_RE = re.compile(
+    r"specs/behavior/features/[^\s\"']+\.feature(?:\.md)?"
+)
 
 
 @dataclass(frozen=True)
@@ -41,7 +44,9 @@ def extract_test_scenarios(path: Path) -> list[Scenario]:
     scenarios: list[Scenario] = []
 
     for node in ast.walk(tree):
-        if isinstance(node, ast.FunctionDef) and node.name.startswith("test_"):
+        if isinstance(
+            node, (ast.FunctionDef, ast.AsyncFunctionDef)
+        ) and node.name.startswith("test_"):
             scenario = _function_to_scenario(node)
             if scenario:
                 scenarios.append(scenario)
@@ -87,8 +92,15 @@ def _dotted_name(node: ast.AST) -> str | None:
     return None
 
 
+def _normalize_feature_mapping(feature: str) -> str:
+    candidate = Path(feature)
+    if candidate.exists():
+        return _display_path(candidate)
+    return feature
+
+
 def _marker_mapping(
-    node: ast.FunctionDef, constants: dict[str, str]
+    node: ast.FunctionDef | ast.AsyncFunctionDef, constants: dict[str, str]
 ) -> tuple[str, str] | None:
     for decorator in node.decorator_list:
         if not isinstance(decorator, ast.Call):
@@ -102,7 +114,7 @@ def _marker_mapping(
             kwargs.get("scenario", ast.Constant(None)), constants
         )
         if feature and scenario:
-            return feature, scenario
+            return _normalize_feature_mapping(feature), scenario
     return None
 
 
@@ -130,7 +142,10 @@ def _comment_mappings(source: str) -> dict[int, tuple[str, str]]:
                     feature = values.get("feature")
                     scenario = values.get("scenario")
                     if feature and scenario:
-                        mappings[index + 1] = (feature, scenario)
+                        mappings[index + 1] = (
+                            _normalize_feature_mapping(feature),
+                            scenario,
+                        )
                     index += 1
                     continue
             index = max(index, start + 1)
@@ -139,14 +154,18 @@ def _comment_mappings(source: str) -> dict[int, tuple[str, str]]:
     return mappings
 
 
-def _docstring_mapping(node: ast.FunctionDef) -> tuple[str, str] | None:
+def _docstring_mapping(
+    node: ast.FunctionDef | ast.AsyncFunctionDef,
+) -> tuple[str, str] | None:
     docstring = ast.get_docstring(node, clean=False)
     if not docstring:
         return None
-    feature_match = re.search(r"specs/behavior/features/[^\s\"']+\.feature", docstring)
+    feature_match = _SPECWEAVE_FEATURE_RE.search(docstring)
     scenario_match = re.search(r"@bdd-[A-Za-z0-9][A-Za-z0-9_-]*", docstring)
     if feature_match and scenario_match:
-        return feature_match.group(0), scenario_match.group(0)
+        return _normalize_feature_mapping(feature_match.group(0)), scenario_match.group(
+            0
+        )
     return None
 
 
@@ -161,7 +180,9 @@ def discover_specweave_tests(path: Path) -> list[SpecweaveTestMapping]:
 
     mappings: list[SpecweaveTestMapping] = []
     for node in ast.walk(tree):
-        if not isinstance(node, ast.FunctionDef) or not node.name.startswith("test_"):
+        if not isinstance(
+            node, (ast.FunctionDef, ast.AsyncFunctionDef)
+        ) or not node.name.startswith("test_"):
             continue
         mapping = _marker_mapping(node, constants)
         source_name = "marker"
@@ -197,7 +218,9 @@ def collect_specweave_tests(paths: Iterable[Path]) -> list[SpecweaveTestMapping]
     return mappings
 
 
-def _function_to_scenario(node: ast.FunctionDef) -> Scenario | None:
+def _function_to_scenario(
+    node: ast.FunctionDef | ast.AsyncFunctionDef,
+) -> Scenario | None:
     """Convert a single test function to a Scenario."""
     title = _function_name_to_title(node.name)
     steps: list[Step] = []

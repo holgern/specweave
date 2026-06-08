@@ -322,15 +322,46 @@ def behavior_coverage(
     features: Annotated[Path, typer.Option("--features")] = Path(
         "specs/behavior/features"
     ),
+    feature: Annotated[
+        Path | None,
+        typer.Option("--feature", help="Limit the report to one feature file."),
+    ] = None,
     tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
+    output_format: Annotated[
+        str,
+        typer.Option("--format", help="Output format: json, text, or markdown."),
+    ] = "json",
+    show: Annotated[
+        str,
+        typer.Option(
+            "--show", help="Display filter: all, missing, bound, stale, or waived."
+        ),
+    ] = "all",
     json_output: Annotated[Path | None, typer.Option("--json")] = None,
+    out: Annotated[
+        Path | None,
+        typer.Option("--out", help="Write the selected output format to this path."),
+    ] = None,
 ) -> None:
     """Check static coverage between behavior specs and plain pytest tests."""
-    from specweave.behavior.coverage import build_behavior_coverage, write_coverage_json
+    from specweave.behavior.coverage import (
+        build_behavior_coverage,
+        render_coverage_markdown,
+        render_coverage_text,
+        write_coverage_json,
+    )
     from specweave.gherkin.lint import collect_feature_files, lint_feature_files
 
+    if json_output is not None and out is not None:
+        typer.echo("Use either --json or --out, not both.", err=True)
+        raise typer.Exit(code=1)
+    if json_output is not None and output_format != "json":
+        typer.echo("--json can only be used with --format json.", err=True)
+        raise typer.Exit(code=1)
+
+    lint_target = feature or features
     findings = lint_feature_files(
-        collect_feature_files((features,)),
+        collect_feature_files((lint_target,)),
         require_scenario_ids=True,
     )
     warnings = [finding for finding in findings if finding.level == "warning"]
@@ -339,14 +370,76 @@ def behavior_coverage(
     if _has_errors(findings):
         raise typer.Exit(code=1)
 
-    data = build_behavior_coverage(features_dir=features, tests_dir=tests)
-    if json_output is None:
-        typer.echo(_dump_json(data))
-    else:
-        write_coverage_json(data, json_output)
-        typer.echo(f"Wrote behavior coverage to {json_output}")
+    try:
+        data = build_behavior_coverage(
+            features_dir=features,
+            tests_dir=tests,
+            feature_path=feature,
+        )
+        if output_format == "json":
+            rendered = _dump_json(data)
+            output_path = json_output or out
+            if output_path is None:
+                typer.echo(rendered)
+            else:
+                write_coverage_json(data, output_path)
+                typer.echo(f"Wrote behavior coverage to {output_path}")
+        elif output_format == "text":
+            rendered = render_coverage_text(data, show=show)
+            if out is None:
+                typer.echo(rendered)
+            else:
+                out.parent.mkdir(parents=True, exist_ok=True)
+                out.write_text(rendered + "\n", encoding="utf-8")
+                typer.echo(f"Wrote behavior coverage to {out}")
+        elif output_format == "markdown":
+            rendered = render_coverage_markdown(data, show=show)
+            if out is None:
+                typer.echo(rendered)
+            else:
+                out.parent.mkdir(parents=True, exist_ok=True)
+                out.write_text(rendered + "\n", encoding="utf-8")
+                typer.echo(f"Wrote behavior coverage to {out}")
+        else:
+            typer.echo(
+                "Unsupported --format: "
+                f"{output_format}; expected json, text, or markdown.",
+                err=True,
+            )
+            raise typer.Exit(code=1)
+    except ValueError as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1) from exc
+
     if _coverage_failed(data):
         raise typer.Exit(code=1)
+
+
+@behavior_app.command("mappings")
+def behavior_mappings(
+    tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
+    output_format: Annotated[
+        str,
+        typer.Option("--format", help="Output format: text or json."),
+    ] = "text",
+) -> None:
+    """List explicit SpecWeave pytest mappings discovered from tests."""
+    from specweave.behavior.coverage import (
+        build_behavior_mapping_inventory,
+        render_mapping_inventory_text,
+    )
+
+    data = build_behavior_mapping_inventory(tests_dir=tests)
+    if output_format == "json":
+        typer.echo(_dump_json(data))
+        return
+    if output_format != "text":
+        typer.echo(
+            f"Unsupported --format: {output_format}; expected text or json.",
+            err=True,
+        )
+        raise typer.Exit(code=1)
+    typer.echo(render_mapping_inventory_text(data))
 
 
 @behavior_app.command("import-report")
@@ -444,12 +537,24 @@ def bdd_coverage_alias(
     features: Annotated[Path, typer.Option("--features")] = Path(
         "specs/behavior/features"
     ),
+    feature: Annotated[Path | None, typer.Option("--feature")] = None,
     tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+    show: Annotated[str, typer.Option("--show")] = "all",
     json_output: Annotated[Path | None, typer.Option("--json")] = None,
+    out: Annotated[Path | None, typer.Option("--out")] = None,
 ) -> None:
     """Compatibility alias for ``specweave behavior coverage``."""
 
-    behavior_coverage(features=features, tests=tests, json_output=json_output)
+    behavior_coverage(
+        features=features,
+        feature=feature,
+        tests=tests,
+        output_format=output_format,
+        show=show,
+        json_output=json_output,
+        out=out,
+    )
 
 
 # --- report subcommands ----------------------------------------------------
@@ -659,11 +764,23 @@ def _task_id(report):  # type: ignore[no-untyped-def]
     return task_id_from_report(report)
 
 
-
 @app.command("convert")
 def convert(
     ctx: typer.Context,
-    feature: Annotated[Path, typer.Argument(help="Feature file to convert.")],
+    paths: Annotated[
+        list[Path] | None,
+        typer.Argument(help="Feature file(s) or directories to convert."),
+    ] = None,
+    all_features: Annotated[
+        bool,
+        typer.Option(
+            "--all",
+            help=(
+                "Convert all configured behavior features under the configured "
+                "features directory."
+            ),
+        ),
+    ] = False,
     out: Annotated[
         Path | None, typer.Option("--out", help="Output feature path.")
     ] = None,
@@ -677,6 +794,16 @@ def convert(
     ] = "auto",
     force: Annotated[bool, typer.Option("--force")] = False,
     dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
+    replace_source: Annotated[
+        bool,
+        typer.Option(
+            "--replace-source/--keep-source",
+            help=(
+                "Delete converted classic source files after successful "
+                "non-dry-run conversion."
+            ),
+        ),
+    ] = False,
     validate: Annotated[
         bool,
         typer.Option(
@@ -685,20 +812,61 @@ def convert(
     ] = True,
 ) -> None:
     """Convert classic .feature and Markdown .feature.md files."""
-    from specweave.gherkin.convert import convert_feature_file
+    from specweave.gherkin.convert import convert_feature_file, convert_feature_files
 
     cli_ctx: CliContext = ctx.obj
+    resolved_paths = list(paths or [])
+    if all_features:
+        resolved_paths.append(cli_ctx.config.paths.features_dir)
+    if not resolved_paths:
+        typer.echo("Provide at least one feature path or use --all.", err=True)
+        raise typer.Exit(code=1)
+
+    batch_mode = (
+        all_features
+        or len(resolved_paths) > 1
+        or any(path.is_dir() for path in resolved_paths)
+    )
+    if batch_mode and out is not None:
+        typer.echo("--out is supported only for single-file conversion.", err=True)
+        raise typer.Exit(code=1)
+
     try:
-        result = convert_feature_file(
-            source_path=feature,
-            out_path=out,
-            target_format=to_format,
-            source_format=from_format,
-            force=force,
-            dry_run=dry_run,
-            validate=validate,
-            config=cli_ctx.config,
-        )
+        if batch_mode:
+            result = convert_feature_files(
+                paths=resolved_paths,
+                target_format=to_format,
+                source_format=from_format,
+                force=force,
+                dry_run=dry_run,
+                validate=validate,
+                replace_source=replace_source,
+                config=cli_ctx.config,
+            )
+        else:
+            feature = resolved_paths[0]
+            result = convert_feature_file(
+                source_path=feature,
+                out_path=out,
+                target_format=to_format,
+                source_format=from_format,
+                force=force,
+                dry_run=dry_run,
+                validate=validate,
+                config=cli_ctx.config,
+            )
+            deletable = (
+                replace_source
+                and result["source_format"] == "classic"
+                and result["target_format"] == "markdown"
+                and result["source_path"] != result["output_path"]
+            )
+            result["deleted_source"] = False
+            if dry_run and deletable:
+                result["would_delete_source"] = True
+            elif deletable:
+                Path(result["source_path"]).unlink()
+                result["deleted_source"] = True
     except ValueError as exc:
         typer.echo(f"Error: {exc}", err=True)
         raise typer.Exit(code=3) from exc
@@ -706,8 +874,32 @@ def convert(
     if cli_ctx.json_output:
         typer.echo(_dump_json(result))
     else:
-        typer.echo(f"{result['status']}: {result['output_path']}")
-        typer.echo(f"{result['source_format']} -> {result['target_format']}")
+        if batch_mode:
+            summary = result["summary"]
+            typer.echo(
+                f"{result['status']}: "
+                f"{summary['created']} created, "
+                f"{summary['updated']} updated, "
+                f"{summary['unchanged']} unchanged, "
+                f"{summary['errors']} errors"
+            )
+            if summary["deleted_sources"]:
+                typer.echo(f"deleted sources: {summary['deleted_sources']}")
+            for error in result["errors"]:
+                typer.echo(
+                    "ERROR "
+                    f"{error['source_path']} -> {error['output_path']} "
+                    f"{error['error']}"
+                )
+        else:
+            typer.echo(f"{result['status']}: {result['output_path']}")
+            typer.echo(f"{result['source_format']} -> {result['target_format']}")
+            if result.get("deleted_source"):
+                typer.echo(f"deleted source: {result['source_path']}")
+            elif result.get("would_delete_source"):
+                typer.echo(f"would delete source: {result['source_path']}")
+    if batch_mode and result["errors"]:
+        raise typer.Exit(code=3)
 
 
 # --- review subcommands ----------------------------------------------------
@@ -760,7 +952,7 @@ def review_specs(
 @create_app.command("gherkin")
 def create_gherkin(
     ctx: typer.Context,
-    from_tests: Annotated[list[Path], typer.Option("--from-tests")] = ...,
+    from_tests: Annotated[list[Path], typer.Option("--from-tests")],
     out: Annotated[Path, typer.Option("--out")] = Path("specs/behavior/features"),
     group_by: Annotated[str, typer.Option("--group-by")] = "file",
     mode: Annotated[str, typer.Option("--mode")] = "create",
@@ -796,7 +988,7 @@ def create_gherkin(
 @app.command("update")
 def update_specs(
     ctx: typer.Context,
-    from_tests: Annotated[list[Path], typer.Option("--from-tests")] = ...,
+    from_tests: Annotated[list[Path], typer.Option("--from-tests")],
     out: Annotated[Path, typer.Option("--out")] = Path("specs/behavior/features"),
 ) -> None:
     """Alias for ``create gherkin --mode update``."""
@@ -814,12 +1006,12 @@ def update_specs(
 @create_app.command("feature")
 def create_feature(
     ctx: typer.Context,
-    area: Annotated[str, typer.Option("--area")] = ...,
-    title: Annotated[str, typer.Option("--title")] = ...,
-    scenario: Annotated[str, typer.Option("--scenario")] = ...,
-    given: Annotated[str, typer.Option("--given")] = ...,
-    when: Annotated[str, typer.Option("--when")] = ...,
-    then: Annotated[str, typer.Option("--then")] = ...,
+    area: Annotated[str, typer.Option("--area")],
+    title: Annotated[str, typer.Option("--title")],
+    scenario: Annotated[str, typer.Option("--scenario")],
+    given: Annotated[str, typer.Option("--given")],
+    when: Annotated[str, typer.Option("--when")],
+    then: Annotated[str, typer.Option("--then")],
     rule: Annotated[str | None, typer.Option("--rule")] = None,
     out: Annotated[Path | None, typer.Option("--out")] = None,
     force: Annotated[bool, typer.Option("--force")] = False,
@@ -891,7 +1083,7 @@ def create_feature(
 @create_app.command("plan")
 def create_plan(
     ctx: typer.Context,
-    feature: Annotated[Path, typer.Option("--feature")] = ...,
+    feature: Annotated[Path, typer.Option("--feature")],
     out: Annotated[Path, typer.Option("--out")] = Path("plan.md"),
 ) -> None:
     """Create a deterministic implementation plan from a feature file."""
@@ -917,7 +1109,7 @@ def create_plan(
 @create_app.command("taskledger-task")
 def create_taskledger_task(
     ctx: typer.Context,
-    feature: Annotated[Path, typer.Option("--feature")] = ...,
+    feature: Annotated[Path, typer.Option("--feature")],
     out: Annotated[Path, typer.Option("--out")] = Path(
         ".specweave/mappings/taskledger/draft.json"
     ),

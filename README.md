@@ -23,6 +23,7 @@ Canonical behavior specs live under `specs/behavior/features`. When
 
 ```bash
 specweave convert <file> --to markdown
+specweave convert --all --to markdown
 ```
 
 and review the resulting `.feature.md` before committing. Executable
@@ -78,7 +79,28 @@ specweave behavior generate-tests \
 specweave behavior coverage \
   --features specs/behavior/features \
   --tests tests \
+  --format text
+```
+
+Write JSON or Markdown artifacts when needed:
+
+```bash
+specweave behavior coverage \
+  --features specs/behavior/features \
+  --tests tests \
   --json .specweave/reports/behavior-coverage.json
+
+specweave behavior coverage \
+  --features specs/behavior/features \
+  --tests tests \
+  --format markdown \
+  --out .specweave/reports/behavior-coverage.md
+```
+
+List the raw explicit pytest mappings discovered by the scanner:
+
+```bash
+specweave behavior mappings --tests tests --format text
 ```
 
 ### 5. Import pytest/JUnit evidence
@@ -127,13 +149,19 @@ Convert between classic `.feature` and Markdown `.feature.md` formats:
 
 ```bash
 specweave convert specs/behavior/features/auth/login.feature
+specweave convert specs/behavior/features --to markdown
+specweave convert --all --to markdown
 specweave --json convert specs/behavior/features/auth/login.feature
 specweave convert login.feature.md --to classic
 specweave convert login.feature --dry-run
+specweave convert specs/behavior/features --to markdown --replace-source
 ```
 
-The source file is never deleted. Use `--force` to overwrite an existing
-output file.
+Source files are kept by default. Use `--replace-source` only when you want to
+delete successfully converted classic `.feature` sources after the Markdown
+target exists. After a bulk conversion, run `specweave behavior coverage` or
+`specweave review specs` to catch stale explicit mappings that still point to
+classic paths.
 
 ## Installation
 

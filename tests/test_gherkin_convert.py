@@ -10,6 +10,7 @@ from typer.testing import CliRunner
 from specweave.cli import app
 from specweave.gherkin.convert import (
     convert_feature_file,
+    convert_feature_files,
     default_output_path,
     infer_document_format,
 )
@@ -29,6 +30,12 @@ Feature: Login
       When the user submits an invalid password
       Then login is rejected
 """
+
+
+def _write_feature_file(path: Path, content: str = _CLASSIC) -> Path:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
+    return path
 
 
 def test_infer_document_format_from_suffix() -> None:
@@ -88,9 +95,114 @@ def test_cli_convert_json(tmp_path: Path) -> None:
     assert Path(data["output_path"]).name == "login.feature.md"
 
 
-def test_create_feature_uses_markdown_default(
-    tmp_path: Path, monkeypatch
+def test_convert_directory_classic_to_markdown(tmp_path: Path) -> None:
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    _write_feature_file(features_dir / "auth" / "login.feature")
+    _write_feature_file(features_dir / "config" / "nested" / "configuration.feature")
+
+    result = convert_feature_files(
+        paths=[features_dir], target_format="markdown", validate=False
+    )
+
+    assert result["status"] == "passed"
+    assert result["summary"]["created"] == 2
+    assert (features_dir / "auth" / "login.feature.md").exists()
+    assert (features_dir / "config" / "nested" / "configuration.feature.md").exists()
+    assert "# Feature: Login" in (features_dir / "auth" / "login.feature.md").read_text(
+        encoding="utf-8"
+    )
+
+
+def test_convert_directory_keeps_source_by_default(tmp_path: Path) -> None:
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    source = _write_feature_file(features_dir / "auth" / "login.feature")
+
+    result = convert_feature_files(
+        paths=[features_dir], target_format="markdown", validate=False
+    )
+
+    assert result["status"] == "passed"
+    assert source.exists()
+    assert (features_dir / "auth" / "login.feature.md").exists()
+
+
+def test_convert_directory_replace_source_removes_classic_after_success(
+    tmp_path: Path,
 ) -> None:
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    source = _write_feature_file(features_dir / "auth" / "login.feature")
+
+    result = convert_feature_files(
+        paths=[features_dir],
+        target_format="markdown",
+        validate=False,
+        replace_source=True,
+    )
+
+    assert result["status"] == "passed"
+    assert not source.exists()
+    assert result["summary"]["deleted_sources"] == 1
+    assert (features_dir / "auth" / "login.feature.md").exists()
+
+
+def test_convert_directory_dry_run_writes_nothing(tmp_path: Path) -> None:
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    source = _write_feature_file(features_dir / "auth" / "login.feature")
+
+    result = convert_feature_files(
+        paths=[features_dir],
+        target_format="markdown",
+        validate=False,
+        dry_run=True,
+        replace_source=True,
+    )
+
+    assert result["status"] == "dry-run"
+    assert source.exists()
+    assert not (features_dir / "auth" / "login.feature.md").exists()
+    assert result["items"][0]["would_delete_source"] is True
+
+
+def test_convert_directory_reports_collision_without_force(tmp_path: Path) -> None:
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    source = _write_feature_file(features_dir / "auth" / "login.feature")
+    _write_feature_file(
+        features_dir / "auth" / "login.feature.md", "# Feature: Different\n"
+    )
+
+    result = convert_feature_files(
+        paths=[features_dir], target_format="markdown", validate=False
+    )
+
+    assert result["status"] == "failed"
+    assert result["summary"]["errors"] == 1
+    assert any(
+        item["source_path"] == str(source) and item["status"] == "error"
+        for item in result["items"]
+    )
+
+
+def test_cli_convert_all_json_summary(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    _write_feature_file(features_dir / "auth" / "login.feature")
+    _write_feature_file(features_dir / "config" / "configuration.feature")
+
+    result = runner.invoke(
+        app,
+        ["--json", "convert", "--all", "--to", "markdown", "--no-validate"],
+    )
+
+    assert result.exit_code == 0, result.stdout
+    data = json.loads(result.stdout)
+    assert data["mode"] == "batch"
+    assert data["summary"]["created"] == 2
+    assert data["summary"]["errors"] == 0
+    assert data["source_count"] == 2
+    assert len(data["items"]) == 2
+
+
+def test_create_feature_uses_markdown_default(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
     result = runner.invoke(
         app,

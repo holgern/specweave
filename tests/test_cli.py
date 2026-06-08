@@ -8,6 +8,8 @@ from pathlib import Path
 from typer.testing import CliRunner
 
 from specweave.cli import app
+from specweave.gherkin.model import Feature, Scenario, Step
+from specweave.gherkin.writer import write_feature
 
 runner = CliRunner()
 
@@ -28,7 +30,39 @@ def test_version_exits_0() -> None:
 
 def _write(tmp_path, name, text):  # type: ignore[no-untyped-def]
     path = tmp_path / name
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
+    return path
+
+
+def _write_markdown_behavior_feature(
+    tmp_path: Path,
+    *,
+    relative_path: str,
+    title: str,
+    scenario_id: str,
+    scenario_title: str,
+) -> Path:
+    path = tmp_path / relative_path
+    path.parent.mkdir(parents=True, exist_ok=True)
+    feature = Feature(
+        title=title,
+        scenarios=(
+            Scenario(
+                title=scenario_title,
+                keyword="Example",
+                tags=(scenario_id.removeprefix("@"),),
+                steps=(
+                    Step(keyword="Given", text="a registered user exists"),
+                    Step(keyword="When", text="the user submits credentials"),
+                    Step(keyword="Then", text="the outcome is observable"),
+                ),
+            ),
+        ),
+    )
+    path.write_text(
+        write_feature(feature, document_format="markdown"), encoding="utf-8"
+    )
     return path
 
 
@@ -331,6 +365,136 @@ def test_behavior_coverage_reports_bound_scenarios(tmp_path, monkeypatch) -> Non
     assert data["scenarios_total"] == 1
     assert data["features_bound"] == 1
     assert data["scenarios_bound"] == 1
+
+
+def test_behavior_coverage_text_shows_missing(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    _write_markdown_behavior_feature(
+        tmp_path,
+        relative_path="specs/behavior/features/auth/login.feature.md",
+        title="Login",
+        scenario_id="@bdd-login-rejects-invalid-password",
+        scenario_title="Reject invalid password",
+    )
+    result = runner.invoke(
+        app,
+        [
+            "behavior",
+            "coverage",
+            "--features",
+            "specs/behavior/features",
+            "--tests",
+            "tests",
+            "--format",
+            "text",
+            "--show",
+            "missing",
+        ],
+    )
+
+    assert result.exit_code == 1, result.stdout
+    assert "@bdd-login-rejects-invalid-password" in result.stdout
+    assert "expected: tests/test_auth_login.py" in result.stdout
+
+
+def test_behavior_coverage_feature_filter(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    first = _write_markdown_behavior_feature(
+        tmp_path,
+        relative_path="specs/behavior/features/auth/login.feature.md",
+        title="Login",
+        scenario_id="@bdd-login-rejects-invalid-password",
+        scenario_title="Reject invalid password",
+    )
+    _write_markdown_behavior_feature(
+        tmp_path,
+        relative_path="specs/behavior/features/config/configuration.feature.md",
+        title="Configuration",
+        scenario_id="@bdd-loads-config",
+        scenario_title="Loads config",
+    )
+    _write(
+        tmp_path,
+        "tests/test_auth_login.py",
+        """
+# specweave: feature=specs/behavior/features/auth/login.feature.md
+# specweave: scenario=@bdd-login-rejects-invalid-password
+def test_rejects_invalid_password() -> None:
+    pass
+""",
+    )
+
+    result = runner.invoke(
+        app,
+        [
+            "behavior",
+            "coverage",
+            "--features",
+            "specs/behavior/features",
+            "--feature",
+            str(first),
+            "--tests",
+            "tests",
+            "--format",
+            "text",
+        ],
+    )
+
+    assert "specs/behavior/features/auth/login.feature.md" in result.stdout
+    assert (
+        "specs/behavior/features/config/configuration.feature.md" not in result.stdout
+    )
+
+
+def test_behavior_mappings_lists_comment_and_marker_sources(
+    tmp_path, monkeypatch
+) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    _write(
+        tmp_path,
+        "tests/test_auth_login.py",
+        """
+# specweave: feature=specs/behavior/features/auth/login.feature.md
+# specweave: scenario=@bdd-login-rejects-invalid-password
+def test_rejects_invalid_password() -> None:
+    pass
+""",
+    )
+    _write(
+        tmp_path,
+        "tests/test_config.py",
+        """
+import pytest
+
+SPECWEAVE_FEATURE = "specs/behavior/features/config/configuration.feature.md"
+
+
+@pytest.mark.specweave(
+    feature=SPECWEAVE_FEATURE,
+    scenario="@bdd-loads-config",
+)
+def test_loads_config() -> None:
+    pass
+""",
+    )
+
+    result = runner.invoke(
+        app,
+        [
+            "behavior",
+            "mappings",
+            "--tests",
+            "tests",
+            "--format",
+            "text",
+        ],
+    )
+
+    assert result.exit_code == 0, result.stdout
+    assert "comment" in result.stdout
+    assert "marker" in result.stdout
+    assert "tests/test_auth_login.py::test_rejects_invalid_password" in result.stdout
+    assert "tests/test_config.py::test_loads_config" in result.stdout
 
 
 def test_behavior_import_report_maps_pytest_nodeid(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]

@@ -37,7 +37,7 @@ def run_review(
         require_scenario_ids=True,
     )
     for finding in lint_results:
-        entry = {
+        entry: dict[str, object] = {
             "code": finding.code,
             "level": finding.level,
             "path": finding.path,
@@ -63,6 +63,8 @@ def run_review(
     scenarios_total = coverage["scenarios_total"]
     scenarios_bound = coverage["scenarios_bound"]
     missing_bindings = coverage["missing_bindings"]
+    stale_bindings = coverage.get("stale_bindings", [])
+    duplicate_bindings = coverage.get("duplicate_bindings", [])
 
     for binding in missing_bindings:
         scenario = binding.get("scenario", "")
@@ -74,8 +76,36 @@ def run_review(
         }
         if scenario:
             entry["scenario"] = scenario
-            entry["message"] = f"@{scenario} has no bound pytest test found."
+            entry["message"] = f"{scenario} has no bound pytest test found."
         findings.append(entry)
+        warnings_count += 1
+
+    for binding in stale_bindings:
+        findings.append(
+            {
+                "code": "SWCOV002",
+                "level": "warning",
+                "path": binding.get("test_file", ""),
+                "scenario": binding.get("scenario", ""),
+                "message": (
+                    "Stale pytest mapping points to a missing feature or scenario."
+                ),
+            }
+        )
+        warnings_count += 1
+
+    for binding in duplicate_bindings:
+        findings.append(
+            {
+                "code": "SWCOV003",
+                "level": "warning",
+                "path": binding.get("feature", ""),
+                "scenario": binding.get("scenario", ""),
+                "message": (
+                    "Multiple explicit pytest mappings target the same scenario."
+                ),
+            }
+        )
         warnings_count += 1
 
     # 4. Needs-review check
@@ -133,7 +163,13 @@ def run_review(
         )
         errors_count += 1
 
-    status = "passed" if errors_count == 0 and missing_bindings == [] else "failed"
+    coverage_failed = bool(
+        missing_bindings
+        or stale_bindings
+        or coverage.get("deprecated_paths")
+        or coverage.get("forbidden_pytest_bdd_usages")
+    )
+    status = "passed" if errors_count == 0 and not coverage_failed else "failed"
 
     return {
         "schema_version": 1,
@@ -144,6 +180,8 @@ def run_review(
             "scenarios": scenarios_total,
             "bound": scenarios_bound,
             "missing_bindings": len(missing_bindings),
+            "stale_bindings": len(stale_bindings),
+            "duplicate_bindings": len(duplicate_bindings),
             "needs_review": sum(1 for f in findings if f["code"] == "SWREV001"),
             "errors": errors_count,
             "warnings": warnings_count,

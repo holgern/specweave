@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from pathlib import Path
+from typing import Any
 
 from specweave.config import SpecWeaveConfig
+from specweave.gherkin.lint import collect_feature_files
 from specweave.gherkin.markdown import markdown_to_classic
 from specweave.gherkin.parser import parse_feature
 from specweave.gherkin.writer import write_feature
@@ -53,6 +56,35 @@ def _validate_format(name: str, value: str) -> None:
     if value not in _SUPPORTED_FORMATS:
         expected = ", ".join(sorted(_SUPPORTED_FORMATS))
         raise ValueError(f"Unsupported {name}: {value}; expected one of: {expected}")
+
+
+def _is_feature_file(path: Path) -> bool:
+    text = path.as_posix()
+    return text.endswith(".feature") or text.endswith(".feature.md")
+
+
+def collect_conversion_sources(paths: Iterable[Path]) -> list[Path]:
+    """Return unique feature files from explicit files and directories."""
+
+    sources: list[Path] = []
+    directory_roots: list[Path] = []
+    for path in paths:
+        if path.is_file():
+            if _is_feature_file(path):
+                sources.append(path)
+            continue
+        directory_roots.append(path)
+
+    sources.extend(collect_feature_files(directory_roots))
+
+    seen: set[Path] = set()
+    unique: list[Path] = []
+    for source in sources:
+        if source in seen:
+            continue
+        seen.add(source)
+        unique.append(source)
+    return unique
 
 
 def _validate_with_official(
@@ -128,11 +160,24 @@ def convert_feature_file(
             document_format=resolved_target_format,
         )
 
+    warnings: list[str] = []
+    should_write = True
     status = "created"
-    if target_path.exists():
+    if target_path == source_path and resolved_source_format == resolved_target_format:
+        if source_text == converted_text:
+            status = "unchanged"
+            should_write = False
+        elif not force:
+            status = "unchanged"
+            should_write = False
+            warnings.append("already_target_format")
+        else:
+            status = "updated"
+    elif target_path.exists():
         existing = target_path.read_text(encoding="utf-8")
         if existing == converted_text:
             status = "unchanged"
+            should_write = False
         elif not force:
             raise ValueError(f"{target_path} already exists. Use --force to overwrite.")
         else:
@@ -142,17 +187,173 @@ def convert_feature_file(
         write_status = "dry-run"
     else:
         write_status = status
-        target_path.parent.mkdir(parents=True, exist_ok=True)
-        target_path.write_text(converted_text, encoding="utf-8")
+        if should_write:
+            target_path.parent.mkdir(parents=True, exist_ok=True)
+            target_path.write_text(converted_text, encoding="utf-8")
 
     return {
         "schema_version": 1,
         "command": "convert",
         "status": write_status,
+        "planned_status": status,
         "source_path": str(source_path),
         "output_path": str(target_path),
         "source_format": resolved_source_format,
         "target_format": resolved_target_format,
         "validated": bool(validate and config.gherkin.official_parser),
-        "warnings": [],
+        "warnings": warnings,
+    }
+
+
+def _deletable_source(result: dict[str, Any], *, replace_source: bool) -> bool:
+    return (
+        replace_source
+        and result["source_format"] == "classic"
+        and result["target_format"] == "markdown"
+        and result["source_path"] != result["output_path"]
+    )
+
+
+def convert_feature_files(
+    *,
+    paths: Iterable[Path],
+    out_dir: Path | None = None,
+    target_format: str | None = None,
+    source_format: str = "auto",
+    force: bool = False,
+    dry_run: bool = False,
+    validate: bool = True,
+    replace_source: bool = False,
+    config: SpecWeaveConfig | None = None,
+) -> dict[str, Any]:
+    """Convert multiple feature files and return a batch result dict."""
+
+    if config is None:
+        config = SpecWeaveConfig()
+    if out_dir is not None:
+        raise ValueError("Batch conversion does not support --out yet.")
+
+    resolved_target_format = target_format or config.gherkin.document_format
+    _validate_format("target format", resolved_target_format)
+
+    sources = collect_conversion_sources(paths)
+    if not sources:
+        raise ValueError("No feature files found to convert.")
+
+    write_targets: dict[Path, list[Path]] = {}
+    for source_path in sources:
+        output_path = default_output_path(source_path, resolved_target_format)
+        if output_path != source_path:
+            write_targets.setdefault(output_path, []).append(source_path)
+    collision_sources = {
+        source
+        for mapped_sources in write_targets.values()
+        if len(mapped_sources) > 1
+        for source in mapped_sources
+    }
+    collision_messages = {
+        source: (
+            f"{default_output_path(source, resolved_target_format)} would be produced "
+            "by multiple batch inputs."
+        )
+        for source in collision_sources
+    }
+
+    items: list[dict[str, Any]] = []
+    errors: list[dict[str, str]] = []
+    summary = {
+        "created": 0,
+        "updated": 0,
+        "unchanged": 0,
+        "skipped": 0,
+        "errors": 0,
+        "deleted_sources": 0,
+    }
+
+    for source_path in sources:
+        if source_path in collision_sources:
+            output_path = default_output_path(source_path, resolved_target_format)
+            error_message = collision_messages[source_path]
+            items.append(
+                {
+                    "status": "error",
+                    "source_path": str(source_path),
+                    "output_path": str(output_path),
+                    "source_format": source_format,
+                    "target_format": resolved_target_format,
+                    "validated": False,
+                    "deleted_source": False,
+                    "warnings": [],
+                    "error": error_message,
+                }
+            )
+            errors.append(
+                {
+                    "source_path": str(source_path),
+                    "output_path": str(output_path),
+                    "error": error_message,
+                }
+            )
+            summary["errors"] += 1
+            continue
+
+        try:
+            result = convert_feature_file(
+                source_path=source_path,
+                target_format=resolved_target_format,
+                source_format=source_format,
+                force=force,
+                dry_run=dry_run,
+                validate=validate,
+                config=config,
+            )
+        except ValueError as exc:
+            output_path = default_output_path(source_path, resolved_target_format)
+            items.append(
+                {
+                    "status": "error",
+                    "source_path": str(source_path),
+                    "output_path": str(output_path),
+                    "source_format": source_format,
+                    "target_format": resolved_target_format,
+                    "validated": False,
+                    "deleted_source": False,
+                    "warnings": [],
+                    "error": str(exc),
+                }
+            )
+            errors.append(
+                {
+                    "source_path": str(source_path),
+                    "output_path": str(output_path),
+                    "error": str(exc),
+                }
+            )
+            summary["errors"] += 1
+            continue
+
+        item = dict(result)
+        item["deleted_source"] = False
+        if dry_run and _deletable_source(item, replace_source=replace_source):
+            item["would_delete_source"] = True
+        elif _deletable_source(item, replace_source=replace_source):
+            Path(item["source_path"]).unlink()
+            item["deleted_source"] = True
+            summary["deleted_sources"] += 1
+
+        planned_status = str(item["planned_status"])
+        summary[planned_status] += 1
+        items.append(item)
+
+    return {
+        "schema_version": 1,
+        "command": "convert",
+        "mode": "batch",
+        "status": "failed" if errors else ("dry-run" if dry_run else "passed"),
+        "source_count": len(sources),
+        "summary": summary,
+        "target_format": resolved_target_format,
+        "validated": bool(validate and config.gherkin.official_parser),
+        "items": items,
+        "errors": errors,
     }

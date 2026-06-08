@@ -149,3 +149,31 @@ def test_imports_pytest_report():
         assert mapping.source == "comment"
     finally:
         path.unlink()
+
+
+def test_docstring_mapping_accepts_feature_md(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.chdir(tmp_path)
+    feature_path = (
+        tmp_path / "specs" / "behavior" / "features" / "auth" / "login.feature.md"
+    )
+    feature_path.parent.mkdir(parents=True, exist_ok=True)
+    feature_path.write_text("# Feature: Login\n", encoding="utf-8")
+    code = """
+def test_rejects_invalid_password():
+    \"\"\"
+    SpecWeave mapping:
+    specs/behavior/features/auth/login.feature.md
+    @bdd-login-rejects-invalid-password
+    \"\"\"
+    pass
+"""
+    path = _write_test_file(code)
+    try:
+        mappings = discover_specweave_tests(path)
+        assert len(mappings) == 1
+        mapping = mappings[0]
+        assert mapping.feature == "specs/behavior/features/auth/login.feature.md"
+        assert mapping.scenario == "@bdd-login-rejects-invalid-password"
+        assert mapping.source == "docstring"
+    finally:
+        path.unlink()

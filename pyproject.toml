@@ -14,6 +14,9 @@ specweave = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
+markers = [
+    "specweave(feature, scenario, rule): maps a plain pytest test to a SpecWeave Gherkin scenario",
+]
 
 [project]
 name = "specweave"

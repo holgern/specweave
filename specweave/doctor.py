@@ -176,8 +176,12 @@ def _check_duplicate_bdd_tags(config: SpecWeaveConfig) -> list[DoctorItem]:
 
 def _collect_bdd_tags(feature: object, path: str, tags: dict[str, list[str]]) -> None:
     from specweave.gherkin.lint import iter_feature_scenarios
+    from specweave.gherkin.model import Feature
 
-    for scenario in iter_feature_scenarios(feature):
+    typed_feature = feature if isinstance(feature, Feature) else None
+    if typed_feature is None:
+        return
+    for scenario in iter_feature_scenarios(typed_feature):
         for tag in scenario.tags:
             if tag.startswith("bdd-"):
                 tags[tag].append(path)
