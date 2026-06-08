@@ -20,7 +20,7 @@ as a runtime dependency.
 - And the draft has schema_version 1
 - And the draft includes scenarios extracted from the feature
 
-`@bdd-taskledger-draft-ac-mapping` `@manual`
+`@bdd-taskledger-draft-ac-mapping`
 
 ### Example: Draft maps @ac-\* tags to acceptance criteria
 

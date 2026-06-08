@@ -10,7 +10,7 @@ function with specweave markers and a NotImplementedError stub.
 
 ## Rule: Generation creates pytest skeletons
 
-`@bdd-generate-single-feature` `@manual`
+`@bdd-generate-single-feature`
 
 ### Example: Generation creates a test file for a feature
 
@@ -20,7 +20,7 @@ function with specweave markers and a NotImplementedError stub.
 - And the test file contains "import pytest"
 - And the test file contains a SPECWEAVE_FEATURE constant
 
-`@bdd-generate-scenario-function` `@manual`
+`@bdd-generate-scenario-function`
 
 ### Example: Each scenario becomes a test function
 
@@ -30,7 +30,7 @@ function with specweave markers and a NotImplementedError stub.
 - And each function has a @pytest.mark.specweave decorator
 - And each function raises NotImplementedError
 
-`@bdd-generate-specweave-markers` `@manual`
+`@bdd-generate-specweave-markers`
 
 ### Example: Test functions have correct specweave markers
 
@@ -39,7 +39,7 @@ function with specweave markers and a NotImplementedError stub.
 - Then the test function has @pytest.mark.specweave with feature and scenario
 - And the scenario marker references @bdd-example
 
-`@bdd-generate-docstring` `@manual`
+`@bdd-generate-docstring`
 
 ### Example: Test functions have docstrings with scenario details
 
@@ -48,7 +48,7 @@ function with specweave markers and a NotImplementedError stub.
 - Then the test function docstring contains the scenario title
 - And the docstring contains the Given, When, Then steps
 
-`@bdd-generate-step-comments` `@manual`
+`@bdd-generate-step-comments`
 
 ### Example: Test functions have step comments
 
@@ -60,7 +60,7 @@ function with specweave markers and a NotImplementedError stub.
 
 ## Rule: Generation derives canonical test paths
 
-`@bdd-generate-canonical-path` `@manual`
+`@bdd-generate-canonical-path`
 
 ### Example: Test path is derived from feature path
 
@@ -70,7 +70,7 @@ function with specweave markers and a NotImplementedError stub.
 
 ## Rule: Generation handles rules
 
-`@bdd-generate-rules` `@manual`
+`@bdd-generate-rules`
 
 ### Example: Scenarios in rules get rule markers
 
@@ -80,7 +80,7 @@ function with specweave markers and a NotImplementedError stub.
 
 ## Rule: Generation supports batch mode
 
-`@bdd-generate-batch` `@manual`
+`@bdd-generate-batch`
 
 ### Example: Generation processes all features in a directory
 

@@ -10,7 +10,7 @@ their test bindings and evidence status.
 
 ## Rule: Index generation scans feature files
 
-`@bdd-index-generates-markdown` `@manual`
+`@bdd-index-generates-markdown`
 
 ### Example: Index generates Markdown with feature listing
 
@@ -19,7 +19,7 @@ their test bindings and evidence status.
 - Then a Markdown file is written
 - And the Markdown contains feature titles grouped by area
 
-`@bdd-index-generates-manifest` `@manual`
+`@bdd-index-generates-manifest`
 
 ### Example: Index generates JSON manifest with scenario mappings
 
@@ -29,7 +29,7 @@ their test bindings and evidence status.
 - And the manifest has schema_version 1
 - And each feature entry has path, area, feature_slug, and title
 
-`@bdd-index-scenario-entries` `@manual`
+`@bdd-index-scenario-entries`
 
 ### Example: Manifest includes scenario entries with automation status
 
@@ -38,7 +38,7 @@ their test bindings and evidence status.
 - Then the manifest scenario entry has automation status "bound"
 - And the entry includes the test_file and nodeid
 
-`@bdd-index-unbound-scenario` `@manual`
+`@bdd-index-unbound-scenario`
 
 ### Example: Manifest marks unbound scenarios as missing
 
@@ -48,7 +48,7 @@ their test bindings and evidence status.
 
 ## Rule: Index reflects evidence status
 
-`@bdd-index-evidence-status` `@manual`
+`@bdd-index-evidence-status`
 
 ### Example: Manifest includes latest evidence status when available
 
@@ -58,7 +58,7 @@ their test bindings and evidence status.
 
 ## Rule: Index supports rule blocks
 
-`@bdd-index-rules` `@manual`
+`@bdd-index-rules`
 
 ### Example: Manifest preserves Rule structure
 

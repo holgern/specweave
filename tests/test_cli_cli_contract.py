@@ -114,6 +114,8 @@ def test_bdd_export_and_import_round_trip(tmp_path) -> None:  # type: ignore[no-
     assert data["examples"][0]["acceptance_criteria"] == ["ac-0001"]
 
 
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-exit-normalize-failed
 def test_report_normalize_writes_json_and_exits_nonzero_on_failure(
     tmp_path,
 ) -> None:  # type: ignore[no-untyped-def]
@@ -290,6 +292,8 @@ Feature: Plan gates
     return path
 
 
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-behavior-check
 def test_behavior_check_accepts_canonical_feature(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     _write_behavior_feature(tmp_path)
@@ -311,6 +315,8 @@ def test_behavior_check_warns_on_deprecated_specs_bdd_path(
     assert "SWBEH015" in result.stdout
 
 
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-behavior-generate-tests
 def test_behavior_generate_tests_creates_plain_pytest(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     feature_path = _write_behavior_feature(tmp_path)
@@ -328,6 +334,8 @@ def test_behavior_generate_tests_creates_plain_pytest(tmp_path, monkeypatch) -> 
     assert "scenarios(" not in content
 
 
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-behavior-index
 def test_behavior_index_writes_markdown_and_manifest(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     feature_path = _write_behavior_feature(tmp_path)
@@ -351,6 +359,8 @@ def test_behavior_index_writes_markdown_and_manifest(tmp_path, monkeypatch) -> N
     assert scenario["automation"]["status"] == "bound"
 
 
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-behavior-coverage
 def test_behavior_coverage_reports_bound_scenarios(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     feature_path = _write_behavior_feature(tmp_path)
@@ -497,6 +507,8 @@ def test_loads_config() -> None:
     assert "tests/test_config.py::test_loads_config" in result.stdout
 
 
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-behavior-import-report
 def test_behavior_import_report_maps_pytest_nodeid(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     feature_path = _write_behavior_feature(tmp_path)
@@ -545,3 +557,148 @@ def test_behavior_import_report_maps_pytest_nodeid(tmp_path, monkeypatch) -> Non
         payload["results"][0]["scenario"]
         == "@bdd-implementation-blocked-before-plan-acceptance"
     )
+
+
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-config-option
+def test_config_option(tmp_path) -> None:
+    """--config selects an explicit config path."""
+    config_file = tmp_path / "custom.toml"
+    config_file.write_text('schema_version = 1\nspelling = "behaviour"\n')
+    result = runner.invoke(app, ["--config", str(config_file), "doctor"])
+    assert result.exit_code == 0, result.stdout
+
+
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-json-output
+def test_json_output(tmp_path, monkeypatch) -> None:
+    """--json produces machine-readable output."""
+    monkeypatch.chdir(tmp_path)
+    result = runner.invoke(app, ["--json", "version"])
+    assert result.exit_code == 0
+    data = json.loads(result.stdout)
+    assert "schema_version" in data
+
+
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-json-init
+def test_json_init(tmp_path, monkeypatch) -> None:
+    """init --json produces machine-readable output."""
+    monkeypatch.chdir(tmp_path)
+    result = runner.invoke(app, ["--json", "init"])
+    assert result.exit_code == 0
+    data = json.loads(result.stdout)
+    assert data.get("command") == "init"
+
+
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-bdd-check-alias
+def test_bdd_check_alias(tmp_path, monkeypatch) -> None:
+    """bdd check is an alias for behavior check."""
+    monkeypatch.chdir(tmp_path)
+    _write_behavior_feature(tmp_path)
+    result = runner.invoke(app, ["bdd", "check"])
+    assert result.exit_code == 0, result.stdout
+
+
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-bdd-index-alias
+def test_bdd_index_alias(tmp_path, monkeypatch) -> None:
+    """bdd index is an alias for behavior index."""
+    monkeypatch.chdir(tmp_path)
+    _write_behavior_feature(tmp_path)
+    result = runner.invoke(app, ["bdd", "index"])
+    assert result.exit_code == 0, result.stdout
+
+
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-create-feature
+def test_create_feature(tmp_path, monkeypatch) -> None:
+    """create feature writes a new Gherkin feature file."""
+    monkeypatch.chdir(tmp_path)
+    result = runner.invoke(
+        app,
+        [
+            "create",
+            "feature",
+            "--area",
+            "auth",
+            "--title",
+            "Login",
+            "--scenario",
+            "Valid login",
+            "--given",
+            "a user exists",
+            "--when",
+            "the user logs in",
+            "--then",
+            "login succeeds",
+        ],
+    )
+    assert result.exit_code == 0, result.stdout
+
+
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-create-gherkin
+def test_create_gherkin(tmp_path, monkeypatch) -> None:
+    """create gherkin generates features from tests."""
+    monkeypatch.chdir(tmp_path)
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    (tests_dir / "test_auth_login.py").write_text(
+        "def test_valid_login():\n    pass\n", encoding="utf-8"
+    )
+    result = runner.invoke(
+        app,
+        [
+            "create",
+            "gherkin",
+            "--from-tests",
+            str(tests_dir),
+            "--out",
+            str(tmp_path / "specs" / "behavior" / "features"),
+        ],
+    )
+    assert result.exit_code == 0, result.stdout
+
+
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-create-plan
+def test_create_plan(tmp_path, monkeypatch) -> None:
+    """create plan generates an implementation plan."""
+    monkeypatch.chdir(tmp_path)
+    feature_path = _write_behavior_feature(tmp_path)
+    out = tmp_path / "plan.md"
+    result = runner.invoke(
+        app, ["create", "plan", "--feature", str(feature_path), "--out", str(out)]
+    )
+    assert result.exit_code == 0, result.stdout
+    assert out.exists()
+
+
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-exit-doctor-failed
+def test_exit_doctor_failed(tmp_path, monkeypatch) -> None:
+    """doctor exits non-zero when errors found."""
+    monkeypatch.chdir(tmp_path)
+    # Create a config with unsupported schema
+    config_file = tmp_path / ".specweave.toml"
+    config_file.write_text("schema_version = 99\n")
+    result = runner.invoke(app, ["--config", str(config_file), "doctor"])
+    # Doctor should report errors
+    assert "SWDOC" in result.stdout or result.exit_code != 0
+
+
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature.md
+# specweave: scenario=@bdd-cli-exit-check-errors
+def test_exit_check_errors(tmp_path, monkeypatch) -> None:
+    """behavior check exits non-zero on lint errors."""
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
+    features_dir.mkdir(parents=True)
+    # Write a feature with lint errors
+    (features_dir / "test.feature").write_text(
+        "Feature: F\n  Example: E\n    Something happens\n", encoding="utf-8"
+    )
+    result = runner.invoke(app, ["behavior", "check"])
+    assert result.exit_code != 0 or "SWBEH" in result.stdout

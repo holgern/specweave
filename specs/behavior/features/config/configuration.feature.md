@@ -16,7 +16,7 @@ by walking parent directories, and renders deterministic defaults.
 - When specweave discovers the config
 - Then the config path is ".specweave.toml"
 
-`@bdd-config-discovery-finds-public` `@manual`
+`@bdd-config-discovery-finds-public`
 
 ### Example: Discovery finds specweave.toml in current directory
 

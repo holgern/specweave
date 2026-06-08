@@ -186,3 +186,97 @@ def test_text() -> None:
     result = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
 
     assert result["forbidden_pytest_bdd_usages"] == []
+
+
+# specweave: feature=specs/behavior/features/behavior/coverage.feature.md
+# specweave: scenario=@bdd-coverage-missing-test-file
+def test_coverage_missing_test_file(tmp_path: Path, monkeypatch) -> None:
+    """Coverage reports missing test files."""
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    _write_markdown_feature(
+        features_dir / "auth" / "login.feature.md",
+        title="Login",
+        scenario_id="@bdd-login-valid",
+        scenario_title="Valid login",
+    )
+    result = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
+    assert len(result["missing_bindings"]) > 0
+
+
+# specweave: feature=specs/behavior/features/behavior/coverage.feature.md
+# specweave: scenario=@bdd-coverage-stale-binding
+def test_coverage_stale_feature_binding(tmp_path: Path, monkeypatch) -> None:
+    """Coverage reports bindings to non-existent features."""
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    tests_dir = tmp_path / "tests"
+    features_dir.mkdir(parents=True)
+    _write_test(
+        tests_dir / "test_auth_login.py",
+        """
+# specweave: feature=specs/behavior/features/auth/nonexistent.feature.md
+# specweave: scenario=@bdd-login-valid
+def test_valid_login() -> None:
+    pass
+""",
+    )
+    result = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
+    assert any(b["reason"] == "missing_feature" for b in result["stale_bindings"])
+
+
+# specweave: feature=specs/behavior/features/behavior/coverage.feature.md
+# specweave: scenario=@bdd-coverage-deprecated-paths
+def test_coverage_deprecated_paths(tmp_path: Path, monkeypatch) -> None:
+    """Coverage reports deprecated feature paths."""
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "bdd" / "features"
+    tests_dir = tmp_path / "tests"
+    _write_markdown_feature(
+        features_dir / "auth" / "login.feature.md",
+        title="Login",
+        scenario_id="@bdd-login-valid",
+        scenario_title="Valid login",
+    )
+    tests_dir.mkdir()
+    _write_test(
+        tests_dir / "test_auth_login.py",
+        """
+# specweave: feature=specs/bdd/features/auth/login.feature.md
+# specweave: scenario=@bdd-login-valid
+def test_valid_login() -> None:
+    pass
+""",
+    )
+    canonical_features = tmp_path / "specs" / "behavior" / "features"
+    canonical_features.mkdir(parents=True)
+    result = build_behavior_coverage(
+        features_dir=canonical_features,
+        tests_dir=tests_dir,
+    )
+    assert len(result["deprecated_paths"]) > 0
+
+
+# specweave: feature=specs/behavior/features/behavior/coverage.feature.md
+# specweave: scenario=@bdd-coverage-manual-scenario
+def test_coverage_manual_scenario_skipped(tmp_path: Path, monkeypatch) -> None:
+    """Coverage skips scenarios tagged @manual."""
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    _write_markdown_feature(
+        features_dir / "auth" / "login.feature.md",
+        title="Login",
+        scenario_id="@bdd-login-valid",
+        scenario_title="Valid login",
+        tags=("manual",),
+    )
+    result = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
+    # Manual scenarios should not appear in missing_bindings
+    manual_missing = [
+        b for b in result["missing_bindings"] if b["scenario"] == "@bdd-login-valid"
+    ]
+    assert len(manual_missing) == 0

@@ -10,7 +10,7 @@ scenario iteration.
 
 ## Rule: Slugification produces stable lowercase slugs
 
-`@bdd-slugify-basic` `@manual`
+`@bdd-slugify-basic`
 
 ### Example: Slugify converts text to lowercase slug
 
@@ -19,7 +19,7 @@ scenario iteration.
 - When specweave slugifies "My Feature Title"
 - Then the result is "my-feature-title"
 
-`@bdd-slugify-special-chars` `@manual`
+`@bdd-slugify-special-chars`
 
 ### Example: Slugify replaces special characters with hyphens
 
@@ -28,7 +28,7 @@ scenario iteration.
 - When specweave slugifies "feature@name!"
 - Then the result is "feature-name"
 
-`@bdd-slugify-empty` `@manual`
+`@bdd-slugify-empty`
 
 ### Example: Slugify returns "behavior" for empty input
 
@@ -39,7 +39,7 @@ scenario iteration.
 
 ## Rule: Feature identity extracts area and slug
 
-`@bdd-feature-identity-from-path` `@manual`
+`@bdd-feature-identity-from-path`
 
 ### Example: Feature identity derives area from parent directory
 
@@ -48,7 +48,7 @@ scenario iteration.
 - Then the area is "auth"
 - And the feature_slug is "login"
 
-`@bdd-feature-identity-no-area` `@manual`
+`@bdd-feature-identity-no-area`
 
 ### Example: Feature identity uses "behavior" when no area directory
 
@@ -77,7 +77,7 @@ scenario iteration.
 
 ## Rule: Canonical test path derivation
 
-`@bdd-canonical-test-path` `@manual`
+`@bdd-canonical-test-path`
 
 ### Example: Test path is derived from feature path
 
@@ -87,7 +87,7 @@ scenario iteration.
 
 ## Rule: Scenario iteration yields all scenarios
 
-`@bdd-iter-scenarios-top-level` `@manual`
+`@bdd-iter-scenarios-top-level`
 
 ### Example: Iterator yields top-level scenarios
 
@@ -95,7 +95,7 @@ scenario iteration.
 - When specweave iterates the feature scenarios
 - Then the top-level scenarios are yielded with rule=None
 
-`@bdd-iter-scenarios-in-rules` `@manual`
+`@bdd-iter-scenarios-in-rules`
 
 ### Example: Iterator yields scenarios from rules
 
@@ -105,7 +105,7 @@ scenario iteration.
 
 ## Rule: Scenario ID extraction
 
-`@bdd-scenario-id-value` `@manual`
+`@bdd-scenario-id-value`
 
 ### Example: scenario_id_value returns first @bdd-\* tag
 
@@ -113,7 +113,7 @@ scenario iteration.
 - When specweave extracts the scenario id
 - Then the id is "bdd-example"
 
-`@bdd-scenario-id-missing` `@manual`
+`@bdd-scenario-id-missing`
 
 ### Example: scenario_id_value returns empty string when no @bdd-\* tag
 

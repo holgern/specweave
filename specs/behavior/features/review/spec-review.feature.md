@@ -51,7 +51,7 @@ to report on the health of the behavior specification suite.
 
 ## Rule: Review reports forbidden pytest-bdd usage
 
-`@bdd-review-forbidden-pytest-bdd` `@manual`
+`@bdd-review-forbidden-pytest-bdd`
 
 ### Example: Review errors on pytest-bdd usage
 
@@ -62,7 +62,7 @@ to report on the health of the behavior specification suite.
 
 ## Rule: Review aggregates lint findings
 
-`@bdd-review-lint-findings` `@manual`
+`@bdd-review-lint-findings`
 
 ### Example: Review includes lint errors and warnings
 

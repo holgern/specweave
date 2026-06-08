@@ -160,3 +160,60 @@ class TestReviewAggregatesCoverage:
         assert result["status"] == "failed"
         assert result["summary"]["stale_bindings"] == 1
         assert any(finding["code"] == "SWCOV002" for finding in result["findings"])
+
+    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: scenario=@bdd-review-forbidden-pytest-bdd
+    def test_forbidden_pytest_bdd(self, tmp_path: Path) -> None:
+        """Review errors on pytest-bdd usage."""
+        features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
+        tests_dir = tmp_path / "tests"
+        _write_markdown_feature(
+            features_dir / "login.feature.md",
+            scenario_id="@bdd-login-valid",
+            title="Valid login",
+        )
+        tests_dir.mkdir()
+        (tests_dir / "test_auth_login.py").write_text(
+            'from pytest_bdd import scenarios\nscenarios("login.feature")\n',
+            encoding="utf-8",
+        )
+        config = SpecWeaveConfig(
+            paths=SpecWeavePaths(
+                features_dir=features_dir.parent,
+                tests_dir=tests_dir,
+            ),
+        )
+        result = run_review(config=config)
+        assert any(f["code"] == "SWREV003" for f in result["findings"])
+
+    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: scenario=@bdd-review-lint-findings
+    def test_lint_findings(self, tmp_path: Path) -> None:
+        """Review includes lint errors and warnings."""
+        features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
+        features_dir.mkdir(parents=True)
+        # Write a feature with no Given/When/Then steps
+        (features_dir / "login.feature.md").write_text(
+            "`@area-auth` `@feature-login`\n"
+            "# Feature: Login\n"
+            "\n"
+            "`@bdd-login-valid`\n"
+            "### Example: Valid login\n"
+            "- A user exists\n",
+            encoding="utf-8",
+        )
+        config = SpecWeaveConfig(
+            paths=SpecWeavePaths(
+                features_dir=features_dir.parent,
+            ),
+        )
+        result = run_review(config=config)
+        lint_codes = [
+            "SWBEH001",
+            "SWBEH002",
+            "SWBEH003",
+            "SWBEH004",
+            "SWBEH005",
+            "SWBEH006",
+        ]
+        assert any(f["code"] in lint_codes for f in result["findings"])

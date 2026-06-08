@@ -18,7 +18,7 @@ normalized scenario results.
 - When specweave extracts IDs from tags
 - Then bdd_ids includes "bdd-login-success"
 
-`@bdd-tag-extraction-ac` `@manual`
+`@bdd-tag-extraction-ac`
 
 ### Example: Extraction finds @ac-\* tags
 

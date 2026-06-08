@@ -27,7 +27,7 @@ instances. Each parser extracts scenario name, status, tags, and evidence.
 - And failed tests have status "failed"
 - And skipped tests have status "skipped"
 
-`@bdd-junit-parse-duration` `@manual`
+`@bdd-junit-parse-duration`
 
 ### Example: Parser extracts test duration
 

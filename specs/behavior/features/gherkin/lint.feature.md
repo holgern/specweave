@@ -8,7 +8,7 @@ missing tags, deprecated paths, and duplicate identifiers.
 
 ## Rule: Lint checks feature structure
 
-`@bdd-lint-single-feature` `@manual`
+`@bdd-lint-single-feature`
 
 ### Example: Lint errors on multiple Feature lines
 
@@ -17,7 +17,7 @@ missing tags, deprecated paths, and duplicate identifiers.
 - Then a finding with code "SWBEH002" is reported
 - And the finding level is "error"
 
-`@bdd-lint-empty-feature-title` `@manual`
+`@bdd-lint-empty-feature-title`
 
 ### Example: Lint errors on empty feature title
 
@@ -25,7 +25,7 @@ missing tags, deprecated paths, and duplicate identifiers.
 - When specweave lints the feature
 - Then a finding with code "SWBEH003" is reported
 
-`@bdd-lint-empty-scenario-title` `@manual`
+`@bdd-lint-empty-scenario-title`
 
 ### Example: Lint errors on empty scenario title
 
@@ -33,7 +33,7 @@ missing tags, deprecated paths, and duplicate identifiers.
 - When specweave lints the feature
 - Then a finding with code "SWBEH004" is reported
 
-`@bdd-lint-missing-given-when-then` `@manual`
+`@bdd-lint-missing-given-when-then`
 
 ### Example: Lint errors when Given/When/Then are missing
 
@@ -41,7 +41,7 @@ missing tags, deprecated paths, and duplicate identifiers.
 - When specweave lints the feature
 - Then a finding with code "SWBEH005" is reported
 
-`@bdd-lint-empty-rule` `@manual`
+`@bdd-lint-empty-rule`
 
 ### Example: Lint errors on Rule without scenarios
 
@@ -51,7 +51,7 @@ missing tags, deprecated paths, and duplicate identifiers.
 
 ## Rule: Lint checks tag conventions
 
-`@bdd-lint-duplicate-bdd-tags` `@manual`
+`@bdd-lint-duplicate-bdd-tags`
 
 ### Example: Lint errors on duplicate @bdd-\* tags
 
@@ -59,7 +59,7 @@ missing tags, deprecated paths, and duplicate identifiers.
 - When specweave lints the features
 - Then a finding with code "SWBEH007" is reported for each location
 
-`@bdd-lint-missing-bdd-tag` `@manual`
+`@bdd-lint-missing-bdd-tag`
 
 ### Example: Lint warns when scenario lacks @bdd-\* tag
 
@@ -67,7 +67,7 @@ missing tags, deprecated paths, and duplicate identifiers.
 - When specweave lints with require_scenario_ids
 - Then a finding with code "SWBEH014" is reported
 
-`@bdd-lint-task-tags-discouraged` `@manual`
+`@bdd-lint-task-tags-discouraged`
 
 ### Example: Lint warns on task-specific tags in features
 
@@ -77,7 +77,7 @@ missing tags, deprecated paths, and duplicate identifiers.
 
 ## Rule: Lint checks file paths
 
-`@bdd-lint-canonical-path` `@manual`
+`@bdd-lint-canonical-path`
 
 ### Example: Lint errors on features outside canonical path
 
@@ -85,7 +85,7 @@ missing tags, deprecated paths, and duplicate identifiers.
 - When specweave lints the feature
 - Then a finding with code "SWBEH009" is reported
 
-`@bdd-lint-area-subdirectory` `@manual`
+`@bdd-lint-area-subdirectory`
 
 ### Example: Lint warns when feature is not in area subdirectory
 
@@ -93,7 +93,7 @@ missing tags, deprecated paths, and duplicate identifiers.
 - When specweave lints the feature
 - Then a finding with code "SWBEH010" is reported
 
-`@bdd-lint-deprecated-path` `@manual`
+`@bdd-lint-deprecated-path`
 
 ### Example: Lint warns on deprecated feature paths
 
@@ -103,7 +103,7 @@ missing tags, deprecated paths, and duplicate identifiers.
 
 ## Rule: Strict mode reports unsupported constructs
 
-`@bdd-lint-strict-unsupported` `@manual`
+`@bdd-lint-strict-unsupported`
 
 ### Example: Strict mode warns on Scenario Outline
 

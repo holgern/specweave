@@ -244,3 +244,26 @@ class TestCreateGherkinJsonShape:
             assert "feature_path" in r
             assert "status" in r
             assert "scenario_ids" in r
+
+    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
+    # specweave: scenario=@bdd-translate-force-overwrite
+    def test_force_overwrites_manual(self, tmp_path: Path) -> None:
+        """Generation overwrites with --force."""
+        test_file = _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)
+        out_dir = tmp_path / "specs" / "behavior" / "features"
+        feature_path = out_dir / "auth_login" / "auth-login.feature.md"
+        feature_path.parent.mkdir(parents=True)
+        feature_path.write_text(
+            "Feature: Manual\n  Scenario: Handwritten\n    Given something\n",
+            encoding="utf-8",
+        )
+        result = generate_gherkin_from_tests(
+            test_paths=[test_file],
+            out_dir=out_dir,
+            mode="update",
+            force=True,
+            config=SpecWeaveConfig(),
+        )
+        assert result["updated"] == 1
+        text = feature_path.read_text(encoding="utf-8")
+        assert "Valid Login" in text

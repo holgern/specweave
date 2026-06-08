@@ -28,7 +28,7 @@ bindings, deprecated paths, and forbidden pytest-bdd usage.
 - Then the scenario appears in missing_bindings
 - And the reason is "missing_scenario_binding"
 
-`@bdd-coverage-missing-test-file` `@manual`
+`@bdd-coverage-missing-test-file`
 
 ### Example: Coverage reports missing test files
 
@@ -38,7 +38,7 @@ bindings, deprecated paths, and forbidden pytest-bdd usage.
 
 ## Rule: Coverage detects stale bindings
 
-`@bdd-coverage-stale-binding` `@manual`
+`@bdd-coverage-stale-binding`
 
 ### Example: Coverage reports bindings to non-existent features
 
@@ -57,7 +57,7 @@ bindings, deprecated paths, and forbidden pytest-bdd usage.
 
 ## Rule: Coverage detects deprecated paths
 
-`@bdd-coverage-deprecated-paths` `@manual`
+`@bdd-coverage-deprecated-paths`
 
 ### Example: Coverage reports deprecated feature paths
 
@@ -77,7 +77,7 @@ bindings, deprecated paths, and forbidden pytest-bdd usage.
 
 ## Rule: Coverage skips manual and waived scenarios
 
-`@bdd-coverage-manual-scenario` `@manual`
+`@bdd-coverage-manual-scenario`
 
 ### Example: Coverage skips scenarios tagged @manual
 

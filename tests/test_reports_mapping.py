@@ -155,3 +155,11 @@ def test_fail_closed_no_passing_scenario() -> None:
     """Failed scenarios fail the linked criterion (no passing)."""
     results = (_scenario("A", "undefined", ("bdd-0001", "ac-0001")),)
     assert summarize_criteria(results)[0].status == "failed"
+
+
+# specweave: feature=specs/behavior/features/reports/mapping.feature.md
+# specweave: scenario=@bdd-tag-extraction-ac
+def test_extract_ac_ids_from_tags() -> None:
+    """Extraction finds @ac-* tags."""
+    ids = extract_ids_from_tags(("bdd-login", "ac-0001", "ac-0002"))
+    assert ids.ac_ids == ("ac-0001", "ac-0002")

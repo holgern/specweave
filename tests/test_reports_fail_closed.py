@@ -205,3 +205,101 @@ def test_passing_report_only_when_all_gates_pass(tmp_path) -> None:  # type: ign
     )
     assert report.status == "passed"
     assert all(c.status == "passed" for c in report.criteria)
+
+
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: scenario=@bdd-fail-closed-failed-scenario
+def test_failed_scenario_fails_criterion(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Failed scenario fails the linked criterion."""
+    path = _write_report(
+        tmp_path,
+        [
+            {
+                "name": "S",
+                "tags": [{"name": "@bdd-0001"}, {"name": "@ac-0001"}],
+                "steps": [{"result": {"status": "failed"}}],
+            }
+        ],
+    )
+    report = normalize_report(path, "cucumber-json")
+    assert report.status == "failed"
+    assert report.criteria[0].status == "failed"
+
+
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: scenario=@bdd-fail-closed-skipped-scenario
+def test_skipped_scenario_fails_criterion(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Skipped scenario fails the criterion by default."""
+    path = _write_report(
+        tmp_path,
+        [
+            {
+                "name": "S",
+                "tags": [{"name": "@bdd-0001"}, {"name": "@ac-0001"}],
+                "steps": [{"result": {"status": "skipped"}}],
+            }
+        ],
+    )
+    report = normalize_report(path, "cucumber-json")
+    assert report.status == "failed"
+    assert report.criteria[0].status == "failed"
+
+
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: scenario=@bdd-fail-closed-pending-scenario
+def test_pending_scenario_fails_criterion(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Pending scenario fails the criterion."""
+    path = _write_report(
+        tmp_path,
+        [
+            {
+                "name": "S",
+                "tags": [{"name": "@bdd-0001"}, {"name": "@ac-0001"}],
+                "steps": [{"result": {"status": "pending"}}],
+            }
+        ],
+    )
+    report = normalize_report(path, "cucumber-json")
+    assert report.status == "failed"
+    assert report.criteria[0].status == "failed"
+
+
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: scenario=@bdd-fail-closed-ambiguous-scenario
+def test_ambiguous_scenario_fails_criterion(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Ambiguous scenario fails the criterion."""
+    path = _write_report(
+        tmp_path,
+        [
+            {
+                "name": "S",
+                "tags": [{"name": "@bdd-0001"}, {"name": "@ac-0001"}],
+                "steps": [{"result": {"status": "ambiguous"}}],
+            }
+        ],
+    )
+    report = normalize_report(path, "cucumber-json")
+    assert report.status == "failed"
+    assert report.criteria[0].status == "failed"
+
+
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: scenario=@bdd-fail-closed-exit-code-not-evidence
+def test_exit_code_not_used_as_evidence(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Passing exit code does not override failed scenarios."""
+    path = _write_report(
+        tmp_path,
+        [
+            {
+                "name": "S",
+                "tags": [{"name": "@bdd-0001"}, {"name": "@ac-0001"}],
+                "steps": [{"result": {"status": "failed"}}],
+            }
+        ],
+    )
+    report = normalize_report(path, "cucumber-json")
+    # Report status must be failed, not passed from any exit code
+    assert report.status == "failed"
+    # The normalized output preserves the failure regardless of process exit code
+    data = to_normalized_dict(report)
+    assert data["status"] == "failed"

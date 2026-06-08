@@ -163,3 +163,11 @@ class TestDoctorFix:
         assert (tmp_path / "reports" / "behavior").is_dir()
         assert (tmp_path / ".specweave" / "evidence").is_dir()
         assert (tmp_path / ".specweave" / "mappings").is_dir()
+
+    # specweave: feature=specs/behavior/features/doctor/diagnostics.feature.md
+    # specweave: scenario=@bdd-doctor-unsupported-schema
+    def test_unsupported_schema(self, tmp_path: Path) -> None:
+        """Doctor errors on unsupported schema version."""
+        config = SpecWeaveConfig(schema_version=99)
+        result = run_doctor(config=config)
+        assert any(i["code"] == "SWDOC002" for i in result["items"])

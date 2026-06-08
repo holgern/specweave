@@ -231,3 +231,43 @@ def test_import_taskledger_infers_markdown_format(tmp_path) -> None:  # type: ig
     assert out.read_text(encoding="utf-8").startswith(
         "`@area-task-management` `@feature-plan-gates`\n# Feature:"
     )
+
+
+# specweave: feature=specs/behavior/features/integrations/taskledger.feature.md
+# specweave: scenario=@bdd-taskledger-draft-ac-mapping
+def test_taskledger_draft_ac_mapping(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Draft maps @ac-* tags to acceptance criteria."""
+    source = tmp_path / "task.acceptance.json"
+    source.write_text(
+        json.dumps(
+            {
+                "task_id": "task-0042",
+                "feature": "Plan gates",
+                "rules": [
+                    {
+                        "id": "rule-accepted-plan-required",
+                        "title": "Plan accepted",
+                    }
+                ],
+                "examples": [
+                    {
+                        "id": "bdd-impl-blocked",
+                        "title": "Implementation blocked",
+                        "rule_id": "rule-accepted-plan-required",
+                        "given": ["a plan exists"],
+                        "when": ["implementation starts"],
+                        "then": ["blocked"],
+                        "acceptance_criteria": ["ac-0001", "ac-0002"],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    out = tmp_path / "specs/behavior/features/task/plan-gates.feature"
+    feature = write_behavior_feature_from_taskledger(source, out)
+    # The acceptance criteria are on the examples/rules, filtered from tags
+    assert len(feature.rules) == 1
+    rule = feature.rules[0]
+    assert len(rule.scenarios) == 1
+    assert rule.scenarios[0].title == "Implementation blocked"

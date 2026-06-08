@@ -44,6 +44,15 @@ class TestFindConfig:
         assert find_config(tmp_path) is None
 
     # specweave: feature=specs/behavior/features/config/configuration.feature.md
+    # specweave: scenario=@bdd-config-discovery-finds-public
+    def test_finds_public_config(self, tmp_path: Path) -> None:
+        """Discovery finds specweave.toml in current directory."""
+        (tmp_path / "specweave.toml").write_text("schema_version = 1\n")
+        found = find_config(tmp_path)
+        assert found is not None
+        assert found.name == "specweave.toml"
+
+    # specweave: feature=specs/behavior/features/config/configuration.feature.md
     # specweave: scenario=@bdd-config-discovery-walks-parents
     def test_walks_up_directories(self, tmp_path: Path) -> None:
         """Discovery walks parent directories when not found locally."""

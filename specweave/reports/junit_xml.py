@@ -34,6 +34,7 @@ class PytestJunitCase:
     test_file: str
     nodeid: str
     properties: dict[str, str]
+    time: str
 
 
 def _tags_from_text(*texts: str | None) -> tuple[str, ...]:
@@ -97,9 +98,20 @@ def parse_pytest_junit_cases(path: str | Path) -> tuple[PytestJunitCase, ...]:
                 test_file=testcase.get("file", ""),
                 nodeid=_nodeid_of(testcase, properties),
                 properties=properties,
+                time=testcase.get("time", ""),
             )
         )
     return tuple(cases)
+
+
+def _parse_duration_ms(time_str: str) -> int | None:
+    """Convert a JUnit ``time`` attribute (seconds) to milliseconds."""
+    if not time_str:
+        return None
+    try:
+        return int(float(time_str) * 1000)
+    except (ValueError, TypeError):
+        return None
 
 
 def parse_junit_xml(path: str | Path) -> tuple[ScenarioResult, ...]:
@@ -110,6 +122,7 @@ def parse_junit_xml(path: str | Path) -> tuple[ScenarioResult, ...]:
     for case in parse_pytest_junit_cases(path):
         feature = case.properties.get("specweave_feature", "")
         scenario_name = case.properties.get("specweave_scenario", case.name)
+        duration_ms = _parse_duration_ms(case.time)
         results.append(
             ScenarioResult(
                 name=scenario_name,
@@ -124,6 +137,7 @@ def parse_junit_xml(path: str | Path) -> tuple[ScenarioResult, ...]:
                 evidence=evidence,
                 test_file=case.test_file,
                 nodeid=case.nodeid,
+                duration_ms=duration_ms,
             )
         )
     return tuple(results)

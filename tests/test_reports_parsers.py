@@ -356,3 +356,21 @@ def test_unsupported_format_raises(tmp_path) -> None:  # type: ignore[no-untyped
         assert "csv" in str(exc)
     else:  # pragma: no cover - defensive
         raise AssertionError("expected ValueError for unsupported format")
+
+
+# specweave: feature=specs/behavior/features/reports/parsers.feature.md
+# specweave: scenario=@bdd-junit-parse-duration
+def test_junit_parse_duration(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Parser extracts test duration from JUnit XML."""
+    text = """\
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="bdd" tests="1">
+    <testcase classname="features.task_0123" name="@bdd-0001 @ac-0001 ok"
+              time="0.123"/>
+  </testsuite>
+</testsuites>
+"""
+    path = _write(tmp_path, "junit.xml", text)
+    results = parse_junit_xml(path)
+    assert results[0].duration_ms == 123
