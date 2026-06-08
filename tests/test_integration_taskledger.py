@@ -1,0 +1,159 @@
+"""Tests for the optional Taskledger file adapter."""
+
+from __future__ import annotations
+
+import json
+
+from specweave.integrations.taskledger import (
+    load_taskledger_acceptance_export,
+    task_id_from_report,
+    write_taskledger_bdd_evidence,
+)
+from specweave.reports.model import NormalizedBddReport, ScenarioResult
+from specweave.reports.normalize import normalize_report
+
+
+def test_load_rich_shape(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """A rich task-BDD export loads verbatim as a TaskBddSpec."""
+    path = tmp_path / "task-0123.acceptance.json"
+    path.write_text(
+        json.dumps(
+            {
+                "task_id": "task-0123",
+                "feature": "Task lifecycle gates",
+                "rules": [
+                    {
+                        "id": "rule-0001",
+                        "title": ("Implementation requires an accepted plan"),
+                    }
+                ],
+                "examples": [
+                    {
+                        "id": "bdd-0001",
+                        "title": (
+                            "Agent cannot start implementation without an accepted plan"
+                        ),
+                        "rule_id": "rule-0001",
+                        "given": ["a task has a proposed plan"],
+                        "when": ["the agent starts implementation"],
+                        "then": ["taskledger rejects the transition"],
+                        "acceptance_criteria": ["ac-0001"],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    spec = load_taskledger_acceptance_export(path)
+    assert spec.task_id == "task-0123"
+    assert spec.rules[0].id == "rule-0001"
+    assert spec.examples[0].id == "bdd-0001"
+    assert spec.examples[0].acceptance_criteria == ("ac-0001",)
+
+
+def test_load_legacy_mvp_shape(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """The MVP acceptance shape builds a starter spec with one example per AC."""
+    path = tmp_path / "task-0009.acceptance.json"
+    path.write_text(
+        json.dumps(
+            {
+                "task_id": "task-0009",
+                "title": "Password login",
+                "acceptance_criteria": [
+                    {"id": "ac-0001", "text": "Reject invalid password"},
+                    {"id": "ac-0002", "text": "Accept valid password"},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    spec = load_taskledger_acceptance_export(path)
+    assert spec.task_id == "task-0009"
+    assert spec.feature == "Password login"
+    assert [ex.id for ex in spec.examples] == ["bdd-0001", "bdd-0002"]
+    assert spec.examples[0].acceptance_criteria == ("ac-0001",)
+    assert spec.examples[0].title == "Reject invalid password"
+
+
+def test_task_id_from_report() -> None:
+    report = NormalizedBddReport(
+        runner="cucumber-json",
+        source_report="x.json",
+        results=(
+            ScenarioResult(
+                name="S",
+                status="passed",
+                tags=("bdd-0001", "task-0123", "rule-0001", "ac-0001"),
+            ),
+        ),
+    )
+    assert task_id_from_report(report) == "task-0123"
+
+
+def test_task_id_from_report_missing_is_empty() -> None:
+    report = NormalizedBddReport(
+        runner="cucumber-json",
+        source_report="x.json",
+        results=(ScenarioResult(name="S", status="passed", tags=("ac-0001",)),),
+    )
+    assert task_id_from_report(report) == ""
+
+
+def test_write_evidence_round_trip(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """A normalized report serializes to the Taskledger evidence JSON shape."""
+    payload = [
+        {
+            "name": "F",
+            "elements": [
+                {
+                    "name": "S",
+                    "tags": [
+                        {"name": "@bdd-0001"},
+                        {"name": "@task-0123"},
+                        {"name": "@ac-0001"},
+                    ],
+                    "steps": [{"result": {"status": "passed"}}],
+                }
+            ],
+        }
+    ]
+    report_path = tmp_path / "cucumber.json"
+    report_path.write_text(json.dumps(payload), encoding="utf-8")
+    report = normalize_report(report_path, "cucumber-json")
+
+    out = tmp_path / ".specweave/evidence/task-0123.bdd-evidence.json"
+    recorded = write_taskledger_bdd_evidence(report, out)
+    assert recorded == "task-0123"
+    data = json.loads(out.read_text(encoding="utf-8"))
+    assert data["schema_version"] == 2
+    assert data["generated_by"] == "specweave"
+    assert data["task_id"] == "task-0123"
+    assert data["status"] == "passed"
+    assert data["criteria"][0]["criterion_id"] == "ac-0001"
+    assert data["criteria"][0]["status"] == "passed"
+    assert data["criteria"][0]["bdd_ids"] == ["bdd-0001"]
+    assert data["scenarios"][0]["bdd_id"] == "bdd-0001"
+
+
+def test_write_evidence_explicit_task_id(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    report = NormalizedBddReport(
+        runner="cucumber-json",
+        source_report="x.json",
+        results=(ScenarioResult(name="S", status="passed", tags=("ac-0001",)),),
+    )
+    out = tmp_path / "ev.json"
+    recorded = write_taskledger_bdd_evidence(report, out, task_id="task-0042")
+    assert recorded == "task-0042"
+    data = json.loads(out.read_text(encoding="utf-8"))
+    assert data["task_id"] == "task-0042"
+
+
+def test_no_taskledger_import_required() -> None:  # type: ignore[no-untyped-def]
+    """The adapter must not import taskledger as a hard dependency."""
+    import sys
+
+    assert "taskledger" not in sys.modules
+    # Importing the adapter does not pull in taskledger.
+    import specweave.integrations.taskledger  # noqa: F401
+
+    assert "taskledger" not in sys.modules

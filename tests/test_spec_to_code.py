@@ -84,7 +84,7 @@ Feature: Password login
 
 
 def test_bind_unsupported_backend_raises() -> None:
-    """Unsupported backend raises ValueError."""
+    """Unknown backends raise ValueError."""
     import tempfile
     from pathlib import Path
 
@@ -96,4 +96,4 @@ def test_bind_unsupported_backend_raises() -> None:
         import pytest
 
         with pytest.raises(ValueError, match="Unsupported backend"):
-            bind_feature(feature_path, "pytest-bdd", Path(tmpdir) / "out")
+            bind_feature(feature_path, "totally-unknown", Path(tmpdir) / "out")

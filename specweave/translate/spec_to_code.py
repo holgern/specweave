@@ -8,7 +8,6 @@ from pathlib import Path
 from specweave.gherkin.model import Feature, Scenario, Step
 from specweave.gherkin.parser import parse_feature
 from specweave.gherkin.writer import write_feature
-from specweave.translate.naming import step_function_name
 
 
 def draft_feature(from_json: Path, out: Path) -> None:
@@ -59,22 +58,17 @@ def _criterion_to_scenario_title(text: str) -> str:
 def bind_feature(feature_path: Path, backend: str, out: Path) -> None:
     """Generate Python step-definition skeletons for a feature file.
 
-    Supports ``behave`` backend.
+    Supported backends are looked up in :data:`specweave.backends.BACKENDS`
+    (``behave``, ``pytest-bdd``).
     """
+    from specweave.backends import get_backend
+
     text = feature_path.read_text(encoding="utf-8")
     feature = parse_feature(text)
 
     out.mkdir(parents=True, exist_ok=True)
 
-    existing_names: set[str] = set()
-    all_steps: list[Step] = []
-    for scenario in feature.scenarios:
-        all_steps.extend(scenario.steps)
-
-    if backend == "behave":
-        generated = _generate_behave_skeletons(feature, all_steps, existing_names)
-    else:
-        raise ValueError(f"Unsupported backend: {backend}")
+    generated = get_backend(backend)(feature)
 
     output_path = out / f"{feature_path.stem}_steps.py"
     output_path.write_text(generated, encoding="utf-8")
@@ -85,47 +79,12 @@ def _generate_behave_skeletons(
     steps: list[Step],
     existing_names: set[str],
 ) -> str:
-    """Generate behave step-definition Python code."""
+    """Generate behave step-definition Python code.
 
-    lines: list[str] = [
-        f'"""Step definitions for feature: {feature.title}"""',
-        "from __future__ import annotations",
-        "",
-        "from behave import given, then, when  # type: ignore[import-untyped]",
-        "",
-        f"# Feature: {feature.title}",
-        "# Source: {}".format(feature.source_path or "generated"),
-        "",
-    ]
+    .. deprecated::
+       Kept for backward compatibility. New code should call
+       :func:`specweave.backends.behave.generate_behave` directly.
+    """
+    from specweave.backends.behave import generate_behave
 
-    decorator_map = {
-        "Given": "given",
-        "When": "when",
-        "Then": "then",
-        "And": "then",  # And/But reuse Then
-        "But": "then",
-    }
-
-    seen_texts: set[str] = set()
-
-    for step in steps:
-        step_text = step.text
-        keyword = step.keyword
-
-        if step_text in seen_texts:
-            continue
-        seen_texts.add(step_text)
-
-        decorator = decorator_map.get(keyword, "given")
-        func_name = step_function_name(
-            f"{keyword} {step_text}", existing=frozenset(existing_names)
-        )
-        existing_names.add(func_name)
-
-        lines.append(f'@{decorator}("{step_text}")')
-        lines.append(f"def {func_name}(context):")
-        lines.append(f'    """Step: {keyword} {step_text}"""')
-        lines.append('    raise NotImplementedError("Bind this step to project code.")')
-        lines.append("")
-
-    return "\n".join(lines)
+    return generate_behave(feature)

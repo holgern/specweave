@@ -24,11 +24,33 @@ class Scenario:
 
 
 @dataclass(frozen=True)
-class Feature:
-    """A Gherkin feature containing scenarios."""
+class Rule:
+    """A Gherkin ``Rule:`` block containing scenarios.
+
+    Rules are the Taskledger/SpecWeave target grouping unit for behaviour
+    examples. A rule owns its own tags and scenarios. Top-level scenarios that
+    are not nested under a rule remain on ``Feature.scenarios`` for backward
+    compatibility.
+    """
 
     title: str
-    scenarios: tuple[Scenario, ...]
+    scenarios: tuple[Scenario, ...] = ()
+    tags: tuple[str, ...] = ()
+    description: str = ""
+
+
+@dataclass(frozen=True)
+class Feature:
+    """A Gherkin feature containing scenarios and/or rules.
+
+    ``scenarios`` holds top-level scenarios (backward compatible with the
+    original MVP model). ``rules`` holds ``Rule:`` blocks preferred for
+    Taskledger-linked BDD. Both may coexist in the same feature.
+    """
+
+    title: str
+    scenarios: tuple[Scenario, ...] = ()
+    rules: tuple[Rule, ...] = ()
     tags: tuple[str, ...] = ()
     description: str = ""
     source_path: Path | None = None
