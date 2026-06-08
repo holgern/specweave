@@ -16,11 +16,24 @@ from __future__ import annotations
 
 import re
 import xml.etree.ElementTree as ET
+from dataclasses import dataclass
 from pathlib import Path
 
 from specweave.reports.model import ScenarioResult
 
 _TAG_TOKEN_RE = re.compile(r"@(\S+)")
+
+
+@dataclass(frozen=True)
+class PytestJunitCase:
+    """A single testcase row parsed from pytest's JUnit XML."""
+
+    name: str
+    classname: str
+    status: str
+    test_file: str
+    nodeid: str
+    properties: dict[str, str]
 
 
 def _tags_from_text(*texts: str | None) -> tuple[str, ...]:
@@ -41,37 +54,76 @@ def _status_of(testcase: ET.Element) -> str:
     return "passed"
 
 
-def _collect_property_values(testcase: ET.Element) -> str:
-    parts: list[str] = []
+def _collect_properties(testcase: ET.Element) -> dict[str, str]:
+    properties: dict[str, str] = {}
     for prop in testcase.iterfind("properties/property"):
+        name = prop.get("name")
         value = prop.get("value")
-        if isinstance(value, str):
-            parts.append(value)
-    return " ".join(parts)
+        if isinstance(name, str) and isinstance(value, str):
+            properties[name] = value
+    return properties
+
+
+def _collect_property_values(testcase: ET.Element) -> str:
+    return " ".join(_collect_properties(testcase).values())
+
+
+def _nodeid_of(testcase: ET.Element, properties: dict[str, str]) -> str:
+    nodeid = properties.get("nodeid")
+    if isinstance(nodeid, str) and nodeid:
+        return nodeid
+    name = testcase.get("name", "")
+    if "::" in name:
+        return name
+    file_path = testcase.get("file", "")
+    if file_path and name:
+        return f"{file_path}::{name}"
+    return name
+
+
+def parse_pytest_junit_cases(path: str | Path) -> tuple[PytestJunitCase, ...]:
+    """Parse JUnit XML at *path* into pytest-oriented testcase records."""
+
+    tree = ET.parse(Path(path))
+    root = tree.getroot()
+    cases: list[PytestJunitCase] = []
+    for testcase in root.iter("testcase"):
+        properties = _collect_properties(testcase)
+        cases.append(
+            PytestJunitCase(
+                name=testcase.get("name", ""),
+                classname=testcase.get("classname", ""),
+                status=_status_of(testcase),
+                test_file=testcase.get("file", ""),
+                nodeid=_nodeid_of(testcase, properties),
+                properties=properties,
+            )
+        )
+    return tuple(cases)
 
 
 def parse_junit_xml(path: str | Path) -> tuple[ScenarioResult, ...]:
     """Parse a JUnit XML report at *path* into scenario results."""
-    tree = ET.parse(Path(path))
-    root = tree.getroot()
     evidence = (str(path),)
 
     results: list[ScenarioResult] = []
-    # testcases may live directly under testsuites/testsuite, or nested deeper.
-    for testcase in root.iter("testcase"):
-        name = testcase.get("name", "")
-        classname = testcase.get("classname", "")
-        feature = classname.rsplit(".", 1)[-1] if classname else ""
+    for case in parse_pytest_junit_cases(path):
+        feature = case.properties.get("specweave_feature", "")
+        scenario_name = case.properties.get("specweave_scenario", case.name)
         results.append(
             ScenarioResult(
-                name=name,
-                status=_status_of(testcase),
+                name=scenario_name,
+                status=case.status,
                 tags=_tags_from_text(
-                    name, classname, _collect_property_values(testcase)
+                    case.name,
+                    case.classname,
+                    " ".join(case.properties.values()),
                 ),
-                feature=feature,
-                rule=None,
+                feature=feature or case.classname.rsplit(".", 1)[-1],
+                rule=case.properties.get("specweave_rule"),
                 evidence=evidence,
+                test_file=case.test_file,
+                nodeid=case.nodeid,
             )
         )
     return tuple(results)

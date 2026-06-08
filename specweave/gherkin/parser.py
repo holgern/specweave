@@ -1,26 +1,15 @@
-"""Narrow parser for generated/editable feature files.
-
-Supports the subset needed by ``bind`` and ``check``:
-
-- ``@tags`` (one or more per line, and/or one tag per line)
-- ``Feature:``
-- ``Rule:`` (optional; groups scenarios)
-- ``Scenario:``
-- step lines beginning with ``Given``, ``When``, ``Then``, ``And``, ``But``
-- feature/rule free-text descriptions
-- comments and blank lines are ignored.
-
-The MVP originally only allowed top-level scenarios. Rules are the preferred
-grouping unit for Taskledger-linked BDD; both may coexist in one feature.
-"""
+"""Parser for editable Gherkin feature files."""
 
 from __future__ import annotations
+
+from pathlib import Path
 
 from specweave.gherkin.model import Feature, Rule, Scenario, Step
 from specweave.gherkin.tags import is_tag_line, parse_tag_line
 
 _STEP_KEYWORDS = frozenset({"Given", "When", "Then", "And", "But"})
-_BLOCK_STARTS = ("Rule:", "Scenario:", "Feature:")
+_SCENARIO_PREFIXES = ("Scenario:", "Example:")
+_BLOCK_STARTS = ("Rule:", "Feature:", *_SCENARIO_PREFIXES)
 
 
 def _is_blank_or_comment(line: str) -> bool:
@@ -54,7 +43,9 @@ def _is_block_boundary(stripped: str) -> bool:
     return is_tag_line(stripped) or stripped.startswith(_BLOCK_STARTS)
 
 
-def _parse_description(lines: list[str], start: int) -> tuple[str, int]:
+def _parse_description(
+    lines: list[str], start: int, *, stop_on_steps: bool = False
+) -> tuple[str, int]:
     """Collect free-text description lines until a block boundary.
 
     Stops at a tag line, ``Rule:``/``Scenario:``/``Feature:``, or EOF. Comments
@@ -68,6 +59,8 @@ def _parse_description(lines: list[str], start: int) -> tuple[str, int]:
         if stripped.startswith("#"):
             i += 1
             continue
+        if stop_on_steps and _first_token(stripped) in _STEP_KEYWORDS:
+            break
         if stripped and _is_block_boundary(stripped):
             break
         desc.append(stripped)
@@ -104,11 +97,41 @@ def _parse_steps(lines: list[str], start: int) -> tuple[tuple[Step, ...], int]:
     return tuple(steps), i
 
 
-def parse_feature(text: str) -> Feature:
-    """Parse a Gherkin feature from *text*.
+def _is_scenario_header(stripped: str) -> bool:
+    return stripped.startswith(_SCENARIO_PREFIXES)
 
-    Raises ValueError on structural errors.
-    """
+
+def _scenario_keyword_and_title(stripped: str) -> tuple[str, str]:
+    for prefix in _SCENARIO_PREFIXES:
+        if stripped.startswith(prefix):
+            return prefix[:-1], stripped[len(prefix) :].strip()
+    raise ValueError(f"Unsupported scenario header: {stripped}")
+
+
+def _parse_scenario(
+    lines: list[str], start: int, tags: tuple[str, ...]
+) -> tuple[Scenario, int]:
+    stripped = lines[start].strip()
+    keyword, title = _scenario_keyword_and_title(stripped)
+    description, after_description = _parse_description(
+        lines, start + 1, stop_on_steps=True
+    )
+    steps, end = _parse_steps(lines, after_description)
+    return (
+        Scenario(
+            title=title,
+            steps=steps,
+            tags=tags,
+            keyword=keyword,
+            description=description,
+            line=start + 1,
+        ),
+        end,
+    )
+
+
+def parse_feature(text: str, *, source_path: Path | None = None) -> Feature:
+    """Parse a Gherkin feature from *text*."""
     lines = text.splitlines()
 
     i = _skip_blanks_comments(lines, 0)
@@ -118,6 +141,7 @@ def parse_feature(text: str) -> Feature:
 
     if i >= len(lines) or not lines[i].strip().startswith("Feature:"):
         raise ValueError("Expected 'Feature:' line")
+    feature_line = i + 1
     feature_title = lines[i].strip()[len("Feature:") :].strip()
     i += 1
 
@@ -125,30 +149,6 @@ def parse_feature(text: str) -> Feature:
 
     top_scenarios: list[Scenario] = []
     rules: list[Rule] = []
-
-    # Current rule accumulation state.
-    in_rule = False
-    rule_title = ""
-    rule_tags: tuple[str, ...] = ()
-    rule_description = ""
-    rule_scenarios: list[Scenario] = []
-
-    def flush_rule() -> None:
-        nonlocal in_rule, rule_title, rule_tags, rule_description, rule_scenarios
-        if in_rule:
-            rules.append(
-                Rule(
-                    title=rule_title,
-                    scenarios=tuple(rule_scenarios),
-                    tags=rule_tags,
-                    description=rule_description,
-                )
-            )
-            in_rule = False
-            rule_title = ""
-            rule_tags = ()
-            rule_description = ""
-            rule_scenarios = []
 
     while i < len(lines):
         i = _skip_blanks_comments(lines, i)
@@ -162,23 +162,40 @@ def parse_feature(text: str) -> Feature:
         stripped = lines[i].strip()
 
         if stripped.startswith("Rule:"):
-            flush_rule()
-            in_rule = True
             rule_title = stripped[len("Rule:") :].strip()
-            rule_tags = tags
-            i += 1
-            rule_description, i = _parse_description(lines, i)
+            rule_line = i + 1
+            rule_description, i = _parse_description(lines, i + 1)
+            rule_scenarios: list[Scenario] = []
+            while i < len(lines):
+                i = _skip_blanks_comments(lines, i)
+                if i >= len(lines):
+                    break
+                scenario_tags, after_tags = _parse_tag_lines(lines, i)
+                if after_tags >= len(lines):
+                    i = after_tags
+                    break
+                nested = lines[after_tags].strip()
+                if nested.startswith(("Rule:", "Feature:")):
+                    break
+                if _is_scenario_header(nested):
+                    scenario, i = _parse_scenario(lines, after_tags, scenario_tags)
+                    rule_scenarios.append(scenario)
+                    continue
+                i = after_tags + 1
+            rules.append(
+                Rule(
+                    title=rule_title,
+                    scenarios=tuple(rule_scenarios),
+                    tags=tags,
+                    description=rule_description,
+                    line=rule_line,
+                )
+            )
             continue
 
-        if stripped.startswith("Scenario:"):
-            scenario_title = stripped[len("Scenario:") :].strip()
-            i += 1
-            steps, i = _parse_steps(lines, i)
-            scenario = Scenario(title=scenario_title, steps=steps, tags=tags)
-            if in_rule:
-                rule_scenarios.append(scenario)
-            else:
-                top_scenarios.append(scenario)
+        if _is_scenario_header(stripped):
+            scenario, i = _parse_scenario(lines, i, tags)
+            top_scenarios.append(scenario)
             continue
 
         if stripped.startswith("Feature:"):
@@ -188,12 +205,12 @@ def parse_feature(text: str) -> Feature:
         # Unknown line at block boundary: skip defensively.
         i += 1
 
-    flush_rule()
-
     return Feature(
         title=feature_title,
         scenarios=tuple(top_scenarios),
         rules=tuple(rules),
         tags=feature_tags,
         description=description,
+        source_path=source_path,
+        line=feature_line,
     )

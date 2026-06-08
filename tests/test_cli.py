@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 from typer.testing import CliRunner
 
@@ -227,3 +228,156 @@ def test_bind_pytest_bdd_backend(tmp_path) -> None:  # type: ignore[no-untyped-d
     step_file = out_dir / "test_steps.py"
     content = step_file.read_text(encoding="utf-8")
     assert "from pytest_bdd import" in content
+
+
+def _write_behavior_feature(
+    tmp_path: Path,
+    *,
+    relative_path: str = "specs/behavior/features/task-management/plan-gates.feature",
+) -> Path:
+    path = tmp_path / relative_path
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        """@area-task-management @feature-plan-gates
+Feature: Plan gates
+  Implementation must not start before a plan is accepted.
+
+  @rule-accepted-plan-required
+  Rule: Implementation requires an accepted plan
+
+    @bdd-implementation-blocked-before-plan-acceptance
+    Example: Agent cannot start implementation before plan approval
+      Given a task has a proposed plan
+      When the agent starts implementation
+      Then implementation is blocked
+""",
+        encoding="utf-8",
+    )
+    return path
+
+
+def test_behavior_check_accepts_canonical_feature(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    _write_behavior_feature(tmp_path)
+    result = runner.invoke(app, ["behavior", "check"])
+    assert result.exit_code == 0, result.stdout
+    assert "No behavior lint findings." in result.stdout
+
+
+def test_behavior_check_warns_on_deprecated_specs_bdd_path(
+    tmp_path, monkeypatch
+) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    feature_path = _write_behavior_feature(
+        tmp_path,
+        relative_path="specs/bdd/features/task-management/plan-gates.feature",
+    )
+    result = runner.invoke(app, ["behavior", "check", str(feature_path)])
+    assert result.exit_code == 0, result.stdout
+    assert "SWBEH015" in result.stdout
+
+
+def test_behavior_generate_tests_creates_plain_pytest(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    feature_path = _write_behavior_feature(tmp_path)
+    result = runner.invoke(app, ["behavior", "generate-tests", str(feature_path)])
+    assert result.exit_code == 0, result.stdout
+    test_file = tmp_path / "tests/test_task_management_plan_gates.py"
+    content = test_file.read_text(encoding="utf-8")
+    assert "import pytest" in content
+    assert "@pytest.mark.specweave" in content
+    assert (
+        "# specweave: feature="
+        "specs/behavior/features/task-management/plan-gates.feature" in content
+    )
+    assert "pytest_bdd" not in content
+    assert "scenarios(" not in content
+
+
+def test_behavior_index_writes_markdown_and_manifest(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    feature_path = _write_behavior_feature(tmp_path)
+    generate_result = runner.invoke(
+        app, ["behavior", "generate-tests", str(feature_path)]
+    )
+    assert generate_result.exit_code == 0, generate_result.stdout
+    result = runner.invoke(app, ["behavior", "index"])
+    assert result.exit_code == 0, result.stdout
+    index_path = tmp_path / "specs/behavior/README.md"
+    manifest_path = tmp_path / "specs/behavior/manifest.json"
+    assert index_path.exists()
+    assert manifest_path.exists()
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert (
+        manifest["features"][0]["path"]
+        == "specs/behavior/features/task-management/plan-gates.feature"
+    )
+    scenario = manifest["features"][0]["rules"][0]["scenarios"][0]
+    assert scenario["automation"]["backend"] == "pytest"
+    assert scenario["automation"]["status"] == "bound"
+
+
+def test_behavior_coverage_reports_bound_scenarios(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    feature_path = _write_behavior_feature(tmp_path)
+    generate_result = runner.invoke(
+        app, ["behavior", "generate-tests", str(feature_path)]
+    )
+    assert generate_result.exit_code == 0, generate_result.stdout
+    result = runner.invoke(app, ["behavior", "coverage"])
+    assert result.exit_code == 0, result.stdout
+    data = json.loads(result.stdout)
+    assert data["features_total"] == 1
+    assert data["scenarios_total"] == 1
+    assert data["features_bound"] == 1
+    assert data["scenarios_bound"] == 1
+
+
+def test_behavior_import_report_maps_pytest_nodeid(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    feature_path = _write_behavior_feature(tmp_path)
+    generate_result = runner.invoke(
+        app, ["behavior", "generate-tests", str(feature_path)]
+    )
+    assert generate_result.exit_code == 0, generate_result.stdout
+    report_path = tmp_path / "reports/behavior/task-management-plan-gates-junit.xml"
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(
+        """<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="pytest" tests="1">
+    <testcase classname="tests.test_task_management_plan_gates"
+              file="tests/test_task_management_plan_gates.py"
+              name="test_agent_cannot_start_implementation_before_plan_approval"/>
+  </testsuite>
+</testsuites>
+""",
+        encoding="utf-8",
+    )
+    result = runner.invoke(
+        app,
+        [
+            "behavior",
+            "import-report",
+            str(report_path),
+            "--format",
+            "junit-xml",
+            "--out",
+            str(tmp_path / ".specweave/evidence/plan-gates.pytest-evidence.json"),
+        ],
+    )
+    assert result.exit_code == 0, result.stdout
+    payload = json.loads(
+        (tmp_path / ".specweave/evidence/plan-gates.pytest-evidence.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert payload["backend"] == "pytest"
+    assert (
+        payload["results"][0]["feature"]
+        == "specs/behavior/features/task-management/plan-gates.feature"
+    )
+    assert (
+        payload["results"][0]["scenario"]
+        == "@bdd-implementation-blocked-before-plan-acceptance"
+    )

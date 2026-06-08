@@ -6,7 +6,10 @@ import tempfile
 from pathlib import Path
 
 from specweave.python_inspect.assertions import describe_assert
-from specweave.python_inspect.ast_reader import extract_test_scenarios
+from specweave.python_inspect.ast_reader import (
+    discover_specweave_tests,
+    extract_test_scenarios,
+)
 
 
 def _write_test_file(content: str) -> Path:
@@ -101,3 +104,48 @@ def test_describe_assert_call() -> None:
     result = describe_assert(node)
     assert result is not None
     assert "succeeds" in result
+
+
+def test_discover_specweave_marker_mapping() -> None:
+    code = """
+import pytest
+
+SPECWEAVE_FEATURE = "specs/behavior/features/task-management/plan-gates.feature"
+
+
+@pytest.mark.specweave(
+    feature=SPECWEAVE_FEATURE,
+    scenario="@bdd-implementation-blocked-before-plan-acceptance",
+)
+def test_agent_cannot_start_implementation_before_plan_approval():
+    pass
+"""
+    path = _write_test_file(code)
+    try:
+        mappings = discover_specweave_tests(path)
+        assert len(mappings) == 1
+        mapping = mappings[0]
+        assert mapping.feature.endswith("plan-gates.feature")
+        assert mapping.scenario == "@bdd-implementation-blocked-before-plan-acceptance"
+        assert mapping.source == "marker"
+    finally:
+        path.unlink()
+
+
+def test_discover_specweave_comment_mapping() -> None:
+    code = """
+# specweave: feature=specs/behavior/features/sync/git-sync.feature
+# specweave: scenario=@bdd-imports-pytest-report
+def test_imports_pytest_report():
+    pass
+"""
+    path = _write_test_file(code)
+    try:
+        mappings = discover_specweave_tests(path)
+        assert len(mappings) == 1
+        mapping = mappings[0]
+        assert mapping.feature.endswith("git-sync.feature")
+        assert mapping.scenario == "@bdd-imports-pytest-report"
+        assert mapping.source == "comment"
+    finally:
+        path.unlink()

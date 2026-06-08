@@ -64,7 +64,7 @@ def bind_feature(feature_path: Path, backend: str, out: Path) -> None:
     from specweave.backends import get_backend
 
     text = feature_path.read_text(encoding="utf-8")
-    feature = parse_feature(text)
+    feature = parse_feature(text, source_path=feature_path)
 
     out.mkdir(parents=True, exist_ok=True)
 

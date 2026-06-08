@@ -21,6 +21,9 @@ class Scenario:
     title: str
     steps: tuple[Step, ...]
     tags: tuple[str, ...] = ()
+    keyword: str = "Scenario"
+    description: str = ""
+    line: int | None = None
 
 
 @dataclass(frozen=True)
@@ -37,6 +40,7 @@ class Rule:
     scenarios: tuple[Scenario, ...] = ()
     tags: tuple[str, ...] = ()
     description: str = ""
+    line: int | None = None
 
 
 @dataclass(frozen=True)
@@ -54,6 +58,7 @@ class Feature:
     tags: tuple[str, ...] = ()
     description: str = ""
     source_path: Path | None = None
+    line: int | None = None
 
 
 @dataclass(frozen=True)

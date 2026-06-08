@@ -26,7 +26,11 @@ def _write_scenario(scenario: Scenario, indent: str, step_indent: str) -> list[s
     tag_line = _format_tag_line(scenario.tags, indent)
     if tag_line is not None:
         lines.append(tag_line)
-    lines.append(f"{indent}Scenario: {scenario.title}")
+    keyword = (
+        scenario.keyword if scenario.keyword in {"Scenario", "Example"} else "Scenario"
+    )
+    lines.append(f"{indent}{keyword}: {scenario.title}")
+    lines.extend(_write_description(scenario.description, step_indent))
     for step in scenario.steps:
         lines.append(f"{step_indent}{step.keyword} {step.text}")
     return lines

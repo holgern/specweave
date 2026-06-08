@@ -7,6 +7,7 @@ import json
 from specweave.integrations.taskledger import (
     load_taskledger_acceptance_export,
     task_id_from_report,
+    write_behavior_feature_from_taskledger,
     write_taskledger_bdd_evidence,
 )
 from specweave.reports.model import NormalizedBddReport, ScenarioResult
@@ -157,3 +158,42 @@ def test_no_taskledger_import_required() -> None:  # type: ignore[no-untyped-def
     import specweave.integrations.taskledger  # noqa: F401
 
     assert "taskledger" not in sys.modules
+
+
+def test_import_taskledger_to_canonical_behavior_feature(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    source = tmp_path / "task-0123.acceptance.json"
+    source.write_text(
+        json.dumps(
+            {
+                "task_id": "task-0123",
+                "feature": "Plan gates",
+                "rules": [
+                    {
+                        "id": "rule-accepted-plan-required",
+                        "title": "Implementation requires an accepted plan",
+                    }
+                ],
+                "examples": [
+                    {
+                        "id": "bdd-implementation-blocked-before-plan-acceptance",
+                        "title": (
+                            "Agent cannot start implementation before plan approval"
+                        ),
+                        "rule_id": "rule-accepted-plan-required",
+                        "given": ["a task has a proposed plan"],
+                        "when": ["the agent starts implementation"],
+                        "then": ["implementation is blocked"],
+                        "acceptance_criteria": ["ac-0001"],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    out = tmp_path / "specs/behavior/features/task-management/plan-gates.feature"
+    feature = write_behavior_feature_from_taskledger(source, out)
+    text = out.read_text(encoding="utf-8")
+    assert feature.tags == ("area-task-management", "feature-plan-gates")
+    assert "@bdd-implementation-blocked-before-plan-acceptance" in text
+    assert "@task-0123" not in text
+    assert "@ac-0001" not in text

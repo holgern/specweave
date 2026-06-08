@@ -50,11 +50,9 @@ def _scenario_names(feature: Feature) -> list[str]:
 
 
 def _iter_scenarios(feature: Feature):  # type: ignore[no-untyped-def]
-    for scenario in feature.scenarios:
-        yield scenario
+    yield from feature.scenarios
     for rule in feature.rules:
-        for scenario in rule.scenarios:
-            yield scenario
+        yield from rule.scenarios
 
 
 def generate_pytest_bdd(feature: Feature) -> str:

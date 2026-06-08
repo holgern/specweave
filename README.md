@@ -1,68 +1,115 @@
 # specweave
 
-SpecWeave translates between Python tests, Gherkin/Cucumber feature files,
-plain-English behavior descriptions, and normalized BDD execution evidence.
+SpecWeave translates between canonical Gherkin behavior specs, plain pytest
+enforcement, and normalized execution evidence.
 
 It is not a task ledger, architecture ledger, or CI system.
 
-## MVP commands
-
-- `specweave explain PATH...` — Inspect Python test files and produce candidate
-  Gherkin behavior descriptions using AST analysis.
-
-- `specweave draft --from-json task.json --out features/task.feature` — Create
-  a Gherkin `.feature` file from a JSON acceptance criteria document.
-
-- `specweave bind features/task.feature --backend behave --out tests/bdd/steps/`
-  — Generate Python step-definition skeletons from a feature file. Backends:
-  `behave` (default) and `pytest-bdd`. Scenarios inside `Rule:` blocks are
-  bound as well.
-
-- `specweave run --runner command -- <external test command>` — Execute a
-  delegated BDD command, capture stdout/stderr, and write a normalized summary
-  report to `.specweave/reports/summary.json`.
-
-- `specweave version` — Print the installed version.
-
-## BDD workflow commands
-
-SpecWeave owns the BDD bridge between project tests, task acceptance criteria,
-and (optional) Taskledger/Archledger records. Taskledger and Archledger are
-**optional, file-based integrations** — SpecWeave never imports them as hard
-Python dependencies.
-
-- `specweave bdd export --from-json task-bdd.json --out features/task.feature`
-  — Export a task-BDD JSON spec (`task_id`, `feature`, `rules`, `examples`) to
-  a target-format Gherkin feature file with canonical
-  `@task-*`/`@rule-*`/`@bdd-*`/`@ac-*` tags.
-
-- `specweave bdd import-feature features/task.feature --out task-bdd.json`
-  — Import a feature file back into a task-BDD JSON spec, preserving
-  task/rule/bdd/ac ids.
-
-- `specweave report normalize REPORT --format cucumber-json|junit-xml [--out OUT] [--evidence] [--task task-0123] [--allow-skipped] [--expect-ac ac-0001]`
-  — Normalize a runner-native report to the SpecWeave schema (v2). Status is
-  **fail-closed**: `failed`/`undefined`/`pending`/`ambiguous` (and `skipped`
-  unless `--allow-skipped`) mark the report `failed`. Exit code is non-zero on
-  failure. Use `--evidence` to emit the Taskledger BDD evidence JSON shape.
-
-- `specweave report inspect REPORT --format cucumber-json|junit-xml` — Print a
-  compact one-line summary of the normalized report.
-
-- `specweave archledger candidate --feature features/task.feature --bdd bdd-0001 --out .archledger/candidates/al_candidate.md` — Render an Archledger
-  candidate behavior record (Source / Behavior / Rationale) for a BDD example.
-  Candidate-only; Archledger decides whether to accept and persist it.
-
-### Data exchange contracts
+## Canonical layout
 
 ```text
-input from Taskledger:   .taskledger/exports/task-0123.acceptance.json
-output to Taskledger:    .specweave/evidence/task-0123.bdd-evidence.json
+specs/behavior/features/<area>/<feature>.feature
+tests/test_<area>_<feature>.py
+reports/behavior/*.xml
+.specweave/reports/*.json
+.specweave/evidence/*.json
+.specweave/mappings/taskledger/*.json
 ```
 
-Acceptance criteria may be supplied in either the rich task-BDD shape
-(`task_id`, `feature`, `rules`, `examples`) or the legacy MVP shape
-(`task_id`, `title`, `acceptance_criteria`).
+Canonical behavior specs live under `specs/behavior/features`. Executable
+enforcement is plain pytest directly under `tests/`.
+
+SpecWeave does **not** require:
+
+- pytest-bdd
+- behave
+- step-definition modules
+- `tests/bdd/`
+- `tests/behavior/`
+- Taskledger as a Python dependency
+
+## Behavior workflow
+
+### 1. Lint behavior specs
+
+```bash
+specweave behavior check
+```
+
+### 2. Generate the behavior index and manifest
+
+```bash
+specweave behavior index \
+  --features specs/behavior/features \
+  --out specs/behavior/README.md \
+  --manifest specs/behavior/manifest.json
+```
+
+### 3. Generate plain pytest skeletons
+
+Single feature:
+
+```bash
+specweave behavior generate-tests \
+  specs/behavior/features/task-management/plan-gates.feature \
+  --out tests/test_task_management_plan_gates.py
+```
+
+Whole tree:
+
+```bash
+specweave behavior generate-tests \
+  --features specs/behavior/features \
+  --tests-dir tests
+```
+
+### 4. Check static behavior coverage
+
+```bash
+specweave behavior coverage \
+  --features specs/behavior/features \
+  --tests tests \
+  --json .specweave/reports/behavior-coverage.json
+```
+
+### 5. Import pytest/JUnit evidence
+
+```bash
+pytest tests/test_task_management_plan_gates.py \
+  --junitxml=reports/behavior/task-management-plan-gates-junit.xml
+
+specweave behavior import-report \
+  reports/behavior/task-management-plan-gates-junit.xml \
+  --format junit-xml \
+  --out .specweave/evidence/task-management-plan-gates.pytest-evidence.json
+```
+
+## Optional Taskledger integration
+
+Taskledger integration is file-based and optional. SpecWeave can import a
+Taskledger acceptance export into a canonical behavior feature:
+
+```bash
+specweave behavior import-taskledger \
+  .specweave/mappings/taskledger/task-0123.json \
+  --out specs/behavior/features/task-management/plan-gates.feature
+```
+
+This does not make Taskledger the canonical owner of the behavior file.
+
+## Compatibility aliases
+
+These aliases point to the behavior workflow:
+
+```bash
+specweave bdd check
+specweave bdd index
+specweave bdd generate-tests
+specweave bdd coverage
+```
+
+Legacy `draft`, `bind`, `report`, and other bridge commands remain available
+for older experiments, but they are not the canonical SpecWeave workflow.
 
 ## Installation
 
@@ -74,25 +121,6 @@ Or install from source with development dependencies:
 
 ```bash
 pip install -e ".[dev]"
-```
-
-## Example workflow
-
-```bash
-# 1. Draft a feature from acceptance criteria
-specweave draft --from-json examples/task_TL-0042.json --out features/tl_0042.feature
-
-# 2. Generate step definition skeletons
-specweave bind features/tl_0042.feature --backend behave --out tests/bdd/steps/
-
-# 3. Implement production code and step definitions
-# (hand-coded by the developer)
-
-# 4. Run the BDD tests and normalize evidence
-specweave run --runner behave -- behave --format json -o .specweave/reports/behave.json
-
-# 5. Pass the evidence to Taskledger for validation tracking
-taskledger validate check --criterion AC-001 --status pass --evidence .specweave/reports/summary.json
 ```
 
 ## Development

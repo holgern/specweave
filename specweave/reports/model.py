@@ -41,6 +41,8 @@ class ScenarioResult:
     rule: str | None = None
     duration_ms: int | None = None
     evidence: tuple[str, ...] = field(default_factory=tuple)
+    test_file: str = ""
+    nodeid: str = ""
 
 
 @dataclass(frozen=True)

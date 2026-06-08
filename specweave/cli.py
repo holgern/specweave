@@ -9,6 +9,13 @@ import typer
 
 app = typer.Typer(no_args_is_help=True)
 
+# Sub-app for behavior-first commands.
+behavior_app = typer.Typer(
+    no_args_is_help=True,
+    help="Work with canonical behavior specs and plain pytest enforcement.",
+)
+app.add_typer(behavior_app, name="behavior")
+
 # Sub-app for BDD conversion commands.
 bdd_app = typer.Typer(
     no_args_is_help=True, help="Convert between task-BDD JSON and feature files."
@@ -88,6 +95,258 @@ def version() -> None:
     from specweave import __version__
 
     typer.echo(f"specweave {__version__}")
+
+
+# --- behavior subcommands ----------------------------------------------------
+
+
+def _print_findings(findings) -> None:  # type: ignore[no-untyped-def]
+    if not findings:
+        typer.echo("No behavior lint findings.")
+        return
+    for finding in findings:
+        location = finding.path
+        if finding.line is not None:
+            location = f"{location}:{finding.line}"
+        typer.echo(
+            f"{finding.level.upper()} {finding.code} {location} {finding.message}"
+        )
+
+
+def _has_errors(findings) -> bool:  # type: ignore[no-untyped-def]
+    return any(finding.level == "error" for finding in findings)
+
+
+def _coverage_failed(data: dict[str, object]) -> bool:
+    return any(
+        bool(data[key])
+        for key in (
+            "missing_bindings",
+            "stale_bindings",
+            "deprecated_paths",
+            "forbidden_pytest_bdd_usages",
+        )
+    )
+
+
+@behavior_app.command("check")
+def behavior_check(
+    path: Annotated[Path | None, typer.Argument()] = None,
+    strict: Annotated[bool, typer.Option("--strict")] = False,
+    json_output: Annotated[bool, typer.Option("--json")] = False,
+) -> None:
+    """Lint behavior feature files."""
+    from specweave.gherkin.lint import default_feature_files, lint_feature_files
+
+    target_paths = (path,) if path is not None else tuple(default_feature_files())
+    findings = lint_feature_files(target_paths, strict=strict)
+    if json_output:
+        typer.echo(
+            _dump_json(
+                {
+                    "schema_version": 1,
+                    "findings": [finding.to_dict() for finding in findings],
+                }
+            )
+        )
+    else:
+        _print_findings(findings)
+    if _has_errors(findings):
+        raise typer.Exit(code=1)
+
+
+@behavior_app.command("index")
+def behavior_index(
+    features: Annotated[Path, typer.Option("--features")] = Path(
+        "specs/behavior/features"
+    ),
+    out: Annotated[Path, typer.Option("--out")] = Path("specs/behavior/README.md"),
+    manifest: Annotated[Path, typer.Option("--manifest")] = Path(
+        "specs/behavior/manifest.json"
+    ),
+    tests_dir: Annotated[Path, typer.Option("--tests-dir")] = Path("tests"),
+) -> None:
+    """Generate the behavior Markdown index and manifest."""
+    from specweave.behavior.index import write_behavior_index
+    from specweave.gherkin.lint import collect_feature_files, lint_feature_files
+
+    findings = lint_feature_files(
+        collect_feature_files((features,)),
+        require_scenario_ids=True,
+    )
+    warnings = [finding for finding in findings if finding.level == "warning"]
+    if warnings:
+        _print_findings(warnings)
+    if _has_errors(findings):
+        raise typer.Exit(code=1)
+
+    index_path, manifest_path = write_behavior_index(
+        features_dir=features,
+        out=out,
+        manifest_path=manifest,
+        tests_dir=tests_dir,
+    )
+    typer.echo(f"Wrote behavior index to {index_path}")
+    typer.echo(f"Wrote behavior manifest to {manifest_path}")
+
+
+@behavior_app.command("generate-tests")
+def behavior_generate_tests(
+    feature: Annotated[Path | None, typer.Argument()] = None,
+    features: Annotated[Path | None, typer.Option("--features")] = None,
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+    tests_dir: Annotated[Path, typer.Option("--tests-dir")] = Path("tests"),
+) -> None:
+    """Generate plain pytest skeletons from behavior feature files."""
+    from specweave.behavior.generate import generate_from_paths
+
+    if feature is not None and features is not None:
+        typer.echo("Use either a feature argument or --features, not both.", err=True)
+        raise typer.Exit(code=1)
+
+    outputs = generate_from_paths(
+        feature_path=feature,
+        features_dir=features,
+        out=out,
+        tests_dir=tests_dir,
+    )
+    for path in outputs:
+        typer.echo(f"Wrote plain pytest skeleton to {path}")
+
+
+@behavior_app.command("coverage")
+def behavior_coverage(
+    features: Annotated[Path, typer.Option("--features")] = Path(
+        "specs/behavior/features"
+    ),
+    tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
+    json_output: Annotated[Path | None, typer.Option("--json")] = None,
+) -> None:
+    """Check static coverage between behavior specs and plain pytest tests."""
+    from specweave.behavior.coverage import build_behavior_coverage, write_coverage_json
+    from specweave.gherkin.lint import collect_feature_files, lint_feature_files
+
+    findings = lint_feature_files(
+        collect_feature_files((features,)),
+        require_scenario_ids=True,
+    )
+    warnings = [finding for finding in findings if finding.level == "warning"]
+    if warnings:
+        _print_findings(warnings)
+    if _has_errors(findings):
+        raise typer.Exit(code=1)
+
+    data = build_behavior_coverage(features_dir=features, tests_dir=tests)
+    if json_output is None:
+        typer.echo(_dump_json(data))
+    else:
+        write_coverage_json(data, json_output)
+        typer.echo(f"Wrote behavior coverage to {json_output}")
+    if _coverage_failed(data):
+        raise typer.Exit(code=1)
+
+
+@behavior_app.command("import-report")
+def behavior_import_report(
+    report: Annotated[Path, typer.Argument(help="Runner report to import.")],
+    fmt: Annotated[str, typer.Option("--format")] = "junit-xml",
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+    tests_dir: Annotated[Path, typer.Option("--tests-dir")] = Path("tests"),
+    manifest: Annotated[Path, typer.Option("--manifest")] = Path(
+        "specs/behavior/manifest.json"
+    ),
+) -> None:
+    """Import a pytest/JUnit report into behavior evidence JSON."""
+    from specweave.behavior.reporting import (
+        import_pytest_report,
+        write_pytest_evidence_json,
+    )
+
+    if fmt != "junit-xml":
+        typer.echo(
+            "behavior import-report currently supports only --format junit-xml.",
+            err=True,
+        )
+        raise typer.Exit(code=1)
+
+    payload = import_pytest_report(report, tests_dir=tests_dir, manifest_path=manifest)
+    target = out or Path(".specweave/evidence") / f"{report.stem}.pytest-evidence.json"
+    write_pytest_evidence_json(payload, target)
+    typer.echo(f"Wrote pytest behavior evidence to {target}")
+    if payload.get("unmapped"):
+        raise typer.Exit(code=1)
+
+
+@behavior_app.command("import-taskledger")
+def behavior_import_taskledger(
+    source: Annotated[Path, typer.Argument(help="Taskledger acceptance export JSON.")],
+    out: Annotated[Path, typer.Option("--out", help="Output canonical .feature file.")],
+) -> None:
+    """Create a canonical behavior feature from a Taskledger export."""
+    from specweave.integrations.taskledger import write_behavior_feature_from_taskledger
+
+    write_behavior_feature_from_taskledger(source, out)
+    typer.echo(f"Wrote behavior feature to {out}")
+
+
+# --- compatibility aliases ---------------------------------------------------
+
+
+@bdd_app.command("check")
+def bdd_check_alias(
+    path: Annotated[Path | None, typer.Argument()] = None,
+    strict: Annotated[bool, typer.Option("--strict")] = False,
+    json_output: Annotated[bool, typer.Option("--json")] = False,
+) -> None:
+    """Compatibility alias for ``specweave behavior check``."""
+
+    behavior_check(path=path, strict=strict, json_output=json_output)
+
+
+@bdd_app.command("index")
+def bdd_index_alias(
+    features: Annotated[Path, typer.Option("--features")] = Path(
+        "specs/behavior/features"
+    ),
+    out: Annotated[Path, typer.Option("--out")] = Path("specs/behavior/README.md"),
+    manifest: Annotated[Path, typer.Option("--manifest")] = Path(
+        "specs/behavior/manifest.json"
+    ),
+    tests_dir: Annotated[Path, typer.Option("--tests-dir")] = Path("tests"),
+) -> None:
+    """Compatibility alias for ``specweave behavior index``."""
+
+    behavior_index(features=features, out=out, manifest=manifest, tests_dir=tests_dir)
+
+
+@bdd_app.command("generate-tests")
+def bdd_generate_tests_alias(
+    feature: Annotated[Path | None, typer.Argument()] = None,
+    features: Annotated[Path | None, typer.Option("--features")] = None,
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+    tests_dir: Annotated[Path, typer.Option("--tests-dir")] = Path("tests"),
+) -> None:
+    """Compatibility alias for ``specweave behavior generate-tests``."""
+
+    behavior_generate_tests(
+        feature=feature,
+        features=features,
+        out=out,
+        tests_dir=tests_dir,
+    )
+
+
+@bdd_app.command("coverage")
+def bdd_coverage_alias(
+    features: Annotated[Path, typer.Option("--features")] = Path(
+        "specs/behavior/features"
+    ),
+    tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
+    json_output: Annotated[Path | None, typer.Option("--json")] = None,
+) -> None:
+    """Compatibility alias for ``specweave behavior coverage``."""
+
+    behavior_coverage(features=features, tests=tests, json_output=json_output)
 
 
 # --- report subcommands ----------------------------------------------------

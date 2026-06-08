@@ -25,6 +25,9 @@ from typing import Any
 
 from specweave.bdd.model import BddExample, TaskBddSpec
 from specweave.bdd.store import task_bdd_from_dict
+from specweave.behavior.common import slugify
+from specweave.gherkin.model import Feature, Rule, Scenario, Step
+from specweave.gherkin.writer import write_feature
 from specweave.reports.mapping import extract_ids_from_tags
 from specweave.reports.model import NormalizedBddReport
 from specweave.reports.normalize import write_evidence_json
@@ -95,8 +98,76 @@ def write_taskledger_bdd_evidence(
     return resolved
 
 
+def _behavior_feature_from_task_bdd(spec: TaskBddSpec, out: Path) -> Feature:
+    area = slugify(out.parent.name)
+    feature_slug = slugify(out.stem)
+    feature_tags = (f"area-{area}", f"feature-{feature_slug}")
+
+    examples_by_rule: dict[str, list[BddExample]] = {rule.id: [] for rule in spec.rules}
+    top_level: list[BddExample] = []
+    for example in spec.examples:
+        if example.rule_id and example.rule_id in examples_by_rule:
+            examples_by_rule[example.rule_id].append(example)
+        else:
+            top_level.append(example)
+
+    def to_scenario(example: BddExample) -> Scenario:
+        tags: list[str] = []
+        if example.id:
+            tags.append(example.id)
+        tags.extend(
+            tag
+            for tag in example.tags
+            if not tag.startswith("task-") and not tag.startswith("ac-")
+        )
+        steps = (
+            tuple(Step(keyword="Given", text=text) for text in example.given)
+            + tuple(Step(keyword="When", text=text) for text in example.when)
+            + tuple(Step(keyword="Then", text=text) for text in example.then)
+        )
+        return Scenario(
+            title=example.title,
+            steps=steps,
+            tags=tuple(tags),
+            keyword="Example",
+        )
+
+    rules = tuple(
+        Rule(
+            title=rule.title,
+            tags=((rule.id,) if rule.id else ()),
+            scenarios=tuple(
+                to_scenario(example) for example in examples_by_rule[rule.id]
+            ),
+        )
+        for rule in spec.rules
+    )
+    return Feature(
+        title=spec.feature,
+        tags=feature_tags,
+        scenarios=tuple(to_scenario(example) for example in top_level),
+        rules=rules,
+    )
+
+
+def write_behavior_feature_from_taskledger(
+    path: str | Path, out: str | Path
+) -> Feature:
+    """Write a canonical behavior feature from a Taskledger export."""
+
+    output = Path(out)
+    feature = _behavior_feature_from_task_bdd(
+        load_taskledger_acceptance_export(path),
+        output,
+    )
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(write_feature(feature), encoding="utf-8")
+    return feature
+
+
 __all__ = [
     "load_taskledger_acceptance_export",
     "task_id_from_report",
     "write_taskledger_bdd_evidence",
+    "write_behavior_feature_from_taskledger",
 ]

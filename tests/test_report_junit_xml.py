@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from specweave.reports.junit_xml import parse_junit_xml
+from specweave.reports.junit_xml import parse_junit_xml, parse_pytest_junit_cases
 from specweave.reports.normalize import normalize_report
 
 _JUNIT_PASS_FAIL_SKIP = """\
@@ -101,3 +101,49 @@ def test_normalize_junit_all_passed(tmp_path) -> None:  # type: ignore[no-untype
     report = normalize_report(path, "junit-xml")
     assert report.status == "passed"
     assert report.criteria[0].status == "passed"
+
+
+def test_parse_pytest_junit_case_nodeid_and_file(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    text = """\
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="pytest" tests="1">
+    <testcase classname="tests.test_sync_git_sync"
+              file="tests/test_sync_git_sync.py"
+              name="test_imports_pytest_report"/>
+  </testsuite>
+</testsuites>
+"""
+    path = _write(tmp_path, "junit.xml", text)
+    cases = parse_pytest_junit_cases(path)
+    assert cases[0].test_file == "tests/test_sync_git_sync.py"
+    assert cases[0].nodeid == "tests/test_sync_git_sync.py::test_imports_pytest_report"
+
+
+def test_parse_junit_preserves_nodeid_and_test_file(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    text = """\
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="pytest" tests="1">
+    <testcase classname="tests.test_sync_git_sync"
+              file="tests/test_sync_git_sync.py"
+              name="test_imports_pytest_report">
+      <properties>
+        <property
+          name="specweave_feature"
+          value="specs/behavior/features/sync/git-sync.feature"
+        />
+        <property name="specweave_scenario" value="@bdd-imports-pytest-report"/>
+      </properties>
+    </testcase>
+  </testsuite>
+</testsuites>
+"""
+    path = _write(tmp_path, "junit.xml", text)
+    results = parse_junit_xml(path)
+    assert results[0].feature == "specs/behavior/features/sync/git-sync.feature"
+    assert results[0].name == "@bdd-imports-pytest-report"
+    assert results[0].test_file == "tests/test_sync_git_sync.py"
+    assert (
+        results[0].nodeid == "tests/test_sync_git_sync.py::test_imports_pytest_report"
+    )

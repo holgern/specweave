@@ -253,3 +253,25 @@ Feature: Task lifecycle gates
     assert reparsed.tags == ("task-0123",)
     assert reparsed.rules[0].tags == ("rule-0001",)
     assert reparsed.rules[0].scenarios[0].steps == feature.rules[0].scenarios[0].steps
+
+
+def test_parse_example_keyword_and_line_numbers() -> None:
+    text = """@area-task-management @feature-plan-gates
+Feature: Plan gates
+
+  @rule-accepted-plan-required
+  Rule: Implementation requires an accepted plan
+
+    @bdd-implementation-blocked-before-plan-acceptance
+    Example: Agent cannot start implementation before plan approval
+      Given a task has a proposed plan
+      When the agent starts implementation
+      Then implementation is blocked
+"""
+    feature = parse_feature(text)
+    scenario = feature.rules[0].scenarios[0]
+    assert feature.line == 2
+    assert feature.rules[0].line == 5
+    assert scenario.keyword == "Example"
+    assert scenario.line == 8
+    assert scenario.tags == ("bdd-implementation-blocked-before-plan-acceptance",)
