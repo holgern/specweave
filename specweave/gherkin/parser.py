@@ -130,8 +130,10 @@ def _parse_scenario(
     )
 
 
-def parse_feature(text: str, *, source_path: Path | None = None) -> Feature:
-    """Parse a Gherkin feature from *text*."""
+def _parse_classic_specweave(
+    text: str, *, source_path: Path | None = None
+) -> Feature:
+    """Parse classic Gherkin using SpecWeave's built-in parser."""
     lines = text.splitlines()
 
     i = _skip_blanks_comments(lines, 0)
@@ -214,3 +216,44 @@ def parse_feature(text: str, *, source_path: Path | None = None) -> Feature:
         source_path=source_path,
         line=feature_line,
     )
+
+
+def parse_feature(
+    text: str,
+    *,
+    source_path: Path | None = None,
+    document_format: str | None = None,
+    use_official: bool = False,
+    compile_pickles: bool = False,
+) -> Feature:
+    """Parse a Gherkin feature from *text*.
+
+    Dispatches based on *document_format* or *source_path* suffix:
+    - ``.feature.md`` -> markdown parser
+    - ``.feature`` -> classic parser (official or built-in)
+    """
+    if document_format is None and source_path is not None:
+        if source_path.suffixes == [".feature", ".md"] or str(source_path).endswith(
+            ".feature.md"
+        ):
+            document_format = "markdown"
+        elif source_path.suffix == ".feature":
+            document_format = "classic"
+        else:
+            document_format = "classic"
+    elif document_format is None:
+        document_format = "classic"
+
+    if document_format == "markdown":
+        from specweave.gherkin.markdown import parse_markdown_feature
+
+        return parse_markdown_feature(text, source_path=source_path)
+
+    if use_official:
+        from specweave.gherkin.official import parse_classic_with_official
+
+        return parse_classic_with_official(
+            text, source_path=source_path, compile_pickles=compile_pickles
+        )
+
+    return _parse_classic_specweave(text, source_path=source_path)

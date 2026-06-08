@@ -51,7 +51,10 @@ def _feature_files(path: Path) -> list[Path]:
     if not path.exists():
         return []
     return sorted(
-        candidate for candidate in path.rglob("*.feature") if candidate.is_file()
+        candidate
+        for candidate in path.rglob("*")
+        if candidate.is_file()
+        and (candidate.suffix == ".feature" or str(candidate).endswith(".feature.md"))
     )
 
 
@@ -145,7 +148,8 @@ def _feature_path_findings(path: Path) -> list[LintFinding]:
                 path=display,
                 message=(
                     "Canonical feature path should match "
-                    "specs/behavior/features/<area>/<feature>.feature."
+                    "specs/behavior/features/<area>/<feature>.feature"
+                    " or <feature>.feature.md."
                 ),
             )
         )

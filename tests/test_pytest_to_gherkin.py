@@ -13,6 +13,15 @@ from specweave.translate.pytest_to_gherkin import (
 )
 
 
+def _feature_file_paths(dir_path: Path) -> list[Path]:
+    """Return .feature and .feature.md files under *dir_path*."""
+    return [
+        f
+        for f in dir_path.rglob("*")
+        if f.is_file() and (f.suffix == ".feature" or str(f).endswith(".feature.md"))
+    ]
+
+
 def _write_pytest_file(tmp_path: Path, name: str, content: str) -> Path:
     tests_dir = tmp_path / "tests"
     tests_dir.mkdir(exist_ok=True)
@@ -74,8 +83,8 @@ class TestCreateGherkinFromSinglePytestFile:
             out_dir=out_dir,
             config=SpecWeaveConfig(),
         )
-        features = list(out_dir.rglob("*.feature"))
-        assert len(features) == 1
+        features = _feature_file_paths(out_dir)
+        assert len(features) == 1, f"Found features: {features}"
         content = features[0].read_text()
         assert "@needs-review" in content
         assert "@generated" in content
@@ -105,15 +114,17 @@ class TestCreateGherkinGroupsByArea:
             config=SpecWeaveConfig(),
         )
         assert result["created"] == 2
-        areas = {p.parent.name for p in out_dir.rglob("*.feature")}
-        assert len(areas) == 2
+        features = _feature_file_paths(out_dir)
+        areas = {p.parent.name for p in features}
+        assert len(areas) == 2, f"Areas found: {areas}"
 
 
 class TestCreateGherkinPreservesExisting:
     def test_skips_manual_file_without_force(self, tmp_path: Path) -> None:
         test_file = _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)
         out_dir = tmp_path / "specs" / "behavior" / "features"
-        feature_path = out_dir / "auth_login" / "auth-login.feature"
+        # Create a manual .feature.md file matching the default extension
+        feature_path = out_dir / "auth_login" / "auth-login.feature.md"
         feature_path.parent.mkdir(parents=True)
         feature_path.write_text(
             "Feature: Manual\n  Scenario: Handwritten\n    Given something\n",
@@ -125,7 +136,10 @@ class TestCreateGherkinPreservesExisting:
             out_dir=out_dir,
             config=SpecWeaveConfig(),
         )
-        assert result["skipped"] == 1
+        skipped = result["skipped"]
+        assert skipped == 1, (
+            f"Expected 1 skipped, got {skipped}: {result.get('warnings')}"
+        )
         assert any("SWWRITE001" in w for w in result["warnings"])
 
     def test_preserves_existing_bdd_id(self, tmp_path: Path) -> None:

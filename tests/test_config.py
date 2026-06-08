@@ -8,6 +8,7 @@ import pytest
 
 from specweave.config import (
     SpecWeaveConfig,
+    SpecWeaveGherkin,
     SpecWeavePaths,
     find_config,
     load_config,
@@ -80,6 +81,26 @@ class TestLoadConfig:
         assert config.gherkin.id_style == "sequence"
         assert config.generation.group_by == "area"
 
+    def test_gherkin_new_fields_preserved(self, tmp_path: Path) -> None:
+        config_file = tmp_path / ".specweave.toml"
+        config_file.write_text(
+            "schema_version = 1\n"
+            "[gherkin]\n"
+            'document_format = "classic"\n'
+            'feature_extension = ".feature"\n'
+            'feature_extensions = [".feature"]\n'
+            "official_parser = false\n"
+            'markdown_parser = "off"\n'
+            "compile_pickles = true\n"
+        )
+        config = load_config(config_file)
+        assert config.gherkin.document_format == "classic"
+        assert config.gherkin.feature_extension == ".feature"
+        assert config.gherkin.feature_extensions == (".feature",)
+        assert config.gherkin.official_parser is False
+        assert config.gherkin.markdown_parser == "off"
+        assert config.gherkin.compile_pickles is True
+
 
 class TestRenderDefaultConfig:
     def test_renders_behavior(self) -> None:
@@ -114,6 +135,15 @@ class TestRenderDefaultConfig:
         assert config.schema_version == 1
         assert config.spelling == "behavior"
 
+    def test_renders_new_gherkin_defaults(self) -> None:
+        text = render_default_config()
+        assert 'document_format = "markdown"' in text
+        assert 'feature_extension = ".feature.md"' in text
+        assert 'feature_extensions = [".feature.md", ".feature"]' in text
+        assert "official_parser = true" in text
+        assert 'markdown_parser = "specweave"' in text
+        assert "compile_pickles = false" in text
+
 
 class TestSpecWeavePaths:
     def test_defaults(self) -> None:
@@ -137,3 +167,21 @@ class TestSpecWeaveConfig:
         config = SpecWeaveConfig()
         with pytest.raises(AttributeError):
             config.spelling = "other"  # type: ignore[misc]
+
+
+class TestSpecWeaveGherkin:
+    def test_default_document_format(self) -> None:
+        g = SpecWeaveGherkin()
+        assert g.document_format == "markdown"
+
+    def test_default_feature_extension(self) -> None:
+        g = SpecWeaveGherkin()
+        assert g.feature_extension == ".feature.md"
+
+    def test_invalid_document_format_raises(self) -> None:
+        with pytest.raises(ValueError, match="document_format"):
+            SpecWeaveGherkin(document_format="invalid")
+
+    def test_invalid_markdown_parser_raises(self) -> None:
+        with pytest.raises(ValueError, match="markdown_parser"):
+            SpecWeaveGherkin(markdown_parser="bogus")

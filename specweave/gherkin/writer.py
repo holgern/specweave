@@ -48,8 +48,23 @@ def _write_rule(rule: Rule) -> list[str]:
     return lines
 
 
-def write_feature(feature: Feature) -> str:
-    """Render a *feature* to a Gherkin feature string.
+def write_feature(
+    feature: Feature, *, document_format: str = "classic"
+) -> str:
+    """Render a *feature* to Gherkin text.
+
+    *document_format* can be ``"classic"`` (``.feature``) or
+    ``"markdown"`` (``.feature.md``).
+    """
+    if document_format == "markdown":
+        from specweave.gherkin.markdown import write_markdown_feature
+
+        return write_markdown_feature(feature)
+    return write_classic_feature(feature)
+
+
+def write_classic_feature(feature: Feature) -> str:
+    """Render a *feature* to classic Gherkin feature string.
 
     Output rules:
 

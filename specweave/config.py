@@ -36,6 +36,12 @@ class SpecWeaveGherkin:
     """Gherkin generation configuration."""
 
     dialect: str = "en"
+    document_format: str = "markdown"  # markdown | classic
+    feature_extension: str = ".feature.md"
+    feature_extensions: tuple[str, ...] = (".feature.md", ".feature")
+    official_parser: bool = True
+    markdown_parser: str = "specweave"  # specweave | cucumber-js | off
+    compile_pickles: bool = False
     default_scenario_keyword: str = "Example"
     require_given_when_then: bool = True
     require_bdd_ids: bool = True
@@ -43,6 +49,18 @@ class SpecWeaveGherkin:
     include_generated_tag: bool = True
     include_needs_review_tag: bool = True
     canonical_task_tags: bool = False
+
+    def __post_init__(self) -> None:
+        if self.document_format not in ("markdown", "classic"):
+            raise ValueError(
+                f"Unsupported document_format: {self.document_format}; "
+                "expected 'markdown' or 'classic'"
+            )
+        if self.markdown_parser not in ("specweave", "cucumber-js", "off"):
+            raise ValueError(
+                f"Unsupported markdown_parser: {self.markdown_parser}; "
+                "expected 'specweave', 'cucumber-js', or 'off'"
+            )
 
 
 @dataclass(frozen=True)
@@ -205,6 +223,14 @@ def _build_gherkin(data: dict) -> SpecWeaveGherkin:
     defaults = SpecWeaveGherkin()
     return SpecWeaveGherkin(
         dialect=data.get("dialect", defaults.dialect),
+        document_format=data.get("document_format", defaults.document_format),
+        feature_extension=data.get("feature_extension", defaults.feature_extension),
+        feature_extensions=tuple(
+            data.get("feature_extensions", list(defaults.feature_extensions))
+        ),
+        official_parser=data.get("official_parser", defaults.official_parser),
+        markdown_parser=data.get("markdown_parser", defaults.markdown_parser),
+        compile_pickles=data.get("compile_pickles", defaults.compile_pickles),
         default_scenario_keyword=data.get(
             "default_scenario_keyword", defaults.default_scenario_keyword
         ),
@@ -275,6 +301,12 @@ def render_default_config(*, spelling: str = "behavior") -> str:
         f"\n"
         f"[gherkin]\n"
         f'dialect = "en"\n'
+        f'document_format = "markdown"\n'
+        f'feature_extension = ".feature.md"\n'
+        f'feature_extensions = [".feature.md", ".feature"]\n'
+        f"official_parser = true\n"
+        f'markdown_parser = "specweave"\n'
+        f"compile_pickles = false\n"
         f'default_scenario_keyword = "Example"\n'
         f"require_given_when_then = true\n"
         f"require_bdd_ids = true\n"

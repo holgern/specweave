@@ -52,24 +52,39 @@ def scenario_identifier(scenario: Scenario) -> str:
     return f"@{bdd_id}" if bdd_id else scenario.title
 
 
+def feature_stem(path: Path) -> str:
+    """Return the feature stem without ``.feature.md`` or ``.feature`` suffix.
+
+    >>> feature_stem(Path("auth/login.feature.md"))
+    'login'
+    >>> feature_stem(Path("auth/login.feature"))
+    'login'
+    """
+    name = path.name
+    if name.endswith(".feature.md"):
+        return name[: -len(".feature.md")]
+    if name.endswith(".feature"):
+        return name[: -len(".feature")]
+    return path.stem
+
+
 def feature_identity(
     feature_path: Path, *, features_root: Path = BEHAVIOR_FEATURES_DIR
 ) -> tuple[str, str]:
     """Return ``(area, feature_slug)`` for *feature_path*."""
 
     path = Path(feature_path)
+    fs = feature_stem(path)
     try:
         relative = path.relative_to(features_root)
     except ValueError:
-        return slugify(path.parent.name), slugify(path.stem)
+        return slugify(path.parent.name), slugify(fs)
 
-    parts = relative.with_suffix("").parts
-    if not parts:
-        return "behavior", slugify(path.stem)
-    if len(parts) == 1:
-        return "behavior", slugify(parts[0])
-    area = slugify(parts[0])
-    feature_slug = slugify("-".join(parts[1:]))
+    parent = relative.parent
+    if str(parent) == ".":
+        return "behavior", slugify(fs)
+    area = slugify(parent.parts[0])
+    feature_slug = slugify(fs)
     return area, feature_slug
 
 

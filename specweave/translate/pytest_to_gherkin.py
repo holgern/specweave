@@ -193,7 +193,8 @@ def generate_gherkin_from_tests(
 
         area = _derive_area(test_file, tests_dir)
         feature_slug = _slug(_derive_feature_title(test_file))
-        feature_path = out_dir / area / f"{feature_slug}.feature"
+        ext = config.gherkin.feature_extension if config else ".feature.md"
+        feature_path = out_dir / area / f"{feature_slug}{ext}"
 
         status = "created"
         if feature_path.exists():
@@ -219,7 +220,8 @@ def generate_gherkin_from_tests(
             continue
 
         if not dry_run:
-            feature_text = write_feature(feature)
+            document_format = config.gherkin.document_format if config else "classic"
+            feature_text = write_feature(feature, document_format=document_format)
             feature_path.parent.mkdir(parents=True, exist_ok=True)
             feature_path.write_text(feature_text, encoding="utf-8")
 
