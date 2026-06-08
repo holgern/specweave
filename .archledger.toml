@@ -44,11 +44,11 @@ record_extension = ".md"
 schema_version = 2
 
 [build]
-default_output = "architecture.md"
+default_output = "ARCHITECTURE.md"
 default_format = "markdown"
 # [build].default_output_dir is relative to the directory containing
 # archledger.toml or .archledger.toml.
-default_output_dir = "build"
+default_output_dir = "."
 include_draft = false
 include_superseded = false
 strict = false
