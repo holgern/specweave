@@ -1,0 +1,254 @@
+"""Generate Gherkin .feature files from existing pytest test files."""
+
+from __future__ import annotations
+
+import re
+from dataclasses import dataclass
+from pathlib import Path
+
+from specweave.config import SpecWeaveConfig
+from specweave.gherkin.model import Feature, Rule, Scenario, Step
+from specweave.gherkin.writer import write_feature
+from specweave.python_inspect.ast_reader import extract_test_scenarios
+
+
+@dataclass(frozen=True)
+class GeneratedFeatureResult:
+    """Result for a single generated .feature file."""
+
+    source_tests: tuple[Path, ...]
+    feature_path: Path
+    status: str  # created | updated | unchanged | skipped
+    scenario_ids: tuple[str, ...] = ()
+    warnings: tuple[str, ...] = ()
+
+
+def _slug(text: str) -> str:
+    """Convert text to a stable slug for IDs."""
+    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+
+
+def _derive_area(path: Path, tests_dir: Path) -> str:
+    """Derive an area name from the relative path of a test file."""
+    try:
+        relative = path.resolve().relative_to(tests_dir.resolve())
+    except ValueError:
+        relative = Path(path.name)
+    parts = list(relative.parts)
+    if parts and parts[-1].endswith(".py"):
+        parts[-1] = parts[-1][:-3]
+    if parts and parts[-1].startswith("test_"):
+        parts[-1] = parts[-1][5:]
+    elif parts and parts[-1].endswith("_test"):
+        parts[-1] = parts[-1][:-5]
+    return parts[0] if parts else "general"
+
+
+def _derive_feature_title(path: Path) -> str:
+    """Derive a human-readable feature title from a test file path."""
+    stem = path.stem
+    if stem.startswith("test_"):
+        stem = stem[5:]
+    elif stem.endswith("_test"):
+        stem = stem[:-5]
+    return stem.replace("_", " ").strip().title()
+
+
+def _collect_pytest_files(paths: list[Path]) -> list[Path]:
+    """Collect all .py files from the given paths (files and directories)."""
+    files: list[Path] = []
+    for p in paths:
+        if p.is_file() and p.suffix == ".py":
+            files.append(p)
+        elif p.is_dir():
+            files.extend(sorted(f for f in p.rglob("*.py") if f.is_file()))
+    return files
+
+
+def _build_scenario_id(
+    feature_slug: str, scenario_title: str, existing_ids: frozenset[str]
+) -> str:
+    """Build a stable @bdd-* ID for a scenario."""
+    base = f"bdd-{feature_slug}-{_slug(scenario_title)}"
+    if base not in existing_ids:
+        return base
+    # Append short hash of the full slug for dedup
+    short_hash = format(abs(hash(base)) % 0xFFFFFF, "06x")
+    return f"{base}-{short_hash}"
+
+
+def _test_file_to_feature(
+    path: Path,
+    tests_dir: Path,
+    config: SpecWeaveConfig,
+    existing_ids: frozenset[str],
+) -> tuple[Feature, tuple[str, ...]]:
+    """Convert a single pytest file into a Feature model."""
+    scenarios_raw = extract_test_scenarios(path)
+    feature_title = _derive_feature_title(path)
+    feature_slug = _slug(feature_title)
+    area = _derive_area(path, tests_dir)
+
+    scenario_ids: list[str] = []
+    scenarios: list[Scenario] = []
+
+    for raw in scenarios_raw:
+        sid = _build_scenario_id(
+            feature_slug, raw.title, existing_ids | frozenset(scenario_ids)
+        )
+        scenario_ids.append(sid)
+
+        # Wrap scenario steps to ensure Given/When/Then presence
+        steps = list(raw.steps)
+        has_given = any(s.keyword == "Given" for s in steps)
+        any(s.keyword == "When" for s in steps)
+        has_then = any(s.keyword == "Then" for s in steps)
+        if not has_given:
+            steps.insert(
+                0, Step(keyword="Given", text="the pytest test setup is prepared")
+            )
+        if not has_then:
+            steps.append(Step(keyword="Then", text="the test completes successfully"))
+
+        tags = list(raw.tags)
+        tags.append(sid)
+        if config.gherkin.include_needs_review_tag:
+            tags.append("needs-review")
+
+        scenarios.append(
+            Scenario(
+                title=raw.title,
+                steps=tuple(steps),
+                tags=tuple(tags),
+                keyword=config.gherkin.default_scenario_keyword,
+            )
+        )
+
+    feature_tags: list[str] = [f"area-{area}", f"feature-{feature_slug}"]
+    if config.gherkin.include_generated_tag:
+        feature_tags.append("generated")
+    if config.gherkin.include_needs_review_tag:
+        feature_tags.append("needs-review")
+
+    rule_tags: tuple[str, ...] = (f"rule-{feature_slug}",)
+    rule = Rule(title=feature_title, scenarios=tuple(scenarios), tags=rule_tags)
+
+    feature = Feature(
+        title=feature_title,
+        rules=(rule,),
+        tags=tuple(feature_tags),
+        description=(
+            "Generated from pytest tests."
+            " Review and refine domain language"
+            " before using as acceptance evidence."
+        ),
+    )
+    return feature, tuple(scenario_ids)
+
+
+def _has_generated_marker(path: Path) -> bool:
+    """Check if a .feature file was generated by SpecWeave."""
+    try:
+        content = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return False
+    return "@generated" in content or "specweave: generated=true" in content
+
+
+def generate_gherkin_from_tests(
+    *,
+    test_paths: list[Path],
+    out_dir: Path = Path("specs/behavior/features"),
+    group_by: str = "file",
+    mode: str = "create",
+    force: bool = False,
+    dry_run: bool = False,
+    config: SpecWeaveConfig | None = None,
+) -> dict:
+    """Generate .feature files from pytest test files.
+
+    Returns a JSON-serialisable result dict.
+    """
+    if config is None:
+        config = SpecWeaveConfig()
+
+    tests_dir = config.paths.tests_dir
+    files = _collect_pytest_files(test_paths)
+
+    results: list[dict] = []
+    all_warnings: list[str] = []
+    all_errors: list[str] = []
+    created_count = 0
+    updated_count = 0
+    unchanged_count = 0
+    skipped_count = 0
+
+    existing_ids: frozenset[str] = frozenset()
+
+    for test_file in files:
+        feature, scenario_ids = _test_file_to_feature(
+            test_file, tests_dir, config, existing_ids
+        )
+        existing_ids = existing_ids | frozenset(scenario_ids)
+
+        area = _derive_area(test_file, tests_dir)
+        feature_slug = _slug(_derive_feature_title(test_file))
+        feature_path = out_dir / area / f"{feature_slug}.feature"
+
+        status = "created"
+        if feature_path.exists():
+            if not _has_generated_marker(feature_path) and not force:
+                status = "skipped"
+                all_warnings.append(f"SWWRITE001 {feature_path} manual file skipped")
+            elif mode == "update" or force:
+                status = "updated"
+            else:
+                status = "unchanged"
+
+        if status == "skipped":
+            skipped_count += 1
+            results.append(
+                {
+                    "source_tests": [str(test_file)],
+                    "feature_path": str(feature_path),
+                    "status": status,
+                    "scenario_ids": list(scenario_ids),
+                    "warnings": [],
+                }
+            )
+            continue
+
+        if not dry_run:
+            feature_text = write_feature(feature)
+            feature_path.parent.mkdir(parents=True, exist_ok=True)
+            feature_path.write_text(feature_text, encoding="utf-8")
+
+        if status == "created":
+            created_count += 1
+        elif status == "updated":
+            updated_count += 1
+        else:
+            unchanged_count += 1
+
+        results.append(
+            {
+                "source_tests": [str(test_file)],
+                "feature_path": str(feature_path),
+                "status": status,
+                "scenario_ids": list(scenario_ids),
+                "warnings": [],
+            }
+        )
+
+    return {
+        "schema_version": 1,
+        "command": "create gherkin",
+        "status": "ok" if not all_errors else "failed",
+        "created": created_count,
+        "updated": updated_count,
+        "unchanged": unchanged_count,
+        "skipped": skipped_count,
+        "results": results,
+        "warnings": all_warnings,
+        "errors": all_errors,
+    }

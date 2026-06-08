@@ -237,9 +237,44 @@ def _scenario_when_text(name: str) -> str:
     return f"{readable} is executed"
 
 
+def extract_module_docstring(path: Path) -> str:
+    """Extract the module-level docstring from a Python file."""
+    source = path.read_text(encoding="utf-8")
+    tree = ast.parse(source, filename=str(path))
+    docstring = ast.get_docstring(tree, clean=False)
+    return docstring or ""
+
+
+def extract_class_rules(path: Path) -> list[tuple[str, list[ast.FunctionDef]]]:
+    """Extract test class names as rule candidates with their test methods.
+
+    Returns a list of (class_title, test_methods) tuples.
+    """
+    source = path.read_text(encoding="utf-8")
+    tree = ast.parse(source, filename=str(path))
+
+    rules: list[tuple[str, list[ast.FunctionDef]]] = []
+    for node in ast.iter_child_nodes(tree):
+        if isinstance(node, ast.ClassDef) and node.name.startswith("Test"):
+            class_title = node.name
+            if class_title.startswith("Test"):
+                class_title = class_title[4:]
+            class_title = class_title.replace("_", " ").strip().title()
+            methods = [
+                child
+                for child in node.body
+                if isinstance(child, ast.FunctionDef) and child.name.startswith("test_")
+            ]
+            if methods:
+                rules.append((class_title, methods))
+    return rules
+
+
 __all__ = [
     "SpecweaveTestMapping",
     "collect_specweave_tests",
     "discover_specweave_tests",
     "extract_test_scenarios",
+    "extract_module_docstring",
+    "extract_class_rules",
 ]

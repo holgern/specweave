@@ -7,7 +7,21 @@ from typing import Annotated
 
 import typer
 
+from specweave.cli_context import CliContext, build_cli_context
+
 app = typer.Typer(no_args_is_help=True)
+
+
+@app.callback()
+def main(
+    ctx: typer.Context,
+    config: Annotated[Path | None, typer.Option("--config")] = None,
+    json_output: Annotated[bool, typer.Option("--json")] = False,
+) -> None:
+    """SpecWeave CLI: translate between Python tests, Gherkin behavior
+    specs, and BDD execution evidence."""
+    ctx.obj = build_cli_context(config_path=config, json_output=json_output)
+
 
 # Sub-app for behavior-first commands.
 behavior_app = typer.Typer(
@@ -25,6 +39,18 @@ app.add_typer(bdd_app, name="bdd")
 # Sub-app for report normalization commands.
 report_app = typer.Typer(no_args_is_help=True, help="Normalize runner reports.")
 app.add_typer(report_app, name="report")
+
+# Sub-app for create commands.
+create_app = typer.Typer(
+    no_args_is_help=True, help="Create Gherkin features, plans, and drafts."
+)
+app.add_typer(create_app, name="create")
+
+# Sub-app for review commands.
+review_app_cli = typer.Typer(
+    no_args_is_help=True, help="Review and diagnose SpecWeave projects."
+)
+app.add_typer(review_app_cli, name="review")
 
 
 @app.command()
@@ -90,11 +116,88 @@ def run(
 
 
 @app.command()
-def version() -> None:
+def version(ctx: typer.Context) -> None:
     """Print the specweave version."""
     from specweave import __version__
 
-    typer.echo(f"specweave {__version__}")
+    cli_ctx: CliContext = ctx.obj
+    if cli_ctx.json_output:
+        typer.echo(
+            _dump_json(
+                {
+                    "schema_version": 1,
+                    "command": "version",
+                    "status": "ok",
+                    "version": __version__,
+                }
+            )
+        )
+    else:
+        typer.echo(f"specweave {__version__}")
+
+
+# --- init command -----------------------------------------------------------
+
+
+@app.command()
+def init(
+    ctx: typer.Context,
+    public_config: Annotated[bool, typer.Option("--public-config")] = False,
+    spelling: Annotated[str, typer.Option("--spelling")] = "behavior",
+    force: Annotated[bool, typer.Option("--force")] = False,
+    dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
+) -> None:
+    """Initialize a SpecWeave project configuration and directory layout."""
+    from specweave.init import init_result_to_dict, run_init
+
+    cli_ctx: CliContext = ctx.obj
+    config_path = Path("specweave.toml") if public_config else Path(".specweave.toml")
+    result = run_init(
+        config_path=config_path,
+        spelling=spelling,
+        force=force,
+        dry_run=dry_run,
+    )
+    if cli_ctx.json_output:
+        typer.echo(_dump_json(init_result_to_dict(result)))
+    else:
+        for p in result.created:
+            typer.echo(f"Created {p}")
+        for p in result.existing:
+            typer.echo(f"Existing {p}")
+        for p in result.skipped:
+            typer.echo(f"Skipped {p}")
+        for w in result.warnings:
+            typer.echo(f"Warning: {w}")
+
+
+# --- doctor command ---------------------------------------------------------
+
+
+@app.command()
+def doctor(
+    ctx: typer.Context,
+    fix: Annotated[bool, typer.Option("--fix")] = False,
+) -> None:
+    """Diagnose SpecWeave setup and convention problems."""
+    from specweave.doctor import run_doctor
+
+    cli_ctx: CliContext = ctx.obj
+    result = run_doctor(config=cli_ctx.config, fix=fix)
+    if cli_ctx.json_output:
+        typer.echo(_dump_json(result))
+    else:
+        status = result["status"]
+        typer.echo(f"SpecWeave doctor: {status}")
+        for item in result.get("items", []):
+            level = item.get("level", "info")
+            typer.echo(f"  {level.upper()}: {item.get('message', '')}")
+        for w in result.get("warnings", []):
+            typer.echo(f"  WARNING: {w}")
+        for e in result.get("errors", []):
+            typer.echo(f"  ERROR: {e}")
+    if result["status"] != "passed":
+        raise typer.Exit(code=1)
 
 
 # --- behavior subcommands ----------------------------------------------------
@@ -554,3 +657,229 @@ def _task_id(report):  # type: ignore[no-untyped-def]
     from specweave.integrations.taskledger import task_id_from_report
 
     return task_id_from_report(report)
+
+
+# --- review subcommands ----------------------------------------------------
+
+
+@review_app_cli.command("specs")
+def review_specs(
+    ctx: typer.Context,
+) -> None:
+    """Review behavior specs for gaps and convention issues."""
+    from specweave.review import run_review
+
+    cli_ctx: CliContext = ctx.obj
+    result = run_review(config=cli_ctx.config)
+    if cli_ctx.json_output:
+        typer.echo(_dump_json(result))
+    else:
+        summary = result["summary"]
+        status = result["status"]
+        typer.echo(
+            f"SpecWeave review: {status}\n"
+            f"features: {summary['features']}, "
+            f"scenarios: {summary['scenarios']}, "
+            f"bound: {summary['bound']}, "
+            f"missing bindings: {summary['missing_bindings']}"
+        )
+        warnings_count = summary.get("warnings", 0)
+        errors_count = summary.get("errors", 0)
+        if warnings_count or errors_count:
+            typer.echo(f"warnings: {warnings_count}, errors: {errors_count}")
+        typer.echo("")
+        for finding in result.get("findings", []):
+            level = finding.get("level", "info").upper()
+            code = finding.get("code", "")
+            path = finding.get("path", "")
+            scenario = finding.get("scenario", "")
+            message = finding.get("message", "")
+            parts = [level, code, path]
+            if scenario:
+                parts.append(scenario)
+            parts.append(message)
+            typer.echo(" ".join(parts))
+    if result["status"] != "passed":
+        raise typer.Exit(code=1)
+
+
+# --- create subcommands ----------------------------------------------------
+
+
+@create_app.command("gherkin")
+def create_gherkin(
+    ctx: typer.Context,
+    from_tests: Annotated[list[Path], typer.Option("--from-tests")] = ...,
+    out: Annotated[Path, typer.Option("--out")] = Path("specs/behavior/features"),
+    group_by: Annotated[str, typer.Option("--group-by")] = "file",
+    mode: Annotated[str, typer.Option("--mode")] = "create",
+    force: Annotated[bool, typer.Option("--force")] = False,
+    dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
+) -> None:
+    """Create or update .feature files from existing pytest tests."""
+    from specweave.translate.pytest_to_gherkin import generate_gherkin_from_tests
+
+    cli_ctx: CliContext = ctx.obj
+    result = generate_gherkin_from_tests(
+        test_paths=from_tests,
+        out_dir=out,
+        group_by=group_by,
+        mode=mode,
+        force=force,
+        dry_run=dry_run,
+        config=cli_ctx.config,
+    )
+    if cli_ctx.json_output:
+        typer.echo(_dump_json(result))
+    else:
+        for item in result.get("results", []):
+            status = item["status"]
+            path = item["feature_path"]
+            typer.echo(f"{status}: {path}")
+        for w in result.get("warnings", []):
+            typer.echo(f"Warning: {w}")
+    if result.get("errors"):
+        raise typer.Exit(code=1)
+
+
+@app.command("update")
+def update_specs(
+    ctx: typer.Context,
+    from_tests: Annotated[list[Path], typer.Option("--from-tests")] = ...,
+    out: Annotated[Path, typer.Option("--out")] = Path("specs/behavior/features"),
+) -> None:
+    """Alias for ``create gherkin --mode update``."""
+    create_gherkin(
+        ctx=ctx,
+        from_tests=from_tests,
+        out=out,
+        group_by="file",
+        mode="update",
+        force=False,
+        dry_run=False,
+    )
+
+
+@create_app.command("feature")
+def create_feature(
+    ctx: typer.Context,
+    area: Annotated[str, typer.Option("--area")] = ...,
+    title: Annotated[str, typer.Option("--title")] = ...,
+    scenario: Annotated[str, typer.Option("--scenario")] = ...,
+    given: Annotated[str, typer.Option("--given")] = ...,
+    when: Annotated[str, typer.Option("--when")] = ...,
+    then: Annotated[str, typer.Option("--then")] = ...,
+    rule: Annotated[str | None, typer.Option("--rule")] = None,
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+    force: Annotated[bool, typer.Option("--force")] = False,
+) -> None:
+    """Create a new Gherkin feature file from structured inputs."""
+    import re
+
+    from specweave.gherkin.model import Feature, Rule, Scenario, Step
+    from specweave.gherkin.writer import write_feature
+
+    cli_ctx: CliContext = ctx.obj
+    feature_slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
+    scenario_slug = re.sub(r"[^a-z0-9]+", "-", scenario.lower()).strip("-")
+    rule_slug = re.sub(r"[^a-z0-9]+", "-", (rule or title).lower()).strip("-")
+
+    feature_tags = (f"area-{area}", f"feature-{feature_slug}")
+    rule_tags = (f"rule-{rule_slug}",)
+    scenario_tags = (f"bdd-{feature_slug}-{scenario_slug}",)
+
+    s = Scenario(
+        title=scenario,
+        steps=(
+            Step(keyword="Given", text=given),
+            Step(keyword="When", text=when),
+            Step(keyword="Then", text=then),
+        ),
+        tags=scenario_tags,
+        keyword=cli_ctx.config.gherkin.default_scenario_keyword,
+    )
+    r = Rule(title=rule or title, scenarios=(s,), tags=rule_tags)
+    f = Feature(title=title, rules=(r,), tags=feature_tags)
+
+    feature_text = write_feature(f)
+    if out is None:
+        features_dir = cli_ctx.config.paths.features_dir
+        out = features_dir / area / f"{feature_slug}.feature"
+
+    if out.exists() and not force:
+        typer.echo(f"Error: {out} already exists. Use --force to overwrite.", err=True)
+        raise typer.Exit(code=3)
+
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(feature_text, encoding="utf-8")
+
+    if cli_ctx.json_output:
+        typer.echo(
+            _dump_json(
+                {
+                    "schema_version": 1,
+                    "command": "create feature",
+                    "status": "created",
+                    "feature_path": str(out),
+                    "feature_id": f"feature-{feature_slug}",
+                    "scenario_ids": [f"bdd-{feature_slug}-{scenario_slug}"],
+                    "warnings": [],
+                }
+            )
+        )
+    else:
+        typer.echo(f"Created feature at {out}")
+
+
+@create_app.command("plan")
+def create_plan(
+    ctx: typer.Context,
+    feature: Annotated[Path, typer.Option("--feature")] = ...,
+    out: Annotated[Path, typer.Option("--out")] = Path("plan.md"),
+) -> None:
+    """Create a deterministic implementation plan from a feature file."""
+    from specweave.planning import create_plan as _create_plan
+
+    cli_ctx: CliContext = ctx.obj
+    _create_plan(feature_path=feature, out_path=out, config=cli_ctx.config)
+    if cli_ctx.json_output:
+        typer.echo(
+            _dump_json(
+                {
+                    "schema_version": 1,
+                    "command": "create plan",
+                    "status": "created",
+                    "plan_path": str(out),
+                }
+            )
+        )
+    else:
+        typer.echo(f"Wrote plan to {out}")
+
+
+@create_app.command("taskledger-task")
+def create_taskledger_task(
+    ctx: typer.Context,
+    feature: Annotated[Path, typer.Option("--feature")] = ...,
+    out: Annotated[Path, typer.Option("--out")] = Path(
+        ".specweave/mappings/taskledger/draft.json"
+    ),
+) -> None:
+    """Create a Taskledger task draft JSON from a feature file."""
+    from specweave.planning import create_taskledger_draft
+
+    cli_ctx: CliContext = ctx.obj
+    create_taskledger_draft(feature_path=feature, out_path=out, config=cli_ctx.config)
+    if cli_ctx.json_output:
+        typer.echo(
+            _dump_json(
+                {
+                    "schema_version": 1,
+                    "command": "create taskledger-task",
+                    "status": "created",
+                    "draft_path": str(out),
+                }
+            )
+        )
+    else:
+        typer.echo(f"Wrote Taskledger task draft to {out}")

@@ -27,6 +27,7 @@ keywords = ["bdd", "gherkin", "cucumber", "pytest", "testing", "developer-tools"
 dependencies = [
     "typer",
     "click",
+    "tomli>=2; python_version < '3.11'",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
