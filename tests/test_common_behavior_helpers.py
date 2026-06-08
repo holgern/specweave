@@ -22,14 +22,10 @@ class TestFeatureStem:
         """feature_stem handles .feature suffix."""
         assert feature_stem(Path("auth/login.feature")) == "login"
 
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature.md
-    # specweave: scenario=@bdd-feature-stem-markdown
     def test_deep_path(self) -> None:
         """feature_stem handles .feature.md suffix in deep paths."""
         assert feature_stem(Path("a/b/c.feature.md")) == "c"
 
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature.md
-    # specweave: scenario=@bdd-feature-stem-classic
     def test_other_extension(self) -> None:
         """feature_stem handles .feature suffix (other extension)."""
         assert feature_stem(Path("test.py")) == "test"

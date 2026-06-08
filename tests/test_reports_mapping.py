@@ -66,8 +66,6 @@ def test_summarize_fails_when_linked_scenario_failed() -> None:
     assert set(criteria[0].scenario_ids) == {"bdd-0001", "bdd-0002"}
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
-# specweave: scenario=@bdd-criteria-fail-closed
 def test_summarize_fails_on_skipped_unless_allowed() -> None:
     """Failed scenarios fail the linked criterion (skipped)."""
     only_skipped = (_scenario("A", "skipped", ("bdd-0001", "ac-0001")),)
@@ -86,8 +84,6 @@ def test_summarize_fails_on_skipped_unless_allowed() -> None:
     assert summarize_criteria(mixed, allow_skipped=True)[0].status == "passed"
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
-# specweave: scenario=@bdd-criteria-fail-closed
 def test_summarize_fails_on_undefined_and_pending() -> None:
     """Failed scenarios fail the linked criterion (undefined/pending)."""
     for status in ("undefined", "pending", "ambiguous"):
@@ -106,8 +102,6 @@ def test_unlinked_scenarios_are_ignored() -> None:
     assert summarize_criteria(results) == ()
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
-# specweave: scenario=@bdd-criteria-summary
 def test_matching_never_uses_title() -> None:
     """Summarization groups scenarios by acceptance criterion (title matching)."""
     results = (
@@ -128,8 +122,6 @@ def test_require_expected_coverage_missing_fails() -> None:
     assert coverage.missing == ("ac-0002",)
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
-# specweave: scenario=@bdd-criteria-summary
 def test_require_expected_coverage_all_present_passes() -> None:
     """Summarization groups scenarios by acceptance criterion (all present)."""
     results = (
@@ -141,8 +133,6 @@ def test_require_expected_coverage_all_present_passes() -> None:
     assert coverage.missing == ()
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
-# specweave: scenario=@bdd-criteria-missing-coverage
 def test_require_expected_coverage_only_failing_counts_as_missing() -> None:
     """Expected AC with no scenarios fails coverage (only failing)."""
     results = (
@@ -154,8 +144,6 @@ def test_require_expected_coverage_only_failing_counts_as_missing() -> None:
     assert coverage.missing == ("ac-0001",)
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
-# specweave: scenario=@bdd-criteria-summary
 def test_empty_expected_is_passing() -> None:
     """Summarization groups scenarios by acceptance criterion (empty)."""
     coverage = require_expected_coverage((), ())
@@ -163,8 +151,6 @@ def test_empty_expected_is_passing() -> None:
     assert coverage.status == "passed"
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
-# specweave: scenario=@bdd-criteria-fail-closed
 def test_fail_closed_no_passing_scenario() -> None:
     """Failed scenarios fail the linked criterion (no passing)."""
     results = (_scenario("A", "undefined", ("bdd-0001", "ac-0001")),)

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from specweave.config import SpecWeaveConfig, SpecWeavePaths
+from specweave.config import SpecWeaveConfig, SpecWeavePaths, load_config
 from specweave.doctor import run_doctor
 
 FEATURE = "specs/behavior/features/doctor/diagnostics.feature.md"
@@ -36,6 +36,33 @@ class TestDoctorPasses:
         result = run_doctor(config=config)
         assert result["status"] == "passed"
 
+    def test_explicit_config_uses_resolved_paths_without_relative_warnings(
+        self, tmp_path: Path
+    ) -> None:
+        project = tmp_path / "project"
+        for path in (
+            project / "specs/behavior/features",
+            project / "tests",
+            project / "reports/behavior",
+            project / ".specweave/evidence",
+            project / ".specweave/mappings",
+        ):
+            path.mkdir(parents=True)
+        config_path = tmp_path / ".specweave.toml"
+        config_path.write_text(
+            'schema_version = 1\nproject_root = "project"\n',
+            encoding="utf-8",
+        )
+
+        result = run_doctor(
+            config=load_config(config_path),
+            config_path=config_path,
+        )
+
+        assert result["status"] == "passed"
+        assert not any(item["code"] == "SWDOC001" for item in result["items"])
+        assert not any(item["code"] == "SWDOC003" for item in result["items"])
+
 
 class TestDoctorReportsMissing:
     # specweave: feature=specs/behavior/features/doctor/diagnostics.feature.md
@@ -51,8 +78,6 @@ class TestDoctorReportsMissing:
         result = run_doctor(config=config)
         assert any("SWDOC006" in item.get("code", "") for item in result["items"])
 
-    # specweave: feature=specs/behavior/features/doctor/diagnostics.feature.md
-    # specweave: scenario=@bdd-doctor-missing-directories
     def test_reports_missing_tests_dir(self, tmp_path: Path) -> None:
         """Doctor warns about missing directories."""
         config = SpecWeaveConfig(

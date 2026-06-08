@@ -39,7 +39,7 @@ features by file.
 - Then the manual file is preserved
 - And only draft features are updated
 
-`@bdd-translate-force-overwrite`
+`@bdd-translate-force-overwrite` `@manual`
 
 ### Example: Generation overwrites with --force
 

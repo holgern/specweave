@@ -89,8 +89,6 @@ def test_junit_error_counts_as_failed(tmp_path) -> None:  # type: ignore[no-unty
     assert results[0].tags == ("bdd-0009", "ac-0001")
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature.md
-# specweave: scenario=@bdd-junit-parse-cases
 def test_junit_tags_from_properties(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser extracts test cases from JUnit XML via properties."""
     path = _write(tmp_path, "junit.xml", _JUNIT_PROPERTIES)
@@ -98,8 +96,6 @@ def test_junit_tags_from_properties(tmp_path) -> None:  # type: ignore[no-untype
     assert results[0].tags == ("bdd-0005", "ac-0003")
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature.md
-# specweave: scenario=@bdd-junit-parse-statuses
 def test_normalize_junit_skipped_fails_closed(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser maps JUnit statuses correctly (skipped fails closed)."""
     path = _write(tmp_path, "junit.xml", _JUNIT_PASS_FAIL_SKIP)
@@ -116,8 +112,6 @@ def test_normalize_junit_skipped_fails_closed(tmp_path) -> None:  # type: ignore
     assert set(criterion.scenario_ids) == {"bdd-0001", "bdd-0002"}
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature.md
-# specweave: scenario=@bdd-junit-parse-statuses
 def test_normalize_junit_all_passed(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser maps JUnit statuses correctly (all passed)."""
     text = """\
@@ -134,8 +128,6 @@ def test_normalize_junit_all_passed(tmp_path) -> None:  # type: ignore[no-untype
     assert report.criteria[0].status == "passed"
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature.md
-# specweave: scenario=@bdd-junit-parse-cases
 def test_parse_pytest_junit_case_nodeid_and_file(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser extracts test cases from JUnit XML with nodeid and file."""
     text = """\
@@ -154,8 +146,6 @@ def test_parse_pytest_junit_case_nodeid_and_file(tmp_path) -> None:  # type: ign
     assert cases[0].nodeid == "tests/test_sync_git_sync.py::test_imports_pytest_report"
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature.md
-# specweave: scenario=@bdd-junit-parse-cases
 def test_parse_junit_preserves_nodeid_and_test_file(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser extracts test cases from JUnit XML with preserved nodeid."""
     text = """\
@@ -238,8 +228,6 @@ def test_cucumber_json_passing_scenario(tmp_path) -> None:  # type: ignore[no-un
     assert report.source_report == str(path)
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature.md
-# specweave: scenario=@bdd-cucumber-parse-scenarios
 def test_skipped_fails_closed_by_default(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser extracts scenarios from Cucumber JSON (skipped fails closed)."""
     payload = [
@@ -261,8 +249,6 @@ def test_skipped_fails_closed_by_default(tmp_path) -> None:  # type: ignore[no-u
     assert report.skipped == 1
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature.md
-# specweave: scenario=@bdd-cucumber-parse-scenarios
 def test_allow_skipped_does_not_fail(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser extracts scenarios from Cucumber JSON (allow_skipped)."""
     payload = [
@@ -283,8 +269,6 @@ def test_allow_skipped_does_not_fail(tmp_path) -> None:  # type: ignore[no-untyp
     assert report.results[0].status == "skipped"
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature.md
-# specweave: scenario=@bdd-cucumber-parse-scenarios
 def test_failed_step_fails_scenario_and_report(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser extracts scenarios from Cucumber JSON (failed step)."""
     payload = [
@@ -335,8 +319,6 @@ def test_behear_string_tags_and_inline_status(tmp_path) -> None:  # type: ignore
     assert report.results[0].tags == ("bdd-0001", "ac-0001")
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature.md
-# specweave: scenario=@bdd-cucumber-parse-scenarios
 def test_normalized_dict_shape(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser extracts scenarios from Cucumber JSON (normalized dict shape)."""
     payload = [
@@ -364,8 +346,6 @@ def test_normalized_dict_shape(tmp_path) -> None:  # type: ignore[no-untyped-def
     assert data["criteria"][0]["scenario_ids"] == ["bdd-0001"]
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature.md
-# specweave: scenario=@bdd-cucumber-parse-scenarios
 def test_unsupported_format_raises(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser rejects unsupported formats."""
     path = tmp_path / "x.json"

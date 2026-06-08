@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import json
 from pathlib import Path
 from typing import Any
@@ -89,8 +90,35 @@ def _deprecated_paths(project_root: Path) -> list[str]:
 def _forbidden_pytest_bdd_usages(test_files: list[Path]) -> list[str]:
     findings: list[str] = []
     for path in test_files:
-        text = path.read_text(encoding="utf-8")
-        if "pytest_bdd" in text or "scenarios(" in text:
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        pytest_bdd_aliases: set[str] = set()
+        scenarios_aliases: set[str] = set()
+        forbidden = False
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    if alias.name == "pytest_bdd":
+                        pytest_bdd_aliases.add(alias.asname or alias.name)
+                        forbidden = True
+            elif isinstance(node, ast.ImportFrom) and node.module == "pytest_bdd":
+                forbidden = True
+                for alias in node.names:
+                    if alias.name == "scenarios":
+                        scenarios_aliases.add(alias.asname or alias.name)
+            elif isinstance(node, ast.Call):
+                if (
+                    isinstance(node.func, ast.Name)
+                    and node.func.id in scenarios_aliases
+                ):
+                    forbidden = True
+                elif (
+                    isinstance(node.func, ast.Attribute)
+                    and node.func.attr == "scenarios"
+                    and isinstance(node.func.value, ast.Name)
+                    and node.func.value.id in pytest_bdd_aliases
+                ):
+                    forbidden = True
+        if forbidden:
             findings.append(display_path(path))
     return findings
 

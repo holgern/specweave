@@ -236,3 +236,51 @@ class TestCreateFeatureFromJson:
         )
         assert feature_path.exists()
         assert "# Feature: Password login" in feature_path.read_text(encoding="utf-8")
+
+    def test_cli_legacy_dry_run_writes_nothing(
+        self, tmp_path: Path, monkeypatch
+    ) -> None:
+        monkeypatch.chdir(tmp_path)
+        out_path = tmp_path / "login.feature.md"
+        result = runner.invoke(
+            app,
+            [
+                "--json",
+                "create",
+                "feature",
+                "--area",
+                "auth",
+                "--title",
+                "Login",
+                "--scenario",
+                "Reject",
+                "--given",
+                "x",
+                "--when",
+                "y",
+                "--then",
+                "z",
+                "--out",
+                str(out_path),
+                "--dry-run",
+            ],
+        )
+        assert result.exit_code == 0, result.stdout
+        assert json.loads(result.stdout)["status"] == "dry-run"
+        assert not out_path.exists()
+
+    def test_cli_legacy_rejects_empty_area(self, tmp_path: Path, monkeypatch) -> None:
+        monkeypatch.chdir(tmp_path)
+        result = runner.invoke(
+            app,
+            [
+                "create",
+                "feature",
+                "--title",
+                "Login",
+                "--scenario",
+                "Reject",
+            ],
+        )
+        assert result.exit_code == 1
+        assert "--area" in result.output

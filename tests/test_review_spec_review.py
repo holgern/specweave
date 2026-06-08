@@ -106,8 +106,6 @@ class TestReviewReportsNeedsReview:
 
 
 class TestReviewJsonShape:
-    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
-    # specweave: scenario=@bdd-review-counts
     def test_json_shape(self, tmp_path: Path) -> None:
         """Review reports feature and scenario statistics (JSON shape)."""
         (tmp_path / "tests").mkdir()

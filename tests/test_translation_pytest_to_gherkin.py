@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from specweave.config import SpecWeaveConfig
 from specweave.translate.pytest_to_gherkin import (
     _derive_area,
@@ -43,8 +45,6 @@ class TestSlug:
         """Generation finds test functions in pytest files."""
         assert _slug("Password Reset") == "password-reset"
 
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
-    # specweave: scenario=@bdd-translate-discovers-tests
     def test_special_chars(self) -> None:
         """Generation finds test functions in pytest files (special chars)."""
         assert _slug("User's login (retry)") == "user-s-login-retry"
@@ -59,8 +59,6 @@ class TestDeriveArea:
         f = tests_dir / "test_auth.py"
         assert _derive_area(f, tests_dir) == "auth"
 
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
-    # specweave: scenario=@bdd-translate-group-by-file
     def test_nested(self, tmp_path: Path) -> None:
         """Generation groups scenarios by test file (nested)."""
         tests_dir = tmp_path / "tests"
@@ -69,22 +67,16 @@ class TestDeriveArea:
 
 
 class TestDeriveFeatureTitle:
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
-    # specweave: scenario=@bdd-translate-discovers-tests
     def test_test_prefix(self) -> None:
         """Generation finds test functions in pytest files (test prefix)."""
         assert _derive_feature_title(Path("test_auth_password.py")) == "Auth Password"
 
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
-    # specweave: scenario=@bdd-translate-discovers-tests
     def test_test_suffix(self) -> None:
         """Generation finds test functions in pytest files (test suffix)."""
         assert _derive_feature_title(Path("auth_password_test.py")) == "Auth Password"
 
 
 class TestCreateGherkinFromSinglePytestFile:
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
-    # specweave: scenario=@bdd-translate-discovers-tests
     def test_creates_feature(self, tmp_path: Path) -> None:
         """Generation finds test functions in pytest files."""
         test_file = _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)
@@ -115,8 +107,6 @@ class TestCreateGherkinFromSinglePytestFile:
         assert "@needs-review" in content
         assert "@generated" in content
 
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
-    # specweave: scenario=@bdd-translate-discovers-tests
     def test_includes_bdd_id(self, tmp_path: Path) -> None:
         """Generation finds test functions in pytest files (bdd id)."""
         test_file = _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)
@@ -132,8 +122,6 @@ class TestCreateGherkinFromSinglePytestFile:
 
 
 class TestCreateGherkinGroupsByArea:
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
-    # specweave: scenario=@bdd-translate-group-by-file
     def test_groups_by_file(self, tmp_path: Path) -> None:
         """Generation groups scenarios by test file."""
         _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)
@@ -149,6 +137,33 @@ class TestCreateGherkinGroupsByArea:
         features = _feature_file_paths(out_dir)
         areas = {p.parent.name for p in features}
         assert len(areas) == 2, f"Areas found: {areas}"
+
+    def test_rejects_unsupported_grouping(self, tmp_path: Path) -> None:
+        test_file = _write_pytest_file(tmp_path, "test_auth.py", _SIMPLE_TEST)
+        with pytest.raises(ValueError, match="group_by"):
+            generate_gherkin_from_tests(
+                test_paths=[test_file],
+                out_dir=tmp_path / "features",
+                group_by="area",
+            )
+
+    def test_duplicate_ids_are_deterministic(self, tmp_path: Path) -> None:
+        test_file = _write_pytest_file(
+            tmp_path,
+            "test_auth.py",
+            "def test_same():\n    assert user is not None\n",
+        )
+        out_dir = tmp_path / "features"
+        existing = out_dir / "auth" / "existing.feature"
+        existing.parent.mkdir(parents=True)
+        existing.write_text("@bdd-auth-same\nFeature: Existing\n", encoding="utf-8")
+
+        result = generate_gherkin_from_tests(
+            test_paths=[test_file],
+            out_dir=out_dir,
+        )
+
+        assert result["results"][0]["scenario_ids"][0] == "bdd-auth-same-2"
 
 
 class TestCreateGherkinPreservesExisting:
@@ -177,8 +192,6 @@ class TestCreateGherkinPreservesExisting:
         )
         assert any("SWWRITE001" in w for w in result["warnings"])
 
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
-    # specweave: scenario=@bdd-translate-preserve-manual
     def test_preserves_existing_bdd_id(self, tmp_path: Path) -> None:
         """Generation does not overwrite manual feature files (preserve bdd id)."""
         test_file = _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)
@@ -215,8 +228,6 @@ class TestCreateGherkinDryRun:
 
 
 class TestCreateGherkinJsonShape:
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
-    # specweave: scenario=@bdd-translate-discovers-tests
     def test_json_shape(self, tmp_path: Path) -> None:
         """Generation finds test functions in pytest files (JSON shape)."""
         test_file = _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)

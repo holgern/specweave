@@ -55,8 +55,6 @@ def test_render_candidate_markdown() -> None:
     assert markdown.endswith("\n")
 
 
-# specweave: feature=specs/behavior/features/integrations/archledger.feature.md
-# specweave: scenario=@bdd-archledger-candidate
 def test_render_candidate_from_parsed_feature(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """archledger command renders candidate markdown from parsed feature."""
     feature_path = tmp_path / "tests/bdd/features/task-0123-lifecycle.feature"

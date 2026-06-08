@@ -166,3 +166,23 @@ scenarios("login.feature")
     result = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
 
     assert result["forbidden_pytest_bdd_usages"] == ["tests/test_auth_login.py"]
+
+
+def test_behavior_coverage_ignores_pytest_bdd_text(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    tests_dir = tmp_path / "tests"
+    _write_test(
+        tests_dir / "test_text.py",
+        '''
+"""pytest_bdd and scenarios("example.feature") are documentation text."""
+from specweave.backends import pytest_bdd
+
+def test_text() -> None:
+    assert "pytest_bdd.scenarios()" == "pytest_bdd.scenarios()"
+''',
+    )
+
+    result = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
+
+    assert result["forbidden_pytest_bdd_usages"] == []

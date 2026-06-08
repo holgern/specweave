@@ -25,7 +25,7 @@ from typing import Any
 
 from specweave.bdd.model import BddExample, TaskBddSpec
 from specweave.bdd.store import task_bdd_from_dict
-from specweave.behavior.common import slugify
+from specweave.behavior.common import feature_stem, slugify
 from specweave.gherkin.model import Feature, Rule, Scenario, Step
 from specweave.gherkin.writer import write_feature
 from specweave.reports.mapping import extract_ids_from_tags
@@ -100,7 +100,7 @@ def write_taskledger_bdd_evidence(
 
 def _behavior_feature_from_task_bdd(spec: TaskBddSpec, out: Path) -> Feature:
     area = slugify(out.parent.name)
-    feature_slug = slugify(out.stem)
+    feature_slug = slugify(feature_stem(out))
     feature_tags = (f"area-{area}", f"feature-{feature_slug}")
 
     examples_by_rule: dict[str, list[BddExample]] = {rule.id: [] for rule in spec.rules}
@@ -151,7 +151,10 @@ def _behavior_feature_from_task_bdd(spec: TaskBddSpec, out: Path) -> Feature:
 
 
 def write_behavior_feature_from_taskledger(
-    path: str | Path, out: str | Path
+    path: str | Path,
+    out: str | Path,
+    *,
+    document_format: str | None = None,
 ) -> Feature:
     """Write a canonical behavior feature from a Taskledger export."""
 
@@ -160,8 +163,16 @@ def write_behavior_feature_from_taskledger(
         load_taskledger_acceptance_export(path),
         output,
     )
+    resolved_format = document_format
+    if resolved_format is None:
+        resolved_format = (
+            "markdown" if output.as_posix().endswith(".feature.md") else "classic"
+        )
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(write_feature(feature), encoding="utf-8")
+    output.write_text(
+        write_feature(feature, document_format=resolved_format),
+        encoding="utf-8",
+    )
     return feature
 
 

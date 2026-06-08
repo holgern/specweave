@@ -9,6 +9,7 @@ include = ["specweave*"]
 [tool.setuptools.package-data]
 specweave = [
     "py.typed",
+    "schemas/*.json",
 ]
 
 [tool.pytest.ini_options]

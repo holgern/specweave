@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from specweave.config import SpecWeaveConfig, load_config
+from specweave.config import SpecWeaveConfig, find_config, load_config
 
 
 @dataclass(frozen=True)
@@ -22,9 +22,10 @@ def build_cli_context(
     json_output: bool,
 ) -> CliContext:
     """Build a ``CliContext`` from CLI flags."""
-    config = load_config(config_path)
+    resolved_config_path = config_path or find_config()
+    config = load_config(resolved_config_path)
     return CliContext(
-        config_path=config_path,
+        config_path=resolved_config_path,
         config=config,
         json_output=json_output,
     )

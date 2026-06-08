@@ -70,11 +70,26 @@ def _build_scenario_id(
 ) -> str:
     """Build a stable @bdd-* ID for a scenario."""
     base = f"bdd-{feature_slug}-{_slug(scenario_title)}"
-    if base not in existing_ids:
-        return base
-    # Append short hash of the full slug for dedup
-    short_hash = format(abs(hash(base)) % 0xFFFFFF, "06x")
-    return f"{base}-{short_hash}"
+    candidate = base
+    suffix = 2
+    while candidate in existing_ids:
+        candidate = f"{base}-{suffix}"
+        suffix += 1
+    return candidate
+
+
+def _existing_scenario_ids(out_dir: Path) -> frozenset[str]:
+    ids: set[str] = set()
+    if not out_dir.exists():
+        return frozenset()
+    for path in out_dir.rglob("*"):
+        if not path.is_file() or not (
+            path.name.endswith(".feature") or path.name.endswith(".feature.md")
+        ):
+            continue
+        text = path.read_text(encoding="utf-8")
+        ids.update(re.findall(r"(?<![a-z0-9-])@?(bdd-[a-z0-9-]+)", text))
+    return frozenset(ids)
 
 
 def _test_file_to_feature(
@@ -171,6 +186,8 @@ def generate_gherkin_from_tests(
     """
     if config is None:
         config = SpecWeaveConfig()
+    if group_by != "file":
+        raise ValueError(f"Unsupported group_by: {group_by}; expected 'file'")
 
     tests_dir = config.paths.tests_dir
     files = _collect_pytest_files(test_paths)
@@ -183,7 +200,7 @@ def generate_gherkin_from_tests(
     unchanged_count = 0
     skipped_count = 0
 
-    existing_ids: frozenset[str] = frozenset()
+    existing_ids = _existing_scenario_ids(out_dir)
 
     for test_file in files:
         feature, scenario_ids = _test_file_to_feature(

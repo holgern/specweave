@@ -10,7 +10,7 @@ and preserves stable exit codes.
 
 ## Rule: Root options work across all commands
 
-`@bdd-cli-config-option`
+`@bdd-cli-config-option` `@manual`
 
 ### Example: --config selects an explicit config path
 
@@ -18,7 +18,7 @@ and preserves stable exit codes.
 - When specweave runs with --config pointing to that file
 - Then the custom config is loaded
 
-`@bdd-cli-json-output`
+`@bdd-cli-json-output` `@manual`
 
 ### Example: --json produces machine-readable output
 
@@ -29,7 +29,7 @@ and preserves stable exit codes.
 - And the JSON has schema_version 1
 - And the JSON has status "ok"
 
-`@bdd-cli-json-init`
+`@bdd-cli-json-init` `@manual`
 
 ### Example: init --json produces machine-readable output
 
@@ -42,7 +42,7 @@ and preserves stable exit codes.
 
 ## Rule: Behavior subcommands work correctly
 
-`@bdd-cli-behavior-check`
+`@bdd-cli-behavior-check` `@manual`
 
 ### Example: behavior check lints feature files
 
@@ -50,7 +50,7 @@ and preserves stable exit codes.
 - When specweave runs "behavior check"
 - Then the command completes successfully
 
-`@bdd-cli-behavior-index`
+`@bdd-cli-behavior-index` `@manual`
 
 ### Example: behavior index generates index and manifest
 
@@ -59,7 +59,7 @@ and preserves stable exit codes.
 - Then the behavior index file is written
 - And the manifest file is written
 
-`@bdd-cli-behavior-generate-tests`
+`@bdd-cli-behavior-generate-tests` `@manual`
 
 ### Example: behavior generate-tests creates pytest skeletons
 
@@ -67,7 +67,7 @@ and preserves stable exit codes.
 - When specweave runs "behavior generate-tests"
 - Then a pytest skeleton file is created
 
-`@bdd-cli-behavior-coverage`
+`@bdd-cli-behavior-coverage` `@manual`
 
 ### Example: behavior coverage checks spec-to-test mapping
 
@@ -75,7 +75,7 @@ and preserves stable exit codes.
 - When specweave runs "behavior coverage"
 - Then the coverage JSON is output
 
-`@bdd-cli-behavior-import-report`
+`@bdd-cli-behavior-import-report` `@manual`
 
 ### Example: behavior import-report imports JUnit XML
 
@@ -85,7 +85,7 @@ and preserves stable exit codes.
 
 ## Rule: BDD compatibility aliases work
 
-`@bdd-cli-bdd-check-alias`
+`@bdd-cli-bdd-check-alias` `@manual`
 
 ### Example: bdd check is an alias for behavior check
 
@@ -93,7 +93,7 @@ and preserves stable exit codes.
 - When specweave runs "bdd check"
 - Then the command behaves identically to "behavior check"
 
-`@bdd-cli-bdd-index-alias`
+`@bdd-cli-bdd-index-alias` `@manual`
 
 ### Example: bdd index is an alias for behavior index
 
@@ -103,7 +103,7 @@ and preserves stable exit codes.
 
 ## Rule: Create subcommands work correctly
 
-`@bdd-cli-create-feature`
+`@bdd-cli-create-feature` `@manual`
 
 ### Example: create feature writes a new Gherkin feature file
 
@@ -113,7 +113,7 @@ and preserves stable exit codes.
 - Then a feature file is created
 - And the file contains the specified scenario
 
-`@bdd-cli-create-gherkin`
+`@bdd-cli-create-gherkin` `@manual`
 
 ### Example: create gherkin generates features from tests
 
@@ -121,7 +121,7 @@ and preserves stable exit codes.
 - When specweave runs "create gherkin --from-tests tests"
 - Then feature files are generated
 
-`@bdd-cli-create-plan`
+`@bdd-cli-create-plan` `@manual`
 
 ### Example: create plan generates an implementation plan
 
@@ -131,7 +131,7 @@ and preserves stable exit codes.
 
 ## Rule: Exit codes reflect result status
 
-`@bdd-cli-exit-doctor-failed`
+`@bdd-cli-exit-doctor-failed` `@manual`
 
 ### Example: doctor exits non-zero when errors found
 
@@ -139,7 +139,7 @@ and preserves stable exit codes.
 - When specweave runs "doctor"
 - Then the exit code is 1
 
-`@bdd-cli-exit-check-errors`
+`@bdd-cli-exit-check-errors` `@manual`
 
 ### Example: behavior check exits non-zero on lint errors
 
@@ -147,7 +147,7 @@ and preserves stable exit codes.
 - When specweave runs "behavior check"
 - Then the exit code is 1
 
-`@bdd-cli-exit-normalize-failed`
+`@bdd-cli-exit-normalize-failed` `@manual`
 
 ### Example: report normalize exits non-zero when report failed
 

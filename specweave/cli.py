@@ -188,7 +188,11 @@ def doctor(
     from specweave.doctor import run_doctor
 
     cli_ctx: CliContext = ctx.obj
-    result = run_doctor(config=cli_ctx.config, fix=fix)
+    result = run_doctor(
+        config=cli_ctx.config,
+        config_path=cli_ctx.config_path,
+        fix=fix,
+    )
     if cli_ctx.json_output:
         typer.echo(_dump_json(result))
     else:
@@ -197,10 +201,6 @@ def doctor(
         for item in result.get("items", []):
             level = item.get("level", "info")
             typer.echo(f"  {level.upper()}: {item.get('message', '')}")
-        for w in result.get("warnings", []):
-            typer.echo(f"  WARNING: {w}")
-        for e in result.get("errors", []):
-            typer.echo(f"  ERROR: {e}")
     if result["status"] != "passed":
         raise typer.Exit(code=1)
 
@@ -223,6 +223,26 @@ def _print_findings(findings) -> None:  # type: ignore[no-untyped-def]
 
 def _has_errors(findings) -> bool:  # type: ignore[no-untyped-def]
     return any(finding.level == "error" for finding in findings)
+
+
+def _required_slug(value: str, option: str) -> str:
+    import re
+
+    slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+    if not slug:
+        typer.echo(
+            f"Error: {option} must contain at least one letter or number.",
+            err=True,
+        )
+        raise typer.Exit(code=1)
+    return slug
+
+
+def _required_option(value: str, option: str, context: str) -> str:
+    if not value:
+        typer.echo(f"Error: {option} is required {context}.", err=True)
+        raise typer.Exit(code=1)
+    return value
 
 
 def _coverage_failed(data: dict[str, object]) -> bool:
@@ -480,13 +500,19 @@ def behavior_import_report(
 
 @behavior_app.command("import-taskledger")
 def behavior_import_taskledger(
+    ctx: typer.Context,
     source: Annotated[Path, typer.Argument(help="Taskledger acceptance export JSON.")],
     out: Annotated[Path, typer.Option("--out", help="Output canonical .feature file.")],
 ) -> None:
     """Create a canonical behavior feature from a Taskledger export."""
     from specweave.integrations.taskledger import write_behavior_feature_from_taskledger
 
-    write_behavior_feature_from_taskledger(source, out)
+    cli_ctx: CliContext = ctx.obj
+    write_behavior_feature_from_taskledger(
+        source,
+        out,
+        document_format=cli_ctx.config.gherkin.document_format,
+    )
     typer.echo(f"Wrote behavior feature to {out}")
 
 
@@ -1035,7 +1061,7 @@ def create_gherkin(
     ctx: typer.Context,
     from_tests: Annotated[list[Path], typer.Option("--from-tests")],
     out: Annotated[Path, typer.Option("--out")] = Path("specs/behavior/features"),
-    group_by: Annotated[str, typer.Option("--group-by")] = "file",
+    group_by: Annotated[str | None, typer.Option("--group-by")] = None,
     mode: Annotated[str, typer.Option("--mode")] = "create",
     force: Annotated[bool, typer.Option("--force")] = False,
     dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
@@ -1047,7 +1073,7 @@ def create_gherkin(
     result = generate_gherkin_from_tests(
         test_paths=from_tests,
         out_dir=out,
-        group_by=group_by,
+        group_by=group_by or cli_ctx.config.generation.group_by,
         mode=mode,
         force=force,
         dry_run=dry_run,
@@ -1175,21 +1201,15 @@ def create_feature(
         return
 
     # Legacy positional path
-    if not title:
-        typer.echo("Error: --title is required when --from-json is not used.", err=True)
-        raise typer.Exit(code=1)
-    if not scenario:
-        typer.echo(
-            "Error: --scenario is required when --from-json is not used.",
-            err=True,
-        )
-        raise typer.Exit(code=1)
+    title = _required_option(title, "--title", "when --from-json is not used")
+    scenario = _required_option(scenario, "--scenario", "when --from-json is not used")
+    area_slug = _required_slug(area, "--area")
 
     feature_slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
     scenario_slug = re.sub(r"[^a-z0-9]+", "-", scenario.lower()).strip("-")
     rule_slug = re.sub(r"[^a-z0-9]+", "-", (rule or title).lower()).strip("-")
 
-    feature_tags = (f"area-{area}", f"feature-{feature_slug}")
+    feature_tags = (f"area-{area_slug}", f"feature-{feature_slug}")
     rule_tags = (f"rule-{rule_slug}",)
     scenario_tags = (f"bdd-{feature_slug}-{scenario_slug}",)
 
@@ -1213,7 +1233,7 @@ def create_feature(
         features_dir = cli_ctx.config.paths.features_dir
         out = (
             features_dir
-            / area
+            / area_slug
             / f"{feature_slug}{cli_ctx.config.gherkin.feature_extension}"
         )
 
@@ -1224,8 +1244,9 @@ def create_feature(
         )
         raise typer.Exit(code=3)
 
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(feature_text, encoding="utf-8")
+    if not dry_run:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(feature_text, encoding="utf-8")
 
     if cli_ctx.json_output:
         typer.echo(
@@ -1233,7 +1254,7 @@ def create_feature(
                 {
                     "schema_version": 1,
                     "command": "create feature",
-                    "status": "created",
+                    "status": "dry-run" if dry_run else "created",
                     "feature_path": str(out),
                     "feature_id": f"feature-{feature_slug}",
                     "scenario_ids": [f"bdd-{feature_slug}-{scenario_slug}"],
@@ -1242,7 +1263,8 @@ def create_feature(
             )
         )
     else:
-        typer.echo(f"Created feature at {out}")
+        status = "Dry-run feature at" if dry_run else "Created feature at"
+        typer.echo(f"{status} {out}")
 
 
 @create_app.command("plan")

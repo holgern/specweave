@@ -59,7 +59,7 @@ formats.
 
 ## Rule: Markdown Gherkin parsing
 
-`@bdd-parser-markdown-feature`
+`@bdd-parser-markdown-feature` `@manual`
 
 ### Example: Parser extracts structure from markdown format
 
@@ -70,7 +70,7 @@ formats.
 
 ## Rule: Parser dispatches by format
 
-`@bdd-parser-dispatch-by-suffix`
+`@bdd-parser-dispatch-by-suffix` `@manual`
 
 ### Example: Parser selects markdown parser for .feature.md files
 
@@ -78,7 +78,7 @@ formats.
 - When specweave parses the feature
 - Then the markdown parser is used
 
-`@bdd-parser-dispatch-classic`
+`@bdd-parser-dispatch-classic` `@manual`
 
 ### Example: Parser selects classic parser for .feature files
 

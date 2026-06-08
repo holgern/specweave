@@ -6,19 +6,19 @@ Generated from `specs/behavior/features`.
 
 ### Static behavior coverage checks
 
-- Path: `specs/behavior/features/behavior/coverage.feature`
+- Path: `specs/behavior/features/behavior/coverage.feature.md`
 - Summary: specweave behavior coverage checks the mapping between behavior feature
 
 #### Rule: Coverage identifies bound and unbound scenarios
 
-- `bdd-coverage-bound-scenario` Coverage marks bound scenarios -> `tests/test_behavior_coverage.py` (missing)
-- `bdd-coverage-unbound-scenario` Coverage reports missing bindings -> `tests/test_behavior_coverage.py` (missing)
+- `bdd-coverage-bound-scenario` Coverage marks bound scenarios -> `tests/test_behavior_coverage.py::test_behavior_coverage_feature_md_bound_by_comment` (bound)
+- `bdd-coverage-unbound-scenario` Coverage reports missing bindings -> `tests/test_behavior_coverage.py::test_behavior_coverage_does_not_match_by_title` (bound)
 - `bdd-coverage-missing-test-file` Coverage reports missing test files -> `tests/test_behavior_coverage.py` (missing)
 
 #### Rule: Coverage detects stale bindings
 
 - `bdd-coverage-stale-binding` Coverage reports bindings to non-existent features -> `tests/test_behavior_coverage.py` (missing)
-- `bdd-coverage-stale-scenario` Coverage reports bindings to non-existent scenarios -> `tests/test_behavior_coverage.py` (missing)
+- `bdd-coverage-stale-scenario` Coverage reports bindings to non-existent scenarios -> `tests/test_behavior_coverage.py::test_behavior_coverage_reports_stale_markdown_mapping` (bound)
 
 #### Rule: Coverage detects deprecated paths
 
@@ -26,7 +26,7 @@ Generated from `specs/behavior/features`.
 
 #### Rule: Coverage detects forbidden pytest-bdd usage
 
-- `bdd-coverage-forbidden-pytest-bdd` Coverage reports pytest-bdd imports in test files -> `tests/test_behavior_coverage.py` (missing)
+- `bdd-coverage-forbidden-pytest-bdd` Coverage reports pytest-bdd imports in test files -> `tests/test_behavior_coverage.py::test_behavior_coverage_reports_forbidden_pytest_bdd_usage` (bound)
 
 #### Rule: Coverage skips manual and waived scenarios
 
@@ -34,7 +34,7 @@ Generated from `specs/behavior/features`.
 
 ### Plain pytest skeleton generation
 
-- Path: `specs/behavior/features/behavior/generation.feature`
+- Path: `specs/behavior/features/behavior/generation.feature.md`
 - Summary: specweave behavior generate-tests creates plain pytest test skeletons
 
 #### Rule: Generation creates pytest skeletons
@@ -59,7 +59,7 @@ Generated from `specs/behavior/features`.
 
 ### Behavior index and manifest generation
 
-- Path: `specs/behavior/features/behavior/index.feature`
+- Path: `specs/behavior/features/behavior/index.feature.md`
 - Summary: specweave behavior index generates a Markdown index and JSON manifest
 
 #### Rule: Index generation scans feature files
@@ -79,7 +79,7 @@ Generated from `specs/behavior/features`.
 
 ### Behavior evidence import from pytest reports
 
-- Path: `specs/behavior/features/behavior/reporting.feature`
+- Path: `specs/behavior/features/behavior/reporting.feature.md`
 - Summary: specweave behavior import-report imports pytest/JUnit XML reports into
 
 #### Rule: Import maps test results to scenarios
@@ -100,7 +100,7 @@ Generated from `specs/behavior/features`.
 
 ### SpecWeave CLI contract
 
-- Path: `specs/behavior/features/cli/cli-contract.feature`
+- Path: `specs/behavior/features/cli/cli-contract.feature.md`
 - Summary: The SpecWeave CLI provides commands for behavior-driven development
 
 #### Rule: Root options work across all commands
@@ -138,7 +138,7 @@ Generated from `specs/behavior/features`.
 
 ### Behavior helper functions
 
-- Path: `specs/behavior/features/common/behavior-helpers.feature`
+- Path: `specs/behavior/features/common/behavior-helpers.feature.md`
 - Summary: The behavior.common module provides shared helpers for slugification,
 
 #### Rule: Slugification produces stable lowercase slugs
@@ -151,8 +151,8 @@ Generated from `specs/behavior/features`.
 
 - `bdd-feature-identity-from-path` Feature identity derives area from parent directory -> `tests/test_common_behavior_helpers.py` (missing)
 - `bdd-feature-identity-no-area` Feature identity uses "behavior" when no area directory -> `tests/test_common_behavior_helpers.py` (missing)
-- `bdd-feature-stem-markdown` feature_stem handles .feature.md suffix -> `tests/test_common_behavior_helpers.py` (missing)
-- `bdd-feature-stem-classic` feature_stem handles .feature suffix -> `tests/test_common_behavior_helpers.py` (missing)
+- `bdd-feature-stem-markdown` feature_stem handles .feature.md suffix -> `tests/test_common_behavior_helpers.py::test_feature_md` (bound)
+- `bdd-feature-stem-classic` feature_stem handles .feature suffix -> `tests/test_common_behavior_helpers.py::test_classic_feature` (bound)
 
 #### Rule: Canonical test path derivation
 
@@ -172,65 +172,65 @@ Generated from `specs/behavior/features`.
 
 ### SpecWeave configuration management
 
-- Path: `specs/behavior/features/config/configuration.feature`
+- Path: `specs/behavior/features/config/configuration.feature.md`
 - Summary: SpecWeave loads project configuration from TOML files, discovers config
 
 #### Rule: Config discovery walks parent directories
 
-- `bdd-config-discovery-finds-dotfile` Discovery finds .specweave.toml in current directory -> `tests/test_config_configuration.py` (missing)
+- `bdd-config-discovery-finds-dotfile` Discovery finds .specweave.toml in current directory -> `tests/test_config_configuration.py::test_prefers_explicit` (bound)
 - `bdd-config-discovery-finds-public` Discovery finds specweave.toml in current directory -> `tests/test_config_configuration.py` (missing)
-- `bdd-config-discovery-prefers-dotfile` Discovery prefers .specweave.toml over specweave.toml -> `tests/test_config_configuration.py` (missing)
-- `bdd-config-discovery-walks-parents` Discovery walks parent directories when not found locally -> `tests/test_config_configuration.py` (missing)
-- `bdd-config-discovery-returns-none` Discovery returns None when no config exists -> `tests/test_config_configuration.py` (missing)
+- `bdd-config-discovery-prefers-dotfile` Discovery prefers .specweave.toml over specweave.toml -> `tests/test_config_configuration.py::test_prefers_dotfile_over_public` (bound)
+- `bdd-config-discovery-walks-parents` Discovery walks parent directories when not found locally -> `tests/test_config_configuration.py::test_walks_up_directories` (bound)
+- `bdd-config-discovery-returns-none` Discovery returns None when no config exists -> `tests/test_config_configuration.py::test_returns_none_when_missing` (bound)
 
 #### Rule: Config loading returns defaults when no file exists
 
-- `bdd-config-load-defaults` Loading with no file returns default config -> `tests/test_config_configuration.py` (missing)
-- `bdd-config-load-from-file` Loading reads values from a valid TOML file -> `tests/test_config_configuration.py` (missing)
+- `bdd-config-load-defaults` Loading with no file returns default config -> `tests/test_config_configuration.py::test_defaults_when_missing` (bound)
+- `bdd-config-load-from-file` Loading reads values from a valid TOML file -> `tests/test_config_configuration.py::test_normalizes_paths` (bound)
 
 #### Rule: Config rejects unsupported schema versions
 
-- `bdd-config-rejects-unsupported-schema` Loading fails for schema_version 2 -> `tests/test_config_configuration.py` (missing)
+- `bdd-config-rejects-unsupported-schema` Loading fails for schema_version 2 -> `tests/test_config_configuration.py::test_rejects_unsupported_schema` (bound)
 
 #### Rule: Default config rendering is deterministic
 
-- `bdd-config-render-behavior` Default config renders behavior spelling -> `tests/test_config_configuration.py` (missing)
-- `bdd-config-render-behaviour` Default config renders behaviour spelling -> `tests/test_config_configuration.py` (missing)
+- `bdd-config-render-behavior` Default config renders behavior spelling -> `tests/test_config_configuration.py::test_renders_behavior` (bound)
+- `bdd-config-render-behaviour` Default config renders behaviour spelling -> `tests/test_config_configuration.py::test_renders_behaviour` (bound)
 
 ## doctor
 
 ### SpecWeave project diagnostics
 
-- Path: `specs/behavior/features/doctor/diagnostics.feature`
+- Path: `specs/behavior/features/doctor/diagnostics.feature.md`
 - Summary: specweave doctor checks the project setup, config, paths, and feature
 
 #### Rule: Doctor checks config presence and schema
 
-- `bdd-doctor-missing-config` Doctor warns when no config file exists -> `tests/test_doctor_diagnostics.py` (missing)
+- `bdd-doctor-missing-config` Doctor warns when no config file exists -> `tests/test_doctor_diagnostics.py::test_no_config_warning` (bound)
 - `bdd-doctor-unsupported-schema` Doctor errors on unsupported schema version -> `tests/test_doctor_diagnostics.py` (missing)
 
 #### Rule: Doctor checks directory existence
 
-- `bdd-doctor-missing-directories` Doctor warns about missing directories -> `tests/test_doctor_diagnostics.py` (missing)
-- `bdd-doctor-fix-creates-directories` Doctor --fix creates missing directories -> `tests/test_doctor_diagnostics.py` (missing)
+- `bdd-doctor-missing-directories` Doctor warns about missing directories -> `tests/test_doctor_diagnostics.py::test_reports_missing_features_dir` (bound)
+- `bdd-doctor-fix-creates-directories` Doctor --fix creates missing directories -> `tests/test_doctor_diagnostics.py::test_fix_creates_missing_dirs` (bound)
 
 #### Rule: Doctor checks for deprecated paths
 
-- `bdd-doctor-deprecated-paths` Doctor warns about deprecated feature paths -> `tests/test_doctor_diagnostics.py` (missing)
+- `bdd-doctor-deprecated-paths` Doctor warns about deprecated feature paths -> `tests/test_doctor_diagnostics.py::test_detects_deprecated` (bound)
 
 #### Rule: Doctor checks for duplicate bdd tags
 
-- `bdd-doctor-duplicate-bdd-tags` Doctor errors on duplicate @bdd-\* tags -> `tests/test_doctor_diagnostics.py` (missing)
+- `bdd-doctor-duplicate-bdd-tags` Doctor errors on duplicate @bdd-\* tags -> `tests/test_doctor_diagnostics.py::test_detects_duplicates` (bound)
 
 #### Rule: Doctor validates feature files
 
-- `bdd-doctor-validates-features` Doctor reports feature lint errors -> `tests/test_doctor_diagnostics.py` (missing)
+- `bdd-doctor-validates-features` Doctor reports feature lint errors -> `tests/test_doctor_diagnostics.py::test_passes_initialized_project` (bound)
 
 ## gherkin
 
 ### Gherkin feature file linting
 
-- Path: `specs/behavior/features/gherkin/lint.feature`
+- Path: `specs/behavior/features/gherkin/lint.feature.md`
 - Summary: The linter checks canonical behavior feature files for structural problems,
 
 #### Rule: Lint checks feature structure
@@ -259,16 +259,16 @@ Generated from `specs/behavior/features`.
 
 ### Gherkin feature file parsing
 
-- Path: `specs/behavior/features/gherkin/parser.feature`
+- Path: `specs/behavior/features/gherkin/parser.feature.md`
 - Summary: The Gherkin parser reads feature text and produces Feature/Rule/Scenario/Step
 
 #### Rule: Classic Gherkin parsing extracts structure
 
-- `bdd-parser-classic-feature` Parser extracts feature title and scenarios -> `tests/test_gherkin_parser.py` (missing)
-- `bdd-parser-classic-rules` Parser extracts Rule blocks -> `tests/test_gherkin_parser.py` (missing)
-- `bdd-parser-classic-tags` Parser preserves tags on features, rules, and scenarios -> `tests/test_gherkin_parser.py` (missing)
-- `bdd-parser-classic-description` Parser preserves feature and scenario descriptions -> `tests/test_gherkin_parser.py` (missing)
-- `bdd-parser-classic-top-level-scenarios` Parser handles top-level scenarios outside rules -> `tests/test_gherkin_parser.py` (missing)
+- `bdd-parser-classic-feature` Parser extracts feature title and scenarios -> `tests/test_gherkin_parser.py::test_parse_simple_feature` (bound)
+- `bdd-parser-classic-rules` Parser extracts Rule blocks -> `tests/test_gherkin_parser.py::test_parse_rule_block` (bound)
+- `bdd-parser-classic-tags` Parser preserves tags on features, rules, and scenarios -> `tests/test_gherkin_parser.py::test_parse_no_tags` (bound)
+- `bdd-parser-classic-description` Parser preserves feature and scenario descriptions -> `tests/test_gherkin_parser.py::test_parse_feature_description` (bound)
+- `bdd-parser-classic-top-level-scenarios` Parser handles top-level scenarios outside rules -> `tests/test_gherkin_parser.py::test_top_level_scenario_before_rule_stays_top_level` (bound)
 
 #### Rule: Markdown Gherkin parsing
 
@@ -281,121 +281,116 @@ Generated from `specs/behavior/features`.
 
 #### Rule: Parser requires Feature line
 
-- `bdd-parser-requires-feature-line` Parser raises ValueError without Feature line -> `tests/test_gherkin_parser.py` (missing)
+- `bdd-parser-requires-feature-line` Parser raises ValueError without Feature line -> `tests/test_gherkin_parser.py::test_parse_missing_feature_raises` (bound)
 
 ### Gherkin feature file writing
 
-- Path: `specs/behavior/features/gherkin/writer.feature`
+- Path: `specs/behavior/features/gherkin/writer.feature.md`
 - Summary: The Gherkin writer serializes Feature dataclass instances back to
 
 #### Rule: Writer produces canonical Gherkin output
 
-- `bdd-writer-basic-feature` Writer serializes a feature with scenarios -> `tests/test_gherkin_writer.py` (missing)
-- `bdd-writer-rules` Writer serializes Rule blocks -> `tests/test_gherkin_writer.py` (missing)
-- `bdd-writer-tags` Writer preserves tags at all levels -> `tests/test_gherkin_writer.py` (missing)
-- `bdd-writer-descriptions` Writer preserves descriptions -> `tests/test_gherkin_writer.py` (missing)
-- `bdd-writer-roundtrip` Parsing then writing produces equivalent output -> `tests/test_gherkin_writer.py` (missing)
+- `bdd-writer-basic-feature` Writer serializes a feature with scenarios -> `tests/test_gherkin_writer.py::test_writes_tags_feature_scenario_steps` (bound)
+- `bdd-writer-rules` Writer serializes Rule blocks -> `tests/test_gherkin_writer.py::test_writes_rule_block` (bound)
+- `bdd-writer-tags` Writer preserves tags at all levels -> `tests/test_gherkin_writer.py::test_scenario_without_tags` (bound)
+- `bdd-writer-descriptions` Writer preserves descriptions -> `tests/test_gherkin_writer.py::test_feature_description_rendered` (bound)
+- `bdd-writer-roundtrip` Parsing then writing produces equivalent output -> `tests/test_gherkin_writer.py::test_rule_round_trips` (bound)
 
 ## init
 
 ### SpecWeave project initialization
 
-- Path: `specs/behavior/features/init/initialization.feature`
+- Path: `specs/behavior/features/init/initialization.feature.md`
 - Summary: specweave init creates the config file and directory layout for a new
 
 #### Rule: Init creates config and directories
 
-- `bdd-init-creates-dotfile` Init creates .specweave.toml by default -> `tests/test_init_initialization.py` (missing)
-- `bdd-init-creates-public-config` Init creates specweave.toml with --public-config -> `tests/test_init_initialization.py` (missing)
-- `bdd-init-creates-readme` Init creates a managed README in specs root -> `tests/test_init_initialization.py` (missing)
-- `bdd-init-creates-gitkeep` Init creates .gitkeep in features directory -> `tests/test_init_initialization.py` (missing)
+- `bdd-init-creates-dotfile` Init creates .specweave.toml by default -> `tests/test_init_initialization.py::test_creates_default_config_and_layout` (bound)
+- `bdd-init-creates-public-config` Init creates specweave.toml with --public-config -> `tests/test_init_initialization.py::test_writes_specweave_toml` (bound)
+- `bdd-init-creates-readme` Init creates a managed README in specs root -> `tests/test_init_initialization.py::test_nonexistent` (bound)
+- `bdd-init-creates-gitkeep` Init creates .gitkeep in features directory -> `tests/test_init_initialization.py::test_creates_behavior_paths` (bound)
 
 #### Rule: Init is idempotent
 
-- `bdd-init-idempotent` Running init twice does not fail -> `tests/test_init_initialization.py` (missing)
+- `bdd-init-idempotent` Running init twice does not fail -> `tests/test_init_initialization.py::test_does_not_overwrite_existing_config` (bound)
 
 #### Rule: Init supports British spelling
 
-- `bdd-init-british-spelling` Init creates behaviour layout with --spelling behaviour -> `tests/test_init_initialization.py` (missing)
+- `bdd-init-british-spelling` Init creates behaviour layout with --spelling behaviour -> `tests/test_init_initialization.py::test_creates_behaviour_layout` (bound)
 
 #### Rule: Init supports dry-run mode
 
-- `bdd-init-dry-run` Dry-run reports paths without writing -> `tests/test_init_initialization.py` (missing)
+- `bdd-init-dry-run` Dry-run reports paths without writing -> `tests/test_init_initialization.py::test_writes_nothing` (bound)
 
 #### Rule: Init refuses to overwrite non-managed README
 
-- `bdd-init-refuses-overwrite-readme` Init skips non-SpecWeave README -> `tests/test_init_initialization.py` (missing)
-- `bdd-init-force-overwrites-readme` Init overwrites managed README with --force -> `tests/test_init_initialization.py` (missing)
+- `bdd-init-refuses-overwrite-readme` Init skips non-SpecWeave README -> `tests/test_init_initialization.py::test_does_not_overwrite_non_specweave_readme` (bound)
+- `bdd-init-force-overwrites-readme` Init overwrites managed README with --force -> `tests/test_init_initialization.py::test_force_overwrites_generated_config_only` (bound)
 
 #### Rule: Init warns about existing config
 
-- `bdd-init-warns-existing-config` Init warns when config already exists -> `tests/test_init_initialization.py` (missing)
+- `bdd-init-warns-existing-config` Init warns when config already exists -> `tests/test_init_initialization.py::test_reports_existing_directories` (bound)
 
 ## integrations
 
 ### Archledger integration
 
-- Path: `specs/behavior/features/integrations/archledger.feature`
-- Summary: SpecWeave generates draft Archledger candidate markdown for scenarios that are selected for durable traceability. It does not write accepted Archledger records.
+- Path: `specs/behavior/features/integrations/archledger.feature.md`
+- Summary: SpecWeave generates Archledger candidate markdown for scenarios that are
 
 #### Rule: Archledger candidate generation
 
-- `bdd-archledger-candidate` archledger command renders candidate markdown -> `tests/test_integrations_archledger.py` (missing)
-- `bdd-archledger-unknown-bdd` archledger errors on unknown @bdd-\* id -> `tests/test_integrations_archledger.py` (missing)
+- `bdd-archledger-candidate` archledger command renders candidate markdown -> `tests/test_integrations_archledger.py::test_render_candidate_markdown` (bound)
+- `bdd-archledger-unknown-bdd` archledger errors on unknown @bdd-\* id -> `tests/test_integrations_archledger.py::test_unknown_bdd_id_raises` (bound)
 
 #### Rule: Archledger does not write accepted records by default
 
-- `bdd-archledger-candidate-only` archledger produces candidates, not accepted records -> `tests/test_integrations_archledger.py` (missing)
+- `bdd-archledger-candidate-only` archledger produces candidates, not accepted records -> `tests/test_integrations_archledger.py::test_write_candidate_file` (bound)
 
 ### Taskledger integration
 
-- Path: `specs/behavior/features/integrations/taskledger.feature`
-- Summary: SpecWeave treats Taskledger exports as input artifacts and writes evidence as output artifact data. Taskledger remains responsible for importing validation evidence into task state.
+- Path: `specs/behavior/features/integrations/taskledger.feature.md`
+- Summary: SpecWeave exchanges files with Taskledger for task drafts and behavior
 
 #### Rule: Taskledger task draft generation
 
-- `bdd-taskledger-draft` create taskledger-task generates a draft JSON -> `tests/test_integrations_taskledger.py` (missing)
+- `bdd-taskledger-draft` create taskledger-task generates a draft JSON -> `tests/test_integrations_taskledger.py::test_no_taskledger_import_required` (bound)
 - `bdd-taskledger-draft-ac-mapping` Draft maps @ac-\* tags to acceptance criteria -> `tests/test_integrations_taskledger.py` (missing)
 
 #### Rule: Taskledger behavior import
 
-- `bdd-taskledger-import` import-taskledger creates a feature from Taskledger export -> `tests/test_integrations_taskledger.py` (missing)
+- `bdd-taskledger-import` import-taskledger creates a feature from Taskledger export -> `tests/test_integrations_taskledger.py::test_load_rich_shape` (bound)
 
 #### Rule: Taskledger evidence generation
 
-- `bdd-taskledger-evidence` report normalize generates Taskledger-compatible evidence -> `tests/test_integrations_taskledger.py` (missing)
-
-#### Rule: Cross-ledger trace diagnostics
-
-- `bdd-trace-json` trace emits a behavior-centered trace bundle -> `tests/test_trace.py`
-- `bdd-combi-check` combi check audits Taskledger, SpecWeave, pytest, evidence, and Archledger links without mutating ledgers -> `tests/test_combi_check.py`
+- `bdd-taskledger-evidence` report normalize generates Taskledger-compatible evidence -> `tests/test_integrations_taskledger.py::test_task_id_from_report` (bound)
 
 ## reports
 
 ### Fail-closed evidence semantics
 
-- Path: `specs/behavior/features/reports/fail-closed.feature`
+- Path: `specs/behavior/features/reports/fail-closed.feature.md`
 - Summary: SpecWeave enforces fail-closed semantics for acceptance criteria. A
 
 #### Rule: Blocking statuses fail linked criteria
 
 - `bdd-fail-closed-failed-scenario` Failed scenario fails the linked criterion -> `tests/test_reports_fail_closed.py` (missing)
 - `bdd-fail-closed-skipped-scenario` Skipped scenario fails the criterion by default -> `tests/test_reports_fail_closed.py` (missing)
-- `bdd-fail-closed-undefined-scenario` Undefined scenario fails the criterion -> `tests/test_reports_fail_closed.py` (missing)
+- `bdd-fail-closed-undefined-scenario` Undefined scenario fails the criterion -> `tests/test_reports_fail_closed.py::test_criterion_requires_passing_native_result` (bound)
 - `bdd-fail-closed-pending-scenario` Pending scenario fails the criterion -> `tests/test_reports_fail_closed.py` (missing)
 - `bdd-fail-closed-ambiguous-scenario` Ambiguous scenario fails the criterion -> `tests/test_reports_fail_closed.py` (missing)
 
 #### Rule: Only passing scenarios satisfy criteria
 
-- `bdd-fail-closed-passed-scenario` Passed scenario satisfies the criterion -> `tests/test_reports_fail_closed.py` (missing)
+- `bdd-fail-closed-passed-scenario` Passed scenario satisfies the criterion -> `tests/test_reports_fail_closed.py::test_evidence_records_command_source_and_paths` (bound)
 
 #### Rule: Unlinked scenarios do not affect criteria
 
-- `bdd-fail-closed-unlinked-scenario` Unlinked scenario does not satisfy any criterion -> `tests/test_reports_fail_closed.py` (missing)
+- `bdd-fail-closed-unlinked-scenario` Unlinked scenario does not satisfy any criterion -> `tests/test_reports_fail_closed.py::test_missing_expected_coverage_fails` (bound)
 
 #### Rule: Multiple scenarios for one criterion
 
-- `bdd-fail-closed-multiple-scenarios` One failed scenario fails the whole criterion -> `tests/test_reports_fail_closed.py` (missing)
+- `bdd-fail-closed-multiple-scenarios` One failed scenario fails the whole criterion -> `tests/test_reports_fail_closed.py::test_criterion_fails_when_sibling_undefined` (bound)
 
 #### Rule: Exit code alone is not sufficient evidence
 
@@ -403,24 +398,24 @@ Generated from `specs/behavior/features`.
 
 ### Report tag mapping and acceptance coverage
 
-- Path: `specs/behavior/features/reports/mapping.feature`
+- Path: `specs/behavior/features/reports/mapping.feature.md`
 - Summary: The reports.mapping module extracts BDD and acceptance criterion IDs
 
 #### Rule: Tag extraction identifies BDD and AC IDs
 
-- `bdd-tag-extraction-bdd` Extraction finds @bdd-\* tags -> `tests/test_reports_mapping.py` (missing)
+- `bdd-tag-extraction-bdd` Extraction finds @bdd-\* tags -> `tests/test_reports_mapping.py::test_extract_ids_partitions_by_prefix` (bound)
 - `bdd-tag-extraction-ac` Extraction finds @ac-\* tags -> `tests/test_reports_mapping.py` (missing)
-- `bdd-tag-extraction-empty` Extraction returns empty lists when no matching tags -> `tests/test_reports_mapping.py` (missing)
+- `bdd-tag-extraction-empty` Extraction returns empty lists when no matching tags -> `tests/test_reports_mapping.py::test_unlinked_scenarios_are_ignored` (bound)
 
 #### Rule: Criteria summarization groups by AC ID
 
-- `bdd-criteria-summary` Summarization groups scenarios by acceptance criterion -> `tests/test_reports_mapping.py` (missing)
-- `bdd-criteria-fail-closed` Failed scenarios fail the linked criterion -> `tests/test_reports_mapping.py` (missing)
-- `bdd-criteria-missing-coverage` Expected AC with no scenarios fails coverage -> `tests/test_reports_mapping.py` (missing)
+- `bdd-criteria-summary` Summarization groups scenarios by acceptance criterion -> `tests/test_reports_mapping.py::test_summarize_passes_when_linked_scenario_passed` (bound)
+- `bdd-criteria-fail-closed` Failed scenarios fail the linked criterion -> `tests/test_reports_mapping.py::test_summarize_fails_when_linked_scenario_failed` (bound)
+- `bdd-criteria-missing-coverage` Expected AC with no scenarios fails coverage -> `tests/test_reports_mapping.py::test_require_expected_coverage_missing_fails` (bound)
 
 ### Report normalization and evidence generation
 
-- Path: `specs/behavior/features/reports/normalization.feature`
+- Path: `specs/behavior/features/reports/normalization.feature.md`
 - Summary: specweave report normalize parses runner-native reports (JUnit XML,
 
 #### Rule: Normalization parses supported formats
@@ -447,42 +442,42 @@ Generated from `specs/behavior/features`.
 
 ### Report format parsers
 
-- Path: `specs/behavior/features/reports/parsers.feature`
+- Path: `specs/behavior/features/reports/parsers.feature.md`
 - Summary: SpecWeave parses JUnit XML and Cucumber JSON reports into ScenarioResult
 
 #### Rule: JUnit XML parser extracts test cases
 
-- `bdd-junit-parse-cases` Parser extracts test cases from JUnit XML -> `tests/test_reports_parsers.py` (missing)
-- `bdd-junit-parse-statuses` Parser maps JUnit statuses correctly -> `tests/test_reports_parsers.py` (missing)
+- `bdd-junit-parse-cases` Parser extracts test cases from JUnit XML -> `tests/test_reports_parsers.py::test_parse_junit_pass_fail_skip` (bound)
+- `bdd-junit-parse-statuses` Parser maps JUnit statuses correctly -> `tests/test_reports_parsers.py::test_junit_error_counts_as_failed` (bound)
 - `bdd-junit-parse-duration` Parser extracts test duration -> `tests/test_reports_parsers.py` (missing)
 
 #### Rule: Cucumber JSON parser extracts scenarios
 
-- `bdd-cucumber-parse-scenarios` Parser extracts scenarios from Cucumber JSON -> `tests/test_reports_parsers.py` (missing)
-- `bdd-cucumber-parse-tags` Parser extracts tags from Cucumber scenarios -> `tests/test_reports_parsers.py` (missing)
+- `bdd-cucumber-parse-scenarios` Parser extracts scenarios from Cucumber JSON -> `tests/test_reports_parsers.py::test_cucumber_json_passing_scenario` (bound)
+- `bdd-cucumber-parse-tags` Parser extracts tags from Cucumber scenarios -> `tests/test_reports_parsers.py::test_behear_string_tags_and_inline_status` (bound)
 
 ## review
 
 ### Behavior spec review
 
-- Path: `specs/behavior/features/review/spec-review.feature`
+- Path: `specs/behavior/features/review/spec-review.feature.md`
 - Summary: specweave review specs aggregates lint, coverage, and convention findings
 
 #### Rule: Review reports feature and scenario counts
 
-- `bdd-review-counts` Review reports feature and scenario statistics -> `tests/test_review_spec_review.py` (missing)
+- `bdd-review-counts` Review reports feature and scenario statistics -> `tests/test_review_spec_review.py::test_no_features` (bound)
 
 #### Rule: Review reports missing bindings
 
-- `bdd-review-missing-bindings` Review warns about unbound scenarios -> `tests/test_review_spec_review.py` (missing)
+- `bdd-review-missing-bindings` Review warns about unbound scenarios -> `tests/test_review_spec_review.py::test_feature_with_no_test` (bound)
 
 #### Rule: Review reports needs-review tags
 
-- `bdd-review-needs-review` Review warns about @needs-review scenarios -> `tests/test_review_spec_review.py` (missing)
+- `bdd-review-needs-review` Review warns about @needs-review scenarios -> `tests/test_review_spec_review.py::test_needs_review_flagged` (bound)
 
 #### Rule: Review reports deprecated paths
 
-- `bdd-review-deprecated-paths` Review warns about deprecated paths -> `tests/test_review_spec_review.py` (missing)
+- `bdd-review-deprecated-paths` Review warns about deprecated paths -> `tests/test_review_spec_review.py::test_stale_mapping_causes_failed_review` (bound)
 
 #### Rule: Review reports forbidden pytest-bdd usage
 
@@ -496,23 +491,23 @@ Generated from `specs/behavior/features`.
 
 ### Brownfield pytest-to-Gherkin generation
 
-- Path: `specs/behavior/features/translation/pytest-to-gherkin.feature`
+- Path: `specs/behavior/features/translation/pytest-to-gherkin.feature.md`
 - Summary: specweave create gherkin generates draft Gherkin feature files from
 
 #### Rule: Generation discovers tests via AST
 
-- `bdd-translate-discovers-tests` Generation finds test functions in pytest files -> `tests/test_translation_pytest_to_gherkin.py` (missing)
-- `bdd-translate-group-by-file` Generation groups scenarios by test file -> `tests/test_translation_pytest_to_gherkin.py` (missing)
+- `bdd-translate-discovers-tests` Generation finds test functions in pytest files -> `tests/test_translation_pytest_to_gherkin.py::test_basic` (bound)
+- `bdd-translate-group-by-file` Generation groups scenarios by test file -> `tests/test_translation_pytest_to_gherkin.py::test_simple` (bound)
 
 #### Rule: Generation preserves existing features
 
-- `bdd-translate-preserve-manual` Generation does not overwrite manual feature files -> `tests/test_translation_pytest_to_gherkin.py` (missing)
+- `bdd-translate-preserve-manual` Generation does not overwrite manual feature files -> `tests/test_translation_pytest_to_gherkin.py::test_skips_manual_file_without_force` (bound)
 - `bdd-translate-force-overwrite` Generation overwrites with --force -> `tests/test_translation_pytest_to_gherkin.py` (missing)
 
 #### Rule: Generation marks drafts appropriately
 
-- `bdd-translate-marks-generated` Generated features have @generated tag -> `tests/test_translation_pytest_to_gherkin.py` (missing)
+- `bdd-translate-marks-generated` Generated features have @generated tag -> `tests/test_translation_pytest_to_gherkin.py::test_marks_needs_review` (bound)
 
 #### Rule: Generation supports dry-run mode
 
-- `bdd-translate-dry-run` Dry-run reports without writing files -> `tests/test_translation_pytest_to_gherkin.py` (missing)
+- `bdd-translate-dry-run` Dry-run reports without writing files -> `tests/test_translation_pytest_to_gherkin.py::test_writes_nothing` (bound)

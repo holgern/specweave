@@ -1,43 +1,82 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://specweave.dev/schemas/combi.trace.v1.schema.json",
-  "title": "Combi Trace v1",
+  "title": "Combi Trace Bundle v1",
   "type": "object",
-  "required": [
-    "schema",
-    "producer",
-    "subject",
-    "task_ids",
-    "ac_ids",
-    "bdd_ids",
-    "archledger_refs",
-    "source_refs",
-    "test_refs",
-    "evidence_refs",
-    "status",
-    "gaps"
-  ],
+  "required": ["schema", "producer", "target", "traces", "gaps"],
   "properties": {
     "schema": { "const": "combi.trace.v1" },
-    "producer": { "type": "string" },
-    "subject": {
-      "type": "object",
-      "required": ["type", "id"],
-      "properties": {
-        "type": { "type": "string" },
-        "id": { "type": "string" }
-      },
-      "additionalProperties": true
+    "producer": { "const": "specweave" },
+    "target": { "type": "string" },
+    "traces": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/trace" }
     },
-    "task_ids": { "type": "array", "items": { "type": "string" } },
-    "ac_ids": { "type": "array", "items": { "type": "string" } },
-    "bdd_ids": { "type": "array", "items": { "type": "string" } },
-    "archledger_refs": { "type": "array" },
-    "source_refs": { "type": "array" },
-    "test_refs": { "type": "array" },
-    "evidence_refs": { "type": "array" },
-    "status": { "type": "object" },
-    "gaps": { "type": "array" }
+    "gaps": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/gap" }
+    }
   },
-  "additionalProperties": true
+  "$defs": {
+    "gap": {
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "trace": {
+      "type": "object",
+      "required": [
+        "schema",
+        "producer",
+        "subject",
+        "feature",
+        "scenario",
+        "task_ids",
+        "ac_ids",
+        "bdd_ids",
+        "archledger_refs",
+        "source_refs",
+        "test_refs",
+        "evidence_refs",
+        "taskledger_refs",
+        "status",
+        "gaps"
+      ],
+      "properties": {
+        "schema": { "const": "combi.trace.v1" },
+        "producer": { "const": "specweave" },
+        "subject": {
+          "type": "object",
+          "required": ["type", "id"],
+          "properties": {
+            "type": { "const": "bdd_scenario" },
+            "id": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "feature": { "type": "object" },
+        "rule": { "type": ["object", "null"] },
+        "scenario": { "type": "object" },
+        "task_ids": { "type": "array", "items": { "type": "string" } },
+        "ac_ids": { "type": "array", "items": { "type": "string" } },
+        "bdd_ids": { "type": "array", "items": { "type": "string" } },
+        "archledger_refs": { "type": "array" },
+        "source_refs": { "type": "array", "items": { "type": "string" } },
+        "test_refs": { "type": "array" },
+        "evidence_refs": { "type": "array" },
+        "taskledger_refs": { "type": "array" },
+        "status": { "type": "object" },
+        "gaps": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/gap" }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
 }

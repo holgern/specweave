@@ -113,8 +113,6 @@ def test_missing_expected_coverage_fails(tmp_path) -> None:  # type: ignore[no-u
     assert report.status == "failed"  # ac-0002 never covered
 
 
-# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
-# specweave: scenario=@bdd-fail-closed-unlinked-scenario
 def test_scenario_without_bdd_tag_is_unlinked(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Unlinked scenario does not satisfy any criterion (no bdd tag)."""
     path = _write_report(
@@ -140,8 +138,6 @@ def test_scenario_without_bdd_tag_is_unlinked(tmp_path) -> None:  # type: ignore
     assert evidence["scenarios"][0]["bdd_id"] == ""
 
 
-# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
-# specweave: scenario=@bdd-fail-closed-unlinked-scenario
 def test_title_only_never_drives_matching() -> None:  # type: ignore[no-untyped-def]
     """Unlinked scenario does not satisfy any criterion (title matching)."""
     results = (
@@ -184,8 +180,6 @@ def test_evidence_records_command_source_and_paths(tmp_path) -> None:  # type: i
     assert normalized["source_report"] == str(path)
 
 
-# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
-# specweave: scenario=@bdd-fail-closed-passed-scenario
 def test_passing_report_only_when_all_gates_pass(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Passed scenario satisfies the criterion (all gates pass)."""
     path = _write_report(

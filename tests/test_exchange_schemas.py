@@ -28,18 +28,44 @@ def test_trace_schema_representative_payload_contract() -> None:
     good_payload = {
         "schema": "combi.trace.v1",
         "producer": "specweave",
-        "subject": {"type": "bdd_scenario", "id": "bdd-0001"},
-        "task_ids": [],
-        "ac_ids": [],
-        "bdd_ids": ["bdd-0001"],
-        "archledger_refs": [],
-        "source_refs": [],
-        "test_refs": [],
-        "evidence_refs": [],
-        "status": {},
+        "target": "bdd-0001",
+        "traces": [],
         "gaps": [],
     }
     assert set(schema["required"]) <= set(good_payload)
     bad_payload = dict(good_payload)
-    bad_payload.pop("subject")
+    bad_payload.pop("target")
     assert not set(schema["required"]) <= set(bad_payload)
+
+
+def test_exchange_schema_required_fields_match_current_payloads() -> None:
+    payloads = {
+        "specweave.taskledger-bdd-export.v1.schema.json": {
+            "task_id": "task-0001",
+            "feature": "Login",
+            "rules": [],
+            "examples": [],
+        },
+        "specweave.behavior-evidence.v1.schema.json": {
+            "schema_version": 2,
+            "generated_by": "specweave",
+            "task_id": "task-0001",
+            "source_report": "report.xml",
+            "status": "passed",
+            "criteria": [],
+            "scenarios": [],
+        },
+        "specweave.archledger-candidate.v1.schema.json": {
+            "schema": "specweave.archledger-candidate.v1",
+            "producer": "specweave",
+            "candidate": {
+                "title": "Login",
+                "source_refs": ["login.feature.md"],
+                "bdd_ids": ["bdd-login"],
+                "status": "draft",
+            },
+        },
+    }
+    for name, payload in payloads.items():
+        schema = _load(name)
+        assert set(schema["required"]) <= set(payload)

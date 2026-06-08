@@ -85,10 +85,8 @@ class TestLoadConfig:
         )
         config = load_config(config_file)
         assert config.spelling == "behaviour"
-        assert config.paths.features_dir == Path("specs/behaviour/features")
+        assert config.paths.features_dir == tmp_path / "specs/behaviour/features"
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-load-from-file
     def test_loads_all_sections(self, tmp_path: Path) -> None:
         """Loading reads values from a valid TOML file (all sections)."""
         config_file = tmp_path / ".specweave.toml"
@@ -100,15 +98,37 @@ class TestLoadConfig:
             "[gherkin]\n"
             'id_style = "sequence"\n'
             "[generation]\n"
-            'group_by = "area"\n'
+            'group_by = "file"\n'
         )
         config = load_config(config_file)
         assert config.pytest.test_globs == ("tests/test_*.py",)
         assert config.gherkin.id_style == "sequence"
-        assert config.generation.group_by == "area"
+        assert config.generation.group_by == "file"
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-load-from-file
+    def test_resolves_paths_from_config_project_root(self, tmp_path: Path) -> None:
+        config_dir = tmp_path / "config"
+        config_dir.mkdir()
+        config_file = config_dir / ".specweave.toml"
+        config_file.write_text(
+            'schema_version = 1\nproject_root = "../project"\n'
+            '[paths]\nfeatures_dir = "features"\n',
+            encoding="utf-8",
+        )
+
+        config = load_config(config_file)
+
+        assert config.project_root == (tmp_path / "project").resolve()
+        assert config.paths.features_dir == (tmp_path / "project/features").resolve()
+
+    def test_rejects_unsupported_group_by(self, tmp_path: Path) -> None:
+        config_file = tmp_path / ".specweave.toml"
+        config_file.write_text(
+            'schema_version = 1\n[generation]\ngroup_by = "area"\n',
+            encoding="utf-8",
+        )
+        with pytest.raises(ValueError, match="group_by"):
+            load_config(config_file)
+
     def test_gherkin_new_fields_preserved(self, tmp_path: Path) -> None:
         """Loading reads values from a valid TOML file (gherkin fields)."""
         config_file = tmp_path / ".specweave.toml"
@@ -148,8 +168,6 @@ class TestRenderDefaultConfig:
         assert 'spelling = "behaviour"' in text
         assert "specs/behaviour" in text
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-render-behavior
     def test_is_valid_toml(self) -> None:
         """Default config renders behavior spelling (valid TOML)."""
         import sys
@@ -165,8 +183,6 @@ class TestRenderDefaultConfig:
             parsed = tomli.loads(text)
         assert parsed["schema_version"] == 1
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-render-behavior
     def test_roundtrip(self, tmp_path: Path) -> None:
         """Default config renders behavior spelling (roundtrip)."""
         text = render_default_config()
@@ -176,8 +192,6 @@ class TestRenderDefaultConfig:
         assert config.schema_version == 1
         assert config.spelling == "behavior"
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-render-behavior
     def test_renders_new_gherkin_defaults(self) -> None:
         """Default config renders behavior spelling (gherkin defaults)."""
         text = render_default_config()
@@ -190,16 +204,12 @@ class TestRenderDefaultConfig:
 
 
 class TestSpecWeavePaths:
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-load-defaults
     def test_defaults(self) -> None:
         """Loading with no file returns default config (paths)."""
         paths = SpecWeavePaths()
         assert paths.features_dir == Path("specs/behavior/features")
         assert paths.tests_dir == Path("tests")
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-load-defaults
     def test_frozen(self) -> None:
         """Loading with no file returns default config (frozen)."""
         paths = SpecWeavePaths()
@@ -208,16 +218,12 @@ class TestSpecWeavePaths:
 
 
 class TestSpecWeaveConfig:
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-load-defaults
     def test_defaults(self) -> None:
         """Loading with no file returns default config."""
         config = SpecWeaveConfig()
         assert config.schema_version == 1
         assert config.spelling == "behavior"
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-load-defaults
     def test_frozen(self) -> None:
         """Loading with no file returns default config (frozen)."""
         config = SpecWeaveConfig()
@@ -226,29 +232,21 @@ class TestSpecWeaveConfig:
 
 
 class TestSpecWeaveGherkin:
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-load-defaults
     def test_default_document_format(self) -> None:
         """Loading with no file returns default config (document_format)."""
         g = SpecWeaveGherkin()
         assert g.document_format == "markdown"
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-load-defaults
     def test_default_feature_extension(self) -> None:
         """Loading with no file returns default config (feature_extension)."""
         g = SpecWeaveGherkin()
         assert g.feature_extension == ".feature.md"
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-load-defaults
     def test_invalid_document_format_raises(self) -> None:
         """Loading with no file returns default config (invalid format)."""
         with pytest.raises(ValueError, match="document_format"):
             SpecWeaveGherkin(document_format="invalid")
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-load-defaults
     def test_invalid_markdown_parser_raises(self) -> None:
         """Loading with no file returns default config (invalid parser)."""
         with pytest.raises(ValueError, match="markdown_parser"):

@@ -59,8 +59,6 @@ def test_scenario_without_tags() -> None:
     assert "    Given a precondition" in output
 
 
-# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
-# specweave: scenario=@bdd-writer-basic-feature
 def test_multiple_scenarios() -> None:
     """Writer serializes a feature with scenarios (multiple)."""
     feature = Feature(
@@ -81,8 +79,6 @@ def test_multiple_scenarios() -> None:
     assert output.index("Scenario: First") < output.index("Scenario: Second")
 
 
-# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
-# specweave: scenario=@bdd-writer-tags
 def test_multi_tag_scenario_on_one_line() -> None:
     """Writer preserves tags at all levels (multi-tag)."""
     feature = Feature(

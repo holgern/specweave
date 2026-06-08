@@ -1,3 +1,9 @@
+[![PyPI - Version](https://img.shields.io/pypi/v/specweave)](https://pypi.org/project/specweave/)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/specweave)
+decov](https://codecov.io/gh/holgern/specweave/graph/badge.svg?token=CjRFwWvyYm)](https://codecov.io/gh/holgern/specweave)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/specweave)
+[![codecov](https://codecov.io/gh/holgern/specweave/graph/badge.svg?token=CjRFwWvyYm)](https://codecov.io/gh/holgern/specweave)
+
 # specweave
 
 SpecWeave translates between canonical Gherkin behavior specs, plain pytest
@@ -61,7 +67,7 @@ Single feature:
 
 ```bash
 specweave behavior generate-tests \
-  specs/behavior/features/task-management/plan-gates.feature \
+  specs/behavior/features/task-management/plan-gates.feature.md \
   --out tests/test_task_management_plan_gates.py
 ```
 
@@ -123,7 +129,7 @@ Taskledger acceptance export into a canonical behavior feature:
 ```bash
 specweave behavior import-taskledger \
   .specweave/mappings/taskledger/task-0123.json \
-  --out specs/behavior/features/task-management/plan-gates.feature
+  --out specs/behavior/features/task-management/plan-gates.feature.md
 ```
 
 This does not make Taskledger the canonical owner of the behavior file. Taskledger exports are input artifacts. SpecWeave evidence JSON is output artifact data. Taskledger remains responsible for importing that evidence into task validation state.

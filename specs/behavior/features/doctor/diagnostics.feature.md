@@ -17,7 +17,7 @@ files for problems. It can optionally fix missing directories.
 - Then the result contains a warning with code "SWDOC001"
 - And the status is "passed"
 
-`@bdd-doctor-unsupported-schema`
+`@bdd-doctor-unsupported-schema` `@manual`
 
 ### Example: Doctor errors on unsupported schema version
 

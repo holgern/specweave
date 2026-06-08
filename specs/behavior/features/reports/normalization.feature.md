@@ -10,7 +10,7 @@ fail-closed semantics for acceptance criteria.
 
 ## Rule: Normalization parses supported formats
 
-`@bdd-normalize-junit-xml`
+`@bdd-normalize-junit-xml` `@manual`
 
 ### Example: Normalization parses JUnit XML reports
 
@@ -19,7 +19,7 @@ fail-closed semantics for acceptance criteria.
 - Then the normalized report has scenario results
 - And each result has feature, scenario, status, and tags
 
-`@bdd-normalize-cucumber-json`
+`@bdd-normalize-cucumber-json` `@manual`
 
 ### Example: Normalization parses Cucumber JSON reports
 
@@ -28,7 +28,7 @@ fail-closed semantics for acceptance criteria.
 - Then the normalized report has scenario results
 - And each result has the correct status
 
-`@bdd-normalize-unsupported-format`
+`@bdd-normalize-unsupported-format` `@manual`
 
 ### Example: Normalization rejects unsupported formats
 
@@ -38,7 +38,7 @@ fail-closed semantics for acceptance criteria.
 
 ## Rule: Normalization computes overall status
 
-`@bdd-normalize-all-passed`
+`@bdd-normalize-all-passed` `@manual`
 
 ### Example: Report status is passed when all scenarios pass
 
@@ -47,7 +47,7 @@ fail-closed semantics for acceptance criteria.
 - Then the overall status is "passed"
 - And the passed count equals the scenario count
 
-`@bdd-normalize-any-failed`
+`@bdd-normalize-any-failed` `@manual`
 
 ### Example: Report status is failed when any scenario fails
 
@@ -56,7 +56,7 @@ fail-closed semantics for acceptance criteria.
 - Then the overall status is "failed"
 - And the failed count is 1
 
-`@bdd-normalize-skipped-fails-by-default`
+`@bdd-normalize-skipped-fails-by-default` `@manual`
 
 ### Example: Skipped scenarios fail the report by default
 
@@ -64,7 +64,7 @@ fail-closed semantics for acceptance criteria.
 - When specweave normalizes the report
 - Then the overall status is "failed"
 
-`@bdd-normalize-allow-skipped`
+`@bdd-normalize-allow-skipped` `@manual`
 
 ### Example: Skipped scenarios pass with --allow-skipped
 
@@ -74,7 +74,7 @@ fail-closed semantics for acceptance criteria.
 
 ## Rule: Normalization enforces acceptance criteria coverage
 
-`@bdd-normalize-missing-ac-coverage`
+`@bdd-normalize-missing-ac-coverage` `@manual`
 
 ### Example: Report fails when expected AC has no passing scenario
 
@@ -82,7 +82,7 @@ fail-closed semantics for acceptance criteria.
 - When specweave normalizes with --expect-ac @ac-0001
 - Then the overall status is "failed"
 
-`@bdd-normalize-ac-covered`
+`@bdd-normalize-ac-covered` `@manual`
 
 ### Example: Report passes when expected AC has a passing scenario
 
@@ -92,7 +92,7 @@ fail-closed semantics for acceptance criteria.
 
 ## Rule: Normalization generates evidence JSON
 
-`@bdd-normalize-evidence-json`
+`@bdd-normalize-evidence-json` `@manual`
 
 ### Example: Normalization writes Taskledger evidence JSON
 

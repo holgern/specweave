@@ -56,8 +56,6 @@ def test_load_rich_shape(tmp_path) -> None:  # type: ignore[no-untyped-def]
     assert spec.examples[0].acceptance_criteria == ("ac-0001",)
 
 
-# specweave: feature=specs/behavior/features/integrations/taskledger.feature.md
-# specweave: scenario=@bdd-taskledger-import
 def test_load_legacy_mvp_shape(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """import-taskledger creates a feature from Taskledger export (legacy shape)."""
     path = tmp_path / "task-0009.acceptance.json"
@@ -100,8 +98,6 @@ def test_task_id_from_report() -> None:
     assert task_id_from_report(report) == "task-0123"
 
 
-# specweave: feature=specs/behavior/features/integrations/taskledger.feature.md
-# specweave: scenario=@bdd-taskledger-evidence
 def test_task_id_from_report_missing_is_empty() -> None:
     """report normalize generates Taskledger-compatible evidence (missing task)."""
     report = NormalizedBddReport(
@@ -112,8 +108,6 @@ def test_task_id_from_report_missing_is_empty() -> None:
     assert task_id_from_report(report) == ""
 
 
-# specweave: feature=specs/behavior/features/integrations/taskledger.feature.md
-# specweave: scenario=@bdd-taskledger-evidence
 def test_write_evidence_round_trip(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """A normalized report serializes to the Taskledger evidence JSON shape."""
     payload = [
@@ -150,8 +144,6 @@ def test_write_evidence_round_trip(tmp_path) -> None:  # type: ignore[no-untyped
     assert data["scenarios"][0]["bdd_id"] == "bdd-0001"
 
 
-# specweave: feature=specs/behavior/features/integrations/taskledger.feature.md
-# specweave: scenario=@bdd-taskledger-evidence
 def test_write_evidence_explicit_task_id(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """report normalize generates Taskledger-compatible evidence (explicit task)."""
     report = NormalizedBddReport(
@@ -179,8 +171,6 @@ def test_no_taskledger_import_required() -> None:  # type: ignore[no-untyped-def
     assert "taskledger" not in sys.modules
 
 
-# specweave: feature=specs/behavior/features/integrations/taskledger.feature.md
-# specweave: scenario=@bdd-taskledger-import
 def test_import_taskledger_to_canonical_behavior_feature(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """import-taskledger creates a feature from Taskledger export."""
     source = tmp_path / "task-0123.acceptance.json"
@@ -219,3 +209,25 @@ def test_import_taskledger_to_canonical_behavior_feature(tmp_path) -> None:  # t
     assert "@bdd-implementation-blocked-before-plan-acceptance" in text
     assert "@task-0123" not in text
     assert "@ac-0001" not in text
+
+
+def test_import_taskledger_infers_markdown_format(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    source = tmp_path / "task.acceptance.json"
+    source.write_text(
+        json.dumps(
+            {
+                "task_id": "task-0123",
+                "feature": "Plan gates",
+                "acceptance_criteria": [{"id": "ac-0001", "text": "Plan accepted"}],
+            }
+        ),
+        encoding="utf-8",
+    )
+    out = tmp_path / "task-management" / "plan-gates.feature.md"
+
+    feature = write_behavior_feature_from_taskledger(source, out)
+
+    assert feature.tags == ("area-task-management", "feature-plan-gates")
+    assert out.read_text(encoding="utf-8").startswith(
+        "`@area-task-management` `@feature-plan-gates`\n# Feature:"
+    )

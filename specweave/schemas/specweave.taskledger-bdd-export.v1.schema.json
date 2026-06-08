@@ -3,29 +3,52 @@
   "$id": "https://specweave.dev/schemas/specweave.taskledger-bdd-export.v1.schema.json",
   "title": "SpecWeave Taskledger BDD Export v1",
   "type": "object",
-  "required": ["schema", "task", "acceptance_criteria"],
+  "required": ["task_id", "feature", "rules", "examples"],
   "properties": {
-    "schema": { "const": "specweave.taskledger-bdd-export.v1" },
-    "task": {
-      "type": "object",
-      "required": ["id"],
-      "properties": { "id": { "type": "string" } },
-      "additionalProperties": true
-    },
-    "acceptance_criteria": {
+    "task_id": { "type": "string" },
+    "feature": { "type": "string" },
+    "rules": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id"],
+        "required": ["id", "title"],
         "properties": {
           "id": { "type": "string" },
-          "text": { "type": "string" },
-          "waived": { "type": "boolean" }
+          "title": { "type": "string" }
         },
-        "additionalProperties": true
+        "additionalProperties": false
       }
     },
-    "examples": { "type": "array" }
+    "examples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "rule_id",
+          "given",
+          "when",
+          "then",
+          "acceptance_criteria",
+          "tags"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "rule_id": { "type": ["string", "null"] },
+          "given": { "type": "array", "items": { "type": "string" } },
+          "when": { "type": "array", "items": { "type": "string" } },
+          "then": { "type": "array", "items": { "type": "string" } },
+          "acceptance_criteria": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "tags": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

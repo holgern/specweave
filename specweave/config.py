@@ -72,6 +72,12 @@ class SpecWeaveGeneration:
     preserve_manual_edits: bool = True
     mark_generated_from_tests: bool = True
 
+    def __post_init__(self) -> None:
+        if self.group_by != "file":
+            raise ValueError(
+                f"Unsupported generation group_by: {self.group_by}; expected 'file'"
+            )
+
 
 @dataclass(frozen=True)
 class SpecWeaveConfig:
@@ -173,14 +179,18 @@ def load_config(config_path: Path | None = None) -> SpecWeaveConfig:
     commands_data = raw.get("commands", {})
     agent_data = raw.get("agent", {})
 
-    paths = _build_paths(spelling, paths_data)
+    project_root = Path(raw.get("project_root", "."))
+    if not project_root.is_absolute():
+        project_root = config_path.parent / project_root
+    project_root = project_root.resolve()
+    paths = _resolve_paths(_build_paths(spelling, paths_data), project_root)
     pytest_cfg = _build_pytest(pytest_data)
     gherkin_cfg = _build_gherkin(gherkin_data)
     generation_cfg = _build_generation(generation_data)
 
     return SpecWeaveConfig(
         schema_version=raw.get("schema_version", 1),
-        project_root=Path(raw.get("project_root", ".")),
+        project_root=project_root,
         spelling=spelling,
         gitkeep=raw.get("gitkeep", True),
         paths=paths,
@@ -191,6 +201,24 @@ def load_config(config_path: Path | None = None) -> SpecWeaveConfig:
             "test", "pytest --junitxml=reports/behavior/pytest-junit.xml"
         ),
         agent_json_default=agent_data.get("json_default", False),
+    )
+
+
+def _resolve_paths(paths: SpecWeavePaths, project_root: Path) -> SpecWeavePaths:
+    def resolve(path: Path) -> Path:
+        return path if path.is_absolute() else (project_root / path).resolve()
+
+    return SpecWeavePaths(
+        specs_root=resolve(paths.specs_root),
+        features_dir=resolve(paths.features_dir),
+        behavior_readme=resolve(paths.behavior_readme),
+        manifest=resolve(paths.manifest),
+        tests_dir=resolve(paths.tests_dir),
+        reports_dir=resolve(paths.reports_dir),
+        state_dir=resolve(paths.state_dir),
+        evidence_dir=resolve(paths.evidence_dir),
+        reports_state_dir=resolve(paths.reports_state_dir),
+        mapping_dir=resolve(paths.mapping_dir),
     )
 
 

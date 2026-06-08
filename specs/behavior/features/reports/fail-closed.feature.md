@@ -12,7 +12,7 @@ the criterion.
 
 ## Rule: Blocking statuses fail linked criteria
 
-`@bdd-fail-closed-failed-scenario`
+`@bdd-fail-closed-failed-scenario` `@manual`
 
 ### Example: Failed scenario fails the linked criterion
 
@@ -20,7 +20,7 @@ the criterion.
 - When specweave evaluates the criterion
 - Then the criterion status is "failed"
 
-`@bdd-fail-closed-skipped-scenario`
+`@bdd-fail-closed-skipped-scenario` `@manual`
 
 ### Example: Skipped scenario fails the criterion by default
 
@@ -36,7 +36,7 @@ the criterion.
 - When specweave evaluates the criterion
 - Then the criterion status is "failed"
 
-`@bdd-fail-closed-pending-scenario`
+`@bdd-fail-closed-pending-scenario` `@manual`
 
 ### Example: Pending scenario fails the criterion
 
@@ -44,7 +44,7 @@ the criterion.
 - When specweave evaluates the criterion
 - Then the criterion status is "failed"
 
-`@bdd-fail-closed-ambiguous-scenario`
+`@bdd-fail-closed-ambiguous-scenario` `@manual`
 
 ### Example: Ambiguous scenario fails the criterion
 
@@ -84,7 +84,7 @@ the criterion.
 
 ## Rule: Exit code alone is not sufficient evidence
 
-`@bdd-fail-closed-exit-code-not-evidence`
+`@bdd-fail-closed-exit-code-not-evidence` `@manual`
 
 ### Example: Passing exit code does not override failed scenarios
 

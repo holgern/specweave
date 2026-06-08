@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -66,15 +67,29 @@ def _check_dir_exists(path: Path, label: str, code: str) -> list[DoctorItem]:
     return items
 
 
-def _check_paths_relative(config: SpecWeaveConfig) -> list[DoctorItem]:
+def _configured_paths(config: SpecWeaveConfig, config_path: Path | None) -> list[Path]:
+    if config_path is None or not config_path.is_file():
+        return [
+            config.paths.specs_root,
+            config.paths.features_dir,
+            config.paths.tests_dir,
+            config.paths.reports_dir,
+        ]
+    if sys.version_info >= (3, 11):
+        import tomllib
+    else:
+        import tomli as tomllib  # type: ignore[import-not-found]
+
+    raw = tomllib.loads(config_path.read_text(encoding="utf-8"))
+    paths = raw.get("paths", {})
+    return [Path(value) for value in paths.values() if isinstance(value, str)]
+
+
+def _check_paths_relative(
+    config: SpecWeaveConfig, config_path: Path | None
+) -> list[DoctorItem]:
     items: list[DoctorItem] = []
-    paths_to_check = [
-        config.paths.specs_root,
-        config.paths.features_dir,
-        config.paths.tests_dir,
-        config.paths.reports_dir,
-    ]
-    for p in paths_to_check:
+    for p in _configured_paths(config, config_path):
         if p.is_absolute():
             items.append(
                 DoctorItem(
@@ -190,6 +205,7 @@ def _collect_bdd_tags(feature: object, path: str, tags: dict[str, list[str]]) ->
 def run_doctor(
     *,
     config: SpecWeaveConfig | None = None,
+    config_path: Path | None = None,
     fix: bool = False,
 ) -> dict:
     """Run doctor checks and return a JSON-serialisable result.
@@ -204,14 +220,15 @@ def run_doctor(
     if config is None:
         config = SpecWeaveConfig()
 
-    config_path = find_config()
+    if config_path is None:
+        config_path = find_config()
     items: list[DoctorItem] = []
     warnings: list[str] = []
     errors: list[str] = []
 
     items.extend(_check_config_exists(config, config_path))
     items.extend(_check_config_schema(config))
-    items.extend(_check_paths_relative(config))
+    items.extend(_check_paths_relative(config, config_path))
 
     # Directory checks
     dir_checks = [

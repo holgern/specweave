@@ -10,7 +10,7 @@ markers and the manifest.
 
 ## Rule: Import maps test results to scenarios
 
-`@bdd-import-maps-by-nodeid`
+`@bdd-import-maps-by-nodeid` `@manual`
 
 ### Example: Import maps results by normalized nodeid
 
@@ -20,7 +20,7 @@ markers and the manifest.
 - Then the evidence contains a result for the mapped scenario
 - And the result status is "passed"
 
-`@bdd-import-maps-by-function-name`
+`@bdd-import-maps-by-function-name` `@manual`
 
 ### Example: Import falls back to function name matching
 
@@ -29,7 +29,7 @@ markers and the manifest.
 - When specweave imports the report
 - Then the evidence contains a result for the mapped scenario
 
-`@bdd-import-maps-by-manifest`
+`@bdd-import-maps-by-manifest` `@manual`
 
 ### Example: Import uses manifest mappings when available
 
@@ -40,7 +40,7 @@ markers and the manifest.
 
 ## Rule: Import reports unmapped tests
 
-`@bdd-import-unmapped-tests`
+`@bdd-import-unmapped-tests` `@manual`
 
 ### Example: Import reports tests without specweave markers
 
@@ -51,7 +51,7 @@ markers and the manifest.
 
 ## Rule: Import writes evidence JSON
 
-`@bdd-import-writes-evidence`
+`@bdd-import-writes-evidence` `@manual`
 
 ### Example: Import writes evidence to the target path
 

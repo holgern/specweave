@@ -131,8 +131,6 @@ class TestInitDryRun:
 
 
 class TestInitJsonShape:
-    # specweave: feature=specs/behavior/features/init/initialization.feature.md
-    # specweave: scenario=@bdd-init-creates-dotfile
     def test_json_shape(self, tmp_path: Path) -> None:
         """Init creates .specweave.toml by default (JSON shape)."""
         result = run_init(
@@ -158,16 +156,12 @@ class TestReadmeIsSpecweaveManaged:
         """Init creates a managed README in specs root."""
         assert _readme_is_specweave_managed(Path("/fake")) is False
 
-    # specweave: feature=specs/behavior/features/init/initialization.feature.md
-    # specweave: scenario=@bdd-init-creates-readme
     def test_non_managed_content(self, tmp_path: Path) -> None:
         """Init creates a managed README in specs root."""
         readme = tmp_path / "README.md"
         readme.write_text("# Custom")
         assert _readme_is_specweave_managed(readme) is False
 
-    # specweave: feature=specs/behavior/features/init/initialization.feature.md
-    # specweave: scenario=@bdd-init-creates-readme
     def test_managed_content(self, tmp_path: Path) -> None:
         """Init creates a managed README in specs root."""
         readme = tmp_path / "README.md"
