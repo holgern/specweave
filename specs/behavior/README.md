@@ -5,6 +5,7 @@ Generated from `specs/behavior/features`.
 ## behavior
 
 ### Static behavior coverage checks
+
 - Path: `specs/behavior/features/behavior/coverage.feature`
 - Summary: specweave behavior coverage checks the mapping between behavior feature
 
@@ -32,6 +33,7 @@ Generated from `specs/behavior/features`.
 - `bdd-coverage-manual-scenario` Coverage skips scenarios tagged @manual -> `tests/test_behavior_coverage.py` (missing)
 
 ### Plain pytest skeleton generation
+
 - Path: `specs/behavior/features/behavior/generation.feature`
 - Summary: specweave behavior generate-tests creates plain pytest test skeletons
 
@@ -56,6 +58,7 @@ Generated from `specs/behavior/features`.
 - `bdd-generate-batch` Generation processes all features in a directory -> `tests/test_behavior_generation.py` (missing)
 
 ### Behavior index and manifest generation
+
 - Path: `specs/behavior/features/behavior/index.feature`
 - Summary: specweave behavior index generates a Markdown index and JSON manifest
 
@@ -75,6 +78,7 @@ Generated from `specs/behavior/features`.
 - `bdd-index-rules` Manifest preserves Rule structure -> `tests/test_behavior_index.py` (missing)
 
 ### Behavior evidence import from pytest reports
+
 - Path: `specs/behavior/features/behavior/reporting.feature`
 - Summary: specweave behavior import-report imports pytest/JUnit XML reports into
 
@@ -95,6 +99,7 @@ Generated from `specs/behavior/features`.
 ## cli
 
 ### SpecWeave CLI contract
+
 - Path: `specs/behavior/features/cli/cli-contract.feature`
 - Summary: The SpecWeave CLI provides commands for behavior-driven development
 
@@ -132,6 +137,7 @@ Generated from `specs/behavior/features`.
 ## common
 
 ### Behavior helper functions
+
 - Path: `specs/behavior/features/common/behavior-helpers.feature`
 - Summary: The behavior.common module provides shared helpers for slugification,
 
@@ -159,12 +165,13 @@ Generated from `specs/behavior/features`.
 
 #### Rule: Scenario ID extraction
 
-- `bdd-scenario-id-value` scenario_id_value returns first @bdd-* tag -> `tests/test_common_behavior_helpers.py` (missing)
-- `bdd-scenario-id-missing` scenario_id_value returns empty string when no @bdd-* tag -> `tests/test_common_behavior_helpers.py` (missing)
+- `bdd-scenario-id-value` scenario_id_value returns first @bdd-\* tag -> `tests/test_common_behavior_helpers.py` (missing)
+- `bdd-scenario-id-missing` scenario_id_value returns empty string when no @bdd-\* tag -> `tests/test_common_behavior_helpers.py` (missing)
 
 ## config
 
 ### SpecWeave configuration management
+
 - Path: `specs/behavior/features/config/configuration.feature`
 - Summary: SpecWeave loads project configuration from TOML files, discovers config
 
@@ -193,6 +200,7 @@ Generated from `specs/behavior/features`.
 ## doctor
 
 ### SpecWeave project diagnostics
+
 - Path: `specs/behavior/features/doctor/diagnostics.feature`
 - Summary: specweave doctor checks the project setup, config, paths, and feature
 
@@ -212,7 +220,7 @@ Generated from `specs/behavior/features`.
 
 #### Rule: Doctor checks for duplicate bdd tags
 
-- `bdd-doctor-duplicate-bdd-tags` Doctor errors on duplicate @bdd-* tags -> `tests/test_doctor_diagnostics.py` (missing)
+- `bdd-doctor-duplicate-bdd-tags` Doctor errors on duplicate @bdd-\* tags -> `tests/test_doctor_diagnostics.py` (missing)
 
 #### Rule: Doctor validates feature files
 
@@ -221,6 +229,7 @@ Generated from `specs/behavior/features`.
 ## gherkin
 
 ### Gherkin feature file linting
+
 - Path: `specs/behavior/features/gherkin/lint.feature`
 - Summary: The linter checks canonical behavior feature files for structural problems,
 
@@ -234,8 +243,8 @@ Generated from `specs/behavior/features`.
 
 #### Rule: Lint checks tag conventions
 
-- `bdd-lint-duplicate-bdd-tags` Lint errors on duplicate @bdd-* tags -> `tests/test_gherkin_lint.py` (missing)
-- `bdd-lint-missing-bdd-tag` Lint warns when scenario lacks @bdd-* tag -> `tests/test_gherkin_lint.py` (missing)
+- `bdd-lint-duplicate-bdd-tags` Lint errors on duplicate @bdd-\* tags -> `tests/test_gherkin_lint.py` (missing)
+- `bdd-lint-missing-bdd-tag` Lint warns when scenario lacks @bdd-\* tag -> `tests/test_gherkin_lint.py` (missing)
 - `bdd-lint-task-tags-discouraged` Lint warns on task-specific tags in features -> `tests/test_gherkin_lint.py` (missing)
 
 #### Rule: Lint checks file paths
@@ -249,6 +258,7 @@ Generated from `specs/behavior/features`.
 - `bdd-lint-strict-unsupported` Strict mode warns on Scenario Outline -> `tests/test_gherkin_lint.py` (missing)
 
 ### Gherkin feature file parsing
+
 - Path: `specs/behavior/features/gherkin/parser.feature`
 - Summary: The Gherkin parser reads feature text and produces Feature/Rule/Scenario/Step
 
@@ -274,6 +284,7 @@ Generated from `specs/behavior/features`.
 - `bdd-parser-requires-feature-line` Parser raises ValueError without Feature line -> `tests/test_gherkin_parser.py` (missing)
 
 ### Gherkin feature file writing
+
 - Path: `specs/behavior/features/gherkin/writer.feature`
 - Summary: The Gherkin writer serializes Feature dataclass instances back to
 
@@ -288,6 +299,7 @@ Generated from `specs/behavior/features`.
 ## init
 
 ### SpecWeave project initialization
+
 - Path: `specs/behavior/features/init/initialization.feature`
 - Summary: specweave init creates the config file and directory layout for a new
 
@@ -322,24 +334,28 @@ Generated from `specs/behavior/features`.
 ## integrations
 
 ### Archledger integration
+
 - Path: `specs/behavior/features/integrations/archledger.feature`
 - Summary: SpecWeave generates draft Archledger candidate markdown for scenarios that are selected for durable traceability. It does not write accepted Archledger records.
+
 #### Rule: Archledger candidate generation
 
 - `bdd-archledger-candidate` archledger command renders candidate markdown -> `tests/test_integrations_archledger.py` (missing)
-- `bdd-archledger-unknown-bdd` archledger errors on unknown @bdd-* id -> `tests/test_integrations_archledger.py` (missing)
+- `bdd-archledger-unknown-bdd` archledger errors on unknown @bdd-\* id -> `tests/test_integrations_archledger.py` (missing)
 
 #### Rule: Archledger does not write accepted records by default
 
 - `bdd-archledger-candidate-only` archledger produces candidates, not accepted records -> `tests/test_integrations_archledger.py` (missing)
 
 ### Taskledger integration
+
 - Path: `specs/behavior/features/integrations/taskledger.feature`
 - Summary: SpecWeave treats Taskledger exports as input artifacts and writes evidence as output artifact data. Taskledger remains responsible for importing validation evidence into task state.
+
 #### Rule: Taskledger task draft generation
 
 - `bdd-taskledger-draft` create taskledger-task generates a draft JSON -> `tests/test_integrations_taskledger.py` (missing)
-- `bdd-taskledger-draft-ac-mapping` Draft maps @ac-* tags to acceptance criteria -> `tests/test_integrations_taskledger.py` (missing)
+- `bdd-taskledger-draft-ac-mapping` Draft maps @ac-\* tags to acceptance criteria -> `tests/test_integrations_taskledger.py` (missing)
 
 #### Rule: Taskledger behavior import
 
@@ -357,6 +373,7 @@ Generated from `specs/behavior/features`.
 ## reports
 
 ### Fail-closed evidence semantics
+
 - Path: `specs/behavior/features/reports/fail-closed.feature`
 - Summary: SpecWeave enforces fail-closed semantics for acceptance criteria. A
 
@@ -385,13 +402,14 @@ Generated from `specs/behavior/features`.
 - `bdd-fail-closed-exit-code-not-evidence` Passing exit code does not override failed scenarios -> `tests/test_reports_fail_closed.py` (missing)
 
 ### Report tag mapping and acceptance coverage
+
 - Path: `specs/behavior/features/reports/mapping.feature`
 - Summary: The reports.mapping module extracts BDD and acceptance criterion IDs
 
 #### Rule: Tag extraction identifies BDD and AC IDs
 
-- `bdd-tag-extraction-bdd` Extraction finds @bdd-* tags -> `tests/test_reports_mapping.py` (missing)
-- `bdd-tag-extraction-ac` Extraction finds @ac-* tags -> `tests/test_reports_mapping.py` (missing)
+- `bdd-tag-extraction-bdd` Extraction finds @bdd-\* tags -> `tests/test_reports_mapping.py` (missing)
+- `bdd-tag-extraction-ac` Extraction finds @ac-\* tags -> `tests/test_reports_mapping.py` (missing)
 - `bdd-tag-extraction-empty` Extraction returns empty lists when no matching tags -> `tests/test_reports_mapping.py` (missing)
 
 #### Rule: Criteria summarization groups by AC ID
@@ -401,6 +419,7 @@ Generated from `specs/behavior/features`.
 - `bdd-criteria-missing-coverage` Expected AC with no scenarios fails coverage -> `tests/test_reports_mapping.py` (missing)
 
 ### Report normalization and evidence generation
+
 - Path: `specs/behavior/features/reports/normalization.feature`
 - Summary: specweave report normalize parses runner-native reports (JUnit XML,
 
@@ -427,6 +446,7 @@ Generated from `specs/behavior/features`.
 - `bdd-normalize-evidence-json` Normalization writes Taskledger evidence JSON -> `tests/test_reports_normalization.py` (missing)
 
 ### Report format parsers
+
 - Path: `specs/behavior/features/reports/parsers.feature`
 - Summary: SpecWeave parses JUnit XML and Cucumber JSON reports into ScenarioResult
 
@@ -444,6 +464,7 @@ Generated from `specs/behavior/features`.
 ## review
 
 ### Behavior spec review
+
 - Path: `specs/behavior/features/review/spec-review.feature`
 - Summary: specweave review specs aggregates lint, coverage, and convention findings
 
@@ -474,6 +495,7 @@ Generated from `specs/behavior/features`.
 ## translation
 
 ### Brownfield pytest-to-Gherkin generation
+
 - Path: `specs/behavior/features/translation/pytest-to-gherkin.feature`
 - Summary: specweave create gherkin generates draft Gherkin feature files from
 

@@ -868,7 +868,10 @@ def convert(
     ] = None,
     from_format: Annotated[
         str,
-        typer.Option("--from", help="Source format: auto, markdown, or classic."),
+        typer.Option(
+            "--from",
+            help="Source format: auto, content, markdown, or classic.",
+        ),
     ] = "auto",
     force: Annotated[bool, typer.Option("--force")] = False,
     dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
@@ -1084,23 +1087,104 @@ def update_specs(
 @create_app.command("feature")
 def create_feature(
     ctx: typer.Context,
-    area: Annotated[str, typer.Option("--area")],
-    title: Annotated[str, typer.Option("--title")],
-    scenario: Annotated[str, typer.Option("--scenario")],
-    given: Annotated[str, typer.Option("--given")],
-    when: Annotated[str, typer.Option("--when")],
-    then: Annotated[str, typer.Option("--then")],
+    from_json: Annotated[Path | None, typer.Option("--from-json")] = None,
+    area: Annotated[str, typer.Option("--area")] = "",
+    title: Annotated[str, typer.Option("--title")] = "",
+    scenario: Annotated[str, typer.Option("--scenario")] = "",
+    given: Annotated[str, typer.Option("--given")] = "",
+    when: Annotated[str, typer.Option("--when")] = "",
+    then: Annotated[str, typer.Option("--then")] = "",
     rule: Annotated[str | None, typer.Option("--rule")] = None,
     out: Annotated[Path | None, typer.Option("--out")] = None,
     force: Annotated[bool, typer.Option("--force")] = False,
+    dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
 ) -> None:
-    """Create a new Gherkin feature file from structured inputs."""
+    """Create a new Gherkin feature file from structured inputs or a JSON draft."""
     import re
 
+    from specweave.gherkin.draft import load_feature_draft
     from specweave.gherkin.model import Feature, Rule, Scenario, Step
     from specweave.gherkin.writer import write_feature
 
     cli_ctx: CliContext = ctx.obj
+
+    if from_json is not None:
+        # JSON draft path
+        f = load_feature_draft(from_json)
+        feature_slug = re.sub(r"[^a-z0-9]+", "-", f.title.lower()).strip("-")
+        # Derive area from tags if present
+        area_name = ""
+        for tag in f.tags:
+            if tag.startswith("area-"):
+                area_name = tag[len("area-") :]
+                break
+
+        feature_text = write_feature(
+            f, document_format=cli_ctx.config.gherkin.document_format
+        )
+        if out is None:
+            features_dir = cli_ctx.config.paths.features_dir
+            out = (
+                features_dir
+                / area_name
+                / f"{feature_slug}{cli_ctx.config.gherkin.feature_extension}"
+            )
+
+        if out.exists() and not force:
+            typer.echo(
+                f"Error: {out} already exists. Use --force to overwrite.",
+                err=True,
+            )
+            raise typer.Exit(code=3)
+
+        if not dry_run:
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(feature_text, encoding="utf-8")
+
+        # Collect scenario IDs
+        scenario_ids: list[str] = []
+        for s in f.scenarios:
+            for tag in s.tags:
+                if tag.startswith("bdd-"):
+                    scenario_ids.append(tag)
+                    break
+        for r in f.rules:
+            for s in r.scenarios:
+                for tag in s.tags:
+                    if tag.startswith("bdd-"):
+                        scenario_ids.append(tag)
+                        break
+
+        if cli_ctx.json_output:
+            typer.echo(
+                _dump_json(
+                    {
+                        "schema_version": 1,
+                        "command": "create feature",
+                        "status": "dry-run" if dry_run else "created",
+                        "feature_path": str(out),
+                        "feature_id": f"feature-{feature_slug}",
+                        "scenario_ids": scenario_ids,
+                        "warnings": [],
+                    }
+                )
+            )
+        else:
+            status = "Dry-run feature at" if dry_run else "Created feature at"
+            typer.echo(f"{status} {out}")
+        return
+
+    # Legacy positional path
+    if not title:
+        typer.echo("Error: --title is required when --from-json is not used.", err=True)
+        raise typer.Exit(code=1)
+    if not scenario:
+        typer.echo(
+            "Error: --scenario is required when --from-json is not used.",
+            err=True,
+        )
+        raise typer.Exit(code=1)
+
     feature_slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
     scenario_slug = re.sub(r"[^a-z0-9]+", "-", scenario.lower()).strip("-")
     rule_slug = re.sub(r"[^a-z0-9]+", "-", (rule or title).lower()).strip("-")
@@ -1134,7 +1218,10 @@ def create_feature(
         )
 
     if out.exists() and not force:
-        typer.echo(f"Error: {out} already exists. Use --force to overwrite.", err=True)
+        typer.echo(
+            f"Error: {out} already exists. Use --force to overwrite.",
+            err=True,
+        )
         raise typer.Exit(code=3)
 
     out.parent.mkdir(parents=True, exist_ok=True)

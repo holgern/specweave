@@ -1,1 +1,43 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://specweave.dev/schemas/combi.trace.v1.schema.json","title":"Combi Trace v1","type":"object","required":["schema","producer","subject","task_ids","ac_ids","bdd_ids","archledger_refs","source_refs","test_refs","evidence_refs","status","gaps"],"properties":{"schema":{"const":"combi.trace.v1"},"producer":{"type":"string"},"subject":{"type":"object","required":["type","id"],"properties":{"type":{"type":"string"},"id":{"type":"string"}},"additionalProperties":true},"task_ids":{"type":"array","items":{"type":"string"}},"ac_ids":{"type":"array","items":{"type":"string"}},"bdd_ids":{"type":"array","items":{"type":"string"}},"archledger_refs":{"type":"array"},"source_refs":{"type":"array"},"test_refs":{"type":"array"},"evidence_refs":{"type":"array"},"status":{"type":"object"},"gaps":{"type":"array"}},"additionalProperties":true}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://specweave.dev/schemas/combi.trace.v1.schema.json",
+  "title": "Combi Trace v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "producer",
+    "subject",
+    "task_ids",
+    "ac_ids",
+    "bdd_ids",
+    "archledger_refs",
+    "source_refs",
+    "test_refs",
+    "evidence_refs",
+    "status",
+    "gaps"
+  ],
+  "properties": {
+    "schema": { "const": "combi.trace.v1" },
+    "producer": { "type": "string" },
+    "subject": {
+      "type": "object",
+      "required": ["type", "id"],
+      "properties": {
+        "type": { "type": "string" },
+        "id": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "task_ids": { "type": "array", "items": { "type": "string" } },
+    "ac_ids": { "type": "array", "items": { "type": "string" } },
+    "bdd_ids": { "type": "array", "items": { "type": "string" } },
+    "archledger_refs": { "type": "array" },
+    "source_refs": { "type": "array" },
+    "test_refs": { "type": "array" },
+    "evidence_refs": { "type": "array" },
+    "status": { "type": "object" },
+    "gaps": { "type": "array" }
+  },
+  "additionalProperties": true
+}

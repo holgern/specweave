@@ -13,10 +13,27 @@ from specweave.gherkin.parser import parse_feature
 from specweave.gherkin.writer import write_feature
 
 _SUPPORTED_FORMATS = frozenset({"classic", "markdown"})
+_SUPPORTED_SOURCE_FORMATS = frozenset({"auto", "content", "classic", "markdown"})
 
 
-def infer_document_format(path: Path, text: str | None = None) -> str:
-    """Infer the SpecWeave Gherkin document format from *path* and optionally text."""
+def infer_document_format(
+    path: Path, text: str | None = None, *, mode: str = "auto"
+) -> str:
+    """Infer the SpecWeave Gherkin document format from *path* and optionally text.
+
+    *mode* controls inference strategy:
+    - ``"auto"``: suffix-first, then text heuristics (default, backward compatible).
+    - ``"content"``: inspect text first regardless of suffix, then fall back to suffix.
+    """
+    if mode == "content" and text is not None:
+        for line in text.splitlines():
+            stripped = line.strip()
+            if not stripped:
+                continue
+            if stripped.startswith("# Feature:") or stripped.startswith("`@"):
+                return "markdown"
+            if stripped.startswith("Feature:") or stripped.startswith("@"):
+                return "classic"
     path_text = path.as_posix()
     if path_text.endswith(".feature.md"):
         return "markdown"
@@ -122,8 +139,10 @@ def convert_feature_file(
         config = SpecWeaveConfig()
 
     source_text = source_path.read_text(encoding="utf-8")
-    if source_format == "auto":
-        resolved_source_format = infer_document_format(source_path, source_text)
+    if source_format in ("auto", "content"):
+        resolved_source_format = infer_document_format(
+            source_path, source_text, mode=source_format
+        )
     else:
         resolved_source_format = source_format
     _validate_format("source format", resolved_source_format)

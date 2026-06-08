@@ -130,9 +130,7 @@ def _parse_scenario(
     )
 
 
-def _parse_classic_specweave(
-    text: str, *, source_path: Path | None = None
-) -> Feature:
+def _parse_classic_specweave(text: str, *, source_path: Path | None = None) -> Feature:
     """Parse classic Gherkin using SpecWeave's built-in parser."""
     lines = text.splitlines()
 

@@ -9,7 +9,6 @@ from specweave.gherkin.model import Feature, Scenario, Step
 from specweave.gherkin.writer import write_feature
 from specweave.review import run_review
 
-
 FEATURE = "specs/behavior/features/review/spec-review.feature.md"
 
 

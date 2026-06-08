@@ -18,9 +18,7 @@
               },
               "id": "bdd-coverage-bound-scenario",
               "line": 10,
-              "tags": [
-                "bdd-coverage-bound-scenario"
-              ],
+              "tags": ["bdd-coverage-bound-scenario"],
               "title": "Coverage marks bound scenarios"
             },
             {
@@ -32,9 +30,7 @@
               },
               "id": "bdd-coverage-unbound-scenario",
               "line": 17,
-              "tags": [
-                "bdd-coverage-unbound-scenario"
-              ],
+              "tags": ["bdd-coverage-unbound-scenario"],
               "title": "Coverage reports missing bindings"
             },
             {
@@ -46,9 +42,7 @@
               },
               "id": "bdd-coverage-missing-test-file",
               "line": 24,
-              "tags": [
-                "bdd-coverage-missing-test-file"
-              ],
+              "tags": ["bdd-coverage-missing-test-file"],
               "title": "Coverage reports missing test files"
             }
           ],
@@ -67,9 +61,7 @@
               },
               "id": "bdd-coverage-stale-binding",
               "line": 32,
-              "tags": [
-                "bdd-coverage-stale-binding"
-              ],
+              "tags": ["bdd-coverage-stale-binding"],
               "title": "Coverage reports bindings to non-existent features"
             },
             {
@@ -81,9 +73,7 @@
               },
               "id": "bdd-coverage-stale-scenario",
               "line": 39,
-              "tags": [
-                "bdd-coverage-stale-scenario"
-              ],
+              "tags": ["bdd-coverage-stale-scenario"],
               "title": "Coverage reports bindings to non-existent scenarios"
             }
           ],
@@ -102,9 +92,7 @@
               },
               "id": "bdd-coverage-deprecated-paths",
               "line": 47,
-              "tags": [
-                "bdd-coverage-deprecated-paths"
-              ],
+              "tags": ["bdd-coverage-deprecated-paths"],
               "title": "Coverage reports deprecated feature paths"
             }
           ],
@@ -123,9 +111,7 @@
               },
               "id": "bdd-coverage-forbidden-pytest-bdd",
               "line": 55,
-              "tags": [
-                "bdd-coverage-forbidden-pytest-bdd"
-              ],
+              "tags": ["bdd-coverage-forbidden-pytest-bdd"],
               "title": "Coverage reports pytest-bdd imports in test files"
             }
           ],
@@ -144,9 +130,7 @@
               },
               "id": "bdd-coverage-manual-scenario",
               "line": 63,
-              "tags": [
-                "bdd-coverage-manual-scenario"
-              ],
+              "tags": ["bdd-coverage-manual-scenario"],
               "title": "Coverage skips scenarios tagged @manual"
             }
           ],
@@ -154,10 +138,7 @@
           "title": "Coverage skips manual and waived scenarios"
         }
       ],
-      "tags": [
-        "area-behavior",
-        "feature-coverage"
-      ],
+      "tags": ["area-behavior", "feature-coverage"],
       "title": "Static behavior coverage checks"
     },
     {
@@ -178,9 +159,7 @@
               },
               "id": "bdd-generate-single-feature",
               "line": 10,
-              "tags": [
-                "bdd-generate-single-feature"
-              ],
+              "tags": ["bdd-generate-single-feature"],
               "title": "Generation creates a test file for a feature"
             },
             {
@@ -192,9 +171,7 @@
               },
               "id": "bdd-generate-scenario-function",
               "line": 18,
-              "tags": [
-                "bdd-generate-scenario-function"
-              ],
+              "tags": ["bdd-generate-scenario-function"],
               "title": "Each scenario becomes a test function"
             },
             {
@@ -206,9 +183,7 @@
               },
               "id": "bdd-generate-specweave-markers",
               "line": 26,
-              "tags": [
-                "bdd-generate-specweave-markers"
-              ],
+              "tags": ["bdd-generate-specweave-markers"],
               "title": "Test functions have correct specweave markers"
             },
             {
@@ -220,9 +195,7 @@
               },
               "id": "bdd-generate-docstring",
               "line": 33,
-              "tags": [
-                "bdd-generate-docstring"
-              ],
+              "tags": ["bdd-generate-docstring"],
               "title": "Test functions have docstrings with scenario details"
             },
             {
@@ -234,9 +207,7 @@
               },
               "id": "bdd-generate-step-comments",
               "line": 40,
-              "tags": [
-                "bdd-generate-step-comments"
-              ],
+              "tags": ["bdd-generate-step-comments"],
               "title": "Test functions have step comments"
             }
           ],
@@ -255,9 +226,7 @@
               },
               "id": "bdd-generate-canonical-path",
               "line": 50,
-              "tags": [
-                "bdd-generate-canonical-path"
-              ],
+              "tags": ["bdd-generate-canonical-path"],
               "title": "Test path is derived from feature path"
             }
           ],
@@ -276,9 +245,7 @@
               },
               "id": "bdd-generate-rules",
               "line": 58,
-              "tags": [
-                "bdd-generate-rules"
-              ],
+              "tags": ["bdd-generate-rules"],
               "title": "Scenarios in rules get rule markers"
             }
           ],
@@ -297,9 +264,7 @@
               },
               "id": "bdd-generate-batch",
               "line": 66,
-              "tags": [
-                "bdd-generate-batch"
-              ],
+              "tags": ["bdd-generate-batch"],
               "title": "Generation processes all features in a directory"
             }
           ],
@@ -307,10 +272,7 @@
           "title": "Generation supports batch mode"
         }
       ],
-      "tags": [
-        "area-behavior",
-        "feature-generation"
-      ],
+      "tags": ["area-behavior", "feature-generation"],
       "title": "Plain pytest skeleton generation"
     },
     {
@@ -331,9 +293,7 @@
               },
               "id": "bdd-index-generates-markdown",
               "line": 10,
-              "tags": [
-                "bdd-index-generates-markdown"
-              ],
+              "tags": ["bdd-index-generates-markdown"],
               "title": "Index generates Markdown with feature listing"
             },
             {
@@ -345,9 +305,7 @@
               },
               "id": "bdd-index-generates-manifest",
               "line": 17,
-              "tags": [
-                "bdd-index-generates-manifest"
-              ],
+              "tags": ["bdd-index-generates-manifest"],
               "title": "Index generates JSON manifest with scenario mappings"
             },
             {
@@ -359,9 +317,7 @@
               },
               "id": "bdd-index-scenario-entries",
               "line": 25,
-              "tags": [
-                "bdd-index-scenario-entries"
-              ],
+              "tags": ["bdd-index-scenario-entries"],
               "title": "Manifest includes scenario entries with automation status"
             },
             {
@@ -373,9 +329,7 @@
               },
               "id": "bdd-index-unbound-scenario",
               "line": 32,
-              "tags": [
-                "bdd-index-unbound-scenario"
-              ],
+              "tags": ["bdd-index-unbound-scenario"],
               "title": "Manifest marks unbound scenarios as missing"
             }
           ],
@@ -394,9 +348,7 @@
               },
               "id": "bdd-index-evidence-status",
               "line": 40,
-              "tags": [
-                "bdd-index-evidence-status"
-              ],
+              "tags": ["bdd-index-evidence-status"],
               "title": "Manifest includes latest evidence status when available"
             }
           ],
@@ -415,9 +367,7 @@
               },
               "id": "bdd-index-rules",
               "line": 48,
-              "tags": [
-                "bdd-index-rules"
-              ],
+              "tags": ["bdd-index-rules"],
               "title": "Manifest preserves Rule structure"
             }
           ],
@@ -425,10 +375,7 @@
           "title": "Index supports rule blocks"
         }
       ],
-      "tags": [
-        "area-behavior",
-        "feature-index"
-      ],
+      "tags": ["area-behavior", "feature-index"],
       "title": "Behavior index and manifest generation"
     },
     {
@@ -449,9 +396,7 @@
               },
               "id": "bdd-import-maps-by-nodeid",
               "line": 10,
-              "tags": [
-                "bdd-import-maps-by-nodeid"
-              ],
+              "tags": ["bdd-import-maps-by-nodeid"],
               "title": "Import maps results by normalized nodeid"
             },
             {
@@ -463,9 +408,7 @@
               },
               "id": "bdd-import-maps-by-function-name",
               "line": 18,
-              "tags": [
-                "bdd-import-maps-by-function-name"
-              ],
+              "tags": ["bdd-import-maps-by-function-name"],
               "title": "Import falls back to function name matching"
             },
             {
@@ -477,9 +420,7 @@
               },
               "id": "bdd-import-maps-by-manifest",
               "line": 25,
-              "tags": [
-                "bdd-import-maps-by-manifest"
-              ],
+              "tags": ["bdd-import-maps-by-manifest"],
               "title": "Import uses manifest mappings when available"
             }
           ],
@@ -498,9 +439,7 @@
               },
               "id": "bdd-import-unmapped-tests",
               "line": 34,
-              "tags": [
-                "bdd-import-unmapped-tests"
-              ],
+              "tags": ["bdd-import-unmapped-tests"],
               "title": "Import reports tests without specweave markers"
             }
           ],
@@ -519,9 +458,7 @@
               },
               "id": "bdd-import-writes-evidence",
               "line": 43,
-              "tags": [
-                "bdd-import-writes-evidence"
-              ],
+              "tags": ["bdd-import-writes-evidence"],
               "title": "Import writes evidence to the target path"
             }
           ],
@@ -529,10 +466,7 @@
           "title": "Import writes evidence JSON"
         }
       ],
-      "tags": [
-        "area-behavior",
-        "feature-reporting"
-      ],
+      "tags": ["area-behavior", "feature-reporting"],
       "title": "Behavior evidence import from pytest reports"
     },
     {
@@ -553,9 +487,7 @@
               },
               "id": "bdd-cli-config-option",
               "line": 10,
-              "tags": [
-                "bdd-cli-config-option"
-              ],
+              "tags": ["bdd-cli-config-option"],
               "title": "--config selects an explicit config path"
             },
             {
@@ -567,9 +499,7 @@
               },
               "id": "bdd-cli-json-output",
               "line": 16,
-              "tags": [
-                "bdd-cli-json-output"
-              ],
+              "tags": ["bdd-cli-json-output"],
               "title": "--json produces machine-readable output"
             },
             {
@@ -581,9 +511,7 @@
               },
               "id": "bdd-cli-json-init",
               "line": 25,
-              "tags": [
-                "bdd-cli-json-init"
-              ],
+              "tags": ["bdd-cli-json-init"],
               "title": "init --json produces machine-readable output"
             }
           ],
@@ -602,9 +530,7 @@
               },
               "id": "bdd-cli-behavior-check",
               "line": 36,
-              "tags": [
-                "bdd-cli-behavior-check"
-              ],
+              "tags": ["bdd-cli-behavior-check"],
               "title": "behavior check lints feature files"
             },
             {
@@ -616,9 +542,7 @@
               },
               "id": "bdd-cli-behavior-index",
               "line": 42,
-              "tags": [
-                "bdd-cli-behavior-index"
-              ],
+              "tags": ["bdd-cli-behavior-index"],
               "title": "behavior index generates index and manifest"
             },
             {
@@ -630,9 +554,7 @@
               },
               "id": "bdd-cli-behavior-generate-tests",
               "line": 49,
-              "tags": [
-                "bdd-cli-behavior-generate-tests"
-              ],
+              "tags": ["bdd-cli-behavior-generate-tests"],
               "title": "behavior generate-tests creates pytest skeletons"
             },
             {
@@ -644,9 +566,7 @@
               },
               "id": "bdd-cli-behavior-coverage",
               "line": 55,
-              "tags": [
-                "bdd-cli-behavior-coverage"
-              ],
+              "tags": ["bdd-cli-behavior-coverage"],
               "title": "behavior coverage checks spec-to-test mapping"
             },
             {
@@ -658,9 +578,7 @@
               },
               "id": "bdd-cli-behavior-import-report",
               "line": 61,
-              "tags": [
-                "bdd-cli-behavior-import-report"
-              ],
+              "tags": ["bdd-cli-behavior-import-report"],
               "title": "behavior import-report imports JUnit XML"
             }
           ],
@@ -679,9 +597,7 @@
               },
               "id": "bdd-cli-bdd-check-alias",
               "line": 69,
-              "tags": [
-                "bdd-cli-bdd-check-alias"
-              ],
+              "tags": ["bdd-cli-bdd-check-alias"],
               "title": "bdd check is an alias for behavior check"
             },
             {
@@ -693,9 +609,7 @@
               },
               "id": "bdd-cli-bdd-index-alias",
               "line": 75,
-              "tags": [
-                "bdd-cli-bdd-index-alias"
-              ],
+              "tags": ["bdd-cli-bdd-index-alias"],
               "title": "bdd index is an alias for behavior index"
             }
           ],
@@ -714,9 +628,7 @@
               },
               "id": "bdd-cli-create-feature",
               "line": 83,
-              "tags": [
-                "bdd-cli-create-feature"
-              ],
+              "tags": ["bdd-cli-create-feature"],
               "title": "create feature writes a new Gherkin feature file"
             },
             {
@@ -728,9 +640,7 @@
               },
               "id": "bdd-cli-create-gherkin",
               "line": 91,
-              "tags": [
-                "bdd-cli-create-gherkin"
-              ],
+              "tags": ["bdd-cli-create-gherkin"],
               "title": "create gherkin generates features from tests"
             },
             {
@@ -742,9 +652,7 @@
               },
               "id": "bdd-cli-create-plan",
               "line": 97,
-              "tags": [
-                "bdd-cli-create-plan"
-              ],
+              "tags": ["bdd-cli-create-plan"],
               "title": "create plan generates an implementation plan"
             }
           ],
@@ -763,9 +671,7 @@
               },
               "id": "bdd-cli-exit-doctor-failed",
               "line": 105,
-              "tags": [
-                "bdd-cli-exit-doctor-failed"
-              ],
+              "tags": ["bdd-cli-exit-doctor-failed"],
               "title": "doctor exits non-zero when errors found"
             },
             {
@@ -777,9 +683,7 @@
               },
               "id": "bdd-cli-exit-check-errors",
               "line": 111,
-              "tags": [
-                "bdd-cli-exit-check-errors"
-              ],
+              "tags": ["bdd-cli-exit-check-errors"],
               "title": "behavior check exits non-zero on lint errors"
             },
             {
@@ -791,9 +695,7 @@
               },
               "id": "bdd-cli-exit-normalize-failed",
               "line": 117,
-              "tags": [
-                "bdd-cli-exit-normalize-failed"
-              ],
+              "tags": ["bdd-cli-exit-normalize-failed"],
               "title": "report normalize exits non-zero when report failed"
             }
           ],
@@ -801,10 +703,7 @@
           "title": "Exit codes reflect result status"
         }
       ],
-      "tags": [
-        "area-cli",
-        "feature-cli-contract"
-      ],
+      "tags": ["area-cli", "feature-cli-contract"],
       "title": "SpecWeave CLI contract"
     },
     {
@@ -825,9 +724,7 @@
               },
               "id": "bdd-slugify-basic",
               "line": 10,
-              "tags": [
-                "bdd-slugify-basic"
-              ],
+              "tags": ["bdd-slugify-basic"],
               "title": "Slugify converts text to lowercase slug"
             },
             {
@@ -839,9 +736,7 @@
               },
               "id": "bdd-slugify-special-chars",
               "line": 17,
-              "tags": [
-                "bdd-slugify-special-chars"
-              ],
+              "tags": ["bdd-slugify-special-chars"],
               "title": "Slugify replaces special characters with hyphens"
             },
             {
@@ -853,9 +748,7 @@
               },
               "id": "bdd-slugify-empty",
               "line": 24,
-              "tags": [
-                "bdd-slugify-empty"
-              ],
+              "tags": ["bdd-slugify-empty"],
               "title": "Slugify returns \"behavior\" for empty input"
             }
           ],
@@ -874,9 +767,7 @@
               },
               "id": "bdd-feature-identity-from-path",
               "line": 33,
-              "tags": [
-                "bdd-feature-identity-from-path"
-              ],
+              "tags": ["bdd-feature-identity-from-path"],
               "title": "Feature identity derives area from parent directory"
             },
             {
@@ -888,9 +779,7 @@
               },
               "id": "bdd-feature-identity-no-area",
               "line": 40,
-              "tags": [
-                "bdd-feature-identity-no-area"
-              ],
+              "tags": ["bdd-feature-identity-no-area"],
               "title": "Feature identity uses \"behavior\" when no area directory"
             },
             {
@@ -902,9 +791,7 @@
               },
               "id": "bdd-feature-stem-markdown",
               "line": 47,
-              "tags": [
-                "bdd-feature-stem-markdown"
-              ],
+              "tags": ["bdd-feature-stem-markdown"],
               "title": "feature_stem handles .feature.md suffix"
             },
             {
@@ -916,9 +803,7 @@
               },
               "id": "bdd-feature-stem-classic",
               "line": 54,
-              "tags": [
-                "bdd-feature-stem-classic"
-              ],
+              "tags": ["bdd-feature-stem-classic"],
               "title": "feature_stem handles .feature suffix"
             }
           ],
@@ -937,9 +822,7 @@
               },
               "id": "bdd-canonical-test-path",
               "line": 63,
-              "tags": [
-                "bdd-canonical-test-path"
-              ],
+              "tags": ["bdd-canonical-test-path"],
               "title": "Test path is derived from feature path"
             }
           ],
@@ -958,9 +841,7 @@
               },
               "id": "bdd-iter-scenarios-top-level",
               "line": 71,
-              "tags": [
-                "bdd-iter-scenarios-top-level"
-              ],
+              "tags": ["bdd-iter-scenarios-top-level"],
               "title": "Iterator yields top-level scenarios"
             },
             {
@@ -972,9 +853,7 @@
               },
               "id": "bdd-iter-scenarios-in-rules",
               "line": 77,
-              "tags": [
-                "bdd-iter-scenarios-in-rules"
-              ],
+              "tags": ["bdd-iter-scenarios-in-rules"],
               "title": "Iterator yields scenarios from rules"
             }
           ],
@@ -993,9 +872,7 @@
               },
               "id": "bdd-scenario-id-value",
               "line": 85,
-              "tags": [
-                "bdd-scenario-id-value"
-              ],
+              "tags": ["bdd-scenario-id-value"],
               "title": "scenario_id_value returns first @bdd-* tag"
             },
             {
@@ -1007,9 +884,7 @@
               },
               "id": "bdd-scenario-id-missing",
               "line": 91,
-              "tags": [
-                "bdd-scenario-id-missing"
-              ],
+              "tags": ["bdd-scenario-id-missing"],
               "title": "scenario_id_value returns empty string when no @bdd-* tag"
             }
           ],
@@ -1017,10 +892,7 @@
           "title": "Scenario ID extraction"
         }
       ],
-      "tags": [
-        "area-common",
-        "feature-behavior-helpers"
-      ],
+      "tags": ["area-common", "feature-behavior-helpers"],
       "title": "Behavior helper functions"
     },
     {
@@ -1041,9 +913,7 @@
               },
               "id": "bdd-config-discovery-finds-dotfile",
               "line": 9,
-              "tags": [
-                "bdd-config-discovery-finds-dotfile"
-              ],
+              "tags": ["bdd-config-discovery-finds-dotfile"],
               "title": "Discovery finds .specweave.toml in current directory"
             },
             {
@@ -1055,9 +925,7 @@
               },
               "id": "bdd-config-discovery-finds-public",
               "line": 15,
-              "tags": [
-                "bdd-config-discovery-finds-public"
-              ],
+              "tags": ["bdd-config-discovery-finds-public"],
               "title": "Discovery finds specweave.toml in current directory"
             },
             {
@@ -1069,9 +937,7 @@
               },
               "id": "bdd-config-discovery-prefers-dotfile",
               "line": 21,
-              "tags": [
-                "bdd-config-discovery-prefers-dotfile"
-              ],
+              "tags": ["bdd-config-discovery-prefers-dotfile"],
               "title": "Discovery prefers .specweave.toml over specweave.toml"
             },
             {
@@ -1083,9 +949,7 @@
               },
               "id": "bdd-config-discovery-walks-parents",
               "line": 27,
-              "tags": [
-                "bdd-config-discovery-walks-parents"
-              ],
+              "tags": ["bdd-config-discovery-walks-parents"],
               "title": "Discovery walks parent directories when not found locally"
             },
             {
@@ -1097,9 +961,7 @@
               },
               "id": "bdd-config-discovery-returns-none",
               "line": 33,
-              "tags": [
-                "bdd-config-discovery-returns-none"
-              ],
+              "tags": ["bdd-config-discovery-returns-none"],
               "title": "Discovery returns None when no config exists"
             }
           ],
@@ -1118,9 +980,7 @@
               },
               "id": "bdd-config-load-defaults",
               "line": 41,
-              "tags": [
-                "bdd-config-load-defaults"
-              ],
+              "tags": ["bdd-config-load-defaults"],
               "title": "Loading with no file returns default config"
             },
             {
@@ -1132,9 +992,7 @@
               },
               "id": "bdd-config-load-from-file",
               "line": 49,
-              "tags": [
-                "bdd-config-load-from-file"
-              ],
+              "tags": ["bdd-config-load-from-file"],
               "title": "Loading reads values from a valid TOML file"
             }
           ],
@@ -1153,9 +1011,7 @@
               },
               "id": "bdd-config-rejects-unsupported-schema",
               "line": 58,
-              "tags": [
-                "bdd-config-rejects-unsupported-schema"
-              ],
+              "tags": ["bdd-config-rejects-unsupported-schema"],
               "title": "Loading fails for schema_version 2"
             }
           ],
@@ -1174,9 +1030,7 @@
               },
               "id": "bdd-config-render-behavior",
               "line": 66,
-              "tags": [
-                "bdd-config-render-behavior"
-              ],
+              "tags": ["bdd-config-render-behavior"],
               "title": "Default config renders behavior spelling"
             },
             {
@@ -1188,9 +1042,7 @@
               },
               "id": "bdd-config-render-behaviour",
               "line": 74,
-              "tags": [
-                "bdd-config-render-behaviour"
-              ],
+              "tags": ["bdd-config-render-behaviour"],
               "title": "Default config renders behaviour spelling"
             }
           ],
@@ -1198,10 +1050,7 @@
           "title": "Default config rendering is deterministic"
         }
       ],
-      "tags": [
-        "area-config",
-        "feature-configuration"
-      ],
+      "tags": ["area-config", "feature-configuration"],
       "title": "SpecWeave configuration management"
     },
     {
@@ -1222,9 +1071,7 @@
               },
               "id": "bdd-doctor-missing-config",
               "line": 9,
-              "tags": [
-                "bdd-doctor-missing-config"
-              ],
+              "tags": ["bdd-doctor-missing-config"],
               "title": "Doctor warns when no config file exists"
             },
             {
@@ -1236,9 +1083,7 @@
               },
               "id": "bdd-doctor-unsupported-schema",
               "line": 16,
-              "tags": [
-                "bdd-doctor-unsupported-schema"
-              ],
+              "tags": ["bdd-doctor-unsupported-schema"],
               "title": "Doctor errors on unsupported schema version"
             }
           ],
@@ -1257,9 +1102,7 @@
               },
               "id": "bdd-doctor-missing-directories",
               "line": 25,
-              "tags": [
-                "bdd-doctor-missing-directories"
-              ],
+              "tags": ["bdd-doctor-missing-directories"],
               "title": "Doctor warns about missing directories"
             },
             {
@@ -1271,9 +1114,7 @@
               },
               "id": "bdd-doctor-fix-creates-directories",
               "line": 32,
-              "tags": [
-                "bdd-doctor-fix-creates-directories"
-              ],
+              "tags": ["bdd-doctor-fix-creates-directories"],
               "title": "Doctor --fix creates missing directories"
             }
           ],
@@ -1292,9 +1133,7 @@
               },
               "id": "bdd-doctor-deprecated-paths",
               "line": 41,
-              "tags": [
-                "bdd-doctor-deprecated-paths"
-              ],
+              "tags": ["bdd-doctor-deprecated-paths"],
               "title": "Doctor warns about deprecated feature paths"
             }
           ],
@@ -1313,9 +1152,7 @@
               },
               "id": "bdd-doctor-duplicate-bdd-tags",
               "line": 49,
-              "tags": [
-                "bdd-doctor-duplicate-bdd-tags"
-              ],
+              "tags": ["bdd-doctor-duplicate-bdd-tags"],
               "title": "Doctor errors on duplicate @bdd-* tags"
             }
           ],
@@ -1334,9 +1171,7 @@
               },
               "id": "bdd-doctor-validates-features",
               "line": 58,
-              "tags": [
-                "bdd-doctor-validates-features"
-              ],
+              "tags": ["bdd-doctor-validates-features"],
               "title": "Doctor reports feature lint errors"
             }
           ],
@@ -1344,10 +1179,7 @@
           "title": "Doctor validates feature files"
         }
       ],
-      "tags": [
-        "area-doctor",
-        "feature-diagnostics"
-      ],
+      "tags": ["area-doctor", "feature-diagnostics"],
       "title": "SpecWeave project diagnostics"
     },
     {
@@ -1368,9 +1200,7 @@
               },
               "id": "bdd-lint-single-feature",
               "line": 9,
-              "tags": [
-                "bdd-lint-single-feature"
-              ],
+              "tags": ["bdd-lint-single-feature"],
               "title": "Lint errors on multiple Feature lines"
             },
             {
@@ -1382,9 +1212,7 @@
               },
               "id": "bdd-lint-empty-feature-title",
               "line": 16,
-              "tags": [
-                "bdd-lint-empty-feature-title"
-              ],
+              "tags": ["bdd-lint-empty-feature-title"],
               "title": "Lint errors on empty feature title"
             },
             {
@@ -1396,9 +1224,7 @@
               },
               "id": "bdd-lint-empty-scenario-title",
               "line": 22,
-              "tags": [
-                "bdd-lint-empty-scenario-title"
-              ],
+              "tags": ["bdd-lint-empty-scenario-title"],
               "title": "Lint errors on empty scenario title"
             },
             {
@@ -1410,9 +1236,7 @@
               },
               "id": "bdd-lint-missing-given-when-then",
               "line": 28,
-              "tags": [
-                "bdd-lint-missing-given-when-then"
-              ],
+              "tags": ["bdd-lint-missing-given-when-then"],
               "title": "Lint errors when Given/When/Then are missing"
             },
             {
@@ -1424,9 +1248,7 @@
               },
               "id": "bdd-lint-empty-rule",
               "line": 34,
-              "tags": [
-                "bdd-lint-empty-rule"
-              ],
+              "tags": ["bdd-lint-empty-rule"],
               "title": "Lint errors on Rule without scenarios"
             }
           ],
@@ -1445,9 +1267,7 @@
               },
               "id": "bdd-lint-duplicate-bdd-tags",
               "line": 42,
-              "tags": [
-                "bdd-lint-duplicate-bdd-tags"
-              ],
+              "tags": ["bdd-lint-duplicate-bdd-tags"],
               "title": "Lint errors on duplicate @bdd-* tags"
             },
             {
@@ -1459,9 +1279,7 @@
               },
               "id": "bdd-lint-missing-bdd-tag",
               "line": 48,
-              "tags": [
-                "bdd-lint-missing-bdd-tag"
-              ],
+              "tags": ["bdd-lint-missing-bdd-tag"],
               "title": "Lint warns when scenario lacks @bdd-* tag"
             },
             {
@@ -1473,9 +1291,7 @@
               },
               "id": "bdd-lint-task-tags-discouraged",
               "line": 54,
-              "tags": [
-                "bdd-lint-task-tags-discouraged"
-              ],
+              "tags": ["bdd-lint-task-tags-discouraged"],
               "title": "Lint warns on task-specific tags in features"
             }
           ],
@@ -1494,9 +1310,7 @@
               },
               "id": "bdd-lint-canonical-path",
               "line": 62,
-              "tags": [
-                "bdd-lint-canonical-path"
-              ],
+              "tags": ["bdd-lint-canonical-path"],
               "title": "Lint errors on features outside canonical path"
             },
             {
@@ -1508,9 +1322,7 @@
               },
               "id": "bdd-lint-area-subdirectory",
               "line": 68,
-              "tags": [
-                "bdd-lint-area-subdirectory"
-              ],
+              "tags": ["bdd-lint-area-subdirectory"],
               "title": "Lint warns when feature is not in area subdirectory"
             },
             {
@@ -1522,9 +1334,7 @@
               },
               "id": "bdd-lint-deprecated-path",
               "line": 74,
-              "tags": [
-                "bdd-lint-deprecated-path"
-              ],
+              "tags": ["bdd-lint-deprecated-path"],
               "title": "Lint warns on deprecated feature paths"
             }
           ],
@@ -1543,9 +1353,7 @@
               },
               "id": "bdd-lint-strict-unsupported",
               "line": 82,
-              "tags": [
-                "bdd-lint-strict-unsupported"
-              ],
+              "tags": ["bdd-lint-strict-unsupported"],
               "title": "Strict mode warns on Scenario Outline"
             }
           ],
@@ -1553,10 +1361,7 @@
           "title": "Strict mode reports unsupported constructs"
         }
       ],
-      "tags": [
-        "area-gherkin",
-        "feature-lint"
-      ],
+      "tags": ["area-gherkin", "feature-lint"],
       "title": "Gherkin feature file linting"
     },
     {
@@ -1577,9 +1382,7 @@
               },
               "id": "bdd-parser-classic-feature",
               "line": 10,
-              "tags": [
-                "bdd-parser-classic-feature"
-              ],
+              "tags": ["bdd-parser-classic-feature"],
               "title": "Parser extracts feature title and scenarios"
             },
             {
@@ -1591,9 +1394,7 @@
               },
               "id": "bdd-parser-classic-rules",
               "line": 18,
-              "tags": [
-                "bdd-parser-classic-rules"
-              ],
+              "tags": ["bdd-parser-classic-rules"],
               "title": "Parser extracts Rule blocks"
             },
             {
@@ -1605,9 +1406,7 @@
               },
               "id": "bdd-parser-classic-tags",
               "line": 25,
-              "tags": [
-                "bdd-parser-classic-tags"
-              ],
+              "tags": ["bdd-parser-classic-tags"],
               "title": "Parser preserves tags on features, rules, and scenarios"
             },
             {
@@ -1619,9 +1418,7 @@
               },
               "id": "bdd-parser-classic-description",
               "line": 33,
-              "tags": [
-                "bdd-parser-classic-description"
-              ],
+              "tags": ["bdd-parser-classic-description"],
               "title": "Parser preserves feature and scenario descriptions"
             },
             {
@@ -1633,9 +1430,7 @@
               },
               "id": "bdd-parser-classic-top-level-scenarios",
               "line": 40,
-              "tags": [
-                "bdd-parser-classic-top-level-scenarios"
-              ],
+              "tags": ["bdd-parser-classic-top-level-scenarios"],
               "title": "Parser handles top-level scenarios outside rules"
             }
           ],
@@ -1654,9 +1449,7 @@
               },
               "id": "bdd-parser-markdown-feature",
               "line": 49,
-              "tags": [
-                "bdd-parser-markdown-feature"
-              ],
+              "tags": ["bdd-parser-markdown-feature"],
               "title": "Parser extracts structure from markdown format"
             }
           ],
@@ -1675,9 +1468,7 @@
               },
               "id": "bdd-parser-dispatch-by-suffix",
               "line": 58,
-              "tags": [
-                "bdd-parser-dispatch-by-suffix"
-              ],
+              "tags": ["bdd-parser-dispatch-by-suffix"],
               "title": "Parser selects markdown parser for .feature.md files"
             },
             {
@@ -1689,9 +1480,7 @@
               },
               "id": "bdd-parser-dispatch-classic",
               "line": 64,
-              "tags": [
-                "bdd-parser-dispatch-classic"
-              ],
+              "tags": ["bdd-parser-dispatch-classic"],
               "title": "Parser selects classic parser for .feature files"
             }
           ],
@@ -1710,9 +1499,7 @@
               },
               "id": "bdd-parser-requires-feature-line",
               "line": 72,
-              "tags": [
-                "bdd-parser-requires-feature-line"
-              ],
+              "tags": ["bdd-parser-requires-feature-line"],
               "title": "Parser raises ValueError without Feature line"
             }
           ],
@@ -1720,10 +1507,7 @@
           "title": "Parser requires Feature line"
         }
       ],
-      "tags": [
-        "area-gherkin",
-        "feature-parser"
-      ],
+      "tags": ["area-gherkin", "feature-parser"],
       "title": "Gherkin feature file parsing"
     },
     {
@@ -1744,9 +1528,7 @@
               },
               "id": "bdd-writer-basic-feature",
               "line": 9,
-              "tags": [
-                "bdd-writer-basic-feature"
-              ],
+              "tags": ["bdd-writer-basic-feature"],
               "title": "Writer serializes a feature with scenarios"
             },
             {
@@ -1758,9 +1540,7 @@
               },
               "id": "bdd-writer-rules",
               "line": 17,
-              "tags": [
-                "bdd-writer-rules"
-              ],
+              "tags": ["bdd-writer-rules"],
               "title": "Writer serializes Rule blocks"
             },
             {
@@ -1772,9 +1552,7 @@
               },
               "id": "bdd-writer-tags",
               "line": 24,
-              "tags": [
-                "bdd-writer-tags"
-              ],
+              "tags": ["bdd-writer-tags"],
               "title": "Writer preserves tags at all levels"
             },
             {
@@ -1786,9 +1564,7 @@
               },
               "id": "bdd-writer-descriptions",
               "line": 32,
-              "tags": [
-                "bdd-writer-descriptions"
-              ],
+              "tags": ["bdd-writer-descriptions"],
               "title": "Writer preserves descriptions"
             },
             {
@@ -1800,9 +1576,7 @@
               },
               "id": "bdd-writer-roundtrip",
               "line": 39,
-              "tags": [
-                "bdd-writer-roundtrip"
-              ],
+              "tags": ["bdd-writer-roundtrip"],
               "title": "Parsing then writing produces equivalent output"
             }
           ],
@@ -1810,10 +1584,7 @@
           "title": "Writer produces canonical Gherkin output"
         }
       ],
-      "tags": [
-        "area-gherkin",
-        "feature-writer"
-      ],
+      "tags": ["area-gherkin", "feature-writer"],
       "title": "Gherkin feature file writing"
     },
     {
@@ -1834,9 +1605,7 @@
               },
               "id": "bdd-init-creates-dotfile",
               "line": 9,
-              "tags": [
-                "bdd-init-creates-dotfile"
-              ],
+              "tags": ["bdd-init-creates-dotfile"],
               "title": "Init creates .specweave.toml by default"
             },
             {
@@ -1848,9 +1617,7 @@
               },
               "id": "bdd-init-creates-public-config",
               "line": 18,
-              "tags": [
-                "bdd-init-creates-public-config"
-              ],
+              "tags": ["bdd-init-creates-public-config"],
               "title": "Init creates specweave.toml with --public-config"
             },
             {
@@ -1862,9 +1629,7 @@
               },
               "id": "bdd-init-creates-readme",
               "line": 25,
-              "tags": [
-                "bdd-init-creates-readme"
-              ],
+              "tags": ["bdd-init-creates-readme"],
               "title": "Init creates a managed README in specs root"
             },
             {
@@ -1876,9 +1641,7 @@
               },
               "id": "bdd-init-creates-gitkeep",
               "line": 32,
-              "tags": [
-                "bdd-init-creates-gitkeep"
-              ],
+              "tags": ["bdd-init-creates-gitkeep"],
               "title": "Init creates .gitkeep in features directory"
             }
           ],
@@ -1897,9 +1660,7 @@
               },
               "id": "bdd-init-idempotent",
               "line": 40,
-              "tags": [
-                "bdd-init-idempotent"
-              ],
+              "tags": ["bdd-init-idempotent"],
               "title": "Running init twice does not fail"
             }
           ],
@@ -1918,9 +1679,7 @@
               },
               "id": "bdd-init-british-spelling",
               "line": 49,
-              "tags": [
-                "bdd-init-british-spelling"
-              ],
+              "tags": ["bdd-init-british-spelling"],
               "title": "Init creates behaviour layout with --spelling behaviour"
             }
           ],
@@ -1939,9 +1698,7 @@
               },
               "id": "bdd-init-dry-run",
               "line": 59,
-              "tags": [
-                "bdd-init-dry-run"
-              ],
+              "tags": ["bdd-init-dry-run"],
               "title": "Dry-run reports paths without writing"
             }
           ],
@@ -1960,9 +1717,7 @@
               },
               "id": "bdd-init-refuses-overwrite-readme",
               "line": 68,
-              "tags": [
-                "bdd-init-refuses-overwrite-readme"
-              ],
+              "tags": ["bdd-init-refuses-overwrite-readme"],
               "title": "Init skips non-SpecWeave README"
             },
             {
@@ -1974,9 +1729,7 @@
               },
               "id": "bdd-init-force-overwrites-readme",
               "line": 75,
-              "tags": [
-                "bdd-init-force-overwrites-readme"
-              ],
+              "tags": ["bdd-init-force-overwrites-readme"],
               "title": "Init overwrites managed README with --force"
             }
           ],
@@ -1995,9 +1748,7 @@
               },
               "id": "bdd-init-warns-existing-config",
               "line": 83,
-              "tags": [
-                "bdd-init-warns-existing-config"
-              ],
+              "tags": ["bdd-init-warns-existing-config"],
               "title": "Init warns when config already exists"
             }
           ],
@@ -2005,10 +1756,7 @@
           "title": "Init warns about existing config"
         }
       ],
-      "tags": [
-        "area-init",
-        "feature-initialization"
-      ],
+      "tags": ["area-init", "feature-initialization"],
       "title": "SpecWeave project initialization"
     },
     {
@@ -2029,9 +1777,7 @@
               },
               "id": "bdd-archledger-candidate",
               "line": 10,
-              "tags": [
-                "bdd-archledger-candidate"
-              ],
+              "tags": ["bdd-archledger-candidate"],
               "title": "archledger command renders candidate markdown"
             },
             {
@@ -2043,9 +1789,7 @@
               },
               "id": "bdd-archledger-unknown-bdd",
               "line": 18,
-              "tags": [
-                "bdd-archledger-unknown-bdd"
-              ],
+              "tags": ["bdd-archledger-unknown-bdd"],
               "title": "archledger errors on unknown @bdd-* id"
             }
           ],
@@ -2064,9 +1808,7 @@
               },
               "id": "bdd-archledger-candidate-only",
               "line": 27,
-              "tags": [
-                "bdd-archledger-candidate-only"
-              ],
+              "tags": ["bdd-archledger-candidate-only"],
               "title": "archledger produces candidates, not accepted records"
             }
           ],
@@ -2074,10 +1816,7 @@
           "title": "Archledger does not write accepted records by default"
         }
       ],
-      "tags": [
-        "area-integrations",
-        "feature-archledger"
-      ],
+      "tags": ["area-integrations", "feature-archledger"],
       "title": "Archledger integration"
     },
     {
@@ -2098,9 +1837,7 @@
               },
               "id": "bdd-taskledger-draft",
               "line": 10,
-              "tags": [
-                "bdd-taskledger-draft"
-              ],
+              "tags": ["bdd-taskledger-draft"],
               "title": "create taskledger-task generates a draft JSON"
             },
             {
@@ -2112,9 +1849,7 @@
               },
               "id": "bdd-taskledger-draft-ac-mapping",
               "line": 18,
-              "tags": [
-                "bdd-taskledger-draft-ac-mapping"
-              ],
+              "tags": ["bdd-taskledger-draft-ac-mapping"],
               "title": "Draft maps @ac-* tags to acceptance criteria"
             }
           ],
@@ -2133,9 +1868,7 @@
               },
               "id": "bdd-taskledger-import",
               "line": 26,
-              "tags": [
-                "bdd-taskledger-import"
-              ],
+              "tags": ["bdd-taskledger-import"],
               "title": "import-taskledger creates a feature from Taskledger export"
             }
           ],
@@ -2154,9 +1887,7 @@
               },
               "id": "bdd-taskledger-evidence",
               "line": 35,
-              "tags": [
-                "bdd-taskledger-evidence"
-              ],
+              "tags": ["bdd-taskledger-evidence"],
               "title": "report normalize generates Taskledger-compatible evidence"
             }
           ],
@@ -2164,10 +1895,7 @@
           "title": "Taskledger evidence generation"
         }
       ],
-      "tags": [
-        "area-integrations",
-        "feature-taskledger"
-      ],
+      "tags": ["area-integrations", "feature-taskledger"],
       "title": "Taskledger integration"
     },
     {
@@ -2188,9 +1916,7 @@
               },
               "id": "bdd-fail-closed-failed-scenario",
               "line": 11,
-              "tags": [
-                "bdd-fail-closed-failed-scenario"
-              ],
+              "tags": ["bdd-fail-closed-failed-scenario"],
               "title": "Failed scenario fails the linked criterion"
             },
             {
@@ -2202,9 +1928,7 @@
               },
               "id": "bdd-fail-closed-skipped-scenario",
               "line": 17,
-              "tags": [
-                "bdd-fail-closed-skipped-scenario"
-              ],
+              "tags": ["bdd-fail-closed-skipped-scenario"],
               "title": "Skipped scenario fails the criterion by default"
             },
             {
@@ -2216,9 +1940,7 @@
               },
               "id": "bdd-fail-closed-undefined-scenario",
               "line": 23,
-              "tags": [
-                "bdd-fail-closed-undefined-scenario"
-              ],
+              "tags": ["bdd-fail-closed-undefined-scenario"],
               "title": "Undefined scenario fails the criterion"
             },
             {
@@ -2230,9 +1952,7 @@
               },
               "id": "bdd-fail-closed-pending-scenario",
               "line": 29,
-              "tags": [
-                "bdd-fail-closed-pending-scenario"
-              ],
+              "tags": ["bdd-fail-closed-pending-scenario"],
               "title": "Pending scenario fails the criterion"
             },
             {
@@ -2244,9 +1964,7 @@
               },
               "id": "bdd-fail-closed-ambiguous-scenario",
               "line": 35,
-              "tags": [
-                "bdd-fail-closed-ambiguous-scenario"
-              ],
+              "tags": ["bdd-fail-closed-ambiguous-scenario"],
               "title": "Ambiguous scenario fails the criterion"
             }
           ],
@@ -2265,9 +1983,7 @@
               },
               "id": "bdd-fail-closed-passed-scenario",
               "line": 43,
-              "tags": [
-                "bdd-fail-closed-passed-scenario"
-              ],
+              "tags": ["bdd-fail-closed-passed-scenario"],
               "title": "Passed scenario satisfies the criterion"
             }
           ],
@@ -2286,9 +2002,7 @@
               },
               "id": "bdd-fail-closed-unlinked-scenario",
               "line": 51,
-              "tags": [
-                "bdd-fail-closed-unlinked-scenario"
-              ],
+              "tags": ["bdd-fail-closed-unlinked-scenario"],
               "title": "Unlinked scenario does not satisfy any criterion"
             }
           ],
@@ -2307,9 +2021,7 @@
               },
               "id": "bdd-fail-closed-multiple-scenarios",
               "line": 59,
-              "tags": [
-                "bdd-fail-closed-multiple-scenarios"
-              ],
+              "tags": ["bdd-fail-closed-multiple-scenarios"],
               "title": "One failed scenario fails the whole criterion"
             }
           ],
@@ -2328,9 +2040,7 @@
               },
               "id": "bdd-fail-closed-exit-code-not-evidence",
               "line": 67,
-              "tags": [
-                "bdd-fail-closed-exit-code-not-evidence"
-              ],
+              "tags": ["bdd-fail-closed-exit-code-not-evidence"],
               "title": "Passing exit code does not override failed scenarios"
             }
           ],
@@ -2338,10 +2048,7 @@
           "title": "Exit code alone is not sufficient evidence"
         }
       ],
-      "tags": [
-        "area-reports",
-        "feature-fail-closed"
-      ],
+      "tags": ["area-reports", "feature-fail-closed"],
       "title": "Fail-closed evidence semantics"
     },
     {
@@ -2362,9 +2069,7 @@
               },
               "id": "bdd-tag-extraction-bdd",
               "line": 10,
-              "tags": [
-                "bdd-tag-extraction-bdd"
-              ],
+              "tags": ["bdd-tag-extraction-bdd"],
               "title": "Extraction finds @bdd-* tags"
             },
             {
@@ -2376,9 +2081,7 @@
               },
               "id": "bdd-tag-extraction-ac",
               "line": 16,
-              "tags": [
-                "bdd-tag-extraction-ac"
-              ],
+              "tags": ["bdd-tag-extraction-ac"],
               "title": "Extraction finds @ac-* tags"
             },
             {
@@ -2390,9 +2093,7 @@
               },
               "id": "bdd-tag-extraction-empty",
               "line": 22,
-              "tags": [
-                "bdd-tag-extraction-empty"
-              ],
+              "tags": ["bdd-tag-extraction-empty"],
               "title": "Extraction returns empty lists when no matching tags"
             }
           ],
@@ -2411,9 +2112,7 @@
               },
               "id": "bdd-criteria-summary",
               "line": 31,
-              "tags": [
-                "bdd-criteria-summary"
-              ],
+              "tags": ["bdd-criteria-summary"],
               "title": "Summarization groups scenarios by acceptance criterion"
             },
             {
@@ -2425,9 +2124,7 @@
               },
               "id": "bdd-criteria-fail-closed",
               "line": 38,
-              "tags": [
-                "bdd-criteria-fail-closed"
-              ],
+              "tags": ["bdd-criteria-fail-closed"],
               "title": "Failed scenarios fail the linked criterion"
             },
             {
@@ -2439,9 +2136,7 @@
               },
               "id": "bdd-criteria-missing-coverage",
               "line": 44,
-              "tags": [
-                "bdd-criteria-missing-coverage"
-              ],
+              "tags": ["bdd-criteria-missing-coverage"],
               "title": "Expected AC with no scenarios fails coverage"
             }
           ],
@@ -2449,10 +2144,7 @@
           "title": "Criteria summarization groups by AC ID"
         }
       ],
-      "tags": [
-        "area-reports",
-        "feature-mapping"
-      ],
+      "tags": ["area-reports", "feature-mapping"],
       "title": "Report tag mapping and acceptance coverage"
     },
     {
@@ -2473,9 +2165,7 @@
               },
               "id": "bdd-normalize-junit-xml",
               "line": 10,
-              "tags": [
-                "bdd-normalize-junit-xml"
-              ],
+              "tags": ["bdd-normalize-junit-xml"],
               "title": "Normalization parses JUnit XML reports"
             },
             {
@@ -2487,9 +2177,7 @@
               },
               "id": "bdd-normalize-cucumber-json",
               "line": 17,
-              "tags": [
-                "bdd-normalize-cucumber-json"
-              ],
+              "tags": ["bdd-normalize-cucumber-json"],
               "title": "Normalization parses Cucumber JSON reports"
             },
             {
@@ -2501,9 +2189,7 @@
               },
               "id": "bdd-normalize-unsupported-format",
               "line": 24,
-              "tags": [
-                "bdd-normalize-unsupported-format"
-              ],
+              "tags": ["bdd-normalize-unsupported-format"],
               "title": "Normalization rejects unsupported formats"
             }
           ],
@@ -2522,9 +2208,7 @@
               },
               "id": "bdd-normalize-all-passed",
               "line": 32,
-              "tags": [
-                "bdd-normalize-all-passed"
-              ],
+              "tags": ["bdd-normalize-all-passed"],
               "title": "Report status is passed when all scenarios pass"
             },
             {
@@ -2536,9 +2220,7 @@
               },
               "id": "bdd-normalize-any-failed",
               "line": 39,
-              "tags": [
-                "bdd-normalize-any-failed"
-              ],
+              "tags": ["bdd-normalize-any-failed"],
               "title": "Report status is failed when any scenario fails"
             },
             {
@@ -2550,9 +2232,7 @@
               },
               "id": "bdd-normalize-skipped-fails-by-default",
               "line": 46,
-              "tags": [
-                "bdd-normalize-skipped-fails-by-default"
-              ],
+              "tags": ["bdd-normalize-skipped-fails-by-default"],
               "title": "Skipped scenarios fail the report by default"
             },
             {
@@ -2564,9 +2244,7 @@
               },
               "id": "bdd-normalize-allow-skipped",
               "line": 52,
-              "tags": [
-                "bdd-normalize-allow-skipped"
-              ],
+              "tags": ["bdd-normalize-allow-skipped"],
               "title": "Skipped scenarios pass with --allow-skipped"
             }
           ],
@@ -2585,9 +2263,7 @@
               },
               "id": "bdd-normalize-missing-ac-coverage",
               "line": 60,
-              "tags": [
-                "bdd-normalize-missing-ac-coverage"
-              ],
+              "tags": ["bdd-normalize-missing-ac-coverage"],
               "title": "Report fails when expected AC has no passing scenario"
             },
             {
@@ -2599,9 +2275,7 @@
               },
               "id": "bdd-normalize-ac-covered",
               "line": 66,
-              "tags": [
-                "bdd-normalize-ac-covered"
-              ],
+              "tags": ["bdd-normalize-ac-covered"],
               "title": "Report passes when expected AC has a passing scenario"
             }
           ],
@@ -2620,9 +2294,7 @@
               },
               "id": "bdd-normalize-evidence-json",
               "line": 74,
-              "tags": [
-                "bdd-normalize-evidence-json"
-              ],
+              "tags": ["bdd-normalize-evidence-json"],
               "title": "Normalization writes Taskledger evidence JSON"
             }
           ],
@@ -2630,10 +2302,7 @@
           "title": "Normalization generates evidence JSON"
         }
       ],
-      "tags": [
-        "area-reports",
-        "feature-normalization"
-      ],
+      "tags": ["area-reports", "feature-normalization"],
       "title": "Report normalization and evidence generation"
     },
     {
@@ -2654,9 +2323,7 @@
               },
               "id": "bdd-junit-parse-cases",
               "line": 9,
-              "tags": [
-                "bdd-junit-parse-cases"
-              ],
+              "tags": ["bdd-junit-parse-cases"],
               "title": "Parser extracts test cases from JUnit XML"
             },
             {
@@ -2668,9 +2335,7 @@
               },
               "id": "bdd-junit-parse-statuses",
               "line": 16,
-              "tags": [
-                "bdd-junit-parse-statuses"
-              ],
+              "tags": ["bdd-junit-parse-statuses"],
               "title": "Parser maps JUnit statuses correctly"
             },
             {
@@ -2682,9 +2347,7 @@
               },
               "id": "bdd-junit-parse-duration",
               "line": 24,
-              "tags": [
-                "bdd-junit-parse-duration"
-              ],
+              "tags": ["bdd-junit-parse-duration"],
               "title": "Parser extracts test duration"
             }
           ],
@@ -2703,9 +2366,7 @@
               },
               "id": "bdd-cucumber-parse-scenarios",
               "line": 32,
-              "tags": [
-                "bdd-cucumber-parse-scenarios"
-              ],
+              "tags": ["bdd-cucumber-parse-scenarios"],
               "title": "Parser extracts scenarios from Cucumber JSON"
             },
             {
@@ -2717,9 +2378,7 @@
               },
               "id": "bdd-cucumber-parse-tags",
               "line": 39,
-              "tags": [
-                "bdd-cucumber-parse-tags"
-              ],
+              "tags": ["bdd-cucumber-parse-tags"],
               "title": "Parser extracts tags from Cucumber scenarios"
             }
           ],
@@ -2727,10 +2386,7 @@
           "title": "Cucumber JSON parser extracts scenarios"
         }
       ],
-      "tags": [
-        "area-reports",
-        "feature-parsers"
-      ],
+      "tags": ["area-reports", "feature-parsers"],
       "title": "Report format parsers"
     },
     {
@@ -2751,9 +2407,7 @@
               },
               "id": "bdd-review-counts",
               "line": 9,
-              "tags": [
-                "bdd-review-counts"
-              ],
+              "tags": ["bdd-review-counts"],
               "title": "Review reports feature and scenario statistics"
             }
           ],
@@ -2772,9 +2426,7 @@
               },
               "id": "bdd-review-missing-bindings",
               "line": 19,
-              "tags": [
-                "bdd-review-missing-bindings"
-              ],
+              "tags": ["bdd-review-missing-bindings"],
               "title": "Review warns about unbound scenarios"
             }
           ],
@@ -2793,9 +2445,7 @@
               },
               "id": "bdd-review-needs-review",
               "line": 28,
-              "tags": [
-                "bdd-review-needs-review"
-              ],
+              "tags": ["bdd-review-needs-review"],
               "title": "Review warns about @needs-review scenarios"
             }
           ],
@@ -2814,9 +2464,7 @@
               },
               "id": "bdd-review-deprecated-paths",
               "line": 36,
-              "tags": [
-                "bdd-review-deprecated-paths"
-              ],
+              "tags": ["bdd-review-deprecated-paths"],
               "title": "Review warns about deprecated paths"
             }
           ],
@@ -2835,9 +2483,7 @@
               },
               "id": "bdd-review-forbidden-pytest-bdd",
               "line": 44,
-              "tags": [
-                "bdd-review-forbidden-pytest-bdd"
-              ],
+              "tags": ["bdd-review-forbidden-pytest-bdd"],
               "title": "Review errors on pytest-bdd usage"
             }
           ],
@@ -2856,9 +2502,7 @@
               },
               "id": "bdd-review-lint-findings",
               "line": 53,
-              "tags": [
-                "bdd-review-lint-findings"
-              ],
+              "tags": ["bdd-review-lint-findings"],
               "title": "Review includes lint errors and warnings"
             }
           ],
@@ -2866,10 +2510,7 @@
           "title": "Review aggregates lint findings"
         }
       ],
-      "tags": [
-        "area-review",
-        "feature-spec-review"
-      ],
+      "tags": ["area-review", "feature-spec-review"],
       "title": "Behavior spec review"
     },
     {
@@ -2890,9 +2531,7 @@
               },
               "id": "bdd-translate-discovers-tests",
               "line": 10,
-              "tags": [
-                "bdd-translate-discovers-tests"
-              ],
+              "tags": ["bdd-translate-discovers-tests"],
               "title": "Generation finds test functions in pytest files"
             },
             {
@@ -2904,9 +2543,7 @@
               },
               "id": "bdd-translate-group-by-file",
               "line": 17,
-              "tags": [
-                "bdd-translate-group-by-file"
-              ],
+              "tags": ["bdd-translate-group-by-file"],
               "title": "Generation groups scenarios by test file"
             }
           ],
@@ -2925,9 +2562,7 @@
               },
               "id": "bdd-translate-preserve-manual",
               "line": 26,
-              "tags": [
-                "bdd-translate-preserve-manual"
-              ],
+              "tags": ["bdd-translate-preserve-manual"],
               "title": "Generation does not overwrite manual feature files"
             },
             {
@@ -2939,9 +2574,7 @@
               },
               "id": "bdd-translate-force-overwrite",
               "line": 33,
-              "tags": [
-                "bdd-translate-force-overwrite"
-              ],
+              "tags": ["bdd-translate-force-overwrite"],
               "title": "Generation overwrites with --force"
             }
           ],
@@ -2960,9 +2593,7 @@
               },
               "id": "bdd-translate-marks-generated",
               "line": 41,
-              "tags": [
-                "bdd-translate-marks-generated"
-              ],
+              "tags": ["bdd-translate-marks-generated"],
               "title": "Generated features have @generated tag"
             }
           ],
@@ -2981,9 +2612,7 @@
               },
               "id": "bdd-translate-dry-run",
               "line": 50,
-              "tags": [
-                "bdd-translate-dry-run"
-              ],
+              "tags": ["bdd-translate-dry-run"],
               "title": "Dry-run reports without writing files"
             }
           ],
@@ -2991,10 +2620,7 @@
           "title": "Generation supports dry-run mode"
         }
       ],
-      "tags": [
-        "area-translation",
-        "feature-pytest-to-gherkin"
-      ],
+      "tags": ["area-translation", "feature-pytest-to-gherkin"],
       "title": "Brownfield pytest-to-Gherkin generation"
     }
   ],

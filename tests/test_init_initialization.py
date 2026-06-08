@@ -6,7 +6,6 @@ from pathlib import Path
 
 from specweave.init import _readme_is_specweave_managed, init_result_to_dict, run_init
 
-
 FEATURE = "specs/behavior/features/init/initialization.feature.md"
 
 

@@ -48,9 +48,7 @@ def _write_rule(rule: Rule) -> list[str]:
     return lines
 
 
-def write_feature(
-    feature: Feature, *, document_format: str = "classic"
-) -> str:
+def write_feature(feature: Feature, *, document_format: str = "classic") -> str:
     """Render a *feature* to Gherkin text.
 
     *document_format* can be ``"classic"`` (``.feature``) or

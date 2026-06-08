@@ -83,9 +83,7 @@ def _build_rule(rule_data: dict, source_path: Path | None) -> Rule:
     )
 
 
-def _document_to_feature(
-    doc: dict, *, source_path: Path | None = None
-) -> Feature:
+def _document_to_feature(doc: dict, *, source_path: Path | None = None) -> Feature:
     """Convert a gherkin-official ``feature`` AST dict to SpecWeave Feature."""
     feature_data = doc.get("feature", {})
     tags = _tag_list(feature_data.get("tags", []))
@@ -98,9 +96,7 @@ def _document_to_feature(
 
     for child in feature_data.get("children", []):
         if "scenario" in child:
-            top_scenarios.append(
-                _build_scenario(child["scenario"], source_path)
-            )
+            top_scenarios.append(_build_scenario(child["scenario"], source_path))
         elif "rule" in child:
             rules.append(_build_rule(child["rule"], source_path))
 

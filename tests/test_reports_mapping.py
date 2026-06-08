@@ -19,7 +19,6 @@ from specweave.reports.mapping import (
 )
 from specweave.reports.model import ScenarioResult
 
-
 FEATURE = "specs/behavior/features/reports/mapping.feature.md"
 
 

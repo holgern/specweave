@@ -6,7 +6,6 @@ from specweave.gherkin.model import Feature, Rule, Scenario, Step
 from specweave.gherkin.parser import parse_feature
 from specweave.gherkin.writer import write_feature
 
-
 FEATURE = "specs/behavior/features/gherkin/writer.feature.md"
 
 

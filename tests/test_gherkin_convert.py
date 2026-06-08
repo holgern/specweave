@@ -228,3 +228,131 @@ def test_create_feature_uses_markdown_default(tmp_path: Path, monkeypatch) -> No
     feature_path = tmp_path / "specs/behavior/features/auth/password-login.feature.md"
     assert feature_path.exists()
     assert "# Feature: Password login" in feature_path.read_text(encoding="utf-8")
+
+
+class TestSWBEH016FormatMismatch:
+    """Tests for the SWBEH016 lint diagnostic.
+
+    Detects classic Gherkin syntax in .feature.md files.
+    """
+
+    def test_classic_at_tag_in_feature_md(self, tmp_path: Path) -> None:
+        from specweave.gherkin.lint import lint_feature_files
+
+        path = tmp_path / "auth" / "login.feature.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            "@area-auth @feature-login\nFeature: Login\n  Users can log in.\n",
+            encoding="utf-8",
+        )
+        findings = lint_feature_files([path])
+        codes = [f.code for f in findings]
+        assert "SWBEH016" in codes, f"Expected SWBEH016 in {codes}"
+        mismatch = [f for f in findings if f.code == "SWBEH016"][0]
+        assert "--from classic --to markdown --force" in mismatch.message
+
+    def test_classic_feature_heading_in_feature_md(self, tmp_path: Path) -> None:
+        from specweave.gherkin.lint import lint_feature_files
+
+        path = tmp_path / "auth" / "login.feature.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            "Feature: Login\n  Users can log in.\n",
+            encoding="utf-8",
+        )
+        findings = lint_feature_files([path])
+        codes = [f.code for f in findings]
+        assert "SWBEH016" in codes
+
+    def test_valid_markdown_feature_md_no_mismatch(self, tmp_path: Path) -> None:
+        from specweave.gherkin.lint import lint_feature_files
+
+        path = tmp_path / "auth" / "login.feature.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            "`@area-auth`\n# Feature: Login\n\n* Given x\n* When y\n* Then z\n",
+            encoding="utf-8",
+        )
+        findings = lint_feature_files([path])
+        codes = [f.code for f in findings]
+        assert "SWBEH016" not in codes
+
+    def test_classic_feature_file_no_mismatch(self, tmp_path: Path) -> None:
+        from specweave.gherkin.lint import lint_feature_files
+
+        path = tmp_path / "auth" / "login.feature"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            "@area-auth\nFeature: Login\n  Users can log in.\n",
+            encoding="utf-8",
+        )
+        findings = lint_feature_files([path])
+        codes = [f.code for f in findings]
+        assert "SWBEH016" not in codes
+
+
+class TestConvertFromContent:
+    """Tests for --from content mode in convert."""
+
+    def test_from_content_detects_classic_in_feature_md(self, tmp_path: Path) -> None:
+        source = tmp_path / "auth" / "login.feature.md"
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text(
+            "@area-auth @feature-login\nFeature: Login\n  Users can log in.\n",
+            encoding="utf-8",
+        )
+        result = convert_feature_file(
+            source_path=source,
+            source_format="content",
+            target_format="markdown",
+            force=True,
+            validate=False,
+        )
+        assert result["source_format"] == "classic"
+        assert result["target_format"] == "markdown"
+        assert result["status"] == "updated"
+        text = source.read_text(encoding="utf-8")
+        assert "# Feature: Login" in text
+
+    def test_from_content_detects_markdown_in_feature_md(self, tmp_path: Path) -> None:
+        source = tmp_path / "auth" / "login.feature.md"
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text(
+            "`@area-auth`\n# Feature: Login\n\n* Given x\n",
+            encoding="utf-8",
+        )
+        result = convert_feature_file(
+            source_path=source,
+            source_format="content",
+            target_format="markdown",
+            validate=False,
+        )
+        assert result["source_format"] == "markdown"
+        assert result["status"] == "unchanged"
+
+    def test_cli_from_content(self, tmp_path: Path) -> None:
+        source = tmp_path / "auth" / "login.feature.md"
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text(
+            "@area-auth\nFeature: Login\n  Users can log in.\n",
+            encoding="utf-8",
+        )
+        result = runner.invoke(
+            app,
+            [
+                "--json",
+                "convert",
+                str(source),
+                "--from",
+                "content",
+                "--to",
+                "markdown",
+                "--force",
+                "--no-validate",
+            ],
+        )
+
+        assert result.exit_code == 0, result.stdout
+        data = json.loads(result.stdout)
+        assert data["source_format"] == "classic"
+        assert data["target_format"] == "markdown"

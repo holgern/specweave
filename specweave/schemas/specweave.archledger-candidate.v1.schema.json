@@ -1,1 +1,23 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://specweave.dev/schemas/specweave.archledger-candidate.v1.schema.json","title":"SpecWeave Archledger Candidate v1","type":"object","required":["schema","producer","candidate"],"properties":{"schema":{"const":"specweave.archledger-candidate.v1"},"producer":{"type":"string"},"candidate":{"type":"object","required":["title","source_refs","bdd_ids"],"properties":{"title":{"type":"string"},"source_refs":{"type":"array","items":{"type":"string"}},"bdd_ids":{"type":"array","items":{"type":"string"}},"status":{"const":"draft"}},"additionalProperties":true}},"additionalProperties":true}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://specweave.dev/schemas/specweave.archledger-candidate.v1.schema.json",
+  "title": "SpecWeave Archledger Candidate v1",
+  "type": "object",
+  "required": ["schema", "producer", "candidate"],
+  "properties": {
+    "schema": { "const": "specweave.archledger-candidate.v1" },
+    "producer": { "type": "string" },
+    "candidate": {
+      "type": "object",
+      "required": ["title", "source_refs", "bdd_ids"],
+      "properties": {
+        "title": { "type": "string" },
+        "source_refs": { "type": "array", "items": { "type": "string" } },
+        "bdd_ids": { "type": "array", "items": { "type": "string" } },
+        "status": { "const": "draft" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

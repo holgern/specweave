@@ -8,7 +8,6 @@ from specweave.behavior.coverage import build_behavior_coverage
 from specweave.gherkin.model import Feature, Scenario, Step
 from specweave.gherkin.writer import write_feature
 
-
 FEATURE = "specs/behavior/features/behavior/coverage.feature.md"
 
 

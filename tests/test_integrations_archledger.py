@@ -12,7 +12,6 @@ from specweave.integrations.archledger import (
     write_archledger_candidate,
 )
 
-
 FEATURE = "specs/behavior/features/integrations/archledger.feature.md"
 
 

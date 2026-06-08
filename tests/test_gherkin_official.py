@@ -74,9 +74,7 @@ class TestParseClassicWithOfficial:
         assert f.source_path == path
 
     def test_compile_pickles_smoke(self) -> None:
-        f = parse_classic_with_official(
-            _SIMPLE_FEATURE, compile_pickles=True
-        )
+        f = parse_classic_with_official(_SIMPLE_FEATURE, compile_pickles=True)
         assert f.title == "Hello"
 
     def test_empty_feature_tags(self) -> None:

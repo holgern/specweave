@@ -15,7 +15,6 @@ from specweave.config import (
     render_default_config,
 )
 
-
 FEATURE = "specs/behavior/features/config/configuration.feature.md"
 
 

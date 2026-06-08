@@ -190,6 +190,40 @@ def _unsupported_findings(path: Path, text: str, *, strict: bool) -> list[LintFi
     return findings
 
 
+def _first_meaningful_line(text: str) -> tuple[int, str] | None:
+    for line_no, line in enumerate(text.splitlines(), start=1):
+        stripped = line.strip()
+        if stripped:
+            return line_no, stripped
+    return None
+
+
+def _format_mismatch_findings(path: Path, text: str) -> list[LintFinding]:
+    """Detect classic Gherkin syntax inside .feature.md files."""
+    if not str(path).endswith(".feature.md"):
+        return []
+    first = _first_meaningful_line(text)
+    if first is None:
+        return []
+    line_no, stripped = first
+    if stripped.startswith("@") or stripped.startswith("Feature:"):
+        return [
+            LintFinding(
+                code="SWBEH016",
+                level="error",
+                path=_feature_display_path(path),
+                line=line_no,
+                message=(
+                    "Classic Gherkin syntax found in .feature.md file. "
+                    "Use Markdown-with-Gherkin syntax or run: "
+                    "specweave convert <path> "
+                    "--from classic --to markdown --force"
+                ),
+            )
+        ]
+    return []
+
+
 def _scenario_findings(
     path: Path, feature: Feature, *, require_scenario_ids: bool
 ) -> list[LintFinding]:
@@ -286,6 +320,7 @@ def lint_feature_files(
                 )
             )
         findings.extend(_unsupported_findings(path, text, strict=strict))
+        findings.extend(_format_mismatch_findings(path, text))
         try:
             feature = parse_feature(text, source_path=path)
         except ValueError as exc:

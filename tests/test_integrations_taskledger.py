@@ -13,7 +13,6 @@ from specweave.integrations.taskledger import (
 from specweave.reports.model import NormalizedBddReport, ScenarioResult
 from specweave.reports.normalize import normalize_report
 
-
 FEATURE = "specs/behavior/features/integrations/taskledger.feature.md"
 
 

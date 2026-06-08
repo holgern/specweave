@@ -17,9 +17,7 @@ from specweave.gherkin.model import Feature, Rule, Scenario, Step
 
 _TAG_PATTERN = re.compile(r"`@([^`]+)`")
 
-_TAG_LINE_PATTERN = re.compile(
-    r"^\s*(`@[^`]+`(?:\s+`@[^`]+`)*)\s*$"
-)
+_TAG_LINE_PATTERN = re.compile(r"^\s*(`@[^`]+`(?:\s+`@[^`]+`)*)\s*$")
 
 
 def _parse_backticked_tags(line: str) -> list[str]:
@@ -67,8 +65,14 @@ def _is_comment(line: str) -> bool:
     # A line starting with # followed by a space and a Gherkin keyword is a
     # Markdown heading, not a comment.
     rest = stripped.lstrip("#").strip()
-    for keyword in ("Feature:", "Rule:", "Scenario:", "Example:",
-                    "Scenario Outline:", "Scenario Template:"):
+    for keyword in (
+        "Feature:",
+        "Rule:",
+        "Scenario:",
+        "Example:",
+        "Scenario Outline:",
+        "Scenario Template:",
+    ):
         if rest.startswith(keyword):
             return False
     # Not a heading keyword -> treat as comment
@@ -222,9 +226,7 @@ def parse_markdown_feature(  # noqa: C901
                             if step_m:
                                 kw = step_m.group(1)
                                 txt = step_m.group(2).strip()
-                                steps.append(
-                                    Step(keyword=kw, text=txt)
-                                )
+                                steps.append(Step(keyword=kw, text=txt))
                                 i += 1
                                 continue
                             if _RULE_HEADING.match(lines[i]):
@@ -276,9 +278,7 @@ def parse_markdown_feature(  # noqa: C901
                         if step_m:
                             kw = step_m.group(1)
                             txt = step_m.group(2).strip()
-                            steps.append(
-                                Step(keyword=kw, text=txt)
-                            )
+                            steps.append(Step(keyword=kw, text=txt))
                             i += 1
                             continue
                         if _RULE_HEADING.match(lines[i]):
@@ -417,9 +417,7 @@ def write_markdown_feature(feature: Feature) -> str:
     return "\n".join(lines)
 
 
-def _write_md_scenario(
-    scenario: Scenario, lines: list[str], *, has_rule: bool
-) -> None:
+def _write_md_scenario(scenario: Scenario, lines: list[str], *, has_rule: bool) -> None:
     """Append a Markdown scenario to *lines*."""
     lines.append("")
     tag_line = _format_backticked_tags(scenario.tags)

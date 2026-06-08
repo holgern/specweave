@@ -83,6 +83,7 @@ specweave --json review specs
 specweave create gherkin --from-tests tests --out specs/behavior/features --mode update
 specweave update specs --from-tests tests
 specweave create feature --area AREA --title TITLE --scenario SCENARIO --given G --when W --then T
+specweave create feature --from-json feature-draft.json [--out OUT] [--force] [--dry-run]
 specweave create plan --feature FEATURE --out plan.md
 specweave create taskledger-task --feature FEATURE --out .specweave/mappings/taskledger/draft.json
 specweave behavior check [--strict]
@@ -93,13 +94,51 @@ specweave behavior mappings --tests tests [--format text|json]
 specweave behavior import-report REPORT --format junit-xml
 specweave behavior import-taskledger SOURCE --out FEATURE
 specweave report normalize REPORT --format junit-xml|cucumber-json
-specweave convert FEATURE_OR_DIR... [--all] [--out OUT] [--to markdown|classic] [--from auto|markdown|classic] [--force] [--dry-run] [--replace-source] [--validate/--no-validate]
-```
+specweave convert FEATURE_OR_DIR... [--all] [--out OUT] [--to markdown|classic] [--from auto|content|markdown|classic] [--force] [--dry-run] [--replace-source] [--validate/--no-validate]
 specweave trace BDD_ID_OR_FEATURE --format json
 specweave combi check --json .specweave/reports/combi-check.json
+```
+
 ## Target Gherkin shape
 
-Prefer this generated format:
+Always read `.specweave.toml` or `specweave.toml` before writing features.
+
+### Default: Markdown-with-Gherkin (`document_format = "markdown"`)
+
+Use this shape for `.feature.md` files:
+
+```markdown
+`@area-<area>` `@feature-<feature>`
+
+# Feature: <Readable feature title>
+
+<Short behavior intent, not implementation details.>
+
+`@rule-<rule>`
+
+## Rule: <Business rule title>
+
+`@bdd-<stable-id>` `@ac-<id>`
+
+### Example: <Observable scenario title>
+
+- Given <initial state/context>
+- When <actor/action/event>
+- Then <observable outcome>
+```
+
+Rules for `.feature.md`:
+
+- feature heading must be `# Feature: ...`, not bare `Feature: ...`;
+- rule heading must be `## Rule: ...`, not bare `Rule: ...`;
+- scenario/example heading must be `### Example: ...` or `## Example: ...` for top-level examples;
+- tags must be backticked, for example `` `@bdd-id` ``;
+- steps must be Markdown bullets, for example `* Given ...` or `- Given ...`;
+- never write raw classic Gherkin syntax into `.feature.md` files.
+
+### Classic Gherkin (`document_format = "classic"` only)
+
+Use this shape only for `.feature` files:
 
 ```gherkin
 @area-<area> @feature-<feature>
@@ -109,7 +148,7 @@ Feature: <Readable feature title>
   @rule-<rule>
   Rule: <Business rule title>
 
-    @bdd-<stable-id> [@ac-<id>]
+    @bdd-<stable-id> @ac-<id>
     Example: <Observable scenario title>
       Given <initial state/context>
       When <actor/action/event>
@@ -131,10 +170,12 @@ names or scenario titles.
 Preferred loop:
 
 ```bash
-specweave convert --all --to markdown
-specweave behavior coverage --features specs/behavior/features --tests tests --format text --show missing
-specweave behavior mappings --tests tests --format text
-specweave review specs
+specweave --json doctor
+specweave --json create gherkin --from-tests tests --out specs/behavior/features --mode update
+specweave --json behavior check specs/behavior/features
+specweave --json behavior coverage --features specs/behavior/features --tests tests --format json --show missing
+specweave --json behavior mappings --tests tests --format json
+specweave --json review specs
 ```
 
 Map pytest functions with one of:
@@ -217,8 +258,24 @@ mypy specweave
 
 At minimum, run focused tests for changed modules and then the full suite.
 
-## Safety rule
+## Format repair
 
-Fail closed. Do not mark acceptance criteria as passed when a linked scenario
-is skipped, pending, undefined, ambiguous, errored, or failed. Do not treat
-exit code alone as sufficient validation when a native BDD report is available.
+Repair classic syntax accidentally written into `.feature.md` files:
+
+```bash
+specweave convert specs/behavior/features --from classic --to markdown --force --no-validate
+specweave convert specs/behavior/features --from content --to markdown --force --no-validate
+specweave behavior check specs/behavior/features
+```
+
+Do not delete `specs/behavior/features/*` to repair format errors. Convert, validate, or restore from VCS.
+
+## Safety rules
+
+- Fail closed. Do not mark acceptance criteria as passed when a linked scenario
+  is skipped, pending, undefined, ambiguous, errored, or failed. Do not treat
+  exit code alone as sufficient validation when a native BDD report is available.
+- Validate a sample feature file before bulk generation. Do not write 40+ files
+  before running `specweave behavior check`.
+- For multi-rule/multi-scenario features, prefer `specweave create feature --from-json`
+  over hand-writing format-sensitive syntax.

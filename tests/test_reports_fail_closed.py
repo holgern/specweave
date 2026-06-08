@@ -26,7 +26,6 @@ from specweave.reports.normalize import (
     write_evidence_json,
 )
 
-
 FEATURE = "specs/behavior/features/reports/fail-closed.feature.md"
 
 

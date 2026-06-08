@@ -151,7 +151,6 @@ specweave bdd coverage
 Legacy `draft`, `bind`, `report`, and other bridge commands remain available
 for older experiments, but they are not the canonical SpecWeave workflow.
 
-
 ## Converting feature files
 
 Convert between classic `.feature` and Markdown `.feature.md` formats:

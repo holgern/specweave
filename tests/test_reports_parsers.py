@@ -7,8 +7,8 @@ import json
 from specweave.reports.junit_xml import parse_junit_xml, parse_pytest_junit_cases
 from specweave.reports.normalize import normalize_report, to_normalized_dict
 
-
 # -- helpers --
+
 
 def _write(tmp_path, name, text):  # type: ignore[no-untyped-def]
     path = tmp_path / name

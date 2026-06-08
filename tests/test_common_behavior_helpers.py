@@ -6,7 +6,6 @@ from pathlib import Path
 
 from specweave.behavior.common import feature_stem
 
-
 FEATURE = "specs/behavior/features/common/behavior-helpers.feature.md"
 
 

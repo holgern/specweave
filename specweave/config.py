@@ -139,9 +139,9 @@ def _toml_load(text: str) -> dict:
         import tomllib
 
         return tomllib.loads(text)
-    import tomli
+    import tomli  # type: ignore[import-not-found]
 
-    return tomli.loads(text)
+    return tomli.loads(text)  # type: ignore[no-any-return]
 
 
 def load_config(config_path: Path | None = None) -> SpecWeaveConfig:
@@ -334,7 +334,7 @@ def render_default_config(*, spelling: str = "behavior") -> str:
 # ---------------------------------------------------------------------------
 
 REPORT_DIR = Path(".specweave/reports")
-"""Default directory for runner summary reports."""
+# Default directory for runner summary reports.
 
 BEHAVIOR_FEATURES_DIR = Path("specs/behavior/features")
 BEHAVIOR_INDEX_PATH = Path("specs/behavior/README.md")

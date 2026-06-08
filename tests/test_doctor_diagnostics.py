@@ -7,7 +7,6 @@ from pathlib import Path
 from specweave.config import SpecWeaveConfig, SpecWeavePaths
 from specweave.doctor import run_doctor
 
-
 FEATURE = "specs/behavior/features/doctor/diagnostics.feature.md"
 
 
