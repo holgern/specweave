@@ -81,8 +81,8 @@ def build_trace_bundle(
     *,
     features_dir: Path = BEHAVIOR_FEATURES_DIR,
     tests_dir: Path = PYTEST_TESTS_DIR,
-    evidence_dir: Path = Path(".specweave/evidence"),
-    taskledger_mappings: Path = Path(".specweave/mappings/taskledger"),
+    evidence_dir: Path = Path("specs/behavior/evidence"),
+    taskledger_mappings: Path = Path("specs/behavior/mappings/taskledger"),
 ) -> dict[str, Any]:
     """Return a normalized trace bundle for a BDD id or feature path."""
 

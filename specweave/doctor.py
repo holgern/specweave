@@ -78,7 +78,7 @@ def _configured_paths(config: SpecWeaveConfig, config_path: Path | None) -> list
     if sys.version_info >= (3, 11):
         import tomllib
     else:
-        import tomli as tomllib  # type: ignore[import-not-found]
+        import tomli as tomllib
 
     raw = tomllib.loads(config_path.read_text(encoding="utf-8"))
     paths = raw.get("paths", {})

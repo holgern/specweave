@@ -53,7 +53,7 @@ def scenario_identifier(scenario: Scenario) -> str:
 
 
 def feature_stem(path: Path) -> str:
-    """Return the feature stem without ``.feature.md`` or ``.feature`` suffix.
+    """Return the feature stem without ``.feature`` or legacy ``.feature.md`` suffix.
 
     >>> feature_stem(Path("auth/login.feature.md"))
     'login'

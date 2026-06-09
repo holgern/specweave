@@ -53,8 +53,7 @@ def _feature_files(path: Path) -> list[Path]:
     return sorted(
         candidate
         for candidate in path.rglob("*")
-        if candidate.is_file()
-        and (candidate.suffix == ".feature" or str(candidate).endswith(".feature.md"))
+        if candidate.is_file() and candidate.suffix == ".feature"
     )
 
 
@@ -148,8 +147,7 @@ def _feature_path_findings(path: Path) -> list[LintFinding]:
                 path=display,
                 message=(
                     "Canonical feature path should match "
-                    "specs/behavior/features/<area>/<feature>.feature"
-                    " or <feature>.feature.md."
+                    "specs/behavior/features/<area>/<feature>.feature."
                 ),
             )
         )
@@ -198,30 +196,20 @@ def _first_meaningful_line(text: str) -> tuple[int, str] | None:
     return None
 
 
-def _format_mismatch_findings(path: Path, text: str) -> list[LintFinding]:
-    """Detect classic Gherkin syntax inside .feature.md files."""
+def _unsupported_markdown_findings(path: Path) -> list[LintFinding]:
     if not str(path).endswith(".feature.md"):
         return []
-    first = _first_meaningful_line(text)
-    if first is None:
-        return []
-    line_no, stripped = first
-    if stripped.startswith("@") or stripped.startswith("Feature:"):
-        return [
-            LintFinding(
-                code="SWBEH016",
-                level="error",
-                path=_feature_display_path(path),
-                line=line_no,
-                message=(
-                    "Classic Gherkin syntax found in .feature.md file. "
-                    "Use Markdown-with-Gherkin syntax or run: "
-                    "specweave convert <path> "
-                    "--from classic --to markdown --force"
-                ),
-            )
-        ]
-    return []
+    return [
+        LintFinding(
+            code="SWBEH016",
+            level="error",
+            path=_feature_display_path(path),
+            message=(
+                "Markdown .feature.md files are no longer supported; "
+                "convert to classic .feature."
+            ),
+        )
+    ]
 
 
 def _scenario_findings(
@@ -302,6 +290,9 @@ def lint_feature_files(
 
     for path in collect_feature_files(paths):
         display = _feature_display_path(path)
+        findings.extend(_unsupported_markdown_findings(path))
+        if str(path).endswith(".feature.md"):
+            continue
         text = path.read_text(encoding="utf-8")
         findings.extend(_feature_path_findings(path))
         feature_count = sum(
@@ -320,7 +311,6 @@ def lint_feature_files(
                 )
             )
         findings.extend(_unsupported_findings(path, text, strict=strict))
-        findings.extend(_format_mismatch_findings(path, text))
         try:
             feature = parse_feature(text, source_path=path)
         except ValueError as exc:

@@ -6,10 +6,10 @@ from specweave.gherkin.model import Feature, Rule, Scenario, Step
 from specweave.gherkin.parser import parse_feature
 from specweave.gherkin.writer import write_feature
 
-FEATURE = "specs/behavior/features/gherkin/writer.feature.md"
+FEATURE = "specs/behavior/features/gherkin/writer.feature"
 
 
-# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
+# specweave: feature=specs/behavior/features/gherkin/writer.feature
 # specweave: scenario=@bdd-writer-basic-feature
 def test_writes_tags_feature_scenario_steps() -> None:
     """Writer serializes a feature with scenarios."""
@@ -41,7 +41,7 @@ def test_writes_tags_feature_scenario_steps() -> None:
     assert output.endswith("\n")
 
 
-# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
+# specweave: feature=specs/behavior/features/gherkin/writer.feature
 # specweave: scenario=@bdd-writer-tags
 def test_scenario_without_tags() -> None:
     """Writer preserves tags at all levels."""
@@ -97,7 +97,7 @@ def test_multi_tag_scenario_on_one_line() -> None:
     assert output.count("@bdd-0001") == 1
 
 
-# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
+# specweave: feature=specs/behavior/features/gherkin/writer.feature
 # specweave: scenario=@bdd-writer-rules
 def test_writes_rule_block() -> None:
     """Writer serializes Rule blocks."""
@@ -143,7 +143,7 @@ def test_writes_rule_block() -> None:
     assert "      Then taskledger rejects the transition" in output
 
 
-# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
+# specweave: feature=specs/behavior/features/gherkin/writer.feature
 # specweave: scenario=@bdd-writer-roundtrip
 def test_rule_round_trips() -> None:
     """Parsing then writing produces equivalent output."""
@@ -177,7 +177,7 @@ def test_rule_round_trips() -> None:
     )
 
 
-# specweave: feature=specs/behavior/features/gherkin/writer.feature.md
+# specweave: feature=specs/behavior/features/gherkin/writer.feature
 # specweave: scenario=@bdd-writer-descriptions
 def test_feature_description_rendered() -> None:
     """Writer preserves descriptions."""

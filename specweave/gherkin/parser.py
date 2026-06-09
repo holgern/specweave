@@ -229,32 +229,15 @@ def parse_feature(
     text: str,
     *,
     source_path: Path | None = None,
-    document_format: str | None = None,
     use_official: bool = False,
     compile_pickles: bool = False,
 ) -> Feature:
-    """Parse a Gherkin feature from *text*.
-
-    Dispatches based on *document_format* or *source_path* suffix:
-    - ``.feature.md`` -> markdown parser
-    - ``.feature`` -> classic parser (official or built-in)
-    """
-    if document_format is None and source_path is not None:
-        if source_path.suffixes == [".feature", ".md"] or str(source_path).endswith(
-            ".feature.md"
-        ):
-            document_format = "markdown"
-        elif source_path.suffix == ".feature":
-            document_format = "classic"
-        else:
-            document_format = "classic"
-    elif document_format is None:
-        document_format = "classic"
-
-    if document_format == "markdown":
-        from specweave.gherkin.markdown import parse_markdown_feature
-
-        return parse_markdown_feature(text, source_path=source_path)
+    """Parse a Gherkin feature from *text*."""
+    if source_path is not None and str(source_path).endswith(".feature.md"):
+        raise ValueError(
+            "Markdown .feature.md files are no longer supported; "
+            "convert to classic .feature first."
+        )
 
     if use_official:
         from specweave.gherkin.official import parse_classic_with_official

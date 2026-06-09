@@ -36,13 +36,13 @@ class TestRootJson:
         assert data["status"] == "ok"
         assert len(data["created"]) > 0
         # Nothing should be written
-        assert not (tmp_path / ".specweave.toml").exists()
+        assert not (tmp_path / "specweave.toml").exists()
 
     def test_human_init(self, tmp_path: Path, monkeypatch) -> None:
         monkeypatch.chdir(tmp_path)
         result = runner.invoke(app, ["init"])
         assert result.exit_code == 0
-        assert (tmp_path / ".specweave.toml").exists()
+        assert (tmp_path / "specweave.toml").exists()
 
     def test_json_init_british(self, tmp_path: Path, monkeypatch) -> None:
         monkeypatch.chdir(tmp_path)
@@ -70,7 +70,7 @@ class TestRootJson:
 
     def test_config_option(self, tmp_path: Path, monkeypatch) -> None:
         monkeypatch.chdir(tmp_path)
-        config_file = tmp_path / ".specweave.toml"
+        config_file = tmp_path / "specweave.toml"
         config_file.write_text("schema_version = 1\n")
         result = runner.invoke(app, ["--config", str(config_file), "--json", "version"])
         assert result.exit_code == 0

@@ -1,44 +1,37 @@
 ---
-schema_version: 2
-id: al_adr_0025
-type: adr
-title: "Markdown feature.md as default format"
-status: proposed
-section: architecture_decisions
-order: 50
-date: "2026-06-08"
-deciders: []
-supersedes: []
-related: []
-tags: []
-body_format: markdown
-created_at: "2026-06-08T19:08:19Z"
-updated_at: "2026-06-08T19:08:19Z"
-source_refs:
-  - specweave/gherkin/markdown.py
-  - specweave/gherkin/convert.py
-  - specweave/config.py
+title: Classic `.feature` is the canonical behavior format
+status: accepted
+date: 2026-06-09
 ---
 
-## Context
-
-Classic `.feature` files have no native Markdown support. They render as
-plain text in GitHub, IDE previews, and agent contexts, reducing readability.
+# ADR 0025: Classic `.feature` is the canonical behavior format
 
 ## Decision
 
-Default to `.feature.md` with embedded Gherkin inside Markdown code fences.
-Support classic `.feature` as a first-class alternative. Provide a `convert`
-command to bridge between formats.
+Use classic Gherkin `.feature` files as the only canonical behavior-spec
+format in SpecWeave.
+
+Durable SpecWeave-owned JSON artifacts live under `specs/behavior/`:
+
+- `specs/behavior/evidence`
+- `specs/behavior/mappings`
+
+Generated runner output lives under:
+
+- `reports/behavior`
+- `reports/behavior/specweave`
+
+## Rationale
+
+- one syntax is easier for humans, tools, and coding agents
+- classic Gherkin maps directly to existing ecosystem tooling
+- removing Markdown feature mode eliminates duplicate parser and writer paths
+- readable durable artifacts belong with the behavior specs, not under a hidden
+  state directory
 
 ## Consequences
 
-- **Positive:** Better readability in modern tooling. Natural fit for
-  Markdown-centric workflows and coding agents.
-- **Negative:** Doubles the parser surface. `gherkin/markdown.py` must stay
-  in sync with the classic parser.
-
-## Alternatives considered
-
-- Classic only: rejected — poor readability in Markdown-native contexts.
-- External converter dependency: rejected — adds a dependency for a core need.
+- legacy `.feature.md` files are not canonical and are rejected
+- `specweave.toml` is the default config file
+- `.specweave.toml` remains a compatibility discovery path for existing
+  projects

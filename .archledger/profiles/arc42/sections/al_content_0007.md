@@ -47,7 +47,7 @@ SpecWeave is a single Python package deployed to a developer's environment via
 specweave.toml               # config (public alternative)
 specs/behavior/
   README.md                  # generated index
-  features/<area>/*.feature.md
+  features/<area>/*.feature
   manifest.json              # generated manifest
 tests/test_<area>_<feature>.py
 reports/behavior/*.xml       # native runner output

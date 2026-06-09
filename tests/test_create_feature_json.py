@@ -91,19 +91,9 @@ class TestParseFeatureDraft:
 
 
 class TestWriteDraftFeature:
-    def test_writes_markdown_feature(self) -> None:
-        f = parse_feature_draft(_DRAFT_JSON)
-        text = write_feature(f, document_format="markdown")
-        assert "# Feature: Ledger ID format and parsing" in text
-        assert "`@area-ids`" in text
-        assert "`@feature-ledger-id-format`" in text
-        assert "## Rule:" in text
-        assert "### Example: Format pads numbers with leading zeros" in text
-        assert '* Given a LedgerIdFormat with prefix "al" and width 4' in text
-
     def test_writes_classic_feature(self) -> None:
         f = parse_feature_draft(_DRAFT_JSON)
-        text = write_feature(f, document_format="classic")
+        text = write_feature(f)
         assert "Feature: Ledger ID format and parsing" in text
         assert "@area-ids @feature-ledger-id-format" in text
         assert "Rule:" in text
@@ -111,7 +101,7 @@ class TestWriteDraftFeature:
 
 
 class TestCreateFeatureFromJson:
-    def test_cli_from_json_markdown(self, tmp_path: Path, monkeypatch) -> None:
+    def test_cli_from_json(self, tmp_path: Path, monkeypatch) -> None:
         monkeypatch.chdir(tmp_path)
         draft_path = _write_draft(tmp_path / "draft.json")
         result = runner.invoke(
@@ -126,7 +116,7 @@ class TestCreateFeatureFromJson:
                 str(
                     tmp_path
                     / "specs/behavior/features"
-                    / "ids/ledger-id-format.feature.md"
+                    / "ids/ledger-id-format.feature"
                 ),
             ],
         )
@@ -139,12 +129,12 @@ class TestCreateFeatureFromJson:
         feature_path = Path(data["feature_path"])
         assert feature_path.exists()
         text = feature_path.read_text(encoding="utf-8")
-        assert "# Feature: Ledger ID format and parsing" in text
+        assert "Feature: Ledger ID format and parsing" in text
 
     def test_cli_from_json_dry_run(self, tmp_path: Path, monkeypatch) -> None:
         monkeypatch.chdir(tmp_path)
         draft_path = _write_draft(tmp_path / "draft.json")
-        out_path = tmp_path / "specs/behavior/features/ids/ledger-id-format.feature.md"
+        out_path = tmp_path / "specs/behavior/features/ids/ledger-id-format.feature"
         result = runner.invoke(
             app,
             [
@@ -166,7 +156,7 @@ class TestCreateFeatureFromJson:
     def test_cli_from_json_refuses_existing(self, tmp_path: Path, monkeypatch) -> None:
         monkeypatch.chdir(tmp_path)
         draft_path = _write_draft(tmp_path / "draft.json")
-        out_path = tmp_path / "specs/behavior/features/ids/ledger-id-format.feature.md"
+        out_path = tmp_path / "specs/behavior/features/ids/ledger-id-format.feature"
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text("existing", encoding="utf-8")
 
@@ -187,7 +177,7 @@ class TestCreateFeatureFromJson:
     def test_cli_from_json_force_overwrites(self, tmp_path: Path, monkeypatch) -> None:
         monkeypatch.chdir(tmp_path)
         draft_path = _write_draft(tmp_path / "draft.json")
-        out_path = tmp_path / "specs/behavior/features/ids/ledger-id-format.feature.md"
+        out_path = tmp_path / "specs/behavior/features/ids/ledger-id-format.feature"
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text("existing", encoding="utf-8")
 
@@ -206,7 +196,7 @@ class TestCreateFeatureFromJson:
         )
         assert result.exit_code == 0, result.stdout
         text = out_path.read_text(encoding="utf-8")
-        assert "# Feature: Ledger ID format and parsing" in text
+        assert "Feature: Ledger ID format and parsing" in text
 
     def test_cli_legacy_path_still_works(self, tmp_path: Path, monkeypatch) -> None:
         """Verify the existing --area/--title/--scenario path is not broken."""
@@ -231,17 +221,15 @@ class TestCreateFeatureFromJson:
             ],
         )
         assert result.exit_code == 0, result.stdout
-        feature_path = (
-            tmp_path / "specs/behavior/features/auth/password-login.feature.md"
-        )
+        feature_path = tmp_path / "specs/behavior/features/auth/password-login.feature"
         assert feature_path.exists()
-        assert "# Feature: Password login" in feature_path.read_text(encoding="utf-8")
+        assert "Feature: Password login" in feature_path.read_text(encoding="utf-8")
 
     def test_cli_legacy_dry_run_writes_nothing(
         self, tmp_path: Path, monkeypatch
     ) -> None:
         monkeypatch.chdir(tmp_path)
-        out_path = tmp_path / "login.feature.md"
+        out_path = tmp_path / "login.feature"
         result = runner.invoke(
             app,
             [

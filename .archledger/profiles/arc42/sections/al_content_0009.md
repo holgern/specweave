@@ -67,12 +67,12 @@ evidence JSON. No runtime dependency on either tool.
 **Consequences:** Clean boundaries. SpecWeave can run without Taskledger or
 Archledger installed. Exchange format changes require coordination.
 
-## AD-6: Markdown .feature.md as default format
+## AD-6: Markdown .feature as default format
 
 **Context:** Classic `.feature` files have no native Markdown support, making
 them harder to read in GitHub, IDEs, and agent contexts.
 
-**Decision:** Default to `.feature.md` with embedded Gherkin inside Markdown
+**Decision:** Default to `.feature` with embedded Gherkin inside Markdown
 code fences. Support classic `.feature` as a first-class alternative.
 
 **Consequences:** Better readability in modern tooling. Requires a Markdown

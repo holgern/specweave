@@ -10,7 +10,7 @@ from specweave.reports.normalize import (
     write_evidence_json,
 )
 
-FEATURE = "specs/behavior/features/reports/normalization.feature.md"
+FEATURE = "specs/behavior/features/reports/normalization.feature"
 
 
 def _write_cucumber(tmp_path: Path, elements: list) -> Path:
@@ -25,7 +25,7 @@ def _write_junit(tmp_path: Path, text: str) -> Path:
     return path
 
 
-# specweave: feature=specs/behavior/features/reports/normalization.feature.md
+# specweave: feature=specs/behavior/features/reports/normalization.feature
 # specweave: scenario=@bdd-normalize-junit-xml
 def test_normalize_junit_xml(tmp_path: Path) -> None:
     """Normalization parses JUnit XML reports."""
@@ -39,7 +39,7 @@ def test_normalize_junit_xml(tmp_path: Path) -> None:
     assert report.runner == "junit-xml"
 
 
-# specweave: feature=specs/behavior/features/reports/normalization.feature.md
+# specweave: feature=specs/behavior/features/reports/normalization.feature
 # specweave: scenario=@bdd-normalize-cucumber-json
 def test_normalize_cucumber_json(tmp_path: Path) -> None:
     """Normalization parses Cucumber JSON reports."""
@@ -58,7 +58,7 @@ def test_normalize_cucumber_json(tmp_path: Path) -> None:
     assert report.runner == "cucumber-json"
 
 
-# specweave: feature=specs/behavior/features/reports/normalization.feature.md
+# specweave: feature=specs/behavior/features/reports/normalization.feature
 # specweave: scenario=@bdd-normalize-unsupported-format
 def test_normalize_unsupported_format(tmp_path: Path) -> None:
     """Normalization rejects unsupported formats."""
@@ -72,7 +72,7 @@ def test_normalize_unsupported_format(tmp_path: Path) -> None:
         raise AssertionError("expected ValueError")
 
 
-# specweave: feature=specs/behavior/features/reports/normalization.feature.md
+# specweave: feature=specs/behavior/features/reports/normalization.feature
 # specweave: scenario=@bdd-normalize-all-passed
 def test_normalize_all_passed(tmp_path: Path) -> None:
     """Report status is passed when all scenarios pass."""
@@ -90,7 +90,7 @@ def test_normalize_all_passed(tmp_path: Path) -> None:
     assert report.status == "passed"
 
 
-# specweave: feature=specs/behavior/features/reports/normalization.feature.md
+# specweave: feature=specs/behavior/features/reports/normalization.feature
 # specweave: scenario=@bdd-normalize-any-failed
 def test_normalize_any_failed(tmp_path: Path) -> None:
     """Report status is failed when any scenario fails."""
@@ -108,7 +108,7 @@ def test_normalize_any_failed(tmp_path: Path) -> None:
     assert report.status == "failed"
 
 
-# specweave: feature=specs/behavior/features/reports/normalization.feature.md
+# specweave: feature=specs/behavior/features/reports/normalization.feature
 # specweave: scenario=@bdd-normalize-skipped-fails-by-default
 def test_normalize_skipped_fails_by_default(tmp_path: Path) -> None:
     """Skipped scenarios fail the report by default."""
@@ -126,7 +126,7 @@ def test_normalize_skipped_fails_by_default(tmp_path: Path) -> None:
     assert report.status == "failed"
 
 
-# specweave: feature=specs/behavior/features/reports/normalization.feature.md
+# specweave: feature=specs/behavior/features/reports/normalization.feature
 # specweave: scenario=@bdd-normalize-allow-skipped
 def test_normalize_allow_skipped(tmp_path: Path) -> None:
     """Skipped scenarios pass with --allow-skipped."""
@@ -149,7 +149,7 @@ def test_normalize_allow_skipped(tmp_path: Path) -> None:
     assert report.status == "passed"
 
 
-# specweave: feature=specs/behavior/features/reports/normalization.feature.md
+# specweave: feature=specs/behavior/features/reports/normalization.feature
 # specweave: scenario=@bdd-normalize-missing-ac-coverage
 def test_normalize_missing_ac_coverage(tmp_path: Path) -> None:
     """Report fails when expected AC has no passing scenario."""
@@ -169,7 +169,7 @@ def test_normalize_missing_ac_coverage(tmp_path: Path) -> None:
     assert report.status == "failed"
 
 
-# specweave: feature=specs/behavior/features/reports/normalization.feature.md
+# specweave: feature=specs/behavior/features/reports/normalization.feature
 # specweave: scenario=@bdd-normalize-ac-covered
 def test_normalize_ac_covered(tmp_path: Path) -> None:
     """Report passes when expected AC has a passing scenario."""
@@ -187,7 +187,7 @@ def test_normalize_ac_covered(tmp_path: Path) -> None:
     assert report.status == "passed"
 
 
-# specweave: feature=specs/behavior/features/reports/normalization.feature.md
+# specweave: feature=specs/behavior/features/reports/normalization.feature
 # specweave: scenario=@bdd-normalize-evidence-json
 def test_normalize_evidence_json(tmp_path: Path) -> None:
     """Normalization writes Taskledger evidence JSON."""

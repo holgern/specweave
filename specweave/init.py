@@ -15,10 +15,8 @@ This directory is managed by SpecWeave.
 Canonical feature files live under:
 
 ```text
-features/<area>/<feature>.feature.md
+features/<area>/<feature>.feature
 ```
-
-Classic `.feature` files remain fully supported.
 
 Use:
 
@@ -67,7 +65,6 @@ def _resolve_paths(paths: SpecWeavePaths, root: Path) -> SpecWeavePaths:
         manifest=root / paths.manifest,
         tests_dir=root / paths.tests_dir,
         reports_dir=root / paths.reports_dir,
-        state_dir=root / paths.state_dir,
         evidence_dir=root / paths.evidence_dir,
         reports_state_dir=root / paths.reports_state_dir,
         mapping_dir=root / paths.mapping_dir,
@@ -76,7 +73,7 @@ def _resolve_paths(paths: SpecWeavePaths, root: Path) -> SpecWeavePaths:
 
 def run_init(
     *,
-    config_path: Path = Path(".specweave.toml"),
+    config_path: Path = Path("specweave.toml"),
     spelling: str = "behavior",
     force: bool = False,
     dry_run: bool = False,
@@ -87,7 +84,7 @@ def run_init(
     Parameters
     ----------
     config_path:
-        Target config file path (e.g. ``.specweave.toml`` or ``specweave.toml``).
+        Target config file path (e.g. ``specweave.toml`` or ``.specweave.toml``).
     spelling:
         ``"behavior"`` or ``"behaviour"``.
     force:
@@ -133,13 +130,12 @@ def run_init(
 
     # Directories to create
     dirs = [
-        paths.state_dir,
-        paths.reports_state_dir,
-        paths.evidence_dir,
-        paths.mapping_dir,
         paths.specs_root,
         paths.features_dir,
+        paths.evidence_dir,
+        paths.mapping_dir,
         paths.reports_dir,
+        paths.reports_state_dir,
     ]
 
     for d in dirs:
@@ -212,4 +208,7 @@ def _paths_for_spelling(spelling: str) -> SpecWeavePaths:
         behavior_readme=Path(f"{spec_segment}/README.md"),
         manifest=Path(f"{spec_segment}/manifest.json"),
         reports_dir=Path(report_segment),
+        evidence_dir=Path(f"{spec_segment}/evidence"),
+        reports_state_dir=Path(f"{report_segment}/specweave"),
+        mapping_dir=Path(f"{spec_segment}/mappings"),
     )

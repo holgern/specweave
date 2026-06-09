@@ -65,7 +65,7 @@ def test_trace_by_bdd_id_reports_mapping_and_missing_evidence_gap(
     ]
 
 
-def test_trace_feature_path_supports_markdown_feature(tmp_path: Path) -> None:
+def test_trace_rejects_markdown_feature_path(tmp_path: Path) -> None:
     feature = _write(
         tmp_path / "specs/behavior/features/core/login.feature.md",
         "# Feature: Login\n\n"
@@ -78,7 +78,6 @@ def test_trace_feature_path_supports_markdown_feature(tmp_path: Path) -> None:
 
     result = runner.invoke(app, ["trace", str(feature), "--format", "json"])
 
-    assert result.exit_code == 0
-    payload = json.loads(result.stdout)
-    assert payload["traces"][0]["feature"]["path"].endswith("login.feature.md")
-    assert payload["traces"][0]["bdd_ids"] == ["bdd-md-login"]
+    assert result.exit_code != 0
+    assert result.exception is not None
+    assert "no longer supported" in str(result.exception)

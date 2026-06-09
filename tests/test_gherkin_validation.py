@@ -222,43 +222,11 @@ Feature: F2
 
 
 class TestValidateMarkdownUnsupported:
-    def test_rejects_scenario_outline_heading(self) -> None:
+    def test_rejects_markdown_features(self) -> None:
         text = """\
 # Feature: F
-## Scenario Outline: Eating
-* Given x
+## Example: S
+- Given x
 """
-        with pytest.raises(ParseError, match="Scenario Outline"):
+        with pytest.raises(ParseError, match="no longer supported"):
             validate_markdown_specweave_subset(text)
-
-    def test_rejects_scenario_template_heading(self) -> None:
-        text = """\
-# Feature: F
-## Scenario Template: T
-* Given x
-"""
-        with pytest.raises(ParseError, match="Scenario Template"):
-            validate_markdown_specweave_subset(text)
-
-    def test_rejects_table_rows(self) -> None:
-        text = """\
-# Feature: F
-## Scenario: S
-| name | email |
-| A    | a@x   |
-"""
-        with pytest.raises(ParseError, match="[Tt]able"):
-            validate_markdown_specweave_subset(text)
-
-    def test_valid_markdown_passes(self) -> None:
-        text = """\
-`@feature-tag`
-
-# Feature: Valid feature
-
-## Scenario: A test
-* Given a precondition
-* When an action happens
-* Then an outcome is verified
-"""
-        validate_markdown_specweave_subset(text)

@@ -15,79 +15,72 @@ from specweave.config import (
     render_default_config,
 )
 
-FEATURE = "specs/behavior/features/config/configuration.feature.md"
+FEATURE = "specs/behavior/features/config/configuration.feature"
 
 
 class TestFindConfig:
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
+    # specweave: feature=specs/behavior/features/config/configuration.feature
     # specweave: scenario=@bdd-config-discovery-finds-dotfile
     def test_prefers_explicit(self, tmp_path: Path) -> None:
-        """Discovery finds .specweave.toml in current directory."""
         config_file = tmp_path / "my-config.toml"
         config_file.write_text("schema_version = 1\n")
         assert find_config(config_file) == config_file
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-discovery-prefers-dotfile
-    def test_prefers_dotfile_over_public(self, tmp_path: Path) -> None:
-        """Discovery prefers .specweave.toml over specweave.toml."""
+    # specweave: feature=specs/behavior/features/config/configuration.feature
+    # specweave: scenario=@bdd-config-discovery-prefers-public
+    def test_prefers_public_over_dotfile(self, tmp_path: Path) -> None:
         (tmp_path / ".specweave.toml").write_text("schema_version = 1\n")
-        (tmp_path / "specweave.toml").write_text("schema_version = 1\n")
-        found = find_config(tmp_path)
-        assert found is not None
-        assert found.name == ".specweave.toml"
-
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-discovery-returns-none
-    def test_returns_none_when_missing(self, tmp_path: Path) -> None:
-        """Discovery returns None when no config exists."""
-        assert find_config(tmp_path) is None
-
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
-    # specweave: scenario=@bdd-config-discovery-finds-public
-    def test_finds_public_config(self, tmp_path: Path) -> None:
-        """Discovery finds specweave.toml in current directory."""
         (tmp_path / "specweave.toml").write_text("schema_version = 1\n")
         found = find_config(tmp_path)
         assert found is not None
         assert found.name == "specweave.toml"
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
+    # specweave: feature=specs/behavior/features/config/configuration.feature
+    # specweave: scenario=@bdd-config-discovery-returns-none
+    def test_returns_none_when_missing(self, tmp_path: Path) -> None:
+        assert find_config(tmp_path) is None
+
+    # specweave: feature=specs/behavior/features/config/configuration.feature
+    # specweave: scenario=@bdd-config-discovery-finds-hidden
+    def test_finds_hidden_config(self, tmp_path: Path) -> None:
+        (tmp_path / ".specweave.toml").write_text("schema_version = 1\n")
+        found = find_config(tmp_path)
+        assert found is not None
+        assert found.name == ".specweave.toml"
+
+    # specweave: feature=specs/behavior/features/config/configuration.feature
     # specweave: scenario=@bdd-config-discovery-walks-parents
     def test_walks_up_directories(self, tmp_path: Path) -> None:
-        """Discovery walks parent directories when not found locally."""
-        (tmp_path / ".specweave.toml").write_text("schema_version = 1\n")
+        (tmp_path / "specweave.toml").write_text("schema_version = 1\n")
         child = tmp_path / "sub" / "deep"
         child.mkdir(parents=True)
         found = find_config(child)
         assert found is not None
-        assert found.name == ".specweave.toml"
+        assert found.name == "specweave.toml"
 
 
 class TestLoadConfig:
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
+    # specweave: feature=specs/behavior/features/config/configuration.feature
     # specweave: scenario=@bdd-config-load-defaults
     def test_defaults_when_missing(self) -> None:
-        """Loading with no file returns default config."""
         config = load_config(Path("/nonexistent"))
         assert config.schema_version == 1
         assert config.spelling == "behavior"
         assert config.paths.features_dir == Path("specs/behavior/features")
+        assert config.paths.evidence_dir == Path("specs/behavior/evidence")
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
+    # specweave: feature=specs/behavior/features/config/configuration.feature
     # specweave: scenario=@bdd-config-rejects-unsupported-schema
     def test_rejects_unsupported_schema(self, tmp_path: Path) -> None:
-        """Loading fails for schema_version 2."""
-        config_file = tmp_path / ".specweave.toml"
+        config_file = tmp_path / "specweave.toml"
         config_file.write_text("schema_version = 99\n")
         with pytest.raises(ValueError, match="Unsupported"):
             load_config(config_file)
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
+    # specweave: feature=specs/behavior/features/config/configuration.feature
     # specweave: scenario=@bdd-config-load-from-file
     def test_normalizes_paths(self, tmp_path: Path) -> None:
-        """Loading reads values from a valid TOML file."""
-        config_file = tmp_path / ".specweave.toml"
+        config_file = tmp_path / "specweave.toml"
         config_file.write_text(
             'schema_version = 1\nspelling = "behaviour"\n'
             '[paths]\nfeatures_dir = "specs/behaviour/features"\n'
@@ -97,11 +90,12 @@ class TestLoadConfig:
         assert config.paths.features_dir == tmp_path / "specs/behaviour/features"
 
     def test_loads_all_sections(self, tmp_path: Path) -> None:
-        """Loading reads values from a valid TOML file (all sections)."""
-        config_file = tmp_path / ".specweave.toml"
+        config_file = tmp_path / "specweave.toml"
         config_file.write_text(
             "schema_version = 1\n"
             'spelling = "behavior"\n'
+            "[paths]\n"
+            'reports_state_dir = "reports/behavior/specweave"\n'
             "[pytest]\n"
             'test_globs = ["tests/test_*.py"]\n'
             "[gherkin]\n"
@@ -113,11 +107,14 @@ class TestLoadConfig:
         assert config.pytest.test_globs == ("tests/test_*.py",)
         assert config.gherkin.id_style == "sequence"
         assert config.generation.group_by == "file"
+        assert config.paths.reports_state_dir == (
+            tmp_path / "reports/behavior/specweave"
+        )
 
     def test_resolves_paths_from_config_project_root(self, tmp_path: Path) -> None:
         config_dir = tmp_path / "config"
         config_dir.mkdir()
-        config_file = config_dir / ".specweave.toml"
+        config_file = config_dir / "specweave.toml"
         config_file.write_text(
             'schema_version = 1\nproject_root = "../project"\n'
             '[paths]\nfeatures_dir = "features"\n',
@@ -130,7 +127,7 @@ class TestLoadConfig:
         assert config.paths.features_dir == (tmp_path / "project/features").resolve()
 
     def test_rejects_unsupported_group_by(self, tmp_path: Path) -> None:
-        config_file = tmp_path / ".specweave.toml"
+        config_file = tmp_path / "specweave.toml"
         config_file.write_text(
             'schema_version = 1\n[generation]\ngroup_by = "area"\n',
             encoding="utf-8",
@@ -138,47 +135,39 @@ class TestLoadConfig:
         with pytest.raises(ValueError, match="group_by"):
             load_config(config_file)
 
-    def test_gherkin_new_fields_preserved(self, tmp_path: Path) -> None:
-        """Loading reads values from a valid TOML file (gherkin fields)."""
-        config_file = tmp_path / ".specweave.toml"
+    def test_gherkin_fields_preserved(self, tmp_path: Path) -> None:
+        config_file = tmp_path / "specweave.toml"
         config_file.write_text(
             "schema_version = 1\n"
             "[gherkin]\n"
-            'document_format = "classic"\n'
-            'feature_extension = ".feature"\n'
-            'feature_extensions = [".feature"]\n'
             "official_parser = true\n"
-            'markdown_parser = "off"\n'
             "compile_pickles = true\n"
+            'default_scenario_keyword = "Scenario"\n'
         )
         config = load_config(config_file)
-        assert config.gherkin.document_format == "classic"
-        assert config.gherkin.feature_extension == ".feature"
-        assert config.gherkin.feature_extensions == (".feature",)
         assert config.gherkin.official_parser is True
-        assert config.gherkin.markdown_parser == "off"
         assert config.gherkin.compile_pickles is True
+        assert config.gherkin.default_scenario_keyword == "Scenario"
 
 
 class TestRenderDefaultConfig:
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
+    # specweave: feature=specs/behavior/features/config/configuration.feature
     # specweave: scenario=@bdd-config-render-behavior
     def test_renders_behavior(self) -> None:
-        """Default config renders behavior spelling."""
         text = render_default_config(spelling="behavior")
         assert 'spelling = "behavior"' in text
-        assert "specs/behavior" in text
+        assert 'evidence_dir = "specs/behavior/evidence"' in text
+        assert 'reports_state_dir = "reports/behavior/specweave"' in text
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature.md
+    # specweave: feature=specs/behavior/features/config/configuration.feature
     # specweave: scenario=@bdd-config-render-behaviour
     def test_renders_behaviour(self) -> None:
-        """Default config renders behaviour spelling."""
         text = render_default_config(spelling="behaviour")
         assert 'spelling = "behaviour"' in text
-        assert "specs/behaviour" in text
+        assert 'evidence_dir = "specs/behaviour/evidence"' in text
+        assert 'reports_state_dir = "reports/behaviour/specweave"' in text
 
     def test_is_valid_toml(self) -> None:
-        """Default config renders behavior spelling (valid TOML)."""
         import sys
 
         text = render_default_config()
@@ -193,34 +182,34 @@ class TestRenderDefaultConfig:
         assert parsed["schema_version"] == 1
 
     def test_roundtrip(self, tmp_path: Path) -> None:
-        """Default config renders behavior spelling (roundtrip)."""
         text = render_default_config()
-        config_file = tmp_path / ".specweave.toml"
+        config_file = tmp_path / "specweave.toml"
         config_file.write_text(text)
         config = load_config(config_file)
         assert config.schema_version == 1
         assert config.spelling == "behavior"
 
-    def test_renders_new_gherkin_defaults(self) -> None:
-        """Default config renders behavior spelling (gherkin defaults)."""
+    def test_renders_classic_only_defaults(self) -> None:
         text = render_default_config()
-        assert 'document_format = "markdown"' in text
-        assert 'feature_extension = ".feature.md"' in text
-        assert 'feature_extensions = [".feature.md", ".feature"]' in text
         assert "official_parser = false" in text
-        assert 'markdown_parser = "specweave"' in text
         assert "compile_pickles = false" in text
+        assert 'default_scenario_keyword = "Example"' in text
+        assert "document_format" not in text
+        assert "feature_extension" not in text
+        assert "feature_extensions" not in text
+        assert "markdown_parser" not in text
+        assert "\nstate_dir =" not in text
 
 
 class TestSpecWeavePaths:
     def test_defaults(self) -> None:
-        """Loading with no file returns default config (paths)."""
         paths = SpecWeavePaths()
         assert paths.features_dir == Path("specs/behavior/features")
         assert paths.tests_dir == Path("tests")
+        assert paths.evidence_dir == Path("specs/behavior/evidence")
+        assert paths.mapping_dir == Path("specs/behavior/mappings")
 
     def test_frozen(self) -> None:
-        """Loading with no file returns default config (frozen)."""
         paths = SpecWeavePaths()
         with pytest.raises(AttributeError):
             paths.features_dir = Path("other")  # type: ignore[misc]
@@ -228,50 +217,29 @@ class TestSpecWeavePaths:
 
 class TestSpecWeaveConfig:
     def test_defaults(self) -> None:
-        """Loading with no file returns default config."""
         config = SpecWeaveConfig()
         assert config.schema_version == 1
         assert config.spelling == "behavior"
 
     def test_frozen(self) -> None:
-        """Loading with no file returns default config (frozen)."""
         config = SpecWeaveConfig()
         with pytest.raises(AttributeError):
             config.spelling = "other"  # type: ignore[misc]
 
 
 class TestSpecWeaveGherkin:
-    def test_default_document_format(self) -> None:
-        """Loading with no file returns default config (document_format)."""
-        g = SpecWeaveGherkin()
-        assert g.document_format == "markdown"
-
-    def test_default_feature_extension(self) -> None:
-        """Loading with no file returns default config (feature_extension)."""
-        g = SpecWeaveGherkin()
-        assert g.feature_extension == ".feature.md"
-
-    def test_invalid_document_format_raises(self) -> None:
-        """Loading with no file returns default config (invalid format)."""
-        with pytest.raises(ValueError, match="document_format"):
-            SpecWeaveGherkin(document_format="invalid")
-
-    def test_invalid_markdown_parser_raises(self) -> None:
-        """Loading with no file returns default config (invalid parser)."""
-        with pytest.raises(ValueError, match="markdown_parser"):
-            SpecWeaveGherkin(markdown_parser="bogus")
-
     def test_default_official_parser_is_false(self) -> None:
-        """Default official_parser is false."""
         g = SpecWeaveGherkin()
         assert g.official_parser is False
 
+    def test_default_keyword_is_example(self) -> None:
+        g = SpecWeaveGherkin()
+        assert g.default_scenario_keyword == "Example"
+
     def test_compile_pickles_without_official_raises(self) -> None:
-        """compile_pickles=True with official_parser=False raises ValueError."""
         with pytest.raises(ValueError, match="compile_pickles"):
             SpecWeaveGherkin(compile_pickles=True, official_parser=False)
 
     def test_compile_pickles_with_official_ok(self) -> None:
-        """compile_pickles=True with official_parser=True is allowed."""
         g = SpecWeaveGherkin(compile_pickles=True, official_parser=True)
         assert g.compile_pickles is True

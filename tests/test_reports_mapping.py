@@ -19,7 +19,7 @@ from specweave.reports.mapping import (
 )
 from specweave.reports.model import ScenarioResult
 
-FEATURE = "specs/behavior/features/reports/mapping.feature.md"
+FEATURE = "specs/behavior/features/reports/mapping.feature"
 
 
 def _scenario(  # type: ignore[no-untyped-def]
@@ -28,7 +28,7 @@ def _scenario(  # type: ignore[no-untyped-def]
     return ScenarioResult(name=name, status=status, tags=tags)
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
+# specweave: feature=specs/behavior/features/reports/mapping.feature
 # specweave: scenario=@bdd-tag-extraction-bdd
 def test_extract_ids_partitions_by_prefix() -> None:
     """Extraction finds @bdd-* tags."""
@@ -41,7 +41,7 @@ def test_extract_ids_partitions_by_prefix() -> None:
     assert ids.ac_ids == ("ac-0001", "ac-0002")
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
+# specweave: feature=specs/behavior/features/reports/mapping.feature
 # specweave: scenario=@bdd-criteria-summary
 def test_summarize_passes_when_linked_scenario_passed() -> None:
     """Summarization groups scenarios by acceptance criterion."""
@@ -52,7 +52,7 @@ def test_summarize_passes_when_linked_scenario_passed() -> None:
     assert criteria[0].scenario_ids == ("bdd-0001",)
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
+# specweave: feature=specs/behavior/features/reports/mapping.feature
 # specweave: scenario=@bdd-criteria-fail-closed
 def test_summarize_fails_when_linked_scenario_failed() -> None:
     """Failed scenarios fail the linked criterion."""
@@ -91,7 +91,7 @@ def test_summarize_fails_on_undefined_and_pending() -> None:
         assert summarize_criteria(results)[0].status == "failed", status
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
+# specweave: feature=specs/behavior/features/reports/mapping.feature
 # specweave: scenario=@bdd-tag-extraction-empty
 def test_unlinked_scenarios_are_ignored() -> None:
     """Extraction returns empty lists when no matching tags."""
@@ -112,7 +112,7 @@ def test_matching_never_uses_title() -> None:
     assert criteria == {"ac-0001": "passed", "ac-0002": "failed"}
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
+# specweave: feature=specs/behavior/features/reports/mapping.feature
 # specweave: scenario=@bdd-criteria-missing-coverage
 def test_require_expected_coverage_missing_fails() -> None:
     """Expected AC with no scenarios fails coverage."""
@@ -157,7 +157,7 @@ def test_fail_closed_no_passing_scenario() -> None:
     assert summarize_criteria(results)[0].status == "failed"
 
 
-# specweave: feature=specs/behavior/features/reports/mapping.feature.md
+# specweave: feature=specs/behavior/features/reports/mapping.feature
 # specweave: scenario=@bdd-tag-extraction-ac
 def test_extract_ac_ids_from_tags() -> None:
     """Extraction finds @ac-* tags."""

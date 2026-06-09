@@ -35,7 +35,7 @@ updated_at: "2026-06-08T18:30:00Z"
    accidental mutation during pipeline transforms.
 
 5. **Dual Gherkin format.** SpecWeave supports both classic `.feature` and
-   Markdown `.feature.md` files. The default is `.feature.md`. A `convert`
+   Markdown `.feature` files. The default is `.feature`. A `convert`
    command bridges between formats.
 
 6. **Layered architecture.** The code is organized into Gherkin model/parser/

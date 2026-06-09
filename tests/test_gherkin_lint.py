@@ -6,7 +6,7 @@ from pathlib import Path
 
 from specweave.gherkin.lint import lint_feature_files
 
-FEATURE = "specs/behavior/features/gherkin/lint.feature.md"
+FEATURE = "specs/behavior/features/gherkin/lint.feature"
 
 
 def _write_feature(path: Path, text: str) -> Path:
@@ -21,7 +21,7 @@ def _canonical_dir(tmp_path: Path) -> Path:
     return d
 
 
-# specweave: feature=specs/behavior/features/gherkin/lint.feature.md
+# specweave: feature=specs/behavior/features/gherkin/lint.feature
 # specweave: scenario=@bdd-lint-single-feature
 def test_lint_multiple_feature_lines(tmp_path: Path) -> None:
     """Lint errors on multiple Feature lines."""
@@ -34,7 +34,7 @@ def test_lint_multiple_feature_lines(tmp_path: Path) -> None:
     assert any(f.code == "SWBEH002" for f in findings)
 
 
-# specweave: feature=specs/behavior/features/gherkin/lint.feature.md
+# specweave: feature=specs/behavior/features/gherkin/lint.feature
 # specweave: scenario=@bdd-lint-empty-feature-title
 def test_lint_empty_feature_title(tmp_path: Path) -> None:
     """Lint errors on empty feature title."""
@@ -47,7 +47,7 @@ def test_lint_empty_feature_title(tmp_path: Path) -> None:
     assert any(f.code == "SWBEH003" for f in findings)
 
 
-# specweave: feature=specs/behavior/features/gherkin/lint.feature.md
+# specweave: feature=specs/behavior/features/gherkin/lint.feature
 # specweave: scenario=@bdd-lint-empty-scenario-title
 def test_lint_empty_scenario_title(tmp_path: Path) -> None:
     """Lint errors on empty scenario title."""
@@ -60,7 +60,7 @@ def test_lint_empty_scenario_title(tmp_path: Path) -> None:
     assert any(f.code == "SWBEH004" for f in findings)
 
 
-# specweave: feature=specs/behavior/features/gherkin/lint.feature.md
+# specweave: feature=specs/behavior/features/gherkin/lint.feature
 # specweave: scenario=@bdd-lint-missing-given-when-then
 def test_lint_missing_given_when_then(tmp_path: Path) -> None:
     """Lint errors when Given/When/Then are missing."""
@@ -73,7 +73,7 @@ def test_lint_missing_given_when_then(tmp_path: Path) -> None:
     assert any(f.code == "SWBEH005" for f in findings)
 
 
-# specweave: feature=specs/behavior/features/gherkin/lint.feature.md
+# specweave: feature=specs/behavior/features/gherkin/lint.feature
 # specweave: scenario=@bdd-lint-empty-rule
 def test_lint_empty_rule(tmp_path: Path) -> None:
     """Lint errors on Rule without scenarios."""
@@ -86,7 +86,7 @@ def test_lint_empty_rule(tmp_path: Path) -> None:
     assert any(f.code == "SWBEH006" for f in findings)
 
 
-# specweave: feature=specs/behavior/features/gherkin/lint.feature.md
+# specweave: feature=specs/behavior/features/gherkin/lint.feature
 # specweave: scenario=@bdd-lint-duplicate-bdd-tags
 def test_lint_duplicate_bdd_tags(tmp_path: Path) -> None:
     """Lint errors on duplicate @bdd-* tags."""
@@ -101,7 +101,7 @@ def test_lint_duplicate_bdd_tags(tmp_path: Path) -> None:
     assert any(f.code == "SWBEH007" for f in findings)
 
 
-# specweave: feature=specs/behavior/features/gherkin/lint.feature.md
+# specweave: feature=specs/behavior/features/gherkin/lint.feature
 # specweave: scenario=@bdd-lint-missing-bdd-tag
 def test_lint_missing_bdd_tag(tmp_path: Path) -> None:
     """Lint warns when scenario lacks @bdd-* tag."""
@@ -114,7 +114,7 @@ def test_lint_missing_bdd_tag(tmp_path: Path) -> None:
     assert any(f.code == "SWBEH014" for f in findings)
 
 
-# specweave: feature=specs/behavior/features/gherkin/lint.feature.md
+# specweave: feature=specs/behavior/features/gherkin/lint.feature
 # specweave: scenario=@bdd-lint-task-tags-discouraged
 def test_lint_task_tags_discouraged(tmp_path: Path) -> None:
     """Lint warns on task-specific tags in features."""
@@ -134,7 +134,7 @@ def test_lint_task_tags_discouraged(tmp_path: Path) -> None:
     assert any(f.code == "SWBEH013" for f in findings)
 
 
-# specweave: feature=specs/behavior/features/gherkin/lint.feature.md
+# specweave: feature=specs/behavior/features/gherkin/lint.feature
 # specweave: scenario=@bdd-lint-canonical-path
 def test_lint_canonical_path(tmp_path: Path) -> None:
     """Lint errors on features outside canonical path."""
@@ -148,7 +148,7 @@ def test_lint_canonical_path(tmp_path: Path) -> None:
     assert any(f.code == "SWBEH009" for f in findings)
 
 
-# specweave: feature=specs/behavior/features/gherkin/lint.feature.md
+# specweave: feature=specs/behavior/features/gherkin/lint.feature
 # specweave: scenario=@bdd-lint-area-subdirectory
 def test_lint_area_subdirectory(tmp_path: Path) -> None:
     """Lint warns when feature is not in area subdirectory."""
@@ -162,7 +162,7 @@ def test_lint_area_subdirectory(tmp_path: Path) -> None:
     assert any(f.code == "SWBEH009" for f in findings)
 
 
-# specweave: feature=specs/behavior/features/gherkin/lint.feature.md
+# specweave: feature=specs/behavior/features/gherkin/lint.feature
 # specweave: scenario=@bdd-lint-deprecated-path
 def test_lint_deprecated_path(tmp_path: Path) -> None:
     """Lint warns on deprecated feature paths."""
@@ -176,7 +176,7 @@ def test_lint_deprecated_path(tmp_path: Path) -> None:
     assert any(f.code == "SWBEH015" for f in findings)
 
 
-# specweave: feature=specs/behavior/features/gherkin/lint.feature.md
+# specweave: feature=specs/behavior/features/gherkin/lint.feature
 # specweave: scenario=@bdd-lint-strict-unsupported
 def test_lint_strict_unsupported(tmp_path: Path) -> None:
     """Strict mode errors on Scenario Outline."""
@@ -187,3 +187,10 @@ def test_lint_strict_unsupported(tmp_path: Path) -> None:
     )
     findings = lint_feature_files([d / "test.feature"], strict=True)
     assert any(f.code == "SWBEH008" and f.level == "error" for f in findings)
+
+
+def test_lint_rejects_markdown_feature_file(tmp_path: Path) -> None:
+    d = _canonical_dir(tmp_path)
+    path = _write_feature(d / "test.feature.md", "# Feature: F\n")
+    findings = lint_feature_files([path])
+    assert any(f.code == "SWBEH016" and f.level == "error" for f in findings)

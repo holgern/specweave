@@ -156,7 +156,7 @@ def init(
     from specweave.init import init_result_to_dict, run_init
 
     cli_ctx: CliContext = ctx.obj
-    config_path = Path("specweave.toml") if public_config else Path(".specweave.toml")
+    config_path = Path("specweave.toml")
     result = run_init(
         config_path=config_path,
         spelling=spelling,
@@ -469,6 +469,7 @@ def behavior_mappings(
 
 @behavior_app.command("import-report")
 def behavior_import_report(
+    ctx: typer.Context,
     report: Annotated[Path, typer.Argument(help="Runner report to import.")],
     fmt: Annotated[str, typer.Option("--format")] = "junit-xml",
     out: Annotated[Path | None, typer.Option("--out")] = None,
@@ -490,8 +491,11 @@ def behavior_import_report(
         )
         raise typer.Exit(code=1)
 
+    cli_ctx: CliContext = ctx.obj
     payload = import_pytest_report(report, tests_dir=tests_dir, manifest_path=manifest)
-    target = out or Path(".specweave/evidence") / f"{report.stem}.pytest-evidence.json"
+    target = out or (
+        cli_ctx.config.paths.evidence_dir / f"{report.stem}.pytest-evidence.json"
+    )
     write_pytest_evidence_json(payload, target)
     typer.echo(f"Wrote pytest behavior evidence to {target}")
     if payload.get("unmapped"):
@@ -500,19 +504,13 @@ def behavior_import_report(
 
 @behavior_app.command("import-taskledger")
 def behavior_import_taskledger(
-    ctx: typer.Context,
     source: Annotated[Path, typer.Argument(help="Taskledger acceptance export JSON.")],
     out: Annotated[Path, typer.Option("--out", help="Output canonical .feature file.")],
 ) -> None:
     """Create a canonical behavior feature from a Taskledger export."""
     from specweave.integrations.taskledger import write_behavior_feature_from_taskledger
 
-    cli_ctx: CliContext = ctx.obj
-    write_behavior_feature_from_taskledger(
-        source,
-        out,
-        document_format=cli_ctx.config.gherkin.document_format,
-    )
+    write_behavior_feature_from_taskledger(source, out)
     typer.echo(f"Wrote behavior feature to {out}")
 
 
@@ -788,9 +786,11 @@ def trace_command(
         "specs/behavior/features"
     ),
     tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
-    evidence: Annotated[Path, typer.Option("--evidence")] = Path(".specweave/evidence"),
+    evidence: Annotated[Path, typer.Option("--evidence")] = Path(
+        "specs/behavior/evidence"
+    ),
     taskledger_mappings: Annotated[Path, typer.Option("--taskledger-mappings")] = Path(
-        ".specweave/mappings/taskledger"
+        "specs/behavior/mappings/taskledger"
     ),
 ) -> None:
     """Emit a normalized behavior-centered trace bundle."""
@@ -820,9 +820,11 @@ def combi_check(
     ),
     tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
     taskledger_mappings: Annotated[Path, typer.Option("--taskledger-mappings")] = Path(
-        ".specweave/mappings/taskledger"
+        "specs/behavior/mappings/taskledger"
     ),
-    evidence: Annotated[Path, typer.Option("--evidence")] = Path(".specweave/evidence"),
+    evidence: Annotated[Path, typer.Option("--evidence")] = Path(
+        "specs/behavior/evidence"
+    ),
     archledger: Annotated[Path, typer.Option("--archledger")] = Path(".archledger"),
     json_path: Annotated[Path | None, typer.Option("--json")] = None,
     strict: Annotated[bool, typer.Option("--strict")] = False,
@@ -866,148 +868,6 @@ def _task_id(report):  # type: ignore[no-untyped-def]
     from specweave.integrations.taskledger import task_id_from_report
 
     return task_id_from_report(report)
-
-
-@app.command("convert")
-def convert(
-    ctx: typer.Context,
-    paths: Annotated[
-        list[Path] | None,
-        typer.Argument(help="Feature file(s) or directories to convert."),
-    ] = None,
-    all_features: Annotated[
-        bool,
-        typer.Option(
-            "--all",
-            help=(
-                "Convert all configured behavior features under the configured "
-                "features directory."
-            ),
-        ),
-    ] = False,
-    out: Annotated[
-        Path | None, typer.Option("--out", help="Output feature path.")
-    ] = None,
-    to_format: Annotated[
-        str | None,
-        typer.Option("--to", help="Target format: markdown or classic."),
-    ] = None,
-    from_format: Annotated[
-        str,
-        typer.Option(
-            "--from",
-            help="Source format: auto, content, markdown, or classic.",
-        ),
-    ] = "auto",
-    force: Annotated[bool, typer.Option("--force")] = False,
-    dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
-    replace_source: Annotated[
-        bool,
-        typer.Option(
-            "--replace-source/--keep-source",
-            help=(
-                "Delete converted classic source files after successful "
-                "non-dry-run conversion."
-            ),
-        ),
-    ] = False,
-    validate: Annotated[
-        bool,
-        typer.Option(
-            "--validate/--no-validate",
-            help="Validate with the configured Gherkin validator.",
-        ),
-    ] = True,
-) -> None:
-    """Convert classic .feature and Markdown .feature.md files."""
-    from specweave.gherkin.convert import convert_feature_file, convert_feature_files
-
-    cli_ctx: CliContext = ctx.obj
-    resolved_paths = list(paths or [])
-    if all_features:
-        resolved_paths.append(cli_ctx.config.paths.features_dir)
-    if not resolved_paths:
-        typer.echo("Provide at least one feature path or use --all.", err=True)
-        raise typer.Exit(code=1)
-
-    batch_mode = (
-        all_features
-        or len(resolved_paths) > 1
-        or any(path.is_dir() for path in resolved_paths)
-    )
-    if batch_mode and out is not None:
-        typer.echo("--out is supported only for single-file conversion.", err=True)
-        raise typer.Exit(code=1)
-
-    try:
-        if batch_mode:
-            result = convert_feature_files(
-                paths=resolved_paths,
-                target_format=to_format,
-                source_format=from_format,
-                force=force,
-                dry_run=dry_run,
-                validate=validate,
-                replace_source=replace_source,
-                config=cli_ctx.config,
-            )
-        else:
-            feature = resolved_paths[0]
-            result = convert_feature_file(
-                source_path=feature,
-                out_path=out,
-                target_format=to_format,
-                source_format=from_format,
-                force=force,
-                dry_run=dry_run,
-                validate=validate,
-                config=cli_ctx.config,
-            )
-            deletable = (
-                replace_source
-                and result["source_format"] == "classic"
-                and result["target_format"] == "markdown"
-                and result["source_path"] != result["output_path"]
-            )
-            result["deleted_source"] = False
-            if dry_run and deletable:
-                result["would_delete_source"] = True
-            elif deletable:
-                Path(result["source_path"]).unlink()
-                result["deleted_source"] = True
-    except ValueError as exc:
-        typer.echo(f"Error: {exc}", err=True)
-        raise typer.Exit(code=3) from exc
-
-    if cli_ctx.json_output:
-        typer.echo(_dump_json(result))
-    else:
-        if batch_mode:
-            summary = result["summary"]
-            typer.echo(
-                f"{result['status']}: "
-                f"{summary['created']} created, "
-                f"{summary['updated']} updated, "
-                f"{summary['unchanged']} unchanged, "
-                f"{summary['errors']} errors"
-            )
-            if summary["deleted_sources"]:
-                typer.echo(f"deleted sources: {summary['deleted_sources']}")
-            for error in result["errors"]:
-                typer.echo(
-                    "ERROR "
-                    f"{error['source_path']} -> {error['output_path']} "
-                    f"{error['error']}"
-                )
-        else:
-            typer.echo(f"{result['status']}: {result['output_path']}")
-            typer.echo(f"{result['source_format']} -> {result['target_format']}")
-            if result.get("deleted_source"):
-                typer.echo(f"deleted source: {result['source_path']}")
-            elif result.get("would_delete_source"):
-                typer.echo(f"would delete source: {result['source_path']}")
-    if batch_mode and result["errors"]:
-        raise typer.Exit(code=3)
 
 
 # --- review subcommands ----------------------------------------------------
@@ -1146,16 +1006,10 @@ def create_feature(
                 area_name = tag[len("area-") :]
                 break
 
-        feature_text = write_feature(
-            f, document_format=cli_ctx.config.gherkin.document_format
-        )
+        feature_text = write_feature(f)
         if out is None:
             features_dir = cli_ctx.config.paths.features_dir
-            out = (
-                features_dir
-                / area_name
-                / f"{feature_slug}{cli_ctx.config.gherkin.feature_extension}"
-            )
+            out = features_dir / area_name / f"{feature_slug}.feature"
 
         if out.exists() and not force:
             typer.echo(
@@ -1227,16 +1081,10 @@ def create_feature(
     r = Rule(title=rule or title, scenarios=(s,), tags=rule_tags)
     f = Feature(title=title, rules=(r,), tags=feature_tags)
 
-    feature_text = write_feature(
-        f, document_format=cli_ctx.config.gherkin.document_format
-    )
+    feature_text = write_feature(f)
     if out is None:
         features_dir = cli_ctx.config.paths.features_dir
-        out = (
-            features_dir
-            / area_slug
-            / f"{feature_slug}{cli_ctx.config.gherkin.feature_extension}"
-        )
+        out = features_dir / area_slug / f"{feature_slug}.feature"
 
     if out.exists() and not force:
         typer.echo(
@@ -1299,7 +1147,7 @@ def create_taskledger_task(
     ctx: typer.Context,
     feature: Annotated[Path, typer.Option("--feature")],
     out: Annotated[Path, typer.Option("--out")] = Path(
-        ".specweave/mappings/taskledger/draft.json"
+        "specs/behavior/mappings/taskledger/draft.json"
     ),
 ) -> None:
     """Create a Taskledger task draft JSON from a feature file."""

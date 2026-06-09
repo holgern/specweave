@@ -56,8 +56,8 @@ def run_combi_check(
     *,
     features_dir: Path = BEHAVIOR_FEATURES_DIR,
     tests_dir: Path = PYTEST_TESTS_DIR,
-    taskledger_mappings: Path = Path(".specweave/mappings/taskledger"),
-    evidence_dir: Path = Path(".specweave/evidence"),
+    taskledger_mappings: Path = Path("specs/behavior/mappings/taskledger"),
+    evidence_dir: Path = Path("specs/behavior/evidence"),
     archledger_dir: Path = Path(".archledger"),
 ) -> dict[str, Any]:
     """Audit Taskledger, SpecWeave, pytest, evidence, and Archledger links."""

@@ -7,7 +7,7 @@ module never imports Taskledger as a Python dependency.
 Contracts::
 
     Input from Taskledger:   .taskledger/exports/task-0123.acceptance.json
-    Output from SpecWeave:   .specweave/evidence/task-0123.bdd-evidence.json
+    Output from SpecWeave:   specs/behavior/evidence/task-0123.bdd-evidence.json
 
 The acceptance export may be either:
 
@@ -153,8 +153,6 @@ def _behavior_feature_from_task_bdd(spec: TaskBddSpec, out: Path) -> Feature:
 def write_behavior_feature_from_taskledger(
     path: str | Path,
     out: str | Path,
-    *,
-    document_format: str | None = None,
 ) -> Feature:
     """Write a canonical behavior feature from a Taskledger export."""
 
@@ -163,14 +161,9 @@ def write_behavior_feature_from_taskledger(
         load_taskledger_acceptance_export(path),
         output,
     )
-    resolved_format = document_format
-    if resolved_format is None:
-        resolved_format = (
-            "markdown" if output.as_posix().endswith(".feature.md") else "classic"
-        )
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(
-        write_feature(feature, document_format=resolved_format),
+        write_feature(feature),
         encoding="utf-8",
     )
     return feature

@@ -153,44 +153,9 @@ def validate_markdown_specweave_subset(
     *,
     source_path: Path | None = None,
 ) -> None:
-    """Validate Markdown-with-Gherkin *text* is within the SpecWeave subset.
-
-    Raises ``ParseError`` on unsupported or ambiguous constructs.
-    """
-    lines = text.splitlines()
-
-    _SCENARIO_OUTLINE_HEADING = re.compile(
-        r"^#{1,6}\s+(Scenario Outline|Scenario Template):",
-        re.IGNORECASE,
+    """Reject legacy Markdown-with-Gherkin input."""
+    _fail(
+        "Markdown .feature.md files are no longer supported; "
+        "convert to classic .feature.",
+        source_path=source_path,
     )
-    _FEATURE_HEADING = re.compile(r"^#{1,6}\s+Feature:", re.IGNORECASE)
-    _SCENARIO_HEADING = re.compile(r"^#{1,6}\s+(Scenario|Example):", re.IGNORECASE)
-
-    for line_no, raw_line in enumerate(lines, start=1):
-        stripped = raw_line.strip()
-
-        # Reject Scenario Outline / Template headings
-        if _SCENARIO_OUTLINE_HEADING.match(stripped):
-            _fail(
-                "Scenario Outline / Scenario Template is not supported "
-                "in the SpecWeave canonical subset.",
-                source_path=source_path,
-                line=line_no,
-            )
-
-        # Detect table rows (|) outside of Markdown table formatting context
-        # (In markdown, tables use | as column separators, but these are not
-        # Gherkin data tables.)
-        # Only flag bare table lines that look like Gherkin data tables,
-        # i.e., lines starting with | after a scenario heading.
-        if stripped.startswith("|"):
-            # Check if previous non-blank line is a markdown table separator
-            # or header — those are ok in markdown.
-            # But standalone | after a scenario heading (without --- separator)
-            # is ambiguous. We flag it for now.
-            _fail(
-                "Table rows (|) are not supported in the SpecWeave canonical subset. "
-                "Examples tables cannot be preserved.",
-                source_path=source_path,
-                line=line_no,
-            )

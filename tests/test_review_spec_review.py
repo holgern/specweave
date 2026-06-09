@@ -9,7 +9,7 @@ from specweave.gherkin.model import Feature, Scenario, Step
 from specweave.gherkin.writer import write_feature
 from specweave.review import run_review
 
-FEATURE = "specs/behavior/features/review/spec-review.feature.md"
+FEATURE = "specs/behavior/features/review/spec-review.feature"
 
 
 def _write_feature(path: Path, content: str) -> None:
@@ -17,7 +17,7 @@ def _write_feature(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
-def _write_markdown_feature(path: Path, *, scenario_id: str, title: str) -> None:
+def _write_behavior_feature(path: Path, *, scenario_id: str, title: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     feature = Feature(
         title="Login",
@@ -34,13 +34,11 @@ def _write_markdown_feature(path: Path, *, scenario_id: str, title: str) -> None
             ),
         ),
     )
-    path.write_text(
-        write_feature(feature, document_format="markdown"), encoding="utf-8"
-    )
+    path.write_text(write_feature(feature), encoding="utf-8")
 
 
 class TestReviewReportsMissingBindings:
-    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: feature=specs/behavior/features/review/spec-review.feature
     # specweave: scenario=@bdd-review-counts
     def test_no_features(self, tmp_path: Path) -> None:
         """Review reports feature and scenario statistics."""
@@ -54,7 +52,7 @@ class TestReviewReportsMissingBindings:
         result = run_review(config=config)
         assert result["summary"]["features"] == 0
 
-    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: feature=specs/behavior/features/review/spec-review.feature
     # specweave: scenario=@bdd-review-missing-bindings
     def test_feature_with_no_test(self, tmp_path: Path) -> None:
         """Review warns about unbound scenarios."""
@@ -78,7 +76,7 @@ class TestReviewReportsMissingBindings:
 
 
 class TestReviewReportsNeedsReview:
-    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: feature=specs/behavior/features/review/spec-review.feature
     # specweave: scenario=@bdd-review-needs-review
     def test_needs_review_flagged(self, tmp_path: Path) -> None:
         """Review warns about @needs-review scenarios."""
@@ -129,20 +127,20 @@ class TestReviewJsonShape:
 
 
 class TestReviewAggregatesCoverage:
-    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: feature=specs/behavior/features/review/spec-review.feature
     # specweave: scenario=@bdd-review-deprecated-paths
     def test_stale_mapping_causes_failed_review(self, tmp_path: Path) -> None:
         """Review warns about deprecated paths (stale mapping)."""
         features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
         tests_dir = tmp_path / "tests"
-        _write_markdown_feature(
-            features_dir / "login.feature.md",
+        _write_behavior_feature(
+            features_dir / "login.feature",
             scenario_id="@bdd-login-valid-login",
             title="Valid login",
         )
         tests_dir.mkdir()
         (tests_dir / "test_auth_login.py").write_text(
-            "# specweave: feature=specs/behavior/features/auth/login.feature.md\n"
+            "# specweave: feature=specs/behavior/features/auth/login.feature\n"
             "# specweave: scenario=@bdd-login-stale\n"
             "def test_valid_login() -> None:\n"
             "    pass\n",
@@ -161,14 +159,14 @@ class TestReviewAggregatesCoverage:
         assert result["summary"]["stale_bindings"] == 1
         assert any(finding["code"] == "SWCOV002" for finding in result["findings"])
 
-    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: feature=specs/behavior/features/review/spec-review.feature
     # specweave: scenario=@bdd-review-forbidden-pytest-bdd
     def test_forbidden_pytest_bdd(self, tmp_path: Path) -> None:
         """Review errors on pytest-bdd usage."""
         features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
         tests_dir = tmp_path / "tests"
-        _write_markdown_feature(
-            features_dir / "login.feature.md",
+        _write_behavior_feature(
+            features_dir / "login.feature",
             scenario_id="@bdd-login-valid",
             title="Valid login",
         )
@@ -186,20 +184,20 @@ class TestReviewAggregatesCoverage:
         result = run_review(config=config)
         assert any(f["code"] == "SWREV003" for f in result["findings"])
 
-    # specweave: feature=specs/behavior/features/review/spec-review.feature.md
+    # specweave: feature=specs/behavior/features/review/spec-review.feature
     # specweave: scenario=@bdd-review-lint-findings
     def test_lint_findings(self, tmp_path: Path) -> None:
         """Review includes lint errors and warnings."""
         features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
         features_dir.mkdir(parents=True)
         # Write a feature with no Given/When/Then steps
-        (features_dir / "login.feature.md").write_text(
-            "`@area-auth` `@feature-login`\n"
-            "# Feature: Login\n"
+        (features_dir / "login.feature").write_text(
+            "@area-auth @feature-login\n"
+            "Feature: Login\n"
             "\n"
-            "`@bdd-login-valid`\n"
-            "### Example: Valid login\n"
-            "- A user exists\n",
+            "  @bdd-login-valid\n"
+            "  Example: Valid login\n"
+            "    A user exists\n",
             encoding="utf-8",
         )
         config = SpecWeaveConfig(

@@ -32,7 +32,7 @@ source_refs:
 ## Responsibility
 
 Owns the Gherkin data model, parsing, writing, linting, format conversion, and
-validation. Supports both classic `.feature` and Markdown `.feature.md` formats.
+validation. Supports both classic `.feature` and Markdown `.feature` formats.
 The built-in parser and subset validator work without external dependencies.
 The optional `gherkin-official` backend (`pip install specweave[gherkin]`)
 provides full Cucumber Gherkin compatibility.
@@ -44,7 +44,7 @@ provides full Cucumber Gherkin compatibility.
 - `specweave/gherkin/writer.py` — `Feature` model → Gherkin text
 - `specweave/gherkin/lint.py` (410 lines) — linting, duplicate ID detection, path checks
 - `specweave/gherkin/convert.py` (378 lines) — classic ↔ Markdown conversion
-- `specweave/gherkin/markdown.py` (463 lines) — Markdown `.feature.md` parser/writer
+- `specweave/gherkin/markdown.py` (463 lines) — Markdown `.feature` parser/writer
 - `specweave/gherkin/tags.py` — tag parsing/filtering helpers
 - `specweave/gherkin/draft.py` — feature draft loading from JSON
 - `specweave/gherkin/official.py` — adapter for optional `gherkin-official` parser

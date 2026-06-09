@@ -14,16 +14,12 @@ from specweave.translate.pytest_to_gherkin import (
     generate_gherkin_from_tests,
 )
 
-FEATURE = "specs/behavior/features/translation/pytest-to-gherkin.feature.md"
+FEATURE = "specs/behavior/features/translation/pytest-to-gherkin.feature"
 
 
 def _feature_file_paths(dir_path: Path) -> list[Path]:
-    """Return .feature and .feature.md files under *dir_path*."""
-    return [
-        f
-        for f in dir_path.rglob("*")
-        if f.is_file() and (f.suffix == ".feature" or str(f).endswith(".feature.md"))
-    ]
+    """Return `.feature` files under *dir_path*."""
+    return [f for f in dir_path.rglob("*.feature") if f.is_file()]
 
 
 def _write_pytest_file(tmp_path: Path, name: str, content: str) -> Path:
@@ -39,7 +35,7 @@ _SIMPLE_TEST = "def test_valid_login():\n    assert user is not None\n"
 
 
 class TestSlug:
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
+    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature
     # specweave: scenario=@bdd-translate-discovers-tests
     def test_basic(self) -> None:
         """Generation finds test functions in pytest files."""
@@ -51,7 +47,7 @@ class TestSlug:
 
 
 class TestDeriveArea:
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
+    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature
     # specweave: scenario=@bdd-translate-group-by-file
     def test_simple(self, tmp_path: Path) -> None:
         """Generation groups scenarios by test file."""
@@ -90,7 +86,7 @@ class TestCreateGherkinFromSinglePytestFile:
         assert result["created"] == 1
         assert len(result["results"]) == 1
 
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
+    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature
     # specweave: scenario=@bdd-translate-marks-generated
     def test_marks_needs_review(self, tmp_path: Path) -> None:
         """Generated features have @generated tag."""
@@ -167,14 +163,14 @@ class TestCreateGherkinGroupsByArea:
 
 
 class TestCreateGherkinPreservesExisting:
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
+    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature
     # specweave: scenario=@bdd-translate-preserve-manual
     def test_skips_manual_file_without_force(self, tmp_path: Path) -> None:
         """Generation does not overwrite manual feature files."""
         test_file = _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)
         out_dir = tmp_path / "specs" / "behavior" / "features"
-        # Create a manual .feature.md file matching the default extension
-        feature_path = out_dir / "auth_login" / "auth-login.feature.md"
+        # Create a manual .feature file matching the default extension
+        feature_path = out_dir / "auth_login" / "auth-login.feature"
         feature_path.parent.mkdir(parents=True)
         feature_path.write_text(
             "Feature: Manual\n  Scenario: Handwritten\n    Given something\n",
@@ -211,7 +207,7 @@ class TestCreateGherkinPreservesExisting:
 
 
 class TestCreateGherkinDryRun:
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
+    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature
     # specweave: scenario=@bdd-translate-dry-run
     def test_writes_nothing(self, tmp_path: Path) -> None:
         """Dry-run reports without writing files."""
@@ -245,13 +241,13 @@ class TestCreateGherkinJsonShape:
             assert "status" in r
             assert "scenario_ids" in r
 
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature.md
+    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature
     # specweave: scenario=@bdd-translate-force-overwrite
     def test_force_overwrites_manual(self, tmp_path: Path) -> None:
         """Generation overwrites with --force."""
         test_file = _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)
         out_dir = tmp_path / "specs" / "behavior" / "features"
-        feature_path = out_dir / "auth_login" / "auth-login.feature.md"
+        feature_path = out_dir / "auth_login" / "auth-login.feature"
         feature_path.parent.mkdir(parents=True)
         feature_path.write_text(
             "Feature: Manual\n  Scenario: Handwritten\n    Given something\n",

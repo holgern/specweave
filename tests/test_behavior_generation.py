@@ -7,7 +7,7 @@ from pathlib import Path
 from specweave.behavior.generate import generate_from_paths, generate_pytest_skeleton
 from specweave.gherkin.model import Feature, Rule, Scenario, Step
 
-FEATURE = "specs/behavior/features/behavior/generation.feature.md"
+FEATURE = "specs/behavior/features/behavior/generation.feature"
 
 
 def _write_feature(path: Path, text: str) -> Path:
@@ -40,7 +40,7 @@ def _simple_feature() -> Feature:
     )
 
 
-# specweave: feature=specs/behavior/features/behavior/generation.feature.md
+# specweave: feature=specs/behavior/features/behavior/generation.feature
 # specweave: scenario=@bdd-generate-single-feature
 def test_generate_single_feature(tmp_path: Path) -> None:
     """Generation creates a test file for a feature."""
@@ -64,7 +64,7 @@ def test_generate_single_feature(tmp_path: Path) -> None:
     assert result[0].exists()
 
 
-# specweave: feature=specs/behavior/features/behavior/generation.feature.md
+# specweave: feature=specs/behavior/features/behavior/generation.feature
 # specweave: scenario=@bdd-generate-scenario-function
 def test_generate_scenario_function() -> None:
     """Each scenario becomes a test function."""
@@ -75,7 +75,7 @@ def test_generate_scenario_function() -> None:
     assert "def test_" in code
 
 
-# specweave: feature=specs/behavior/features/behavior/generation.feature.md
+# specweave: feature=specs/behavior/features/behavior/generation.feature
 # specweave: scenario=@bdd-generate-specweave-markers
 def test_generate_specweave_markers() -> None:
     """Test functions have correct specweave markers."""
@@ -86,7 +86,7 @@ def test_generate_specweave_markers() -> None:
     assert "specweave:" in code
 
 
-# specweave: feature=specs/behavior/features/behavior/generation.feature.md
+# specweave: feature=specs/behavior/features/behavior/generation.feature
 # specweave: scenario=@bdd-generate-docstring
 def test_generate_docstring() -> None:
     """Test functions have docstrings with scenario details."""
@@ -97,7 +97,7 @@ def test_generate_docstring() -> None:
     assert '"""' in code
 
 
-# specweave: feature=specs/behavior/features/behavior/generation.feature.md
+# specweave: feature=specs/behavior/features/behavior/generation.feature
 # specweave: scenario=@bdd-generate-step-comments
 def test_generate_step_comments() -> None:
     feature = _simple_feature()
@@ -107,7 +107,7 @@ def test_generate_step_comments() -> None:
     assert "# Arrange" in code or "Given" in code
 
 
-# specweave: feature=specs/behavior/features/behavior/generation.feature.md
+# specweave: feature=specs/behavior/features/behavior/generation.feature
 # specweave: scenario=@bdd-generate-canonical-path
 def test_generate_canonical_path() -> None:
     """Test path is derived from feature path."""
@@ -118,7 +118,7 @@ def test_generate_canonical_path() -> None:
     assert "specs/behavior/features/auth/login.feature" in code
 
 
-# specweave: feature=specs/behavior/features/behavior/generation.feature.md
+# specweave: feature=specs/behavior/features/behavior/generation.feature
 # specweave: scenario=@bdd-generate-rules
 def test_generate_rules() -> None:
     """Scenarios in rules get rule markers."""
@@ -129,7 +129,7 @@ def test_generate_rules() -> None:
     assert 'rule="Auth rule"' in code
 
 
-# specweave: feature=specs/behavior/features/behavior/generation.feature.md
+# specweave: feature=specs/behavior/features/behavior/generation.feature
 # specweave: scenario=@bdd-generate-batch
 def test_generate_batch(tmp_path: Path) -> None:
     """Generation processes all features in a directory."""

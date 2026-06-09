@@ -20,7 +20,7 @@ evidence. It is not a task ledger, architecture ledger, or CI system.
 
 ## Goals
 
-1. **Keep behavior intent readable.** Gherkin `.feature.md` (Markdown) files
+1. **Keep behavior intent readable.** Gherkin `.feature` (Markdown) files
    under `specs/behavior/features/<area>/` serve as the human-readable source of
    truth for what a system should do.
 2. **Keep executable validation traceable.** Plain pytest tests under `tests/`

@@ -83,9 +83,7 @@ def _existing_scenario_ids(out_dir: Path) -> frozenset[str]:
     if not out_dir.exists():
         return frozenset()
     for path in out_dir.rglob("*"):
-        if not path.is_file() or not (
-            path.name.endswith(".feature") or path.name.endswith(".feature.md")
-        ):
+        if not path.is_file() or path.suffix != ".feature":
             continue
         text = path.read_text(encoding="utf-8")
         ids.update(re.findall(r"(?<![a-z0-9-])@?(bdd-[a-z0-9-]+)", text))
@@ -210,8 +208,7 @@ def generate_gherkin_from_tests(
 
         area = _derive_area(test_file, tests_dir)
         feature_slug = _slug(_derive_feature_title(test_file))
-        ext = config.gherkin.feature_extension if config else ".feature.md"
-        feature_path = out_dir / area / f"{feature_slug}{ext}"
+        feature_path = out_dir / area / f"{feature_slug}.feature"
 
         status = "created"
         if feature_path.exists():
@@ -237,8 +234,7 @@ def generate_gherkin_from_tests(
             continue
 
         if not dry_run:
-            document_format = config.gherkin.document_format if config else "classic"
-            feature_text = write_feature(feature, document_format=document_format)
+            feature_text = write_feature(feature)
             feature_path.parent.mkdir(parents=True, exist_ok=True)
             feature_path.write_text(feature_text, encoding="utf-8")
 

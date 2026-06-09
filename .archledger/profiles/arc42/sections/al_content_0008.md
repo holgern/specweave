@@ -57,6 +57,6 @@ All public models are frozen dataclasses (`frozen=True`):
 
 ## Dual Gherkin format
 
-SpecWeave supports both `.feature` (classic Gherkin) and `.feature.md`
+SpecWeave supports both `.feature` (classic Gherkin) and `.feature`
 (Markdown-embedded Gherkin, the default). The `convert` command bridges
 between formats. The Markdown parser is in `specweave/gherkin/markdown.py`.

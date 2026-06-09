@@ -28,7 +28,7 @@ source_refs:
 Bidirectional translation between Python tests and Gherkin behavior specs:
 
 - **pytest → Gherkin:** Brownfield workflow. Uses AST Inspection to discover
-  tests, then generates draft `.feature.md` files.
+  tests, then generates draft `.feature` files.
 - **Gherkin → pytest:** New-feature workflow. Generates plain pytest skeletons
   from canonical feature files.
 - **Code → Spec explanation:** Explains Python test files as candidate behavior

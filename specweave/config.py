@@ -17,10 +17,9 @@ class SpecWeavePaths:
     manifest: Path = Path("specs/behavior/manifest.json")
     tests_dir: Path = Path("tests")
     reports_dir: Path = Path("reports/behavior")
-    state_dir: Path = Path(".specweave")
-    evidence_dir: Path = Path(".specweave/evidence")
-    reports_state_dir: Path = Path(".specweave/reports")
-    mapping_dir: Path = Path(".specweave/mappings")
+    evidence_dir: Path = Path("specs/behavior/evidence")
+    reports_state_dir: Path = Path("reports/behavior/specweave")
+    mapping_dir: Path = Path("specs/behavior/mappings")
 
 
 @dataclass(frozen=True)
@@ -36,11 +35,7 @@ class SpecWeaveGherkin:
     """Gherkin generation configuration."""
 
     dialect: str = "en"
-    document_format: str = "markdown"  # markdown | classic
-    feature_extension: str = ".feature.md"
-    feature_extensions: tuple[str, ...] = (".feature.md", ".feature")
     official_parser: bool = False
-    markdown_parser: str = "specweave"  # specweave | cucumber-js | off
     compile_pickles: bool = False
     default_scenario_keyword: str = "Example"
     require_given_when_then: bool = True
@@ -51,16 +46,6 @@ class SpecWeaveGherkin:
     canonical_task_tags: bool = False
 
     def __post_init__(self) -> None:
-        if self.document_format not in ("markdown", "classic"):
-            raise ValueError(
-                f"Unsupported document_format: {self.document_format}; "
-                "expected 'markdown' or 'classic'"
-            )
-        if self.markdown_parser not in ("specweave", "cucumber-js", "off"):
-            raise ValueError(
-                f"Unsupported markdown_parser: {self.markdown_parser}; "
-                "expected 'specweave', 'cucumber-js', or 'off'"
-            )
         if self.compile_pickles and not self.official_parser:
             raise ValueError(
                 "compile_pickles requires official_parser to be enabled; "
@@ -113,6 +98,9 @@ class SpecWeaveConfig:
                     behavior_readme=Path(f"{spec_segment}/README.md"),
                     manifest=Path(f"{spec_segment}/manifest.json"),
                     reports_dir=Path(report_segment),
+                    evidence_dir=Path(f"{spec_segment}/evidence"),
+                    reports_state_dir=Path(f"{report_segment}/specweave"),
+                    mapping_dir=Path(f"{spec_segment}/mappings"),
                 ),
             )
             object.__setattr__(
@@ -120,7 +108,7 @@ class SpecWeaveConfig:
             )
 
 
-_CONFIG_NAMES = (".specweave.toml", "specweave.toml")
+_CONFIG_NAMES = ("specweave.toml", ".specweave.toml")
 
 
 def find_config(start: Path | None = None) -> Path | None:
@@ -150,9 +138,9 @@ def _toml_load(text: str) -> dict:
         import tomllib
 
         return tomllib.loads(text)
-    import tomli  # type: ignore[import-not-found]
+    import tomli
 
-    return tomli.loads(text)  # type: ignore[no-any-return]
+    return tomli.loads(text)
 
 
 def load_config(config_path: Path | None = None) -> SpecWeaveConfig:
@@ -220,7 +208,6 @@ def _resolve_paths(paths: SpecWeavePaths, project_root: Path) -> SpecWeavePaths:
         manifest=resolve(paths.manifest),
         tests_dir=resolve(paths.tests_dir),
         reports_dir=resolve(paths.reports_dir),
-        state_dir=resolve(paths.state_dir),
         evidence_dir=resolve(paths.evidence_dir),
         reports_state_dir=resolve(paths.reports_state_dir),
         mapping_dir=resolve(paths.mapping_dir),
@@ -238,10 +225,11 @@ def _build_paths(spelling: str, data: dict) -> SpecWeavePaths:
         manifest=Path(data.get("manifest", f"{spec_segment}/manifest.json")),
         tests_dir=Path(data.get("tests_dir", "tests")),
         reports_dir=Path(data.get("reports_dir", f"{report_segment}")),
-        state_dir=Path(data.get("state_dir", ".specweave")),
-        evidence_dir=Path(data.get("evidence_dir", ".specweave/evidence")),
-        reports_state_dir=Path(data.get("reports_state_dir", ".specweave/reports")),
-        mapping_dir=Path(data.get("mapping_dir", ".specweave/mappings")),
+        evidence_dir=Path(data.get("evidence_dir", f"{spec_segment}/evidence")),
+        reports_state_dir=Path(
+            data.get("reports_state_dir", f"{report_segment}/specweave")
+        ),
+        mapping_dir=Path(data.get("mapping_dir", f"{spec_segment}/mappings")),
     )
 
 
@@ -256,13 +244,7 @@ def _build_gherkin(data: dict) -> SpecWeaveGherkin:
     defaults = SpecWeaveGherkin()
     return SpecWeaveGherkin(
         dialect=data.get("dialect", defaults.dialect),
-        document_format=data.get("document_format", defaults.document_format),
-        feature_extension=data.get("feature_extension", defaults.feature_extension),
-        feature_extensions=tuple(
-            data.get("feature_extensions", list(defaults.feature_extensions))
-        ),
         official_parser=data.get("official_parser", defaults.official_parser),
-        markdown_parser=data.get("markdown_parser", defaults.markdown_parser),
         compile_pickles=data.get("compile_pickles", defaults.compile_pickles),
         default_scenario_keyword=data.get(
             "default_scenario_keyword", defaults.default_scenario_keyword
@@ -321,10 +303,9 @@ def render_default_config(*, spelling: str = "behavior") -> str:
         f'manifest = "{spec_segment}/manifest.json"\n'
         f'tests_dir = "tests"\n'
         f'reports_dir = "{report_segment}"\n'
-        f'state_dir = ".specweave"\n'
-        f'evidence_dir = ".specweave/evidence"\n'
-        f'reports_state_dir = ".specweave/reports"\n'
-        f'mapping_dir = ".specweave/mappings"\n'
+        f'evidence_dir = "{spec_segment}/evidence"\n'
+        f'reports_state_dir = "{report_segment}/specweave"\n'
+        f'mapping_dir = "{spec_segment}/mappings"\n'
         f"\n"
         f"gitkeep = true\n"
         f"\n"
@@ -334,11 +315,7 @@ def render_default_config(*, spelling: str = "behavior") -> str:
         f"\n"
         f"[gherkin]\n"
         f'dialect = "en"\n'
-        f'document_format = "markdown"\n'
-        f'feature_extension = ".feature.md"\n'
-        f'feature_extensions = [".feature.md", ".feature"]\n'
         f"official_parser = false\n"
-        f'markdown_parser = "specweave"\n'
         f"compile_pickles = false\n"
         f'default_scenario_keyword = "Example"\n'
         f"require_given_when_then = true\n"
@@ -366,7 +343,7 @@ def render_default_config(*, spelling: str = "behavior") -> str:
 # Backward-compatible constants (existing code uses these)
 # ---------------------------------------------------------------------------
 
-REPORT_DIR = Path(".specweave/reports")
+REPORT_DIR = Path("reports/behavior/specweave")
 # Default directory for runner summary reports.
 
 BEHAVIOR_FEATURES_DIR = Path("specs/behavior/features")
@@ -375,8 +352,8 @@ BEHAVIOR_MANIFEST_PATH = Path("specs/behavior/manifest.json")
 PYTEST_TESTS_DIR = Path("tests")
 BEHAVIOR_REPORTS_DIR = Path("reports/behavior")
 SPECWEAVE_REPORTS_DIR = REPORT_DIR
-SPECWEAVE_EVIDENCE_DIR = Path(".specweave/evidence")
-SPECWEAVE_MAPPING_DIR = Path(".specweave/mappings")
+SPECWEAVE_EVIDENCE_DIR = Path("specs/behavior/evidence")
+SPECWEAVE_MAPPING_DIR = Path("specs/behavior/mappings")
 
 # Compatibility aliases retained for older code paths.
 FEATURES_DIR = BEHAVIOR_FEATURES_DIR

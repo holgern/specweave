@@ -18,7 +18,7 @@ updated_at: "2026-06-08T18:30:00Z"
    coverage and evidence mapping break. Mitigated by `require_bdd_ids = true`
    and lint enforcement.
 
-2. **Dual format complexity.** Supporting both `.feature` and `.feature.md`
+2. **Dual format complexity.** Supporting both `.feature` and `.feature`
    doubles the parser surface. The `convert` command and `gherkin/markdown.py`
    must stay in sync with the classic parser.
 

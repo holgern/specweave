@@ -127,7 +127,9 @@ def create_plan(
     lines.append("```bash")
     lines.append(f"specweave behavior import-report {junit_file} \\")
     lines.append("  --format junit-xml \\")
-    evidence = f".specweave/evidence/{area}-{feature_slug}.pytest-evidence.json"
+    evidence = (
+        f"specs/{config.spelling}/evidence/{area}-{feature_slug}.pytest-evidence.json"
+    )
     lines.append(f"  --out {evidence}")
     lines.append("```")
     lines.append("")
@@ -139,7 +141,7 @@ def create_plan(
 def create_taskledger_draft(
     *,
     feature_path: Path,
-    out_path: Path = Path(".specweave/mappings/taskledger/draft.json"),
+    out_path: Path = Path("specs/behavior/mappings/taskledger/draft.json"),
     config: SpecWeaveConfig | None = None,
 ) -> None:
     """Create a Taskledger task draft JSON from a feature file.

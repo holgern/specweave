@@ -26,7 +26,7 @@ from specweave.reports.normalize import (
     write_evidence_json,
 )
 
-FEATURE = "specs/behavior/features/reports/fail-closed.feature.md"
+FEATURE = "specs/behavior/features/reports/fail-closed.feature"
 
 
 def _scenario(name: str, status: str, tags: tuple[str, ...]) -> ScenarioResult:  # type: ignore[no-untyped-def]
@@ -50,7 +50,7 @@ def _write_report(tmp_path, elements):  # type: ignore[no-untyped-def]
     return path
 
 
-# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature
 # specweave: scenario=@bdd-fail-closed-undefined-scenario
 def test_criterion_requires_passing_native_result(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Undefined scenario fails the criterion."""
@@ -69,7 +69,7 @@ def test_criterion_requires_passing_native_result(tmp_path) -> None:  # type: ig
     assert report.criteria[0].status == "failed"
 
 
-# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature
 # specweave: scenario=@bdd-fail-closed-multiple-scenarios
 def test_criterion_fails_when_sibling_undefined(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """One failed scenario fails the whole criterion."""
@@ -93,7 +93,7 @@ def test_criterion_fails_when_sibling_undefined(tmp_path) -> None:  # type: igno
     assert report.criteria[0].status == "failed"
 
 
-# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature
 # specweave: scenario=@bdd-fail-closed-unlinked-scenario
 def test_missing_expected_coverage_fails(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Unlinked scenario does not satisfy any criterion."""
@@ -148,7 +148,7 @@ def test_title_only_never_drives_matching() -> None:  # type: ignore[no-untyped-
     assert criteria == {"ac-0001": "passed", "ac-0002": "failed"}
 
 
-# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature
 # specweave: scenario=@bdd-fail-closed-passed-scenario
 def test_evidence_records_command_source_and_paths(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Passed scenario satisfies the criterion."""
@@ -169,7 +169,7 @@ def test_evidence_records_command_source_and_paths(tmp_path) -> None:  # type: i
     report = normalize_report(
         path, "cucumber-json", command=("behave", "tests/bdd/features")
     )
-    out = tmp_path / ".specweave/evidence/task-0123.bdd-evidence.json"
+    out = tmp_path / "specs/behavior/evidence/task-0123.bdd-evidence.json"
     write_evidence_json(report, "task-0123", out)
     data = json.loads(out.read_text(encoding="utf-8"))
     assert data["task_id"] == "task-0123"
@@ -207,7 +207,7 @@ def test_passing_report_only_when_all_gates_pass(tmp_path) -> None:  # type: ign
     assert all(c.status == "passed" for c in report.criteria)
 
 
-# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature
 # specweave: scenario=@bdd-fail-closed-failed-scenario
 def test_failed_scenario_fails_criterion(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Failed scenario fails the linked criterion."""
@@ -226,7 +226,7 @@ def test_failed_scenario_fails_criterion(tmp_path) -> None:  # type: ignore[no-u
     assert report.criteria[0].status == "failed"
 
 
-# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature
 # specweave: scenario=@bdd-fail-closed-skipped-scenario
 def test_skipped_scenario_fails_criterion(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Skipped scenario fails the criterion by default."""
@@ -245,7 +245,7 @@ def test_skipped_scenario_fails_criterion(tmp_path) -> None:  # type: ignore[no-
     assert report.criteria[0].status == "failed"
 
 
-# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature
 # specweave: scenario=@bdd-fail-closed-pending-scenario
 def test_pending_scenario_fails_criterion(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Pending scenario fails the criterion."""
@@ -264,7 +264,7 @@ def test_pending_scenario_fails_criterion(tmp_path) -> None:  # type: ignore[no-
     assert report.criteria[0].status == "failed"
 
 
-# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature
 # specweave: scenario=@bdd-fail-closed-ambiguous-scenario
 def test_ambiguous_scenario_fails_criterion(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Ambiguous scenario fails the criterion."""
@@ -283,7 +283,7 @@ def test_ambiguous_scenario_fails_criterion(tmp_path) -> None:  # type: ignore[n
     assert report.criteria[0].status == "failed"
 
 
-# specweave: feature=specs/behavior/features/reports/fail-closed.feature.md
+# specweave: feature=specs/behavior/features/reports/fail-closed.feature
 # specweave: scenario=@bdd-fail-closed-exit-code-not-evidence
 def test_exit_code_not_used_as_evidence(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Passing exit code does not override failed scenarios."""

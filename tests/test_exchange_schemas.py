@@ -60,7 +60,7 @@ def test_exchange_schema_required_fields_match_current_payloads() -> None:
             "producer": "specweave",
             "candidate": {
                 "title": "Login",
-                "source_refs": ["login.feature.md"],
+                "source_refs": ["login.feature"],
                 "bdd_ids": ["bdd-login"],
                 "status": "draft",
             },

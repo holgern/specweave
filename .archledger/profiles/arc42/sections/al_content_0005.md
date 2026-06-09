@@ -66,7 +66,7 @@ source_refs:
   scenario linting, duplicate `@bdd-*` detection.
 - `specweave/gherkin/tags.py` — tag parsing/filtering helpers.
 - `specweave/gherkin/convert.py` — classic ↔ Markdown format conversion.
-- `specweave/gherkin/markdown.py` — Markdown `.feature.md` parser/writer.
+- `specweave/gherkin/markdown.py` — Markdown `.feature` parser/writer.
 - `specweave/gherkin/draft.py` — feature draft loading from JSON.
 
 ### Behavior Workflow

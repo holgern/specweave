@@ -14,7 +14,7 @@ updated_at: "2026-06-08T18:30:00Z"
 
 | Term                 | Definition                                                                  |
 | -------------------- | --------------------------------------------------------------------------- |
-| Behavior spec        | A Gherkin `.feature.md` or `.feature` file describing expected behavior     |
+| Behavior spec        | A Gherkin `.feature` or `.feature` file describing expected behavior        |
 | Canonical layout     | The default directory structure: `specs/behavior/features/`, `tests/`, etc. |
 | Brownfield workflow  | Generating specs from existing pytest tests (tests → specs)                 |
 | New-feature workflow | Writing specs first, then generating test skeletons (spec → tests)          |
@@ -25,9 +25,9 @@ updated_at: "2026-06-08T18:30:00Z"
 | Fail-closed          | Evidence normalization that treats every non-passed status as blocking      |
 | Plain pytest         | Standard `test_*.py` files without pytest-bdd or behave dependencies        |
 | Manifest             | `specs/behavior/manifest.json` — generated index of all features/scenarios  |
-| Evidence JSON        | Normalized test execution evidence in `.specweave/evidence/`                |
+| Evidence JSON        | Normalized test execution evidence in `specs/behavior/evidence/`            |
 | Task-BDD JSON        | Portable BDD representation used for Taskledger exchange                    |
-| Feature Markdown     | `.feature.md` format — Gherkin embedded in Markdown code fences             |
+| Feature Markdown     | `.feature` format — Gherkin embedded in Markdown code fences                |
 | Source mapping       | `@specweave` markers and comments in generated tests linking to scenarios   |
 | Building block       | A top-level architectural module or subsystem within SpecWeave              |
 | Archledger           | External tool that owns durable architecture and specification records      |

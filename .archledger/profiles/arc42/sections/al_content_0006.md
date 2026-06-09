@@ -25,11 +25,11 @@ Developer          SpecWeave CLI              Filesystem
    │   gherkin           │                        │
    │   --from-tests      │ AST-read tests/*.py    │
    │────────────────────►│───────────────────────►│
-   │                     │ generate .feature.md   │
+   │                     │ generate .feature   │
    │                     │───────────────────────►│
    │                     │                        │
    │ specweave behavior  │                        │
-   │   check             │ lint .feature.md files │
+   │   check             │ lint .feature files │
    │────────────────────►│───────────────────────►│
    │                     │                        │
    │ specweave behavior  │                        │
@@ -57,7 +57,7 @@ Developer          SpecWeave CLI              Filesystem
    │                     │                        │
    │ specweave create    │                        │
    │   feature           │                        │
-   │   --area --title    │ generate .feature.md   │
+   │   --area --title    │ generate .feature   │
    │────────────────────►│───────────────────────►│
    │                     │                        │
    │ specweave behavior  │                        │
@@ -78,4 +78,4 @@ Developer          SpecWeave CLI              Filesystem
 3. Non-passed scenarios fail the report. Missing expected `@ac-*` coverage
    fails the report.
 4. Output: normalized JSON or Taskledger evidence JSON to
-   `.specweave/evidence/`.
+   `specs/behavior/evidence/`.
