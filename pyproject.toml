@@ -31,7 +31,6 @@ keywords = ["bdd", "gherkin", "cucumber", "pytest", "testing", "developer-tools"
 dependencies = [
     "typer",
     "click",
-    "gherkin-official>=39,<40",
     "tomli>=2; python_version < '3.11'",
 ]
 classifiers = [
@@ -62,8 +61,12 @@ Issues = "https://github.com/holgern/specweave/issues"
 Changelog = "https://github.com/holgern/specweave/releases"
 
 [project.optional-dependencies]
+gherkin = [
+    "gherkin-official>=39,<40",
+]
 dev = [
     "build",
+    ".[gherkin]",
     "mypy",
     "pytest",
     "pytest-xdist",

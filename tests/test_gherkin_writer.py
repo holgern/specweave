@@ -189,3 +189,54 @@ def test_feature_description_rendered() -> None:
     output = write_feature(feature)
     assert "  As a user" in output
     assert "  I want docs" in output
+
+
+class TestWriterRejectsUnsupportedKeywords:
+    def test_rejects_scenario_outline_in_classic(self) -> None:
+        """Writer raises on Scenario Outline keyword."""
+        feature = Feature(
+            title="F",
+            scenarios=(
+                Scenario(
+                    title="S",
+                    keyword="Scenario Outline",
+                    steps=(Step(keyword="Given", text="x"),),
+                ),
+            ),
+        )
+        import pytest
+
+        with pytest.raises(ValueError, match="Scenario Outline"):
+            write_feature(feature)
+
+    def test_rejects_scenario_template_in_classic(self) -> None:
+        """Writer raises on Scenario Template keyword."""
+        feature = Feature(
+            title="F",
+            scenarios=(
+                Scenario(
+                    title="S",
+                    keyword="Scenario Template",
+                    steps=(Step(keyword="Given", text="x"),),
+                ),
+            ),
+        )
+        import pytest
+
+        with pytest.raises(ValueError, match="Scenario Template"):
+            write_feature(feature)
+
+    def test_accepts_example_keyword(self) -> None:
+        """Writer accepts Example keyword."""
+        feature = Feature(
+            title="F",
+            scenarios=(
+                Scenario(
+                    title="S",
+                    keyword="Example",
+                    steps=(Step(keyword="Given", text="x"),),
+                ),
+            ),
+        )
+        output = write_feature(feature)
+        assert "Example: S" in output

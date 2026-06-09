@@ -147,7 +147,7 @@ class TestLoadConfig:
             'document_format = "classic"\n'
             'feature_extension = ".feature"\n'
             'feature_extensions = [".feature"]\n'
-            "official_parser = false\n"
+            "official_parser = true\n"
             'markdown_parser = "off"\n'
             "compile_pickles = true\n"
         )
@@ -155,7 +155,7 @@ class TestLoadConfig:
         assert config.gherkin.document_format == "classic"
         assert config.gherkin.feature_extension == ".feature"
         assert config.gherkin.feature_extensions == (".feature",)
-        assert config.gherkin.official_parser is False
+        assert config.gherkin.official_parser is True
         assert config.gherkin.markdown_parser == "off"
         assert config.gherkin.compile_pickles is True
 
@@ -207,7 +207,7 @@ class TestRenderDefaultConfig:
         assert 'document_format = "markdown"' in text
         assert 'feature_extension = ".feature.md"' in text
         assert 'feature_extensions = [".feature.md", ".feature"]' in text
-        assert "official_parser = true" in text
+        assert "official_parser = false" in text
         assert 'markdown_parser = "specweave"' in text
         assert "compile_pickles = false" in text
 
@@ -260,3 +260,18 @@ class TestSpecWeaveGherkin:
         """Loading with no file returns default config (invalid parser)."""
         with pytest.raises(ValueError, match="markdown_parser"):
             SpecWeaveGherkin(markdown_parser="bogus")
+
+    def test_default_official_parser_is_false(self) -> None:
+        """Default official_parser is false."""
+        g = SpecWeaveGherkin()
+        assert g.official_parser is False
+
+    def test_compile_pickles_without_official_raises(self) -> None:
+        """compile_pickles=True with official_parser=False raises ValueError."""
+        with pytest.raises(ValueError, match="compile_pickles"):
+            SpecWeaveGherkin(compile_pickles=True, official_parser=False)
+
+    def test_compile_pickles_with_official_ok(self) -> None:
+        """compile_pickles=True with official_parser=True is allowed."""
+        g = SpecWeaveGherkin(compile_pickles=True, official_parser=True)
+        assert g.compile_pickles is True

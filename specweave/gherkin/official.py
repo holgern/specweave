@@ -14,7 +14,7 @@ def _gherkin_imports() -> tuple[type, type]:
     except ImportError as exc:
         raise ParseError(
             "gherkin-official is required for official parser support; "
-            "install specweave with its runtime dependencies."
+            "install specweave[gherkin]."
         ) from exc
     return Parser, Compiler
 

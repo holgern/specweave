@@ -44,7 +44,7 @@ def _format_backticked_tags(tags: tuple[str, ...]) -> str:
 _FEATURE_HEADING = re.compile(r"^#{1,6}\s+Feature:\s*(.*)$", re.IGNORECASE)
 _RULE_HEADING = re.compile(r"^#{1,6}\s+Rule:\s*(.*)$", re.IGNORECASE)
 _SCENARIO_HEADING = re.compile(
-    r"^#{1,6}\s+(Scenario|Example|Scenario Outline|Scenario Template):\s*(.*)$",
+    r"^#{1,6}\s+(Scenario|Example):\s*(.*)$",
     re.IGNORECASE,
 )
 _STEP_BULLET = re.compile(
@@ -70,8 +70,6 @@ def _is_comment(line: str) -> bool:
         "Rule:",
         "Scenario:",
         "Example:",
-        "Scenario Outline:",
-        "Scenario Template:",
     ):
         if rest.startswith(keyword):
             return False
@@ -424,12 +422,12 @@ def _write_md_scenario(scenario: Scenario, lines: list[str], *, has_rule: bool) 
     if tag_line:
         lines.append(tag_line)
     level = "###" if has_rule else "##"
-    keyword = (
-        scenario.keyword
-        if scenario.keyword
-        in {"Scenario", "Example", "Scenario Outline", "Scenario Template"}
-        else "Scenario"
-    )
+    if scenario.keyword not in {"Scenario", "Example"}:
+        raise ValueError(
+            f"Cannot render unsupported scenario keyword "
+            f"without semantic loss: {scenario.keyword}"
+        )
+    keyword = scenario.keyword
     lines.append(f"{level} {keyword}: {scenario.title}")
     if scenario.description:
         for desc_line in scenario.description.splitlines():

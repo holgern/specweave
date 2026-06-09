@@ -72,12 +72,15 @@ def _first_token(stripped: str) -> str:
     return stripped.split(maxsplit=1)[0] if stripped else ""
 
 
-def _parse_steps(lines: list[str], start: int) -> tuple[tuple[Step, ...], int]:
+def _parse_steps(
+    lines: list[str], start: int, *, strict: bool = False
+) -> tuple[tuple[Step, ...], int]:
     """Collect steps for the current scenario starting at *start*.
 
-    Stops at the next tag line, ``Rule:``/``Scenario:``/``Feature:``. Blank and
-    comment lines are skipped. Unrecognized non-block lines are skipped (doc
-    strings, data tables, and other unsupported constructs are not modeled).
+    Stops at the next tag line, ``Rule:``/``Scenario:``/``Feature:``.
+    Blank and comment lines are skipped. When *strict* is True,
+    unrecognized non-block lines raise ``ValueError`` instead of being
+    silently skipped.
     """
     steps: list[Step] = []
     i = start
@@ -92,6 +95,12 @@ def _parse_steps(lines: list[str], start: int) -> tuple[tuple[Step, ...], int]:
         if token in _STEP_KEYWORDS:
             text = stripped[len(token) :].strip()
             steps.append(Step(keyword=token, text=text))
+            i += 1
+            continue
+        if strict:
+            raise ValueError(
+                f"Unsupported or invalid scenario line at {i + 1}: {stripped}"
+            )
         # Unknown line within a scenario: skip gracefully.
         i += 1
     return tuple(steps), i

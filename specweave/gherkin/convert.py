@@ -123,6 +123,49 @@ def _validate_with_official(
     validate_classic_with_official(text, source_path=source_path)
 
 
+
+def _validate_with_specweave(
+    text: str,
+    *,
+    source_path: Path,
+    document_format: str,
+) -> None:
+    """Validate *text* using SpecWeave's strict subset validator.
+
+    Rejects constructs that cannot be preserved in the SpecWeave model.
+    """
+    from specweave.gherkin.validation import (
+        validate_classic_specweave_subset,
+        validate_markdown_specweave_subset,
+    )
+
+    if document_format == "markdown":
+        validate_markdown_specweave_subset(text, source_path=source_path)
+    else:
+        validate_classic_specweave_subset(text, source_path=source_path)
+
+
+def _validate(
+    text: str,
+    *,
+    source_path: Path,
+    document_format: str,
+    config: SpecWeaveConfig,
+) -> None:
+    """Dispatch validation based on config."""
+    if config.gherkin.official_parser:
+        _validate_with_official(
+            text,
+            source_path=source_path,
+            document_format=document_format,
+        )
+    else:
+        _validate_with_specweave(
+            text,
+            source_path=source_path,
+            document_format=document_format,
+        )
+
 def convert_feature_file(
     *,
     source_path: Path,
@@ -152,11 +195,12 @@ def convert_feature_file(
 
     target_path = out_path or default_output_path(source_path, resolved_target_format)
 
-    if validate and config.gherkin.official_parser:
-        _validate_with_official(
+    if validate:
+        _validate(
             source_text,
             source_path=source_path,
             document_format=resolved_source_format,
+            config=config,
         )
 
     feature = parse_feature(
@@ -172,11 +216,12 @@ def convert_feature_file(
     )
     converted_text = write_feature(feature, document_format=resolved_target_format)
 
-    if validate and config.gherkin.official_parser:
-        _validate_with_official(
+    if validate:
+        _validate(
             converted_text,
             source_path=target_path,
             document_format=resolved_target_format,
+            config=config,
         )
 
     warnings: list[str] = []
@@ -219,7 +264,7 @@ def convert_feature_file(
         "output_path": str(target_path),
         "source_format": resolved_source_format,
         "target_format": resolved_target_format,
-        "validated": bool(validate and config.gherkin.official_parser),
+        "validated": bool(validate),
         "warnings": warnings,
     }
 
@@ -372,7 +417,7 @@ def convert_feature_files(
         "source_count": len(sources),
         "summary": summary,
         "target_format": resolved_target_format,
-        "validated": bool(validate and config.gherkin.official_parser),
+        "validated": bool(validate),
         "items": items,
         "errors": errors,
     }

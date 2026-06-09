@@ -6,8 +6,10 @@ from pathlib import Path
 
 import pytest
 
-from specweave.errors import ParseError
-from specweave.gherkin.official import (
+gherkin = pytest.importorskip("gherkin")  # noqa: F841
+
+from specweave.errors import ParseError  # noqa: E402
+from specweave.gherkin.official import (  # noqa: E402
     parse_classic_with_official,
     validate_classic_with_official,
 )
@@ -94,3 +96,30 @@ class TestValidateClassicWithOfficial:
     def test_validates_invalid(self) -> None:
         with pytest.raises(ParseError):
             validate_classic_with_official("bogus")
+
+
+class TestMissingOfficialDependency:
+    """Tests for the error message when gherkin-official is not installed."""
+
+    def test_import_error_message_mentions_extra(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """When gherkin is not importable, the error mentions specweave[gherkin]."""
+        import importlib
+
+        # Force the import to fail by removing the module if present
+        monkeypatch.setitem(
+            __import__("sys").modules, "gherkin", None
+        )
+        monkeypatch.setattr(
+            importlib,
+            "import_module",
+            lambda name: (_ for _ in ()).throw(
+                ImportError(f"No module named {name!r}")
+            ),
+        )
+
+        from specweave.gherkin.official import _gherkin_imports
+
+        with pytest.raises(ParseError, match="specweave\\[gherkin\\]"):
+            _gherkin_imports()

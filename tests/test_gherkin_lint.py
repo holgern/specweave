@@ -179,11 +179,11 @@ def test_lint_deprecated_path(tmp_path: Path) -> None:
 # specweave: feature=specs/behavior/features/gherkin/lint.feature.md
 # specweave: scenario=@bdd-lint-strict-unsupported
 def test_lint_strict_unsupported(tmp_path: Path) -> None:
-    """Strict mode warns on Scenario Outline."""
+    """Strict mode errors on Scenario Outline."""
     d = _canonical_dir(tmp_path)
     _write_feature(
         d / "test.feature",
         "Feature: F\n  Scenario Outline: SO\n    Given x\n    When y\n    Then z\n",
     )
     findings = lint_feature_files([d / "test.feature"], strict=True)
-    assert any(f.code == "SWBEH008" for f in findings)
+    assert any(f.code == "SWBEH008" and f.level == "error" for f in findings)

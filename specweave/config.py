@@ -39,7 +39,7 @@ class SpecWeaveGherkin:
     document_format: str = "markdown"  # markdown | classic
     feature_extension: str = ".feature.md"
     feature_extensions: tuple[str, ...] = (".feature.md", ".feature")
-    official_parser: bool = True
+    official_parser: bool = False
     markdown_parser: str = "specweave"  # specweave | cucumber-js | off
     compile_pickles: bool = False
     default_scenario_keyword: str = "Example"
@@ -49,6 +49,7 @@ class SpecWeaveGherkin:
     include_generated_tag: bool = True
     include_needs_review_tag: bool = True
     canonical_task_tags: bool = False
+
 
     def __post_init__(self) -> None:
         if self.document_format not in ("markdown", "classic"):
@@ -60,6 +61,11 @@ class SpecWeaveGherkin:
             raise ValueError(
                 f"Unsupported markdown_parser: {self.markdown_parser}; "
                 "expected 'specweave', 'cucumber-js', or 'off'"
+            )
+        if self.compile_pickles and not self.official_parser:
+            raise ValueError(
+                "compile_pickles requires official_parser to be enabled; "
+                "install specweave[gherkin] and set official_parser = true."
             )
 
 
@@ -332,7 +338,7 @@ def render_default_config(*, spelling: str = "behavior") -> str:
         f'document_format = "markdown"\n'
         f'feature_extension = ".feature.md"\n'
         f'feature_extensions = [".feature.md", ".feature"]\n'
-        f"official_parser = true\n"
+        f"official_parser = false\n"
         f'markdown_parser = "specweave"\n'
         f"compile_pickles = false\n"
         f'default_scenario_keyword = "Example"\n'

@@ -914,7 +914,8 @@ def convert(
     validate: Annotated[
         bool,
         typer.Option(
-            "--validate/--no-validate", help="Validate with gherkin-official."
+            "--validate/--no-validate",
+            help="Validate with the configured Gherkin validator.",
         ),
     ] = True,
 ) -> None:

@@ -26,9 +26,12 @@ def _write_scenario(scenario: Scenario, indent: str, step_indent: str) -> list[s
     tag_line = _format_tag_line(scenario.tags, indent)
     if tag_line is not None:
         lines.append(tag_line)
-    keyword = (
-        scenario.keyword if scenario.keyword in {"Scenario", "Example"} else "Scenario"
-    )
+    if scenario.keyword not in {"Scenario", "Example"}:
+        raise ValueError(
+            f"Cannot render unsupported scenario keyword "
+            f"without semantic loss: {scenario.keyword}"
+        )
+    keyword = scenario.keyword
     lines.append(f"{indent}{keyword}: {scenario.title}")
     lines.extend(_write_description(scenario.description, step_indent))
     for step in scenario.steps:

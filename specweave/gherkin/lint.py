@@ -181,7 +181,7 @@ def _unsupported_findings(path: Path, text: str, *, strict: bool) -> list[LintFi
             findings.append(
                 LintFinding(
                     code="SWBEH008",
-                    level="warning",
+                    level="error",
                     path=_feature_display_path(path),
                     line=line_no,
                     message=f"Unsupported construct ignored by parser: {stripped}",
