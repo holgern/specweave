@@ -28,6 +28,18 @@ specweave behavior import-report REPORT --format junit-xml
 specweave behavior import-taskledger SOURCE --out FEATURE
 ```
 
+## Review
+
+```bash
+specweave review specs
+specweave review coverage --view both --show gaps
+specweave review coverage --view feature --show missing
+specweave review coverage --view test --show unmapped
+```
+
+`review specs` is the concise health gate. `review coverage` is the detailed
+two-way browser for feature-to-pytest and pytest-to-feature traceability.
+
 ## Create
 
 ```bash

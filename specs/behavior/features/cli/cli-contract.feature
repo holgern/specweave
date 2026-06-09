@@ -60,6 +60,20 @@ Feature: SpecWeave CLI contract
       When specweave runs "behavior coverage"
       Then the coverage JSON is output
 
+    @bdd-cli-review-coverage-both-directions
+    Example: review coverage shows both feature and pytest directions
+      Given canonical behavior feature files and tests exist
+      When specweave runs "review coverage --view both --show gaps"
+      Then the output includes "Features -> pytest"
+      And the output includes "Pytest -> features"
+
+    @bdd-cli-behavior-coverage-view-test-json
+    Example: behavior coverage emits pytest-side JSON
+      Given canonical behavior feature files and tests exist
+      When specweave runs "behavior coverage --view test --format json"
+      Then the JSON includes tests
+      And the JSON includes unmapped_tests
+
     @bdd-cli-behavior-import-report
     Example: behavior import-report imports JUnit XML
       Given a JUnit XML report and mapped test files

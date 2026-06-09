@@ -57,3 +57,19 @@ Feature: Behavior spec review
       When specweave reviews the specs
       Then the findings include lint error codes
       And the summary counts include the lint findings
+
+  Rule: Review points to detailed coverage
+
+    @bdd-review-coverage-summary-both-directions
+    Example: Review summary includes pytest reverse coverage counts
+      Given behavior feature files and pytest tests exist
+      When specweave reviews the specs
+      Then the summary includes pytest test count
+      And the summary includes unmapped pytest test count
+
+    @bdd-review-warning-scenario-once
+    Example: Review warning prints scenario id once
+      Given a feature scenario with no bound pytest test
+      When specweave reviews the specs
+      Then the warning line includes the scenario id once
+      And the warning message does not repeat the scenario id

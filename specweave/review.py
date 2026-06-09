@@ -62,6 +62,9 @@ def run_review(
     features_total = coverage["features_total"]
     scenarios_total = coverage["scenarios_total"]
     scenarios_bound = coverage["scenarios_bound"]
+    pytest_tests_total = coverage["pytest_tests_total"]
+    pytest_tests_mapped = coverage["pytest_tests_mapped"]
+    pytest_tests_unmapped = coverage["pytest_tests_unmapped"]
     missing_bindings = coverage["missing_bindings"]
     stale_bindings = coverage.get("stale_bindings", [])
     duplicate_bindings = coverage.get("duplicate_bindings", [])
@@ -76,7 +79,6 @@ def run_review(
         }
         if scenario:
             entry["scenario"] = scenario
-            entry["message"] = f"{scenario} has no bound pytest test found."
         findings.append(entry)
         warnings_count += 1
 
@@ -166,6 +168,7 @@ def run_review(
     coverage_failed = bool(
         missing_bindings
         or stale_bindings
+        or pytest_tests_unmapped
         or coverage.get("deprecated_paths")
         or coverage.get("forbidden_pytest_bdd_usages")
     )
@@ -179,6 +182,9 @@ def run_review(
             "features": features_total,
             "scenarios": scenarios_total,
             "bound": scenarios_bound,
+            "pytest_tests": pytest_tests_total,
+            "pytest_mapped": pytest_tests_mapped,
+            "pytest_unmapped": pytest_tests_unmapped,
             "missing_bindings": len(missing_bindings),
             "stale_bindings": len(stale_bindings),
             "duplicate_bindings": len(duplicate_bindings),

@@ -215,3 +215,60 @@ class TestReviewAggregatesCoverage:
             "SWBEH006",
         ]
         assert any(f["code"] in lint_codes for f in result["findings"])
+
+
+# specweave: feature=specs/behavior/features/review/spec-review.feature
+# specweave: scenario=@bdd-review-coverage-summary-both-directions
+def test_review_summary_includes_pytest_reverse_counts(tmp_path: Path) -> None:
+    features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
+    tests_dir = tmp_path / "tests"
+    _write_behavior_feature(
+        features_dir / "login.feature",
+        scenario_id="@bdd-login-valid",
+        title="Valid login",
+    )
+    tests_dir.mkdir()
+    (tests_dir / "test_auth_login.py").write_text(
+        "def test_valid_login() -> None:\n    pass\n",
+        encoding="utf-8",
+    )
+    config = SpecWeaveConfig(
+        paths=SpecWeavePaths(
+            features_dir=features_dir.parent,
+            tests_dir=tests_dir,
+        ),
+    )
+
+    result = run_review(config=config)
+
+    assert result["summary"]["pytest_tests"] == 1
+    assert result["summary"]["pytest_mapped"] == 0
+    assert result["summary"]["pytest_unmapped"] == 1
+
+
+# specweave: feature=specs/behavior/features/review/spec-review.feature
+# specweave: scenario=@bdd-review-warning-scenario-once
+def test_review_missing_binding_message_does_not_duplicate_scenario_id(
+    tmp_path: Path,
+) -> None:
+    features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
+    _write_feature(
+        features_dir / "login.feature",
+        "@feature-login\nFeature: Login\n"
+        "  @rule-login\n  Rule: Login\n"
+        "    @bdd-login-valid-login\n    Example: Valid login\n"
+        "      Given a user\n      When login\n      Then success\n",
+    )
+    (tmp_path / "tests").mkdir()
+    config = SpecWeaveConfig(
+        paths=SpecWeavePaths(
+            features_dir=features_dir.parent,
+            tests_dir=tmp_path / "tests",
+        ),
+    )
+
+    result = run_review(config=config)
+
+    finding = next(f for f in result["findings"] if f["code"] == "SWCOV001")
+    assert finding["scenario"] == "@bdd-login-valid-login"
+    assert finding["message"].count("@bdd-login-valid-login") == 0

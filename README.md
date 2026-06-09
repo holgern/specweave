@@ -35,6 +35,7 @@ specweave init
 specweave doctor
 specweave create gherkin --from-tests tests --out specs/behavior/features
 specweave review specs
+specweave review coverage --view both --show gaps
 specweave behavior index
 specweave behavior generate-tests --features specs/behavior/features --tests-dir tests
 pytest --junitxml=reports/behavior/pytest-junit.xml

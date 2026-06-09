@@ -7,6 +7,8 @@ from pathlib import Path
 
 from specweave.python_inspect.assertions import describe_assert
 from specweave.python_inspect.ast_reader import (
+    collect_pytest_tests,
+    discover_pytest_tests,
     discover_specweave_tests,
     extract_test_scenarios,
 )
@@ -177,3 +179,67 @@ def test_rejects_invalid_password():
         assert mapping.source == "docstring"
     finally:
         path.unlink()
+
+
+def test_discover_pytest_tests_lists_all_test_functions(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    path = tmp_path / "tests" / "test_auth_login.py"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        """
+def helper() -> None:
+    pass
+
+
+def test_valid_login() -> None:
+    pass
+
+
+async def test_reject_invalid_password() -> None:
+    pass
+""",
+        encoding="utf-8",
+    )
+
+    items = discover_pytest_tests(path)
+
+    assert [item.function_name for item in items] == [
+        "test_valid_login",
+        "test_reject_invalid_password",
+    ]
+    assert [item.nodeid for item in items] == [
+        "tests/test_auth_login.py::test_valid_login",
+        "tests/test_auth_login.py::test_reject_invalid_password",
+    ]
+
+
+def test_collect_pytest_tests_keeps_unmapped_tests(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.chdir(tmp_path)
+    first = tmp_path / "tests" / "test_auth_login.py"
+    second = tmp_path / "tests" / "test_config.py"
+    first.parent.mkdir(parents=True, exist_ok=True)
+    first.write_text(
+        """
+# specweave: feature=specs/behavior/features/auth/login.feature
+# specweave: scenario=@bdd-login-valid
+def test_valid_login() -> None:
+    pass
+""",
+        encoding="utf-8",
+    )
+    second.write_text(
+        """
+def test_loads_hidden_config() -> None:
+    pass
+""",
+        encoding="utf-8",
+    )
+
+    items = collect_pytest_tests([first, second])
+
+    assert [item.nodeid for item in items] == [
+        "tests/test_auth_login.py::test_valid_login",
+        "tests/test_config.py::test_loads_hidden_config",
+    ]

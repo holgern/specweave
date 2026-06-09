@@ -32,6 +32,16 @@ class SpecweaveTestMapping:
     source: str
 
 
+@dataclass(frozen=True)
+class PytestTestItem:
+    """Pytest test function discovered from a Python module."""
+
+    function_name: str
+    test_file: str
+    nodeid: str
+    line: int
+
+
 def extract_test_scenarios(path: Path) -> list[Scenario]:
     """Parse a Python file and extract test functions as candidate Scenarios.
 
@@ -209,6 +219,28 @@ def discover_specweave_tests(path: Path) -> list[SpecweaveTestMapping]:
     return mappings
 
 
+def discover_pytest_tests(path: Path) -> list[PytestTestItem]:
+    """Discover plain pytest test functions from *path*."""
+
+    source = path.read_text(encoding="utf-8")
+    tree = ast.parse(source, filename=str(path))
+    test_file = _display_path(path)
+    items: list[PytestTestItem] = []
+    for node in ast.walk(tree):
+        if isinstance(
+            node, (ast.FunctionDef, ast.AsyncFunctionDef)
+        ) and node.name.startswith("test_"):
+            items.append(
+                PytestTestItem(
+                    function_name=node.name,
+                    test_file=test_file,
+                    nodeid=f"{test_file}::{node.name}",
+                    line=node.lineno,
+                )
+            )
+    return sorted(items, key=lambda item: item.line)
+
+
 def collect_specweave_tests(paths: Iterable[Path]) -> list[SpecweaveTestMapping]:
     """Collect SpecWeave mappings from multiple pytest files."""
 
@@ -216,6 +248,15 @@ def collect_specweave_tests(paths: Iterable[Path]) -> list[SpecweaveTestMapping]
     for path in paths:
         mappings.extend(discover_specweave_tests(path))
     return mappings
+
+
+def collect_pytest_tests(paths: Iterable[Path]) -> list[PytestTestItem]:
+    """Collect plain pytest test functions from multiple Python files."""
+
+    items: list[PytestTestItem] = []
+    for path in paths:
+        items.extend(discover_pytest_tests(path))
+    return items
 
 
 def _function_to_scenario(
@@ -294,8 +335,11 @@ def extract_class_rules(path: Path) -> list[tuple[str, list[ast.FunctionDef]]]:
 
 
 __all__ = [
+    "PytestTestItem",
     "SpecweaveTestMapping",
+    "collect_pytest_tests",
     "collect_specweave_tests",
+    "discover_pytest_tests",
     "discover_specweave_tests",
     "extract_test_scenarios",
     "extract_module_docstring",

@@ -452,6 +452,89 @@ def test_rejects_invalid_password() -> None:
     assert "specs/behavior/features/config/configuration.feature" not in result.stdout
 
 
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature
+# specweave: scenario=@bdd-cli-review-coverage-both-directions
+def test_review_coverage_both_directions_text(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    _write_behavior_feature(
+        tmp_path,
+        relative_path="specs/behavior/features/auth/login.feature",
+        title="Login",
+        scenario_id="@bdd-login-valid",
+        scenario_title="Valid login",
+    )
+    _write(
+        tmp_path,
+        "tests/test_auth_login.py",
+        """
+def test_valid_login() -> None:
+    pass
+""",
+    )
+
+    result = runner.invoke(
+        app,
+        ["review", "coverage", "--view", "both", "--show", "gaps"],
+    )
+
+    assert result.exit_code == 1, result.stdout
+    assert "Features -> pytest" in result.stdout
+    assert "Pytest -> features" in result.stdout
+
+
+# specweave: feature=specs/behavior/features/cli/cli-contract.feature
+# specweave: scenario=@bdd-cli-behavior-coverage-view-test-json
+def test_behavior_coverage_view_test_json(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    _write_behavior_feature(
+        tmp_path,
+        relative_path="specs/behavior/features/auth/login.feature",
+        title="Login",
+        scenario_id="@bdd-login-valid",
+        scenario_title="Valid login",
+    )
+    _write(
+        tmp_path,
+        "tests/test_auth_login.py",
+        """
+def test_valid_login() -> None:
+    pass
+""",
+    )
+
+    result = runner.invoke(
+        app,
+        ["behavior", "coverage", "--view", "test", "--format", "json"],
+    )
+
+    assert result.exit_code == 1, result.stdout
+    data = json.loads(result.stdout)
+    assert "tests" in data
+    assert "unmapped_tests" in data
+
+
+# specweave: feature=specs/behavior/features/review/spec-review.feature
+# specweave: scenario=@bdd-review-warning-scenario-once
+def test_review_specs_prints_scenario_only_once(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    _write_behavior_feature(
+        tmp_path,
+        relative_path="specs/behavior/features/auth/login.feature",
+        title="Login",
+        scenario_id="@bdd-login-valid",
+        scenario_title="Valid login",
+    )
+    result = runner.invoke(app, ["review", "specs"])
+
+    assert result.exit_code == 1, result.stdout
+    line = next(
+        current
+        for current in result.stdout.splitlines()
+        if "SWCOV001" in current and "@bdd-login-valid" in current
+    )
+    assert line.count("@bdd-login-valid") == 1
+
+
 def test_behavior_mappings_lists_comment_and_marker_sources(
     tmp_path, monkeypatch
 ) -> None:  # type: ignore[no-untyped-def]

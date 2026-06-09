@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from specweave.behavior.coverage import build_behavior_coverage
+from specweave.behavior.coverage import build_behavior_coverage, render_coverage_text
 from specweave.gherkin.model import Feature, Scenario, Step
 from specweave.gherkin.writer import write_feature
 
@@ -202,6 +202,7 @@ def test_coverage_missing_test_file(tmp_path: Path, monkeypatch) -> None:
     )
     result = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
     assert len(result["missing_bindings"]) > 0
+    assert result["missing_bindings"][0]["reason"] == "missing_test_file"
 
 
 # specweave: feature=specs/behavior/features/behavior/coverage.feature
@@ -278,3 +279,134 @@ def test_coverage_manual_scenario_skipped(tmp_path: Path, monkeypatch) -> None:
         b for b in result["missing_bindings"] if b["scenario"] == "@bdd-login-valid"
     ]
     assert len(manual_missing) == 0
+
+
+# specweave: feature=specs/behavior/features/behavior/coverage.feature
+# specweave: scenario=@bdd-coverage-pytest-unmapped
+def test_coverage_lists_unmapped_pytest_tests(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    tests_dir = tmp_path / "tests"
+    _write_behavior_feature(
+        features_dir / "auth" / "login.feature",
+        title="Login",
+        scenario_id="@bdd-login-valid",
+        scenario_title="Valid login",
+    )
+    _write_test(
+        tests_dir / "test_auth_login.py",
+        """
+def test_valid_login() -> None:
+    pass
+""",
+    )
+
+    result = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
+
+    assert result["pytest_tests_total"] == 1
+    assert result["pytest_tests_unmapped"] == 1
+    assert (
+        result["unmapped_tests"][0]["nodeid"]
+        == "tests/test_auth_login.py::test_valid_login"
+    )
+
+
+# specweave: feature=specs/behavior/features/behavior/coverage.feature
+# specweave: scenario=@bdd-coverage-pytest-stale
+def test_coverage_marks_stale_pytest_test_in_reverse_inventory(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    tests_dir = tmp_path / "tests"
+    _write_behavior_feature(
+        features_dir / "auth" / "login.feature",
+        title="Login",
+        scenario_id="@bdd-login-valid",
+        scenario_title="Valid login",
+    )
+    _write_test(
+        tests_dir / "test_auth_login.py",
+        """
+# specweave: feature=specs/behavior/features/auth/login.feature
+# specweave: scenario=@bdd-login-missing
+def test_valid_login() -> None:
+    pass
+""",
+    )
+
+    result = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
+
+    assert result["tests"][0]["items"][0]["status"] == "stale"
+
+
+# specweave: feature=specs/behavior/features/behavior/coverage.feature
+# specweave: scenario=@bdd-coverage-candidate-tests
+def test_coverage_candidate_tests_are_hints_not_bindings(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    tests_dir = tmp_path / "tests"
+    _write_behavior_feature(
+        features_dir / "auth" / "login.feature",
+        title="Login",
+        scenario_id="@bdd-login-rejects-invalid-password",
+        scenario_title="Reject invalid password",
+    )
+    _write_test(
+        tests_dir / "test_auth_login.py",
+        """
+def test_reject_invalid_password() -> None:
+    pass
+""",
+    )
+
+    result = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
+
+    missing = result["missing_bindings"][0]
+    scenario = result["features"][0]["scenarios"][0]
+    assert scenario["status"] == "missing"
+    assert missing["reason"] == "unmapped_candidate_tests"
+    assert scenario["mappings"] == []
+    assert scenario["candidate_tests"][0]["nodeid"] == (
+        "tests/test_auth_login.py::test_reject_invalid_password"
+    )
+
+
+# specweave: feature=specs/behavior/features/behavior/coverage.feature
+# specweave: scenario=@bdd-coverage-both-directions-render
+def test_render_coverage_text_both_directions(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    tests_dir = tmp_path / "tests"
+    _write_behavior_feature(
+        features_dir / "auth" / "login.feature",
+        title="Login",
+        scenario_id="@bdd-login-valid",
+        scenario_title="Valid login",
+    )
+    _write_test(
+        tests_dir / "test_auth_login.py",
+        """
+def test_valid_login() -> None:
+    pass
+""",
+    )
+    _write_test(
+        tests_dir / "test_config_configuration.py",
+        """
+# specweave: feature=specs/behavior/features/config/configuration.feature
+# specweave: scenario=@bdd-config-missing
+def test_loads_hidden_config() -> None:
+    pass
+""",
+    )
+
+    data = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
+    rendered = render_coverage_text(data, view="both", show="gaps")
+
+    assert "Features -> pytest" in rendered
+    assert "Pytest -> features" in rendered
+    assert "Unmapped pytest tests" in rendered
+    assert "Missing scenario bindings" in rendered

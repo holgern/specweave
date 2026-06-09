@@ -38,14 +38,16 @@ specweave behavior index
 specweave behavior generate-tests --features specs/behavior/features --tests-dir tests
 ```
 
-## 4. Check static coverage
+## 4. Check static coverage in both directions
 
 ```bash
-specweave behavior coverage \
-  --features specs/behavior/features \
-  --tests tests \
-  --format text
+specweave review coverage --view both --show gaps
 ```
+
+Use feature-side gaps to add missing `# specweave:` markers or
+`@pytest.mark.specweave` mappings. Use pytest-side gaps to decide whether
+unmapped tests should be linked to existing scenarios, covered by a new
+scenario, or left outside behavior coverage intentionally.
 
 ## 5. Import evidence
 

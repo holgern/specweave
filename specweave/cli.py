@@ -245,16 +245,19 @@ def _required_option(value: str, option: str, context: str) -> str:
     return value
 
 
-def _coverage_failed(data: dict[str, object]) -> bool:
-    return any(
-        bool(data[key])
-        for key in (
-            "missing_bindings",
-            "stale_bindings",
-            "deprecated_paths",
-            "forbidden_pytest_bdd_usages",
-        )
-    )
+def _coverage_failed(
+    data: dict[str, object], *, include_unmapped_tests: bool = False
+) -> bool:
+    keys = [
+        "missing_bindings",
+        "stale_bindings",
+        "duplicate_bindings",
+        "deprecated_paths",
+        "forbidden_pytest_bdd_usages",
+    ]
+    if include_unmapped_tests:
+        keys.append("unmapped_tests")
+    return any(bool(data[key]) for key in keys)
 
 
 @behavior_app.command("check")
@@ -344,14 +347,21 @@ def behavior_generate_tests(
 
 @behavior_app.command("coverage")
 def behavior_coverage(
-    features: Annotated[Path, typer.Option("--features")] = Path(
-        "specs/behavior/features"
-    ),
+    ctx: typer.Context,
+    features: Annotated[Path | None, typer.Option("--features")] = None,
     feature: Annotated[
         Path | None,
         typer.Option("--feature", help="Limit the report to one feature file."),
     ] = None,
-    tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
+    tests: Annotated[Path | None, typer.Option("--tests")] = None,
+    view: Annotated[
+        str,
+        typer.Option("--view", help="View: feature, test, or both."),
+    ] = "feature",
+    test_file: Annotated[
+        Path | None,
+        typer.Option("--test-file", help="Limit the pytest-side report to one file."),
+    ] = None,
     output_format: Annotated[
         str,
         typer.Option("--format", help="Output format: json, text, or markdown."),
@@ -359,9 +369,17 @@ def behavior_coverage(
     show: Annotated[
         str,
         typer.Option(
-            "--show", help="Display filter: all, missing, bound, stale, or waived."
+            "--show",
+            help=(
+                "Display filter: all, gaps, missing, unmapped, bound, stale, "
+                "waived, or duplicate."
+            ),
         ),
     ] = "all",
+    suggestions: Annotated[
+        bool,
+        typer.Option("--suggestions/--no-suggestions"),
+    ] = True,
     json_output: Annotated[Path | None, typer.Option("--json")] = None,
     out: Annotated[
         Path | None,
@@ -384,7 +402,10 @@ def behavior_coverage(
         typer.echo("--json can only be used with --format json.", err=True)
         raise typer.Exit(code=1)
 
-    lint_target = feature or features
+    cli_ctx: CliContext = ctx.obj
+    resolved_features = features or cli_ctx.config.paths.features_dir
+    resolved_tests = tests or cli_ctx.config.paths.tests_dir
+    lint_target = feature or resolved_features
     findings = lint_feature_files(
         collect_feature_files((lint_target,)),
         require_scenario_ids=True,
@@ -397,9 +418,10 @@ def behavior_coverage(
 
     try:
         data = build_behavior_coverage(
-            features_dir=features,
-            tests_dir=tests,
+            features_dir=resolved_features,
+            tests_dir=resolved_tests,
             feature_path=feature,
+            test_file=test_file,
         )
         if output_format == "json":
             rendered = _dump_json(data)
@@ -410,7 +432,12 @@ def behavior_coverage(
                 write_coverage_json(data, output_path)
                 typer.echo(f"Wrote behavior coverage to {output_path}")
         elif output_format == "text":
-            rendered = render_coverage_text(data, show=show)
+            rendered = render_coverage_text(
+                data,
+                view=view,
+                show=show,
+                suggestions=suggestions,
+            )
             if out is None:
                 typer.echo(rendered)
             else:
@@ -418,7 +445,12 @@ def behavior_coverage(
                 out.write_text(rendered + "\n", encoding="utf-8")
                 typer.echo(f"Wrote behavior coverage to {out}")
         elif output_format == "markdown":
-            rendered = render_coverage_markdown(data, show=show)
+            rendered = render_coverage_markdown(
+                data,
+                view=view,
+                show=show,
+                suggestions=suggestions,
+            )
             if out is None:
                 typer.echo(rendered)
             else:
@@ -436,7 +468,7 @@ def behavior_coverage(
         typer.echo(f"Error: {exc}", err=True)
         raise typer.Exit(code=1) from exc
 
-    if _coverage_failed(data):
+    if _coverage_failed(data, include_unmapped_tests=view in {"test", "both"}):
         raise typer.Exit(code=1)
 
 
@@ -563,24 +595,33 @@ def bdd_generate_tests_alias(
 
 @bdd_app.command("coverage")
 def bdd_coverage_alias(
-    features: Annotated[Path, typer.Option("--features")] = Path(
-        "specs/behavior/features"
-    ),
+    ctx: typer.Context,
+    features: Annotated[Path | None, typer.Option("--features")] = None,
     feature: Annotated[Path | None, typer.Option("--feature")] = None,
-    tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
+    tests: Annotated[Path | None, typer.Option("--tests")] = None,
+    view: Annotated[str, typer.Option("--view")] = "feature",
+    test_file: Annotated[Path | None, typer.Option("--test-file")] = None,
     output_format: Annotated[str, typer.Option("--format")] = "json",
     show: Annotated[str, typer.Option("--show")] = "all",
+    suggestions: Annotated[
+        bool,
+        typer.Option("--suggestions/--no-suggestions"),
+    ] = True,
     json_output: Annotated[Path | None, typer.Option("--json")] = None,
     out: Annotated[Path | None, typer.Option("--out")] = None,
 ) -> None:
     """Compatibility alias for ``specweave behavior coverage``."""
 
     behavior_coverage(
+        ctx=ctx,
         features=features,
         feature=feature,
         tests=tests,
+        view=view,
+        test_file=test_file,
         output_format=output_format,
         show=show,
+        suggestions=suggestions,
         json_output=json_output,
         out=out,
     )
@@ -873,6 +914,106 @@ def _task_id(report):  # type: ignore[no-untyped-def]
 # --- review subcommands ----------------------------------------------------
 
 
+@review_app_cli.command("coverage")
+def review_coverage(
+    ctx: typer.Context,
+    features: Annotated[Path | None, typer.Option("--features")] = None,
+    feature: Annotated[
+        Path | None,
+        typer.Option("--feature", help="Limit the feature-side report to one file."),
+    ] = None,
+    tests: Annotated[Path | None, typer.Option("--tests")] = None,
+    test_file: Annotated[
+        Path | None,
+        typer.Option("--test-file", help="Limit the pytest-side report to one file."),
+    ] = None,
+    view: Annotated[str, typer.Option("--view")] = "both",
+    show: Annotated[str, typer.Option("--show")] = "gaps",
+    output_format: Annotated[str, typer.Option("--format")] = "text",
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+    suggestions: Annotated[
+        bool,
+        typer.Option("--suggestions/--no-suggestions"),
+    ] = True,
+) -> None:
+    """Browse detailed feature-to-pytest and pytest-to-feature coverage gaps."""
+    from specweave.behavior.coverage import (
+        build_behavior_coverage,
+        render_coverage_markdown,
+        render_coverage_text,
+        write_coverage_json,
+    )
+    from specweave.gherkin.lint import collect_feature_files, lint_feature_files
+
+    cli_ctx: CliContext = ctx.obj
+    resolved_features = features or cli_ctx.config.paths.features_dir
+    resolved_tests = tests or cli_ctx.config.paths.tests_dir
+    lint_target = feature or resolved_features
+    findings = lint_feature_files(
+        collect_feature_files((lint_target,)),
+        require_scenario_ids=True,
+    )
+    warnings = [finding for finding in findings if finding.level == "warning"]
+    if warnings:
+        _print_findings(warnings)
+    if _has_errors(findings):
+        raise typer.Exit(code=1)
+
+    try:
+        data = build_behavior_coverage(
+            features_dir=resolved_features,
+            tests_dir=resolved_tests,
+            feature_path=feature,
+            test_file=test_file,
+        )
+        if output_format == "json":
+            rendered = _dump_json(data)
+            if out is None:
+                typer.echo(rendered)
+            else:
+                write_coverage_json(data, out)
+                typer.echo(f"Wrote review coverage to {out}")
+        elif output_format == "text":
+            rendered = render_coverage_text(
+                data,
+                view=view,
+                show=show,
+                suggestions=suggestions,
+            )
+            if out is None:
+                typer.echo(rendered)
+            else:
+                out.parent.mkdir(parents=True, exist_ok=True)
+                out.write_text(rendered + "\n", encoding="utf-8")
+                typer.echo(f"Wrote review coverage to {out}")
+        elif output_format == "markdown":
+            rendered = render_coverage_markdown(
+                data,
+                view=view,
+                show=show,
+                suggestions=suggestions,
+            )
+            if out is None:
+                typer.echo(rendered)
+            else:
+                out.parent.mkdir(parents=True, exist_ok=True)
+                out.write_text(rendered + "\n", encoding="utf-8")
+                typer.echo(f"Wrote review coverage to {out}")
+        else:
+            typer.echo(
+                "Unsupported --format: "
+                f"{output_format}; expected json, text, or markdown.",
+                err=True,
+            )
+            raise typer.Exit(code=1)
+    except ValueError as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1) from exc
+
+    if _coverage_failed(data, include_unmapped_tests=True):
+        raise typer.Exit(code=1)
+
+
 @review_app_cli.command("specs")
 def review_specs(
     ctx: typer.Context,
@@ -894,10 +1035,19 @@ def review_specs(
             f"bound: {summary['bound']}, "
             f"missing bindings: {summary['missing_bindings']}"
         )
+        typer.echo(
+            f"pytest tests: {summary['pytest_tests']}, "
+            f"mapped: {summary['pytest_mapped']}, "
+            f"unmapped: {summary['pytest_unmapped']}, "
+            f"stale mappings: {summary['stale_bindings']}"
+        )
         warnings_count = summary.get("warnings", 0)
         errors_count = summary.get("errors", 0)
         if warnings_count or errors_count:
             typer.echo(f"warnings: {warnings_count}, errors: {errors_count}")
+        typer.echo("")
+        typer.echo("Run detailed coverage:")
+        typer.echo("  specweave review coverage --view both --show gaps")
         typer.echo("")
         for finding in result.get("findings", []):
             level = finding.get("level", "info").upper()

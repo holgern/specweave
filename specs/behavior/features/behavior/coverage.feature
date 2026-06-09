@@ -67,3 +67,41 @@ Feature: Static behavior coverage checks
       Given a feature file with a scenario tagged @manual
       When specweave builds the behavior coverage
       Then the scenario is not in missing_bindings
+
+  Rule: Coverage can be viewed from pytest back to features
+
+    @bdd-coverage-pytest-unmapped
+    Example: Coverage reports unmapped pytest tests
+      Given a pytest test function without a SpecWeave mapping
+      When specweave builds the behavior coverage
+      Then the pytest test appears in unmapped_tests
+      And the pytest-side summary counts it as unmapped
+
+    @bdd-coverage-pytest-stale
+    Example: Coverage reports stale pytest mappings in the pytest view
+      Given a pytest test function mapped to a missing scenario id
+      When specweave builds the behavior coverage
+      Then the pytest test appears with status "stale"
+      And the stale binding includes the missing scenario id
+
+    @bdd-coverage-both-directions-render
+    Example: Coverage renders feature and pytest directions together
+      Given feature scenarios and pytest tests with mixed mapping states
+      When specweave renders coverage with view "both"
+      Then the output includes "Features -> pytest"
+      And the output includes "Pytest -> features"
+
+  Rule: Coverage reasons are actionable
+
+    @bdd-coverage-missing-test-file-reason
+    Example: Coverage distinguishes a missing expected test file
+      Given a feature scenario whose expected pytest file does not exist
+      When specweave builds the behavior coverage
+      Then the missing binding reason is "missing_test_file"
+
+    @bdd-coverage-candidate-tests
+    Example: Coverage suggests candidate tests without binding by title
+      Given an unmapped pytest test resembles a missing scenario
+      When specweave builds the behavior coverage
+      Then the scenario remains missing
+      And candidate_tests contains the pytest test as a hint

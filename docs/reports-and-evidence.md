@@ -36,6 +36,7 @@ Passing evidence must not be inferred from:
 ## Trace and cross-ledger diagnostics
 
 ```bash
+specweave review coverage --view both --show gaps
 specweave trace @bdd-user-login-success --format json
 specweave combi check --json reports/behavior/specweave/combi-check.json
 ```

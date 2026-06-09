@@ -1,15 +1,32 @@
 ---
-title: Classic `.feature` is the canonical behavior format
+schema_version: 2
+id: al_adr_0025
+type: adr
+title: "Classic `.feature` is the canonical behavior format"
 status: accepted
-date: 2026-06-09
+section: architecture_decisions
+order: 10
+date: "2026-06-09"
+deciders: []
+supersedes: []
+related: []
+tags: []
+body_format: markdown
+created_at: "2026-06-09T00:00:00Z"
+updated_at: "2026-06-09T00:00:00Z"
+source_refs:
+  - specweave/gherkin/parser.py
+  - specweave/gherkin/writer.py
 ---
 
-# ADR 0025: Classic `.feature` is the canonical behavior format
+
+## Context
+
+SpecWeave previously supported both classic Gherkin `.feature` and Markdown-embedded `.feature.md` as behavior spec formats. Maintaining two parser and writer paths adds complexity for humans, tools, and coding agents.
 
 ## Decision
 
-Use classic Gherkin `.feature` files as the only canonical behavior-spec
-format in SpecWeave.
+Use classic Gherkin `.feature` files as the only canonical behavior-spec format in SpecWeave.
 
 Durable SpecWeave-owned JSON artifacts live under `specs/behavior/`:
 
@@ -21,14 +38,10 @@ Generated runner output lives under:
 - `reports/behavior`
 - `reports/behavior/specweave`
 
-## Rationale
+## Alternatives considered
 
-- one syntax is easier for humans, tools, and coding agents
-- classic Gherkin maps directly to existing ecosystem tooling
-- removing Markdown feature mode eliminates duplicate parser and writer paths
-- readable durable artifacts belong with the behavior specs, not under a hidden
-  state directory
-
+- Continue supporting `.feature.md` alongside `.feature`: rejected — two parser and writer paths add maintenance burden without sufficient benefit.
+- Migrate `.feature.md` to a separate plugin: rejected — not enough usage to justify the indirection.
 ## Consequences
 
 - legacy `.feature.md` files are not canonical and are rejected
