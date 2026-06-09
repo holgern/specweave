@@ -78,3 +78,22 @@ code fences. Support classic `.feature` as a first-class alternative.
 **Consequences:** Better readability in modern tooling. Requires a Markdown
 parser alongside the standard Gherkin parser. The `convert` command bridges
 formats.
+
+## AD-7: Optional gherkin-official dependency
+
+**Context:** `gherkin-official` (the Cucumber reference parser) was previously
+listed as a required runtime dependency. However, SpecWeave's built-in parser
+and subset validator (`specweave/gherkin/validation.py`) cover the canonical
+subset without external help. Only users needing full Cucumber Gherkin
+compatibility require the official parser.
+
+**Decision:** Move `gherkin-official` to an optional extra
+(`pip install specweave[gherkin]`). The adapter in
+`specweave/gherkin/official.py` lazy-imports the library and raises a clear
+error when it is not installed. The core SpecWeave workflow (parse, lint,
+generate, convert, validate) works without it.
+
+**Consequences:** Smaller default install footprint. Users who need full
+Cucumber compatibility opt in explicitly. The built-in subset validator
+catches unsupported constructs (Background, Scenario Outline, tables, doc
+strings) without any external dependency.

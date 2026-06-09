@@ -16,9 +16,11 @@ updated_at: "2026-06-08T18:30:00Z"
 
 - **Python ≥3.10.** The package uses `from __future__ import annotations` and
   union type syntax (`X | Y`) throughout.
-- **No required runtime dependencies beyond typer, click, and gherkin-official.**
-  `tomli` is conditionally imported for Python <3.11. Taskledger and Archledger
-  are never runtime dependencies.
+- **No required runtime dependencies beyond typer and click.**
+  `tomli` is conditionally imported for Python <3.11. `gherkin-official` is
+  optional (`pip install specweave[gherkin]`) and only needed for the official
+  parser backend. SpecWeave's built-in parser and validation work without it.
+  Taskledger and Archledger are never runtime dependencies.
 - **No test runner dependency for the canonical workflow.** SpecWeave generates
   plain pytest functions; it does not require `pytest-bdd`, `behave`, or
   step-definition modules.

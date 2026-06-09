@@ -43,6 +43,11 @@ SpecWeave does **not** require:
 - `tests/bdd/`
 - `tests/behavior/`
 - Taskledger as a Python dependency
+- `gherkin-official` (optional: `pip install specweave[gherkin]`)
+
+The built-in parser and subset validator cover the canonical Gherkin subset.
+Install `specweave[gherkin]` only if you need full Cucumber Gherkin
+compatibility via the official reference parser.
 
 ## Behavior workflow
 
@@ -181,6 +186,13 @@ classic paths.
 
 ```bash
 pip install specweave
+```
+
+Optional extras:
+
+```bash
+pip install specweave[gherkin]   # official Cucumber Gherkin parser
+pip install specweave[dev]       # development tools
 ```
 
 Or install from source with development dependencies:

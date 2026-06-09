@@ -62,7 +62,7 @@ evidence. It is not a task ledger, architecture ledger, or CI system.
 
 - **Python ≥3.10.** The package uses `from __future__ import annotations` and
   union type syntax (`X | Y`) throughout.
-- **No required runtime dependencies beyond typer, click, and gherkin-official.**
+- **Minimal required runtime dependencies: typer and click.**
   `tomli` is conditionally imported for Python <3.11. Taskledger and Archledger
   are never runtime dependencies.
 - **No test runner dependency for the canonical workflow.** SpecWeave generates
@@ -1008,7 +1008,7 @@ Markdown for Archledger. Neither tool is a Python dependency.
 - **AST-based discovery.** No test execution during spec generation.
 - **File-based only.** No network calls, database queries, or daemon
   processes.
-- **Minimal dependencies.** Only typer, click, and gherkin-official at runtime.
+- **Minimal dependencies.** Only typer and click at runtime. `gherkin-official` is an optional extra (`pip install specweave[gherkin]`).
 
 ## Quality Requirements Overview
 

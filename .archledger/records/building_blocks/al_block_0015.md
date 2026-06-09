@@ -25,12 +25,17 @@ source_refs:
   - specweave/gherkin/markdown.py
   - specweave/gherkin/tags.py
   - specweave/gherkin/draft.py
+  - specweave/gherkin/official.py
+  - specweave/gherkin/validation.py
 ---
 
 ## Responsibility
 
-Owns the Gherkin data model, parsing, writing, linting, and format conversion.
-Supports both classic `.feature` and Markdown `.feature.md` formats.
+Owns the Gherkin data model, parsing, writing, linting, format conversion, and
+validation. Supports both classic `.feature` and Markdown `.feature.md` formats.
+The built-in parser and subset validator work without external dependencies.
+The optional `gherkin-official` backend (`pip install specweave[gherkin]`)
+provides full Cucumber Gherkin compatibility.
 
 ## Key files
 
@@ -42,8 +47,11 @@ Supports both classic `.feature` and Markdown `.feature.md` formats.
 - `specweave/gherkin/markdown.py` (463 lines) — Markdown `.feature.md` parser/writer
 - `specweave/gherkin/tags.py` — tag parsing/filtering helpers
 - `specweave/gherkin/draft.py` — feature draft loading from JSON
+- `specweave/gherkin/official.py` — adapter for optional `gherkin-official` parser
+- `specweave/gherkin/validation.py` — SpecWeave subset validator (no external deps)
 
 ## Interfaces
 
 - **Inbound:** Called by CLI, Behavior Workflow, Translation, and Integrations
-- **Outbound:** Pure data transformations; no external calls
+- **Outbound:** Pure data transformations; optional `gherkin-official` backend
+  (lazy-imported, only when installed)
