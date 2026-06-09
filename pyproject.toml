@@ -64,8 +64,14 @@ Changelog = "https://github.com/holgern/specweave/releases"
 gherkin = [
     "gherkin-official>=39,<40",
 ]
+docs = [
+    "myst-parser>=2",
+    "sphinx>=7",
+    "sphinx-rtd-theme>=2",
+]
 dev = [
     "build",
+    ".[docs]",
     ".[gherkin]",
     "mypy",
     "pytest",

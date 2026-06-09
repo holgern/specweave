@@ -108,9 +108,7 @@ class TestMissingOfficialDependency:
         import importlib
 
         # Force the import to fail by removing the module if present
-        monkeypatch.setitem(
-            __import__("sys").modules, "gherkin", None
-        )
+        monkeypatch.setitem(__import__("sys").modules, "gherkin", None)
         monkeypatch.setattr(
             importlib,
             "import_module",

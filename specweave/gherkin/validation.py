@@ -164,9 +164,7 @@ def validate_markdown_specweave_subset(
         re.IGNORECASE,
     )
     _FEATURE_HEADING = re.compile(r"^#{1,6}\s+Feature:", re.IGNORECASE)
-    _SCENARIO_HEADING = re.compile(
-        r"^#{1,6}\s+(Scenario|Example):", re.IGNORECASE
-    )
+    _SCENARIO_HEADING = re.compile(r"^#{1,6}\s+(Scenario|Example):", re.IGNORECASE)
 
     for line_no, raw_line in enumerate(lines, start=1):
         stripped = raw_line.strip()

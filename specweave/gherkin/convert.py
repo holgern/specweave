@@ -123,7 +123,6 @@ def _validate_with_official(
     validate_classic_with_official(text, source_path=source_path)
 
 
-
 def _validate_with_specweave(
     text: str,
     *,
@@ -165,6 +164,7 @@ def _validate(
             source_path=source_path,
             document_format=document_format,
         )
+
 
 def convert_feature_file(
     *,

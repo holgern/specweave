@@ -25,7 +25,7 @@ for unsupported backends.
 - Given two steps with the same "Given a step" text
 - When specweave generates the second function name with existing names
 - Then the two names are different
-- And the second name ends with "_2"
+- And the second name ends with "\_2"
 
 ## Rule: Draft feature from JSON input
 

@@ -25,7 +25,7 @@ Taskledger/Archledger alignment. It reports gaps and supports strict mode.
 
 `@bdd-combi-check-strict`
 
-### Example: Scenario without @bdd-* tag fails in strict mode
+### Example: Scenario without @bdd-\* tag fails in strict mode
 
 - Given a feature with a scenario that has no `@bdd-*` id tag
 - When specweave runs combi check with `--strict`

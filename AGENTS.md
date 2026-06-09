@@ -123,7 +123,9 @@ Preserve the default layout:
 
 ```text
 .specweave.toml
+
 specs/behavior/README.md
+specs/behavior/features/<area>/<feature>.feature.md
 specs/behavior/features/<area>/<feature>.feature
 specs/behavior/manifest.json
 tests/test_<area>_<feature>.py
@@ -143,6 +145,7 @@ Also preserve the British spelling variant:
 
 ```text
 specs/behaviour/README.md
+specs/behaviour/features/<area>/<feature>.feature.md
 specs/behaviour/features/<area>/<feature>.feature
 specs/behaviour/manifest.json
 reports/behaviour/*.xml

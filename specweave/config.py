@@ -50,7 +50,6 @@ class SpecWeaveGherkin:
     include_needs_review_tag: bool = True
     canonical_task_tags: bool = False
 
-
     def __post_init__(self) -> None:
         if self.document_format not in ("markdown", "classic"):
             raise ValueError(

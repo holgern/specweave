@@ -1,6 +1,5 @@
 [![PyPI - Version](https://img.shields.io/pypi/v/specweave)](https://pypi.org/project/specweave/)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/specweave)
-decov](https://codecov.io/gh/holgern/specweave/graph/badge.svg?token=CjRFwWvyYm)](https://codecov.io/gh/holgern/specweave)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/specweave)
 [![codecov](https://codecov.io/gh/holgern/specweave/graph/badge.svg?token=CjRFwWvyYm)](https://codecov.io/gh/holgern/specweave)
 
@@ -10,6 +9,13 @@ SpecWeave translates between canonical Gherkin behavior specs, plain pytest
 enforcement, and normalized execution evidence.
 
 It is not a task ledger, architecture ledger, or CI system.
+
+Documentation sources live under `docs/`. Build them locally with:
+
+```bash
+python -m pip install -e ".[docs]"
+python -m sphinx -b html docs docs/_build/html
+```
 
 ## Canonical layout
 

@@ -11,7 +11,7 @@ behavior descriptions.
 
 `@bdd-ast-extract-test-functions`
 
-### Example: AST reader finds test_* functions in a Python file
+### Example: AST reader finds test\_\* functions in a Python file
 
 - Given a Python file containing a `test_rejects_invalid_password` function with assertions
 - When specweave extracts test scenarios from the file
