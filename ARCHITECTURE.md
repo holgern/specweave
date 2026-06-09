@@ -124,15 +124,13 @@ expose a network API.
 - **CLI** (`specweave` console script): Typer-based CLI with `--config`,
   `--json` root options. Human and machine-readable output.
 - **Filesystem**: canonical layout of `specs/behavior/features/<area>/`,
-  `tests/`, `reports/behavior/`, `.specweave/`.
+  `tests/`, `specs/behavior/reports/`, `.specweave/`.
 - **Taskledger integration**: file-based JSON exchange
   (`specweave/integrations/taskledger.py`). SpecWeave reads task-BDD JSON and
   writes evidence JSON. It never approves plans or manages task lifecycle.
 - **Archledger integration**: candidate markdown rendering
   (`specweave/integrations/archledger.py`). SpecWeave writes candidate files
   when explicitly requested; it never creates accepted records implicitly.
-
-
 
 ## Business Context
 
@@ -310,8 +308,6 @@ expose a network API.
 - `specweave/errors.py` — `SpecWeaveError`, `ParseError`, `BackendError`,
   `RunnerError`.
 
-
-
 ## Whitebox Overall System
 
 ## Motivation
@@ -344,8 +340,8 @@ external integrations.
 #### CLI Layer
 
 **Parent:** al_block_0013
-**Interfaces:** 
-**Location:** 
+**Interfaces:**
+**Location:**
 
 ## Responsibility
 
@@ -370,8 +366,8 @@ Constructs `CliContext` with loaded config and JSON-output flag.
 #### Gherkin Layer
 
 **Parent:** al_block_0013
-**Interfaces:** 
-**Location:** 
+**Interfaces:**
+**Location:**
 
 ## Responsibility
 
@@ -403,8 +399,8 @@ provides full Cucumber Gherkin compatibility.
 #### Behavior Workflow
 
 **Parent:** al_block_0013
-**Interfaces:** 
-**Location:** 
+**Interfaces:**
+**Location:**
 
 ## Responsibility
 
@@ -428,8 +424,8 @@ pytest/JUnit reports into evidence JSON.
 #### Report Normalization
 
 **Parent:** al_block_0013
-**Interfaces:** 
-**Location:** 
+**Interfaces:**
+**Location:**
 
 ## Responsibility
 
@@ -453,8 +449,8 @@ unified `NormalizedBddReport` model, maps scenario results to `@bdd-*` and
 #### Translation Layer
 
 **Parent:** al_block_0013
-**Interfaces:** 
-**Location:** 
+**Interfaces:**
+**Location:**
 
 ## Responsibility
 
@@ -487,8 +483,8 @@ workflows via `specweave/backends/`.
 #### Python AST Inspection
 
 **Parent:** al_block_0013
-**Interfaces:** 
-**Location:** 
+**Interfaces:**
+**Location:**
 
 ## Responsibility
 
@@ -511,8 +507,8 @@ converts assert statements into candidate `Then` clauses.
 #### Integrations
 
 **Parent:** al_block_0013
-**Interfaces:** 
-**Location:** 
+**Interfaces:**
+**Location:**
 
 ## Responsibility
 
@@ -595,7 +591,7 @@ Developer          SpecWeave CLI              Filesystem
 ## Report normalization flow
 
 1. External runner (pytest with `--junitxml`) writes native XML to
-   `reports/behavior/`.
+   `specs/behavior/reports/`.
 2. `specweave report normalize` parses the XML via
    `specweave/reports/junit_xml.py`, maps scenario results to `@bdd-*` tags,
    rolls up acceptance criteria via `@ac-*`.
@@ -603,8 +599,6 @@ Developer          SpecWeave CLI              Filesystem
    fails the report.
 4. Output: normalized JSON or Taskledger evidence JSON to
    `specs/behavior/evidence/`.
-
-
 
 <!-- archledger: no accepted records for this section yet -->
 
@@ -633,7 +627,7 @@ SpecWeave is a single Python package deployed to a developer's environment via
 │    .specweave.toml                       │
 │    specs/behavior/features/              │
 │    tests/                                │
-│    reports/behavior/                     │
+│    specs/behavior/reports/                     │
 │    .specweave/                           │
 └──────────────────────────────────────────┘
 ```
@@ -648,7 +642,7 @@ specs/behavior/
   features/<area>/*.feature
   manifest.json              # generated manifest
 tests/test_<area>_<feature>.py
-reports/behavior/*.xml       # native runner output
+specs/behavior/reports/*.xml       # native runner output
 .specweave/
   evidence/*.json            # normalized evidence
   reports/*.json             # report state
@@ -661,13 +655,11 @@ skills/specweave/SKILL.md    # agent skill (not packaged)
 SpecWeave runs in CI as a CLI step after `pytest --junitxml=...`:
 
 ```bash
-pytest --junitxml=reports/behavior/pytest-junit.xml
-specweave behavior import-report reports/behavior/pytest-junit.xml --format junit-xml
+pytest --junitxml=specs/behavior/reports/pytest-junit.xml
+specweave behavior import-report specs/behavior/reports/pytest-junit.xml --format junit-xml
 ```
 
 No special CI plugin, Docker image, or hosted service is required.
-
-
 
 <!-- archledger: no accepted records for this section yet -->
 
@@ -721,8 +713,6 @@ All public models are frozen dataclasses (`frozen=True`):
 SpecWeave supports both `.feature` (classic Gherkin) and `.feature`
 (Markdown-embedded Gherkin, the default). The `convert` command bridges
 between formats. The Markdown parser is in `specweave/gherkin/markdown.py`.
-
-
 
 <!-- archledger: no accepted records for this section yet -->
 
@@ -814,14 +804,13 @@ Cucumber compatibility opt in explicitly. The built-in subset validator
 catches unsupported constructs (Background, Scenario Outline, tables, doc
 strings) without any external dependency.
 
-
 ## Tag-based scenario identity
 
 **Status:** proposed
 **Date:** 2026-06-08
-**Deciders:** 
-**Supersedes:** 
-**Related:** 
+**Deciders:**
+**Supersedes:**
+**Related:**
 
 ## Context
 
@@ -850,14 +839,13 @@ Enforced by `require_bdd_ids = true` in config and by lint checks in
 - Title-based matching: rejected — fragile, causes false negatives on renames.
 - UUID-based IDs: rejected — less human-readable in Gherkin source.
 
-
 ## Classic `.feature` is the canonical behavior format
 
 **Status:** accepted
 **Date:** 2026-06-09
-**Deciders:** 
-**Supersedes:** 
-**Related:** 
+**Deciders:**
+**Supersedes:**
+**Related:**
 
 ## Context
 
@@ -874,13 +862,14 @@ Durable SpecWeave-owned JSON artifacts live under `specs/behavior/`:
 
 Generated runner output lives under:
 
-- `reports/behavior`
-- `reports/behavior/specweave`
+- `specs/behavior/reports`
+- `specs/behavior/reports/specweave`
 
 ## Alternatives considered
 
 - Continue supporting `.feature.md` alongside `.feature`: rejected — two parser and writer paths add maintenance burden without sufficient benefit.
 - Migrate `.feature.md` to a separate plugin: rejected — not enough usage to justify the indirection.
+
 ## Consequences
 
 - legacy `.feature.md` files are not canonical and are rejected
@@ -888,14 +877,13 @@ Generated runner output lives under:
 - `.specweave.toml` remains a compatibility discovery path for existing
   projects
 
-
 ## Plain pytest as canonical enforcement
 
 **Status:** proposed
 **Date:** 2026-06-08
-**Deciders:** 
-**Supersedes:** 
-**Related:** 
+**Deciders:**
+**Supersedes:**
+**Related:**
 
 ## Context
 
@@ -921,14 +909,13 @@ required. Tests are runnable without SpecWeave installed.
 - pytest-bdd as canonical: rejected — adds runtime dependency and step-module coupling.
 - behave as canonical: rejected — different test runner, more coupling.
 
-
 ## AST-based test discovery
 
 **Status:** proposed
 **Date:** 2026-06-08
-**Deciders:** 
-**Supersedes:** 
-**Related:** 
+**Deciders:**
+**Supersedes:**
+**Related:**
 
 ## Context
 
@@ -955,14 +942,13 @@ discovery.
 - Runtime introspection: rejected — slow, side effects, non-deterministic.
 - Manual spec writing only: rejected — defeats the brownfield workflow purpose.
 
-
 ## Fail-closed evidence normalization
 
 **Status:** proposed
 **Date:** 2026-06-08
-**Deciders:** 
-**Supersedes:** 
-**Related:** 
+**Deciders:**
+**Supersedes:**
+**Related:**
 
 ## Context
 
@@ -987,14 +973,13 @@ coverage blocks. A clean command exit code alone is never sufficient evidence.
 - Fail-open (only hard failures block): rejected — undermines evidence trust.
 - Configurable per-status defaults: rejected — too easy to weaken by accident.
 
-
 ## File-based Taskledger and Archledger integration
 
 **Status:** proposed
 **Date:** 2026-06-08
-**Deciders:** 
-**Supersedes:** 
-**Related:** 
+**Deciders:**
+**Supersedes:**
+**Related:**
 
 ## Context
 
@@ -1020,14 +1005,13 @@ Markdown for Archledger. Neither tool is a Python dependency.
 - Direct API integration: rejected — tight coupling, version fragility.
 - Shared database: rejected — violates the "no database" constraint.
 
-
 ## Make gherkin-official an optional dependency
 
 **Status:** proposed
 **Date:** 2026-06-09
-**Deciders:** 
-**Supersedes:** 
-**Related:** 
+**Deciders:**
+**Supersedes:**
+**Related:**
 
 ## Context
 
@@ -1105,8 +1089,6 @@ workflow (parse, lint, generate, convert, validate) works without it.
 - **Minimal dependencies.** Only typer and click at runtime. `gherkin-official`
   is optional (`specweave[gherkin]`) and only needed for the official parser
   backend.
-
-
 
 ## Quality Requirements Overview
 

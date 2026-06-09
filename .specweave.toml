@@ -38,7 +38,7 @@ preserve_manual_edits = true
 mark_generated_from_tests = true
 
 [commands]
-test = "pytest --junitxml=reports/behavior/pytest-junit.xml"
+test = "pytest --junitxml=specs/behavior/reports/pytest-junit.xml"
 
 [agent]
 json_default = false

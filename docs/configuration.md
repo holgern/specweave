@@ -19,9 +19,9 @@ features_dir = "specs/behavior/features"
 behavior_readme = "specs/behavior/README.md"
 manifest = "specs/behavior/manifest.json"
 tests_dir = "tests"
-reports_dir = "reports/behavior"
+reports_dir = "specs/behavior/reports"
 evidence_dir = "specs/behavior/evidence"
-reports_state_dir = "reports/behavior/specweave"
+reports_state_dir = "specs/behavior/reports/specweave"
 mapping_dir = "specs/behavior/mappings"
 
 gitkeep = true
@@ -49,7 +49,7 @@ preserve_manual_edits = true
 mark_generated_from_tests = true
 
 [commands]
-test = "pytest --junitxml=reports/behavior/pytest-junit.xml"
+test = "pytest --junitxml=specs/behavior/reports/pytest-junit.xml"
 
 [agent]
 json_default = false
@@ -60,5 +60,5 @@ json_default = false
 - classic `.feature` is the only canonical feature format
 - normalized evidence lives under `specs/behavior/evidence`
 - Taskledger mappings live under `specs/behavior/mappings`
-- runner summaries live under `reports/behavior/specweave`
+- runner summaries live under `specs/behavior/reports/specweave`
 - `spelling = "behaviour"` switches defaults to the British path variant

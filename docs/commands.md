@@ -54,7 +54,7 @@ specweave create taskledger-task --feature FEATURE --out specs/behavior/mappings
 
 ```bash
 specweave trace BDD_ID_OR_FEATURE --format json
-specweave combi check --json reports/behavior/specweave/combi-check.json
+specweave combi check --json specs/behavior/reports/specweave/combi-check.json
 ```
 
 ## Compatibility and bridge commands

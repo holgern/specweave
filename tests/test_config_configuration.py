@@ -95,7 +95,7 @@ class TestLoadConfig:
             "schema_version = 1\n"
             'spelling = "behavior"\n'
             "[paths]\n"
-            'reports_state_dir = "reports/behavior/specweave"\n'
+            'reports_state_dir = "specs/behavior/reports/specweave"\n'
             "[pytest]\n"
             'test_globs = ["tests/test_*.py"]\n'
             "[gherkin]\n"
@@ -108,7 +108,7 @@ class TestLoadConfig:
         assert config.gherkin.id_style == "sequence"
         assert config.generation.group_by == "file"
         assert config.paths.reports_state_dir == (
-            tmp_path / "reports/behavior/specweave"
+            tmp_path / "specs/behavior/reports/specweave"
         )
 
     def test_resolves_paths_from_config_project_root(self, tmp_path: Path) -> None:
@@ -157,7 +157,7 @@ class TestRenderDefaultConfig:
         text = render_default_config(spelling="behavior")
         assert 'spelling = "behavior"' in text
         assert 'evidence_dir = "specs/behavior/evidence"' in text
-        assert 'reports_state_dir = "reports/behavior/specweave"' in text
+        assert 'reports_state_dir = "specs/behavior/reports/specweave"' in text
 
     # specweave: feature=specs/behavior/features/config/configuration.feature
     # specweave: scenario=@bdd-config-render-behaviour
@@ -165,7 +165,7 @@ class TestRenderDefaultConfig:
         text = render_default_config(spelling="behaviour")
         assert 'spelling = "behaviour"' in text
         assert 'evidence_dir = "specs/behaviour/evidence"' in text
-        assert 'reports_state_dir = "reports/behaviour/specweave"' in text
+        assert 'reports_state_dir = "specs/behaviour/reports/specweave"' in text
 
     def test_is_valid_toml(self) -> None:
         import sys

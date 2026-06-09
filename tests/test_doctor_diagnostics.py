@@ -42,7 +42,7 @@ class TestDoctorPasses:
         for path in (
             project / "specs/behavior/features",
             project / "tests",
-            project / "reports/behavior",
+            project / "specs/behavior/reports",
             project / "specs/behavior/evidence",
             project / "specs/behavior/mappings",
         ):

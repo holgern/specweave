@@ -16,9 +16,9 @@ class SpecWeavePaths:
     behavior_readme: Path = Path("specs/behavior/README.md")
     manifest: Path = Path("specs/behavior/manifest.json")
     tests_dir: Path = Path("tests")
-    reports_dir: Path = Path("reports/behavior")
+    reports_dir: Path = Path("specs/behavior/reports")
     evidence_dir: Path = Path("specs/behavior/evidence")
-    reports_state_dir: Path = Path("reports/behavior/specweave")
+    reports_state_dir: Path = Path("specs/behavior/reports/specweave")
     mapping_dir: Path = Path("specs/behavior/mappings")
 
 
@@ -81,14 +81,14 @@ class SpecWeaveConfig:
     pytest: SpecWeavePytest = field(default_factory=SpecWeavePytest)
     gherkin: SpecWeaveGherkin = field(default_factory=SpecWeaveGherkin)
     generation: SpecWeaveGeneration = field(default_factory=SpecWeaveGeneration)
-    test_command: str = "pytest --junitxml=reports/behavior/pytest-junit.xml"
+    test_command: str = "pytest --junitxml=specs/behavior/reports/pytest-junit.xml"
     agent_json_default: bool = False
 
     def __post_init__(self) -> None:
         if self.spelling != "behavior" and self.paths == SpecWeavePaths():
             s = self.spelling
             spec_segment = f"specs/{s}"
-            report_segment = f"reports/{s}"
+            report_segment = f"specs/{s}/reports"
             object.__setattr__(
                 self,
                 "paths",
@@ -104,7 +104,9 @@ class SpecWeaveConfig:
                 ),
             )
             object.__setattr__(
-                self, "test_command", f"pytest --junitxml=reports/{s}/pytest-junit.xml"
+                self,
+                "test_command",
+                f"pytest --junitxml=specs/{s}/reports/pytest-junit.xml",
             )
 
 
@@ -191,7 +193,7 @@ def load_config(config_path: Path | None = None) -> SpecWeaveConfig:
         gherkin=gherkin_cfg,
         generation=generation_cfg,
         test_command=commands_data.get(
-            "test", "pytest --junitxml=reports/behavior/pytest-junit.xml"
+            "test", f"pytest --junitxml=specs/{spelling}/reports/pytest-junit.xml"
         ),
         agent_json_default=agent_data.get("json_default", False),
     )
@@ -216,7 +218,7 @@ def _resolve_paths(paths: SpecWeavePaths, project_root: Path) -> SpecWeavePaths:
 
 def _build_paths(spelling: str, data: dict) -> SpecWeavePaths:
     spec_segment = f"specs/{spelling}"
-    report_segment = f"reports/{spelling}"
+    report_segment = f"specs/{spelling}/reports"
 
     return SpecWeavePaths(
         specs_root=Path(data.get("specs_root", f"{spec_segment}")),
@@ -289,7 +291,7 @@ def render_default_config(*, spelling: str = "behavior") -> str:
     """Render the default TOML config as a deterministic string."""
     s = spelling
     spec_segment = f"specs/{s}"
-    report_segment = f"reports/{s}"
+    report_segment = f"specs/{s}/reports"
 
     return (
         f"schema_version = 1\n"
@@ -332,7 +334,7 @@ def render_default_config(*, spelling: str = "behavior") -> str:
         f"mark_generated_from_tests = true\n"
         f"\n"
         f"[commands]\n"
-        f'test = "pytest --junitxml=reports/{s}/pytest-junit.xml"\n'
+        f'test = "pytest --junitxml=specs/{s}/reports/pytest-junit.xml"\n'
         f"\n"
         f"[agent]\n"
         f"json_default = false\n"
@@ -343,14 +345,14 @@ def render_default_config(*, spelling: str = "behavior") -> str:
 # Backward-compatible constants (existing code uses these)
 # ---------------------------------------------------------------------------
 
-REPORT_DIR = Path("reports/behavior/specweave")
+REPORT_DIR = Path("specs/behavior/reports/specweave")
 # Default directory for runner summary reports.
 
 BEHAVIOR_FEATURES_DIR = Path("specs/behavior/features")
 BEHAVIOR_INDEX_PATH = Path("specs/behavior/README.md")
 BEHAVIOR_MANIFEST_PATH = Path("specs/behavior/manifest.json")
 PYTEST_TESTS_DIR = Path("tests")
-BEHAVIOR_REPORTS_DIR = Path("reports/behavior")
+BEHAVIOR_REPORTS_DIR = Path("specs/behavior/reports")
 SPECWEAVE_REPORTS_DIR = REPORT_DIR
 SPECWEAVE_EVIDENCE_DIR = Path("specs/behavior/evidence")
 SPECWEAVE_MAPPING_DIR = Path("specs/behavior/mappings")

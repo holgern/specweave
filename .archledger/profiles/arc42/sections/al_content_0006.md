@@ -71,7 +71,7 @@ Developer          SpecWeave CLI              Filesystem
 ## Report normalization flow
 
 1. External runner (pytest with `--junitxml`) writes native XML to
-   `reports/behavior/`.
+   `specs/behavior/reports/`.
 2. `specweave report normalize` parses the XML via
    `specweave/reports/junit_xml.py`, maps scenario results to `@bdd-*` tags,
    rolls up acceptance criteria via `@ac-*`.

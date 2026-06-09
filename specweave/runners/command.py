@@ -8,7 +8,7 @@ from pathlib import Path
 
 from specweave.runners.reports import write_summary
 
-REPORT_DIR = Path("reports/behavior/specweave")
+REPORT_DIR = Path("specs/behavior/reports/specweave")
 
 
 def run_command(args: list[str], runner: str = "command") -> int:

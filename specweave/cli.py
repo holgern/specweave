@@ -156,7 +156,12 @@ def init(
     from specweave.init import init_result_to_dict, run_init
 
     cli_ctx: CliContext = ctx.obj
-    config_path = Path("specweave.toml")
+    if public_config:
+        config_path = Path("specweave.toml")
+    elif cli_ctx.config_path is not None:
+        config_path = cli_ctx.config_path
+    else:
+        config_path = Path("specweave.toml")
     result = run_init(
         config_path=config_path,
         spelling=spelling,

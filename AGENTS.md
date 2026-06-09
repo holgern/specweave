@@ -29,8 +29,8 @@ specs/behavior/features/<area>/<feature>.feature
 specs/behavior/evidence/*.json
 specs/behavior/mappings/taskledger/*.json
 tests/test_<area>_<feature>.py
-reports/behavior/*.xml
-reports/behavior/specweave/*.json
+specs/behavior/reports/*.xml
+specs/behavior/reports/specweave/*.json
 ```
 
 Compatibility:
@@ -80,7 +80,7 @@ Do not match validation by scenario title.
 - hidden `.specweave.toml` remains supported for discovery and explicit paths
 - default evidence path: `specs/behavior/evidence`
 - default mapping path: `specs/behavior/mappings`
-- default runner summary path: `reports/behavior/specweave`
+- default runner summary path: `specs/behavior/reports/specweave`
 - `specweave init` must not create `.specweave/`
 
 ## Important code surfaces

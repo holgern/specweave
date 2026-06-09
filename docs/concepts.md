@@ -13,7 +13,7 @@ matching use explicit mappings plus stable `@bdd-*` and `@ac-*` tags.
 ## Evidence
 
 Normalized evidence is durable, readable JSON under `specs/behavior/evidence`.
-Generated runner output remains under `reports/behavior`.
+Generated runner output remains under `specs/behavior/reports`.
 
 ## Boundaries
 

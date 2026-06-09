@@ -20,8 +20,8 @@ specs/behavior/features/<area>/<feature>.feature
 specs/behavior/evidence/*.json
 specs/behavior/mappings/taskledger/*.json
 tests/test_<area>_<feature>.py
-reports/behavior/*.xml
-reports/behavior/specweave/*.json
+specs/behavior/reports/*.xml
+specs/behavior/reports/specweave/*.json
 ```
 
 Hidden `.specweave.toml` is still discovered for existing projects, but
@@ -38,8 +38,8 @@ specweave review specs
 specweave review coverage --view both --show gaps
 specweave behavior index
 specweave behavior generate-tests --features specs/behavior/features --tests-dir tests
-pytest --junitxml=reports/behavior/pytest-junit.xml
-specweave behavior import-report reports/behavior/pytest-junit.xml --format junit-xml
+pytest --junitxml=specs/behavior/reports/pytest-junit.xml
+specweave behavior import-report specs/behavior/reports/pytest-junit.xml --format junit-xml
 ```
 
 ## Classic Gherkin only
@@ -68,14 +68,14 @@ Legacy `.feature.md` files are no longer supported as canonical specs.
 
 - normalized evidence: `specs/behavior/evidence`
 - Taskledger mapping artifacts: `specs/behavior/mappings/taskledger`
-- generated runner output: `reports/behavior`
-- SpecWeave runner summaries: `reports/behavior/specweave`
+- generated runner output: `specs/behavior/reports`
+- SpecWeave runner summaries: `specs/behavior/reports/specweave`
 
 Import pytest/JUnit evidence with:
 
 ```bash
 specweave behavior import-report \
-  reports/behavior/pytest-junit.xml \
+  specs/behavior/reports/pytest-junit.xml \
   --format junit-xml \
   --out specs/behavior/evidence/pytest-evidence.json
 ```
@@ -98,7 +98,7 @@ Trace and cross-ledger diagnostics remain read-only:
 
 ```bash
 specweave trace @bdd-login-success --format json
-specweave combi check --json reports/behavior/specweave/combi-check.json
+specweave combi check --json specs/behavior/reports/specweave/combi-check.json
 ```
 
 ## Installation

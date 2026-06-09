@@ -146,15 +146,22 @@ def run_init(
             if not dry_run:
                 d.mkdir(parents=True, exist_ok=True)
 
-    # Features gitkeep
-    gitkeep_path = paths.features_dir / ".gitkeep"
+    # Git placeholders keep empty managed directories present in source control.
     if config.gitkeep:
-        if gitkeep_path.exists():
-            existing.append(gitkeep_path)
-        else:
-            created.append(gitkeep_path)
-            if not dry_run:
-                gitkeep_path.touch()
+        gitkeep_paths = [
+            paths.features_dir / ".gitkeep",
+            paths.evidence_dir / ".gitkeep",
+            paths.mapping_dir / ".gitkeep",
+            paths.reports_state_dir / ".gitkeep",
+        ]
+        for gitkeep_path in gitkeep_paths:
+            if gitkeep_path.exists():
+                existing.append(gitkeep_path)
+            else:
+                created.append(gitkeep_path)
+                if not dry_run:
+                    gitkeep_path.parent.mkdir(parents=True, exist_ok=True)
+                    gitkeep_path.touch()
 
     # README
     readme_path = paths.behavior_readme

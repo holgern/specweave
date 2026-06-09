@@ -45,7 +45,7 @@ expose a network API.
 - **CLI** (`specweave` console script): Typer-based CLI with `--config`,
   `--json` root options. Human and machine-readable output.
 - **Filesystem**: canonical layout of `specs/behavior/features/<area>/`,
-  `tests/`, `reports/behavior/`, `.specweave/`.
+  `tests/`, `specs/behavior/reports/`, `.specweave/`.
 - **Taskledger integration**: file-based JSON exchange
   (`specweave/integrations/taskledger.py`). SpecWeave reads task-BDD JSON and
   writes evidence JSON. It never approves plans or manages task lifecycle.

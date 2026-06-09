@@ -52,9 +52,9 @@ scenario, or left outside behavior coverage intentionally.
 ## 5. Import evidence
 
 ```bash
-pytest --junitxml=reports/behavior/pytest-junit.xml
-specweave behavior import-report reports/behavior/pytest-junit.xml --format junit-xml
+pytest --junitxml=specs/behavior/reports/pytest-junit.xml
+specweave behavior import-report specs/behavior/reports/pytest-junit.xml --format junit-xml
 ```
 
 Normalized evidence is written to `specs/behavior/evidence`. Generated runner
-artifacts belong under `reports/behavior` and `reports/behavior/specweave`.
+artifacts belong under `specs/behavior/reports` and `specs/behavior/reports/specweave`.

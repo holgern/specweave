@@ -26,6 +26,6 @@ specweave create feature \
 
 ```bash
 specweave behavior generate-tests --features specs/behavior/features --tests-dir tests
-pytest --junitxml=reports/behavior/pytest-junit.xml
-specweave behavior import-report reports/behavior/pytest-junit.xml --format junit-xml
+pytest --junitxml=specs/behavior/reports/pytest-junit.xml
+specweave behavior import-report specs/behavior/reports/pytest-junit.xml --format junit-xml
 ```

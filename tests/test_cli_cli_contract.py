@@ -595,7 +595,9 @@ def test_behavior_import_report_maps_pytest_nodeid(tmp_path, monkeypatch) -> Non
         app, ["behavior", "generate-tests", str(feature_path)]
     )
     assert generate_result.exit_code == 0, generate_result.stdout
-    report_path = tmp_path / "reports/behavior/task-management-plan-gates-junit.xml"
+    report_path = (
+        tmp_path / "specs/behavior/reports/task-management-plan-gates-junit.xml"
+    )
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(
         """<?xml version="1.0" encoding="UTF-8"?>
@@ -646,6 +648,15 @@ def test_config_option(tmp_path) -> None:
     config_file.write_text('schema_version = 1\nspelling = "behaviour"\n')
     result = runner.invoke(app, ["--config", str(config_file), "doctor"])
     assert result.exit_code == 0, result.stdout
+
+
+def test_init_respects_explicit_hidden_config(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    """init writes .specweave.toml when selected through root --config."""
+    monkeypatch.chdir(tmp_path)
+    result = runner.invoke(app, ["--config", ".specweave.toml", "init"])
+    assert result.exit_code == 0, result.stdout
+    assert (tmp_path / ".specweave.toml").exists()
+    assert not (tmp_path / "specweave.toml").exists()
 
 
 # specweave: feature=specs/behavior/features/cli/cli-contract.feature

@@ -26,7 +26,7 @@ def test_combi_check_writes_json_and_human_diagnostics(tmp_path: Path) -> None:
         "    When credentials are submitted\n"
         "    Then access is granted\n",
     )
-    output = tmp_path / "reports/behavior/specweave/combi-check.json"
+    output = tmp_path / "specs/behavior/reports/specweave/combi-check.json"
 
     result = runner.invoke(
         app,

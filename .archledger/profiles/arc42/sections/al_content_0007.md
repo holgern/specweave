@@ -35,7 +35,7 @@ SpecWeave is a single Python package deployed to a developer's environment via
 │    .specweave.toml                       │
 │    specs/behavior/features/              │
 │    tests/                                │
-│    reports/behavior/                     │
+│    specs/behavior/reports/                     │
 │    .specweave/                           │
 └──────────────────────────────────────────┘
 ```
@@ -50,7 +50,7 @@ specs/behavior/
   features/<area>/*.feature
   manifest.json              # generated manifest
 tests/test_<area>_<feature>.py
-reports/behavior/*.xml       # native runner output
+specs/behavior/reports/*.xml       # native runner output
 .specweave/
   evidence/*.json            # normalized evidence
   reports/*.json             # report state
@@ -63,8 +63,8 @@ skills/specweave/SKILL.md    # agent skill (not packaged)
 SpecWeave runs in CI as a CLI step after `pytest --junitxml=...`:
 
 ```bash
-pytest --junitxml=reports/behavior/pytest-junit.xml
-specweave behavior import-report reports/behavior/pytest-junit.xml --format junit-xml
+pytest --junitxml=specs/behavior/reports/pytest-junit.xml
+specweave behavior import-report specs/behavior/reports/pytest-junit.xml --format junit-xml
 ```
 
 No special CI plugin, Docker image, or hosted service is required.

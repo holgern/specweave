@@ -21,10 +21,15 @@ class TestInitDefault:
         assert (tmp_path / "specweave.toml").exists()
         assert (tmp_path / "specs" / "behavior" / "evidence").is_dir()
         assert (tmp_path / "specs" / "behavior" / "mappings").is_dir()
-        assert (tmp_path / "reports" / "behavior" / "specweave").is_dir()
+        assert (tmp_path / "specs" / "behavior" / "reports" / "specweave").is_dir()
         assert (tmp_path / "specs" / "behavior" / "README.md").exists()
         assert (tmp_path / "specs" / "behavior" / "features" / ".gitkeep").exists()
-        assert (tmp_path / "reports" / "behavior").is_dir()
+        assert (tmp_path / "specs" / "behavior" / "evidence" / ".gitkeep").exists()
+        assert (tmp_path / "specs" / "behavior" / "mappings" / ".gitkeep").exists()
+        assert (
+            tmp_path / "specs" / "behavior" / "reports" / "specweave" / ".gitkeep"
+        ).exists()
+        assert (tmp_path / "specs" / "behavior" / "reports").is_dir()
         assert not (tmp_path / ".specweave").exists()
 
     # specweave: feature=specs/behavior/features/init/initialization.feature
@@ -49,9 +54,14 @@ class TestInitBritishSpelling:
         )
         assert (tmp_path / "specs" / "behaviour" / "README.md").exists()
         assert (tmp_path / "specs" / "behaviour" / "features" / ".gitkeep").exists()
+        assert (tmp_path / "specs" / "behaviour" / "evidence" / ".gitkeep").exists()
+        assert (tmp_path / "specs" / "behaviour" / "mappings" / ".gitkeep").exists()
+        assert (
+            tmp_path / "specs" / "behaviour" / "reports" / "specweave" / ".gitkeep"
+        ).exists()
         assert (tmp_path / "specs" / "behaviour" / "evidence").is_dir()
         assert (tmp_path / "specs" / "behaviour" / "mappings").is_dir()
-        assert (tmp_path / "reports" / "behaviour" / "specweave").is_dir()
+        assert (tmp_path / "specs" / "behaviour" / "reports" / "specweave").is_dir()
 
 
 class TestInitCompatibility:
@@ -120,7 +130,7 @@ class TestInitDryRun:
             project_root=tmp_path,
         )
         assert not (tmp_path / "specweave.toml").exists()
-        assert not (tmp_path / "reports" / "behavior" / "specweave").exists()
+        assert not (tmp_path / "specs" / "behavior" / "reports" / "specweave").exists()
         assert not (tmp_path / "specs" / "behavior" / "evidence").exists()
         assert len(result.created) > 0
 

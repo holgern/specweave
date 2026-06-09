@@ -9,18 +9,18 @@ SpecWeave normalizes execution evidence with fail-closed semantics.
 
 ## Default locations
 
-- runner reports: `reports/behavior`
-- SpecWeave runner summaries: `reports/behavior/specweave`
+- runner reports: `specs/behavior/reports`
+- SpecWeave runner summaries: `specs/behavior/reports/specweave`
 - normalized evidence: `specs/behavior/evidence`
 - Taskledger mapping artifacts: `specs/behavior/mappings/taskledger`
 
 ## Import example
 
 ```bash
-pytest --junitxml=reports/behavior/pytest-junit.xml
+pytest --junitxml=specs/behavior/reports/pytest-junit.xml
 
 specweave behavior import-report \
-  reports/behavior/pytest-junit.xml \
+  specs/behavior/reports/pytest-junit.xml \
   --format junit-xml \
   --out specs/behavior/evidence/pytest-evidence.json
 ```
@@ -38,5 +38,5 @@ Passing evidence must not be inferred from:
 ```bash
 specweave review coverage --view both --show gaps
 specweave trace @bdd-user-login-success --format json
-specweave combi check --json reports/behavior/specweave/combi-check.json
+specweave combi check --json specs/behavior/reports/specweave/combi-check.json
 ```

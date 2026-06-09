@@ -19,7 +19,6 @@ source_refs:
   - specweave/gherkin/writer.py
 ---
 
-
 ## Context
 
 SpecWeave previously supported both classic Gherkin `.feature` and Markdown-embedded `.feature.md` as behavior spec formats. Maintaining two parser and writer paths adds complexity for humans, tools, and coding agents.
@@ -35,13 +34,14 @@ Durable SpecWeave-owned JSON artifacts live under `specs/behavior/`:
 
 Generated runner output lives under:
 
-- `reports/behavior`
-- `reports/behavior/specweave`
+- `specs/behavior/reports`
+- `specs/behavior/reports/specweave`
 
 ## Alternatives considered
 
 - Continue supporting `.feature.md` alongside `.feature`: rejected — two parser and writer paths add maintenance burden without sufficient benefit.
 - Migrate `.feature.md` to a separate plugin: rejected — not enough usage to justify the indirection.
+
 ## Consequences
 
 - legacy `.feature.md` files are not canonical and are rejected

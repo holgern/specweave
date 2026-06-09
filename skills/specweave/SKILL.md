@@ -21,8 +21,8 @@ Read `specweave.toml` or `.specweave.toml` first.
 ```text
 specs/behavior/features/<area>/<feature>.feature
 tests/test_<area>_<feature>.py
-reports/behavior/*.xml
-reports/behavior/specweave/*.json
+specs/behavior/reports/*.xml
+specs/behavior/reports/specweave/*.json
 specs/behavior/evidence/*.json
 specs/behavior/mappings/taskledger/*.json
 ```
@@ -51,7 +51,7 @@ specweave behavior import-report REPORT --format junit-xml
 specweave behavior import-taskledger SOURCE --out FEATURE
 specweave report normalize REPORT --format junit-xml|cucumber-json
 specweave trace BDD_ID_OR_FEATURE --format json
-specweave combi check --json reports/behavior/specweave/combi-check.json
+specweave combi check --json specs/behavior/reports/specweave/combi-check.json
 ```
 
 ## Target Gherkin shape

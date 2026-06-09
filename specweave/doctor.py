@@ -235,6 +235,7 @@ def run_doctor(
         (config.paths.features_dir, "Features", "SWDOC006"),
         (config.paths.tests_dir, "Tests", "SWDOC007"),
         (config.paths.reports_dir, "Reports", "SWDOC008"),
+        (config.paths.reports_state_dir, "Reports state", "SWDOC011"),
         (config.paths.evidence_dir, "Evidence", "SWDOC009"),
         (config.paths.mapping_dir, "Mapping", "SWDOC010"),
     ]
@@ -250,6 +251,13 @@ def run_doctor(
             )
             if fix:
                 dir_path.mkdir(parents=True, exist_ok=True)
+                if config.gitkeep and dir_path in {
+                    config.paths.features_dir,
+                    config.paths.evidence_dir,
+                    config.paths.mapping_dir,
+                    config.paths.reports_state_dir,
+                }:
+                    (dir_path / ".gitkeep").touch()
                 warnings.append(f"Created {dir_path}")
 
     items.extend(_check_deprecated_paths(config))

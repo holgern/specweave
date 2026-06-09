@@ -15,8 +15,8 @@ Feature: SpecWeave project initialization
       And the specs/behavior/features directory exists
       And the specs/behavior/evidence directory exists
       And the specs/behavior/mappings directory exists
-      And the reports/behavior/specweave directory exists
-      And the reports/behavior directory exists
+      And the specs/behavior/reports/specweave directory exists
+      And the specs/behavior/reports directory exists
 
     @bdd-init-creates-dotfile
     Example: Init still supports explicit hidden config output
