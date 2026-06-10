@@ -153,6 +153,45 @@ def test_imports_pytest_report():
         path.unlink()
 
 
+def test_discover_specweave_short_comment_mapping() -> None:
+    code = """
+# sw: f=specs/behavior/features/sync/git-sync.feature
+# sw: s=@bdd-imports-pytest-report
+def test_imports_pytest_report():
+    pass
+"""
+    path = _write_test_file(code)
+    try:
+        mappings = discover_specweave_tests(path)
+        assert len(mappings) == 1
+        mapping = mappings[0]
+        assert mapping.feature.endswith("git-sync.feature")
+        assert mapping.scenario == "@bdd-imports-pytest-report"
+        assert mapping.source == "comment"
+    finally:
+        path.unlink()
+
+
+def test_discover_specweave_block_comment_mapping() -> None:
+    code = """
+# specweave:
+#   feature: specs/behavior/features/sync/git-sync.feature
+#   scenario: @bdd-imports-pytest-report
+def test_imports_pytest_report():
+    pass
+"""
+    path = _write_test_file(code)
+    try:
+        mappings = discover_specweave_tests(path)
+        assert len(mappings) == 1
+        mapping = mappings[0]
+        assert mapping.feature.endswith("git-sync.feature")
+        assert mapping.scenario == "@bdd-imports-pytest-report"
+        assert mapping.source == "comment"
+    finally:
+        path.unlink()
+
+
 def test_docstring_mapping_accepts_feature_md(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
     feature_path = (

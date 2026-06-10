@@ -41,6 +41,15 @@ specweave review coverage --view both --show gaps --format markdown --out specs/
 specweave behavior mappings --tests tests --format json
 ```
 
+If features were generated from pytest and coverage shows many candidate tests, run a dry-run autolink first:
+
+```bash
+specweave behavior autolink --features specs/behavior/features --tests tests --strategy generated-id
+specweave behavior autolink --features specs/behavior/features --tests tests --strategy generated-id --apply
+```
+
+Review the dry-run before using `--apply`. Autolink creates traceability metadata only. It does not validate behavior evidence.
+
 ## 4. Generate index and tests
 
 ```bash
@@ -54,10 +63,7 @@ specweave behavior index --features specs/behavior/features --out specs/behavior
 specweave review coverage --view both --show gaps
 ```
 
-Use feature-side gaps to add missing `# specweave:` markers or
-`@pytest.mark.specweave` mappings. Use pytest-side gaps to decide whether
-unmapped tests should be linked to existing scenarios, covered by a new
-scenario, or left outside behavior coverage intentionally.
+Use feature-side gaps to add missing `@pytest.mark.specweave` mappings or short `# sw:` comments. Prefer decorators for new or generated tests because Python string literals can be split to satisfy Ruff line length. Do not add file-level `# ruff: noqa: E501` only because of SpecWeave mapping metadata. Use pytest-side gaps to decide whether unmapped tests should be linked to existing scenarios, covered by a new scenario, or left outside behavior coverage intentionally.
 
 ## 5. Import evidence
 
@@ -68,3 +74,14 @@ specweave behavior import-report specs/behavior/reports/pytest-junit.xml --forma
 
 Normalized evidence is written to `specs/behavior/evidence`. Generated runner
 artifacts belong under `specs/behavior/reports` and `specs/behavior/reports/specweave`.
+
+
+## Refresh common artifacts
+
+Use the wrapper when you need the standard coverage, mapping inventory, and index artifacts from config paths:
+
+```bash
+specweave behavior refresh --coverage --mappings --index
+```
+
+This avoids repeated shell redirection and keeps output paths consistent.

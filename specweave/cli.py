@@ -523,6 +523,106 @@ def behavior_mappings(
     typer.echo(render_mapping_inventory_text(data))
 
 
+@behavior_app.command("autolink")
+def behavior_autolink(
+    ctx: typer.Context,
+    features: Annotated[Path | None, typer.Option("--features")] = None,
+    tests: Annotated[Path | None, typer.Option("--tests")] = None,
+    strategy: Annotated[str, typer.Option("--strategy")] = "generated-id",
+    apply: Annotated[bool, typer.Option("--apply")] = False,
+    output_format: Annotated[str, typer.Option("--format")] = "text",
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+    allow_non_generated: Annotated[bool, typer.Option("--allow-non-generated")] = False,
+    max_ambiguity: Annotated[int, typer.Option("--max-ambiguity")] = 0,
+    check: Annotated[bool, typer.Option("--check")] = False,
+    rewrite_duplicates: Annotated[bool, typer.Option("--rewrite-duplicates")] = False,
+) -> None:
+    """Plan or apply explicit mappings for generated behavior scenarios."""
+    from specweave.behavior.autolink import (
+        autolink_generated_ids,
+        autolink_result_to_dict,
+        render_autolink_text,
+    )
+
+    if strategy != "generated-id":
+        typer.echo("Unsupported --strategy: expected generated-id.", err=True)
+        raise typer.Exit(code=1)
+    if output_format not in {"text", "json"}:
+        typer.echo("Unsupported --format: expected text or json.", err=True)
+        raise typer.Exit(code=1)
+
+    cli_ctx: CliContext = ctx.obj
+    result = autolink_generated_ids(
+        features=features or cli_ctx.config.paths.features_dir,
+        tests=tests or cli_ctx.config.paths.tests_dir,
+        apply=apply,
+        allow_non_generated=allow_non_generated,
+        rewrite_duplicates=rewrite_duplicates,
+    )
+    rendered = (
+        _dump_json(autolink_result_to_dict(result))
+        if output_format == "json"
+        else render_autolink_text(result)
+    )
+    if out is None:
+        typer.echo(rendered)
+    else:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(rendered + "\n", encoding="utf-8")
+        typer.echo(f"Wrote behavior autolink report to {out}")
+    if result.summary["ambiguous"] > max_ambiguity:
+        raise typer.Exit(code=1)
+    if check and result.summary["planned"]:
+        raise typer.Exit(code=1)
+
+
+@behavior_app.command("refresh")
+def behavior_refresh(
+    ctx: typer.Context,
+    coverage: Annotated[bool, typer.Option("--coverage")] = False,
+    mappings: Annotated[bool, typer.Option("--mappings")] = False,
+    index: Annotated[bool, typer.Option("--index")] = False,
+) -> None:
+    """Refresh common behavior reports using configured paths."""
+    from specweave.behavior.coverage import (
+        build_behavior_coverage,
+        build_behavior_mapping_inventory,
+        render_coverage_markdown,
+    )
+    from specweave.behavior.index import write_behavior_index
+
+    cli_ctx: CliContext = ctx.obj
+    paths = cli_ctx.config.paths
+    if not any((coverage, mappings, index)):
+        coverage = mappings = index = True
+    if coverage:
+        data = build_behavior_coverage(
+            features_dir=paths.features_dir, tests_dir=paths.tests_dir
+        )
+        out = paths.reports_state_dir / "coverage-gaps.md"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(
+            render_coverage_markdown(data, view="both", show="gaps") + "\n",
+            encoding="utf-8",
+        )
+        typer.echo(f"Wrote behavior coverage to {out}")
+    if mappings:
+        data = build_behavior_mapping_inventory(tests_dir=paths.tests_dir)
+        out = paths.reports_state_dir / "mappings.json"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(_dump_json(data) + "\n", encoding="utf-8")
+        typer.echo(f"Wrote behavior mappings to {out}")
+    if index:
+        index_path, manifest_path = write_behavior_index(
+            features_dir=paths.features_dir,
+            out=paths.behavior_readme,
+            manifest_path=paths.manifest,
+            tests_dir=paths.tests_dir,
+        )
+        typer.echo(f"Wrote behavior index to {index_path}")
+        typer.echo(f"Wrote behavior manifest to {manifest_path}")
+
+
 @behavior_app.command("import-report")
 def behavior_import_report(
     ctx: typer.Context,

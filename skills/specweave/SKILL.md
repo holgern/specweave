@@ -51,34 +51,43 @@ If the project uses `specweave.toml`, drop `--config .specweave.toml`.
 
 1. Fix Gherkin lint errors first. Use `specweave behavior check` and edit only the reported feature files.
 2. Generate or refresh the two-way coverage report with `review coverage --view both --show gaps`.
-3. For each missing feature-side binding, add a mapping to the most relevant plain-pytest test or create a skeleton with `behavior generate-tests`.
-4. For each unmapped pytest-side test, decide one of: link it to an existing scenario, create a new scenario, or leave it unmapped intentionally and mention why.
-5. Regenerate the behavior index with `behavior index --features specs/behavior/features --tests-dir tests`.
-6. Finish with a compact summary: changed files, command results, remaining gaps, and next commands.
+3. If features were generated from pytest and coverage shows many candidate tests, run `specweave behavior autolink --strategy generated-id` first. Review the dry-run. Only then run again with `--apply`.
+4. For each remaining missing feature-side binding, add a mapping to the most relevant plain-pytest test or create a skeleton with `behavior generate-tests`.
+5. For each unmapped pytest-side test, decide one of: link it to an existing scenario, create a new scenario, or leave it unmapped intentionally and mention why.
+6. Regenerate standard artifacts with `behavior refresh --coverage --mappings --index` or regenerate the behavior index directly with `behavior index --features specs/behavior/features --tests-dir tests`.
+7. Finish with a compact summary: changed files, command results, remaining gaps, and next commands.
+
+Do not chain diagnostic gap commands with `&&`. Some gap commands correctly exit non-zero. Use labeled semicolon-separated commands or inspect each command separately.
 
 ## Mapping plain pytest to Gherkin
 
-Preferred mapping comment immediately above the test function or decorators:
-
-```python
-# specweave: feature=specs/behavior/features/<area>/<feature>.feature
-# specweave: scenario=@bdd-<stable-id>
-def test_observable_behavior() -> None:
-    ...
-```
-
-Decorator mapping is also valid:
+Preferred mapping for new or generated pytest tests is the decorator form:
 
 ```python
 @pytest.mark.specweave(
-    feature="specs/behavior/features/<area>/<feature>.feature",
-    scenario="@bdd-<stable-id>",
+    feature=(
+        "specs/behavior/features/<area>/"
+        "<feature>.feature"
+    ),
+    scenario=(
+        "@bdd-<stable-id-part-1>"
+        "<stable-id-part-2>"
+    ),
 )
 def test_observable_behavior() -> None:
     ...
 ```
 
-Docstring mapping is valid only when it contains both `specs/behavior/features/...feature` and `@bdd-*`.
+Short comments are valid for manual mappings when each line stays under Ruff's limit:
+
+```python
+# sw: f=specs/behavior/features/<area>/<feature>.feature
+# sw: s=@bdd-<stable-id>
+def test_observable_behavior() -> None:
+    ...
+```
+
+Legacy `# specweave: feature=...` and `# specweave: scenario=...` comments remain valid for compatibility. Do not add file-level `# ruff: noqa: E501` only because of SpecWeave mapping metadata. Docstring mapping is valid only when it contains both `specs/behavior/features/...feature` and `@bdd-*`.
 
 ## Command matrix
 
@@ -99,6 +108,8 @@ specweave behavior index --features specs/behavior/features --out specs/behavior
 specweave behavior generate-tests --features specs/behavior/features --tests-dir tests
 specweave behavior coverage --features specs/behavior/features --tests tests --view both --show gaps --format markdown --out specs/behavior/reports/specweave/coverage.md
 specweave behavior mappings --tests tests --format json
+specweave behavior autolink --features specs/behavior/features --tests tests --strategy generated-id [--apply]
+specweave behavior refresh --coverage --mappings --index
 specweave behavior import-report specs/behavior/reports/pytest-junit.xml --format junit-xml --out specs/behavior/evidence/pytest-evidence.json
 specweave behavior import-taskledger SOURCE --out FEATURE
 specweave report normalize REPORT --format junit-xml|cucumber-json

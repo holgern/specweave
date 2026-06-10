@@ -324,10 +324,7 @@ def test_behavior_generate_tests_creates_plain_pytest(tmp_path, monkeypatch) -> 
     content = test_file.read_text(encoding="utf-8")
     assert "import pytest" in content
     assert "@pytest.mark.specweave" in content
-    assert (
-        "# specweave: feature="
-        "specs/behavior/features/task-management/plan-gates.feature" in content
-    )
+    assert "feature=SPECWEAVE_FEATURE" in content
     assert "pytest_bdd" not in content
     assert "scenarios(" not in content
 

@@ -12,8 +12,9 @@ from specweave.gherkin.model import Scenario, Step
 from specweave.python_inspect.assertions import describe_assert
 
 _SPECWEAVE_COMMENT_RE = re.compile(
-    r"#\s*specweave:\s*(feature|scenario)\s*=\s*(.+?)\s*$"
+    r"#\s*(?:specweave|sw):\s*(feature|scenario|f|s)\s*=\s*(.+?)\s*$"
 )
+_SPECWEAVE_BLOCK_RE = re.compile(r"#\s*(feature|scenario|f|s)\s*:\s*(.+?)\s*$")
 _SPECWEAVE_FEATURE_RE = re.compile(
     r"specs/behavior/features/[^\s\"']+\.feature(?:\.md)?"
 )
@@ -40,6 +41,9 @@ class PytestTestItem:
     test_file: str
     nodeid: str
     line: int
+    insert_line: int
+    indent: str
+    class_name: str | None = None
 
 
 def extract_test_scenarios(path: Path) -> list[Scenario]:
@@ -128,19 +132,42 @@ def _marker_mapping(
     return None
 
 
+def _canonical_comment_key(key: str) -> str:
+    return {"f": "feature", "s": "scenario"}.get(key, key)
+
+
+def _comment_values(lines: list[str], index: int) -> tuple[dict[str, str], int]:
+    values: dict[str, str] = {}
+    match = _SPECWEAVE_COMMENT_RE.match(lines[index].strip())
+    if match is not None:
+        while index < len(lines):
+            match = _SPECWEAVE_COMMENT_RE.match(lines[index].strip())
+            if match is None:
+                break
+            values[_canonical_comment_key(match.group(1))] = match.group(2).strip()
+            index += 1
+        return values, index
+
+    stripped = lines[index].strip()
+    if stripped not in {"# specweave:", "# sw:"}:
+        return values, index
+    index += 1
+    while index < len(lines):
+        match = _SPECWEAVE_BLOCK_RE.match(lines[index].strip())
+        if match is None:
+            break
+        values[_canonical_comment_key(match.group(1))] = match.group(2).strip()
+        index += 1
+    return values, index
+
+
 def _comment_mappings(source: str) -> dict[int, tuple[str, str]]:
     mappings: dict[int, tuple[str, str]] = {}
     lines = source.splitlines()
     index = 0
     while index < len(lines):
-        values: dict[str, str] = {}
         start = index
-        while index < len(lines):
-            match = _SPECWEAVE_COMMENT_RE.match(lines[index].strip())
-            if match is None:
-                break
-            values[match.group(1)] = match.group(2).strip()
-            index += 1
+        values, index = _comment_values(lines, index)
         if values:
             while index < len(lines) and lines[index].lstrip().startswith("@"):
                 index += 1
@@ -219,26 +246,50 @@ def discover_specweave_tests(path: Path) -> list[SpecweaveTestMapping]:
     return mappings
 
 
+def _pytest_test_items(
+    tree: ast.Module, test_file: str, source: str
+) -> list[PytestTestItem]:
+    lines = source.splitlines()
+    items: list[PytestTestItem] = []
+
+    def visit(body: list[ast.stmt], class_name: str | None = None) -> None:
+        for node in body:
+            if isinstance(node, ast.ClassDef):
+                nested_class = node.name if node.name.startswith("Test") else None
+                visit(list(node.body), nested_class)
+                continue
+            if not isinstance(
+                node, (ast.FunctionDef, ast.AsyncFunctionDef)
+            ) or not node.name.startswith("test_"):
+                continue
+            decorator_lines = [decorator.lineno for decorator in node.decorator_list]
+            insert_line = min(decorator_lines, default=node.lineno)
+            source_line = lines[node.lineno - 1] if node.lineno <= len(lines) else ""
+            indent = source_line[: len(source_line) - len(source_line.lstrip())]
+            qualname = f"{class_name}::{node.name}" if class_name else node.name
+            items.append(
+                PytestTestItem(
+                    function_name=node.name,
+                    test_file=test_file,
+                    nodeid=f"{test_file}::{qualname}",
+                    line=node.lineno,
+                    insert_line=insert_line,
+                    indent=indent,
+                    class_name=class_name,
+                )
+            )
+
+    visit(list(tree.body))
+    return sorted(items, key=lambda item: item.line)
+
+
 def discover_pytest_tests(path: Path) -> list[PytestTestItem]:
     """Discover plain pytest test functions from *path*."""
 
     source = path.read_text(encoding="utf-8")
     tree = ast.parse(source, filename=str(path))
     test_file = _display_path(path)
-    items: list[PytestTestItem] = []
-    for node in ast.walk(tree):
-        if isinstance(
-            node, (ast.FunctionDef, ast.AsyncFunctionDef)
-        ) and node.name.startswith("test_"):
-            items.append(
-                PytestTestItem(
-                    function_name=node.name,
-                    test_file=test_file,
-                    nodeid=f"{test_file}::{node.name}",
-                    line=node.lineno,
-                )
-            )
-    return sorted(items, key=lambda item: item.line)
+    return _pytest_test_items(tree, test_file, source)
 
 
 def collect_specweave_tests(paths: Iterable[Path]) -> list[SpecweaveTestMapping]:

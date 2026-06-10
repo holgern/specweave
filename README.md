@@ -36,7 +36,9 @@ specweave doctor
 specweave create gherkin --from-tests tests --out specs/behavior/features
 specweave review specs
 specweave review coverage --view both --show gaps
-specweave behavior index
+specweave behavior autolink --strategy generated-id
+specweave behavior autolink --strategy generated-id --apply
+specweave behavior refresh --coverage --mappings --index
 specweave behavior generate-tests --features specs/behavior/features --tests-dir tests
 pytest --junitxml=specs/behavior/reports/pytest-junit.xml
 specweave behavior import-report specs/behavior/reports/pytest-junit.xml --format junit-xml
@@ -79,6 +81,8 @@ specweave behavior import-report \
   --format junit-xml \
   --out specs/behavior/evidence/pytest-evidence.json
 ```
+
+For new pytest mappings, prefer `@pytest.mark.specweave(...)` over long comment headers. Long feature paths and scenario ids can be split as adjacent Python string literals, which keeps generated tests Ruff-compatible while preserving exact mapping values.
 
 ## Optional Taskledger integration
 

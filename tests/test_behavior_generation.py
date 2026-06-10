@@ -83,7 +83,7 @@ def test_generate_specweave_markers() -> None:
     code = generate_pytest_skeleton(
         feature, Path("specs/behavior/features/auth/login.feature")
     )
-    assert "specweave:" in code
+    assert "@pytest.mark.specweave" in code
 
 
 # specweave: feature=specs/behavior/features/behavior/generation.feature
@@ -127,6 +127,42 @@ def test_generate_rules() -> None:
         feature, Path("specs/behavior/features/auth/login.feature")
     )
     assert 'rule="Auth rule"' in code
+
+
+# specweave: feature=specs/behavior/features/behavior/generation.feature
+# specweave: scenario=@bdd-generate-long-mapping-lines
+def test_generate_avoids_long_specweave_mapping_lines() -> None:
+    feature = Feature(
+        title="Long paths",
+        rules=(
+            Rule(
+                title="A rule title that is deliberately long but still readable",
+                scenarios=(
+                    Scenario(
+                        title="Long mapping",
+                        keyword="Example",
+                        tags=(
+                            "bdd-cli-command-contract-commands-do-not-register-"
+                            "local-json-options-and-remain-ruff-clean",
+                        ),
+                        steps=(Step(keyword="Given", text="x"),),
+                    ),
+                ),
+            ),
+        ),
+    )
+    code = generate_pytest_skeleton(
+        feature,
+        Path(
+            "specs/behavior/features/cli_command_contract/"
+            "cli-command-contract.feature"
+        ),
+    )
+
+    assert max(len(line) for line in code.splitlines()) <= 88
+    assert "cli_command_contract/" in code
+    assert "local-json-options-" in code
+    assert "remain-ruff-clean" in code
 
 
 # specweave: feature=specs/behavior/features/behavior/generation.feature

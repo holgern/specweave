@@ -22,6 +22,9 @@ specweave explain PATH...
 specweave behavior check [FEATURE_OR_DIR]
 specweave behavior index --features specs/behavior/features --out specs/behavior/README.md --manifest specs/behavior/manifest.json --tests-dir tests
 specweave behavior generate-tests --features specs/behavior/features --tests-dir tests
+specweave behavior autolink --features specs/behavior/features --tests tests --strategy generated-id
+specweave behavior autolink --features specs/behavior/features --tests tests --strategy generated-id --apply
+specweave behavior refresh --coverage --mappings --index
 specweave behavior coverage --features specs/behavior/features --tests tests --view both --show gaps --format markdown --out specs/behavior/reports/specweave/coverage.md
 specweave behavior mappings --tests tests --format json
 specweave behavior import-report REPORT --format junit-xml
@@ -40,6 +43,8 @@ specweave review coverage --view test --show unmapped
 `review specs` is the concise health gate. `review coverage` is the detailed
 two-way browser for feature-to-pytest and pytest-to-feature traceability.
 
+
+Do not chain diagnostic gap commands with `&&`. Some gap commands correctly exit non-zero when gaps remain. Use labeled semicolon-separated commands or inspect each command separately.
 ## Create
 
 ```bash
