@@ -227,6 +227,11 @@ class TestSpecWeaveConfig:
             config.spelling = "other"  # type: ignore[misc]
 
 
+
+def test_specweave_skill_uses_canonical_report_paths() -> None:
+    text = Path("skills/specweave/SKILL.md").read_text(encoding="utf-8")
+    assert "specs/behavior/reports" in text
+    assert "reports/behavior" not in text.replace("specs/behavior/reports", "")
 class TestSpecWeaveGherkin:
     def test_default_official_parser_is_false(self) -> None:
         g = SpecWeaveGherkin()

@@ -31,14 +31,24 @@ specweave create gherkin --from-tests tests --out specs/behavior/features
 specweave review specs
 ```
 
-## 3. Generate index and tests
+## 3. Review coverage before manual scanning
+
+Start traceability work with SpecWeave's review commands instead of broad source greps:
 
 ```bash
-specweave behavior index
-specweave behavior generate-tests --features specs/behavior/features --tests-dir tests
+specweave review specs
+specweave review coverage --view both --show gaps --format markdown --out specs/behavior/reports/specweave/coverage-gaps.md
+specweave behavior mappings --tests tests --format json
 ```
 
-## 4. Check static coverage in both directions
+## 4. Generate index and tests
+
+```bash
+specweave behavior generate-tests --features specs/behavior/features --tests-dir tests
+specweave behavior index --features specs/behavior/features --out specs/behavior/README.md --manifest specs/behavior/manifest.json --tests-dir tests
+```
+
+## 5. Check static coverage in both directions
 
 ```bash
 specweave review coverage --view both --show gaps

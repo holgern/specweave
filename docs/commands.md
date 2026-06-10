@@ -19,11 +19,11 @@ specweave explain PATH...
 ## Behavior
 
 ```bash
-specweave behavior check
-specweave behavior index
-specweave behavior generate-tests
-specweave behavior coverage
-specweave behavior mappings
+specweave behavior check [FEATURE_OR_DIR]
+specweave behavior index --features specs/behavior/features --out specs/behavior/README.md --manifest specs/behavior/manifest.json --tests-dir tests
+specweave behavior generate-tests --features specs/behavior/features --tests-dir tests
+specweave behavior coverage --features specs/behavior/features --tests tests --view both --show gaps --format markdown --out specs/behavior/reports/specweave/coverage.md
+specweave behavior mappings --tests tests --format json
 specweave behavior import-report REPORT --format junit-xml
 specweave behavior import-taskledger SOURCE --out FEATURE
 ```
@@ -32,7 +32,7 @@ specweave behavior import-taskledger SOURCE --out FEATURE
 
 ```bash
 specweave review specs
-specweave review coverage --view both --show gaps
+specweave review coverage --view both --show gaps --format markdown --out specs/behavior/reports/specweave/coverage-gaps.md
 specweave review coverage --view feature --show missing
 specweave review coverage --view test --show unmapped
 ```

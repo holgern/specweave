@@ -267,14 +267,16 @@ def _coverage_failed(
 
 @behavior_app.command("check")
 def behavior_check(
+    ctx: typer.Context,
     path: Annotated[Path | None, typer.Argument()] = None,
     strict: Annotated[bool, typer.Option("--strict")] = False,
     json_output: Annotated[bool, typer.Option("--json")] = False,
 ) -> None:
     """Lint behavior feature files."""
-    from specweave.gherkin.lint import default_feature_files, lint_feature_files
+    from specweave.gherkin.lint import lint_feature_files
 
-    target_paths = (path,) if path is not None else tuple(default_feature_files())
+    cli_ctx: CliContext = ctx.obj
+    target_paths = (path,) if path is not None else (cli_ctx.config.paths.features_dir,)
     findings = lint_feature_files(target_paths, strict=strict)
     if json_output:
         typer.echo(
@@ -293,21 +295,29 @@ def behavior_check(
 
 @behavior_app.command("index")
 def behavior_index(
-    features: Annotated[Path, typer.Option("--features")] = Path(
-        "specs/behavior/features"
-    ),
-    out: Annotated[Path, typer.Option("--out")] = Path("specs/behavior/README.md"),
-    manifest: Annotated[Path, typer.Option("--manifest")] = Path(
-        "specs/behavior/manifest.json"
-    ),
-    tests_dir: Annotated[Path, typer.Option("--tests-dir")] = Path("tests"),
+    ctx: typer.Context,
+    features: Annotated[Path | None, typer.Option("--features")] = None,
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+    manifest: Annotated[Path | None, typer.Option("--manifest")] = None,
+    tests_dir: Annotated[
+        Path | None,
+        typer.Option(
+            "--tests-dir", "--tests", help="Directory containing pytest tests."
+        ),
+    ] = None,
 ) -> None:
     """Generate the behavior Markdown index and manifest."""
     from specweave.behavior.index import write_behavior_index
     from specweave.gherkin.lint import collect_feature_files, lint_feature_files
 
+    cli_ctx: CliContext = ctx.obj
+    resolved_features = features or cli_ctx.config.paths.features_dir
+    resolved_out = out or cli_ctx.config.paths.behavior_readme
+    resolved_manifest = manifest or cli_ctx.config.paths.manifest
+    resolved_tests_dir = tests_dir or cli_ctx.config.paths.tests_dir
+
     findings = lint_feature_files(
-        collect_feature_files((features,)),
+        collect_feature_files((resolved_features,)),
         require_scenario_ids=True,
     )
     warnings = [finding for finding in findings if finding.level == "warning"]
@@ -317,10 +327,10 @@ def behavior_index(
         raise typer.Exit(code=1)
 
     index_path, manifest_path = write_behavior_index(
-        features_dir=features,
-        out=out,
-        manifest_path=manifest,
-        tests_dir=tests_dir,
+        features_dir=resolved_features,
+        out=resolved_out,
+        manifest_path=resolved_manifest,
+        tests_dir=resolved_tests_dir,
     )
     typer.echo(f"Wrote behavior index to {index_path}")
     typer.echo(f"Wrote behavior manifest to {manifest_path}")
@@ -328,10 +338,11 @@ def behavior_index(
 
 @behavior_app.command("generate-tests")
 def behavior_generate_tests(
+    ctx: typer.Context,
     feature: Annotated[Path | None, typer.Argument()] = None,
     features: Annotated[Path | None, typer.Option("--features")] = None,
     out: Annotated[Path | None, typer.Option("--out")] = None,
-    tests_dir: Annotated[Path, typer.Option("--tests-dir")] = Path("tests"),
+    tests_dir: Annotated[Path | None, typer.Option("--tests-dir")] = None,
 ) -> None:
     """Generate plain pytest skeletons from behavior feature files."""
     from specweave.behavior.generate import generate_from_paths
@@ -340,11 +351,16 @@ def behavior_generate_tests(
         typer.echo("Use either a feature argument or --features, not both.", err=True)
         raise typer.Exit(code=1)
 
+    cli_ctx: CliContext = ctx.obj
+    resolved_features = features or (
+        cli_ctx.config.paths.features_dir if feature is None else None
+    )
+    resolved_tests_dir = tests_dir or cli_ctx.config.paths.tests_dir
     outputs = generate_from_paths(
         feature_path=feature,
-        features_dir=features,
+        features_dir=resolved_features,
         out=out,
-        tests_dir=tests_dir,
+        tests_dir=resolved_tests_dir,
     )
     for path in outputs:
         typer.echo(f"Wrote plain pytest skeleton to {path}")
@@ -479,7 +495,8 @@ def behavior_coverage(
 
 @behavior_app.command("mappings")
 def behavior_mappings(
-    tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
+    ctx: typer.Context,
+    tests: Annotated[Path | None, typer.Option("--tests")] = None,
     output_format: Annotated[
         str,
         typer.Option("--format", help="Output format: text or json."),
@@ -491,7 +508,9 @@ def behavior_mappings(
         render_mapping_inventory_text,
     )
 
-    data = build_behavior_mapping_inventory(tests_dir=tests)
+    cli_ctx: CliContext = ctx.obj
+    resolved_tests = tests or cli_ctx.config.paths.tests_dir
+    data = build_behavior_mapping_inventory(tests_dir=resolved_tests)
     if output_format == "json":
         typer.echo(_dump_json(data))
         return
@@ -556,41 +575,48 @@ def behavior_import_taskledger(
 
 @bdd_app.command("check")
 def bdd_check_alias(
+    ctx: typer.Context,
     path: Annotated[Path | None, typer.Argument()] = None,
     strict: Annotated[bool, typer.Option("--strict")] = False,
     json_output: Annotated[bool, typer.Option("--json")] = False,
 ) -> None:
     """Compatibility alias for ``specweave behavior check``."""
 
-    behavior_check(path=path, strict=strict, json_output=json_output)
+    behavior_check(ctx=ctx, path=path, strict=strict, json_output=json_output)
 
 
 @bdd_app.command("index")
 def bdd_index_alias(
-    features: Annotated[Path, typer.Option("--features")] = Path(
-        "specs/behavior/features"
-    ),
-    out: Annotated[Path, typer.Option("--out")] = Path("specs/behavior/README.md"),
-    manifest: Annotated[Path, typer.Option("--manifest")] = Path(
-        "specs/behavior/manifest.json"
-    ),
-    tests_dir: Annotated[Path, typer.Option("--tests-dir")] = Path("tests"),
+    ctx: typer.Context,
+    features: Annotated[Path | None, typer.Option("--features")] = None,
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+    manifest: Annotated[Path | None, typer.Option("--manifest")] = None,
+    tests_dir: Annotated[
+        Path | None,
+        typer.Option(
+            "--tests-dir", "--tests", help="Directory containing pytest tests."
+        ),
+    ] = None,
 ) -> None:
     """Compatibility alias for ``specweave behavior index``."""
 
-    behavior_index(features=features, out=out, manifest=manifest, tests_dir=tests_dir)
+    behavior_index(
+        ctx=ctx, features=features, out=out, manifest=manifest, tests_dir=tests_dir
+    )
 
 
 @bdd_app.command("generate-tests")
 def bdd_generate_tests_alias(
+    ctx: typer.Context,
     feature: Annotated[Path | None, typer.Argument()] = None,
     features: Annotated[Path | None, typer.Option("--features")] = None,
     out: Annotated[Path | None, typer.Option("--out")] = None,
-    tests_dir: Annotated[Path, typer.Option("--tests-dir")] = Path("tests"),
+    tests_dir: Annotated[Path | None, typer.Option("--tests-dir")] = None,
 ) -> None:
     """Compatibility alias for ``specweave behavior generate-tests``."""
 
     behavior_generate_tests(
+        ctx=ctx,
         feature=feature,
         features=features,
         out=out,

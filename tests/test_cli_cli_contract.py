@@ -357,6 +357,69 @@ def test_behavior_index_writes_markdown_and_manifest(tmp_path, monkeypatch) -> N
     assert scenario["automation"]["status"] == "bound"
 
 
+def test_behavior_index_accepts_tests_alias(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    feature_path = _write_plan_gates_feature(tmp_path)
+    generate_result = runner.invoke(
+        app, ["behavior", "generate-tests", str(feature_path)]
+    )
+    assert generate_result.exit_code == 0, generate_result.stdout
+
+    result = runner.invoke(
+        app,
+        [
+            "behavior",
+            "index",
+            "--features",
+            "specs/behavior/features",
+            "--out",
+            "alias-index.md",
+            "--manifest",
+            "alias-manifest.json",
+            "--tests",
+            "tests",
+        ],
+    )
+
+    assert result.exit_code == 0, result.stdout
+    assert (tmp_path / "alias-index.md").exists()
+    assert (tmp_path / "alias-manifest.json").exists()
+
+
+def test_behavior_commands_use_configured_default_paths(
+    tmp_path, monkeypatch
+) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    config_file = tmp_path / "specweave.toml"
+    config_file.write_text(
+        "schema_version = 1\n"
+        "[paths]\n"
+        "features_dir = \"specs/behavior/features\"\n"
+        "tests_dir = \"custom/tests\"\n"
+        "behavior_readme = \"custom/README.md\"\n"
+        "manifest = \"custom/manifest.json\"\n",
+        encoding="utf-8",
+    )
+    feature_path = _write_plan_gates_feature(tmp_path)
+
+    check_result = runner.invoke(app, ["behavior", "check"])
+    assert check_result.exit_code == 0, check_result.stdout
+
+    generate_result = runner.invoke(app, ["behavior", "generate-tests"])
+    assert generate_result.exit_code == 0, generate_result.stdout
+    assert (tmp_path / "custom/tests/test_task_management_plan_gates.py").exists()
+
+    mappings_result = runner.invoke(app, ["behavior", "mappings", "--format", "json"])
+    assert mappings_result.exit_code == 0, mappings_result.stdout
+    mappings = json.loads(mappings_result.stdout)
+    assert mappings["tests_dir"] == "custom/tests"
+
+    index_result = runner.invoke(app, ["behavior", "index"])
+    assert index_result.exit_code == 0, index_result.stdout
+    assert (tmp_path / "custom/README.md").exists()
+    assert (tmp_path / "custom/manifest.json").exists()
+    assert feature_path.exists()
+
 # specweave: feature=specs/behavior/features/cli/cli-contract.feature
 # specweave: scenario=@bdd-cli-behavior-coverage
 def test_behavior_coverage_reports_bound_scenarios(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
