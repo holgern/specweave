@@ -37,12 +37,16 @@ def _feature_path(tmp_path: Path, text: str, name: str = "test.feature") -> Path
     return path
 
 
+# sw: f=specs/behavior/features/backends/pytest-bdd.feature
+# sw: s=@bdd-backend-registry
 def test_backend_registry_contents() -> None:
     assert "behave" in BACKENDS
     assert "pytest-bdd" in BACKENDS
     assert get_backend("pytest-bdd") is generate_pytest_bdd
 
 
+# sw: f=specs/behavior/features/backends/pytest-bdd.feature
+# sw: s=@bdd-backend-unsupported
 def test_unsupported_cucumber_backends_message() -> None:
     assert "cucumber-js" in UNSUPPORTED_BACKENDS
     assert "cucumber-jvm" in UNSUPPORTED_BACKENDS
@@ -55,6 +59,8 @@ def test_unsupported_cucumber_backends_message() -> None:
             raise AssertionError(f"expected ValueError for {name}")
 
 
+# sw: f=specs/behavior/features/backends/pytest-bdd.feature
+# sw: s=@bdd-backend-pytest-bdd-skeleton
 def test_pytest_bdd_skeleton_shape(tmp_path) -> None:  # type: ignore[no-untyped-def]
     feature_path = _feature_path(tmp_path, FEATURE_TEXT)
     feature = parse_feature(feature_path.read_text(encoding="utf-8"))
@@ -72,6 +78,8 @@ def test_pytest_bdd_skeleton_shape(tmp_path) -> None:  # type: ignore[no-untyped
     assert "raise NotImplementedError" in skeleton
 
 
+# sw: f=specs/behavior/features/backends/pytest-bdd.feature
+# sw: s=@bdd-backend-pytest-bdd-dedup
 def test_pytest_bdd_dedups_repeated_steps(tmp_path) -> None:  # type: ignore[no-untyped-def]
     text = """Feature: Dedup
   Scenario: S
@@ -86,6 +94,8 @@ def test_pytest_bdd_dedups_repeated_steps(tmp_path) -> None:  # type: ignore[no-
     assert skeleton.count('parsers.parse("a user")') == 1
 
 
+# sw: f=specs/behavior/features/backends/pytest-bdd.feature
+# sw: s=@bdd-backend-pytest-bdd-rule-scenarios
 def test_pytest_bdd_collects_rule_scenarios(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Steps inside Rule: blocks are bound by the pytest-bdd backend."""
     feature = parse_feature(
@@ -99,6 +109,8 @@ def test_pytest_bdd_collects_rule_scenarios(tmp_path) -> None:  # type: ignore[n
     assert 'parsers.parse("taskledger rejects the transition")' in skeleton
 
 
+# sw: f=specs/behavior/features/translation/spec-to-code.feature
+# sw: s=@bdd-spec-to-code-bind-pytest-bdd
 def test_bind_feature_writes_pytest_bdd_file(tmp_path) -> None:  # type: ignore[no-untyped-def]
     feature_path = _feature_path(tmp_path, FEATURE_TEXT)
     out_dir = tmp_path / "steps"
@@ -110,6 +122,8 @@ def test_bind_feature_writes_pytest_bdd_file(tmp_path) -> None:  # type: ignore[
     assert "@when(parsers.parse" in content
 
 
+# sw: f=specs/behavior/features/backends/pytest-bdd.feature
+# sw: s=@bdd-backend-pytest-bdd-source-path
 def test_pytest_bdd_uses_source_path_filename(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """When source_path is set, scenarios() references that filename."""
     feature_path = _feature_path(tmp_path, FEATURE_TEXT, name="custom-name.feature")

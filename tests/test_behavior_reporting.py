@@ -49,8 +49,8 @@ def _setup(tmp_path: Path) -> dict:
     return {"tests_dir": tests_dir, "manifest_path": manifest_path}
 
 
-# specweave: feature=specs/behavior/features/behavior/reporting.feature
-# specweave: scenario=@bdd-import-maps-by-nodeid
+# sw: f=specs/behavior/features/behavior/reporting.feature
+# sw: s=@bdd-import-maps-by-nodeid
 def test_import_maps_by_nodeid(tmp_path: Path) -> None:
     """Import maps results by normalized nodeid."""
     paths = _setup(tmp_path)
@@ -63,8 +63,8 @@ def test_import_maps_by_nodeid(tmp_path: Path) -> None:
     assert result is not None
 
 
-# specweave: feature=specs/behavior/features/behavior/reporting.feature
-# specweave: scenario=@bdd-import-maps-by-function-name
+# sw: f=specs/behavior/features/behavior/reporting.feature
+# sw: s=@bdd-import-maps-by-function-name
 def test_import_maps_by_function_name(tmp_path: Path) -> None:
     """Import falls back to function name matching."""
     paths = _setup(tmp_path)
@@ -84,8 +84,8 @@ def test_import_maps_by_function_name(tmp_path: Path) -> None:
     assert result is not None
 
 
-# specweave: feature=specs/behavior/features/behavior/reporting.feature
-# specweave: scenario=@bdd-import-maps-by-manifest
+# sw: f=specs/behavior/features/behavior/reporting.feature
+# sw: s=@bdd-import-maps-by-manifest
 def test_import_maps_by_manifest(tmp_path: Path) -> None:
     """Import uses manifest mappings when available."""
     paths = _setup(tmp_path)
@@ -98,8 +98,8 @@ def test_import_maps_by_manifest(tmp_path: Path) -> None:
     assert result is not None
 
 
-# specweave: feature=specs/behavior/features/behavior/reporting.feature
-# specweave: scenario=@bdd-import-unmapped-tests
+# sw: f=specs/behavior/features/behavior/reporting.feature
+# sw: s=@bdd-import-unmapped-tests
 def test_import_unmapped_tests(tmp_path: Path) -> None:
     """Import reports tests without specweave markers."""
     tests_dir = tmp_path / "tests"
@@ -122,8 +122,8 @@ def test_import_unmapped_tests(tmp_path: Path) -> None:
     assert result is not None
 
 
-# specweave: feature=specs/behavior/features/behavior/reporting.feature
-# specweave: scenario=@bdd-import-writes-evidence
+# sw: f=specs/behavior/features/behavior/reporting.feature
+# sw: s=@bdd-import-writes-evidence
 def test_import_writes_evidence(tmp_path: Path) -> None:
     """Import writes evidence to the target path."""
     paths = _setup(tmp_path)

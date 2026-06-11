@@ -47,6 +47,8 @@ def test_autolink_generated_id_top_level_function(tmp_path: Path, monkeypatch) -
     assert result.items[0].nodeid == "tests/test_autolink.py::test_does_the_thing"
 
 
+# sw: f=specs/behavior/features/behavior/autolink.feature
+# sw: s=@bdd-autolink-generated-id-dry-run
 def test_autolink_dry_run_does_not_write(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
     features = tmp_path / "specs" / "behavior" / "features"
@@ -62,6 +64,8 @@ def test_autolink_dry_run_does_not_write(tmp_path: Path, monkeypatch) -> None:
     assert test_file.read_text(encoding="utf-8") == before
 
 
+# sw: f=specs/behavior/features/behavior/autolink.feature
+# sw: s=@bdd-autolink-generated-id-apply
 def test_autolink_apply_writes_mapping_comments(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
     features = tmp_path / "specs" / "behavior" / "features"
@@ -134,6 +138,8 @@ def test_autolink_skips_existing_mapping(tmp_path: Path, monkeypatch) -> None:
     assert result.summary["skipped_existing"] == 1
 
 
+# sw: f=specs/behavior/features/behavior/autolink.feature
+# sw: s=@bdd-autolink-ambiguous-candidate
 def test_autolink_reports_ambiguous_equal_score(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
     features = tmp_path / "specs" / "behavior" / "features"
@@ -191,6 +197,8 @@ def test_autolink_json_shape(tmp_path: Path, monkeypatch) -> None:
     }
 
 
+# sw: f=specs/behavior/features/behavior/autolink.feature
+# sw: s=@bdd-autolink-refresh-wrapper
 def test_autolink_uses_config_paths(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
     _write(

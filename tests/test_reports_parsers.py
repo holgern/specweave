@@ -67,8 +67,8 @@ _JUNIT_PROPERTIES = """\
 # -- JUnit XML parser tests --
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature
-# specweave: scenario=@bdd-junit-parse-cases
+# sw: f=specs/behavior/features/reports/parsers.feature
+# sw: s=@bdd-junit-parse-cases
 def test_parse_junit_pass_fail_skip(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser extracts test cases from JUnit XML."""
     path = _write(tmp_path, "junit.xml", _JUNIT_PASS_FAIL_SKIP)
@@ -79,8 +79,8 @@ def test_parse_junit_pass_fail_skip(tmp_path) -> None:  # type: ignore[no-untype
     assert results[2].tags == ("bdd-0003", "ac-0002")
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature
-# specweave: scenario=@bdd-junit-parse-statuses
+# sw: f=specs/behavior/features/reports/parsers.feature
+# sw: s=@bdd-junit-parse-statuses
 def test_junit_error_counts_as_failed(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser maps JUnit statuses correctly."""
     path = _write(tmp_path, "junit.xml", _JUNIT_ERROR)
@@ -179,8 +179,8 @@ def test_parse_junit_preserves_nodeid_and_test_file(tmp_path) -> None:  # type: 
 # -- Cucumber JSON parser tests --
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature
-# specweave: scenario=@bdd-cucumber-parse-scenarios
+# sw: f=specs/behavior/features/reports/parsers.feature
+# sw: s=@bdd-cucumber-parse-scenarios
 def test_cucumber_json_passing_scenario(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser extracts scenarios from Cucumber JSON."""
     payload = [
@@ -294,8 +294,8 @@ def test_failed_step_fails_scenario_and_report(tmp_path) -> None:  # type: ignor
     assert report.criteria[0].status == "failed"
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature
-# specweave: scenario=@bdd-cucumber-parse-tags
+# sw: f=specs/behavior/features/reports/parsers.feature
+# sw: s=@bdd-cucumber-parse-tags
 def test_behear_string_tags_and_inline_status(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser extracts tags from Cucumber scenarios (behave style)."""
     payload = [
@@ -358,8 +358,8 @@ def test_unsupported_format_raises(tmp_path) -> None:  # type: ignore[no-untyped
         raise AssertionError("expected ValueError for unsupported format")
 
 
-# specweave: feature=specs/behavior/features/reports/parsers.feature
-# specweave: scenario=@bdd-junit-parse-duration
+# sw: f=specs/behavior/features/reports/parsers.feature
+# sw: s=@bdd-junit-parse-duration
 def test_junit_parse_duration(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Parser extracts test duration from JUnit XML."""
     text = """\

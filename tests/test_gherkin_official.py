@@ -42,6 +42,8 @@ Feature: With rules
 
 
 class TestParseClassicWithOfficial:
+    # sw: f=specs/behavior/features/gherkin/official.feature
+    # sw: s=@bdd-official-parse-simple
     def test_parses_simple_feature(self) -> None:
         f = parse_classic_with_official(_SIMPLE_FEATURE)
         assert f.title == "Hello"
@@ -55,6 +57,8 @@ class TestParseClassicWithOfficial:
         assert f.scenarios[0].steps[0].keyword == "Given"
         assert f.scenarios[0].steps[0].text == "a precondition"
 
+    # sw: f=specs/behavior/features/gherkin/official.feature
+    # sw: s=@bdd-official-parse-rules
     def test_parses_rule_and_scenario_tags(self) -> None:
         f = parse_classic_with_official(_RULE_FEATURE)
         assert f.title == "With rules"
@@ -66,33 +70,47 @@ class TestParseClassicWithOfficial:
         assert rule.scenarios[0].title == "First scenario"
         assert rule.scenarios[0].tags == ("scenario-a1",)
 
+    # sw: f=specs/behavior/features/gherkin/official.feature
+    # sw: s=@bdd-official-reject-invalid
     def test_rejects_invalid_gherkin(self) -> None:
         with pytest.raises(ParseError):
             parse_classic_with_official("Not valid gherkin content")
 
+    # sw: f=specs/behavior/features/gherkin/official.feature
+    # sw: s=@bdd-official-source-path
     def test_accepts_source_path(self) -> None:
         path = Path("specs/behavior/features/auth/login.feature")
         f = parse_classic_with_official(_SIMPLE_FEATURE, source_path=path)
         assert f.source_path == path
 
+    # sw: f=specs/behavior/features/gherkin/official.feature
+    # sw: s=@bdd-official-compile-pickles
     def test_compile_pickles_smoke(self) -> None:
         f = parse_classic_with_official(_SIMPLE_FEATURE, compile_pickles=True)
         assert f.title == "Hello"
 
+    # sw: f=specs/behavior/features/gherkin/official.feature
+    # sw: s=@bdd-official-parse-no-tags
     def test_empty_feature_tags(self) -> None:
         src = "Feature: No tags\n  Scenario: Bare\n    Given x\n"
         f = parse_classic_with_official(src)
         assert f.tags == ()
 
+    # sw: f=specs/behavior/features/gherkin/official.feature
+    # sw: s=@bdd-official-preserve-description
     def test_preserves_description(self) -> None:
         f = parse_classic_with_official(_SIMPLE_FEATURE)
         assert "description." in f.description
 
 
 class TestValidateClassicWithOfficial:
+    # sw: f=specs/behavior/features/gherkin/official.feature
+    # sw: s=@bdd-official-validate-valid
     def test_validates_valid(self) -> None:
         validate_classic_with_official(_SIMPLE_FEATURE)
 
+    # sw: f=specs/behavior/features/gherkin/official.feature
+    # sw: s=@bdd-official-validate-invalid
     def test_validates_invalid(self) -> None:
         with pytest.raises(ParseError):
             validate_classic_with_official("bogus")

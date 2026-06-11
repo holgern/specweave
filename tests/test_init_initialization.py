@@ -10,8 +10,8 @@ FEATURE = "specs/behavior/features/init/initialization.feature"
 
 
 class TestInitDefault:
-    # specweave: feature=specs/behavior/features/init/initialization.feature
-    # specweave: scenario=@bdd-init-creates-public-config
+    # sw: f=specs/behavior/features/init/initialization.feature
+    # sw: s=@bdd-init-creates-public-config
     def test_creates_default_config_and_layout(self, tmp_path: Path) -> None:
         result = run_init(
             config_path=tmp_path / "specweave.toml",
@@ -32,8 +32,8 @@ class TestInitDefault:
         assert (tmp_path / "specs" / "behavior" / "reports").is_dir()
         assert not (tmp_path / ".specweave").exists()
 
-    # specweave: feature=specs/behavior/features/init/initialization.feature
-    # specweave: scenario=@bdd-init-creates-gitkeep
+    # sw: f=specs/behavior/features/init/initialization.feature
+    # sw: s=@bdd-init-creates-gitkeep
     def test_creates_behavior_paths(self, tmp_path: Path) -> None:
         result = run_init(
             config_path=tmp_path / "specweave.toml",
@@ -44,8 +44,8 @@ class TestInitDefault:
 
 
 class TestInitBritishSpelling:
-    # specweave: feature=specs/behavior/features/init/initialization.feature
-    # specweave: scenario=@bdd-init-british-spelling
+    # sw: f=specs/behavior/features/init/initialization.feature
+    # sw: s=@bdd-init-british-spelling
     def test_creates_behaviour_layout(self, tmp_path: Path) -> None:
         run_init(
             config_path=tmp_path / "specweave.toml",
@@ -65,14 +65,16 @@ class TestInitBritishSpelling:
 
 
 class TestInitCompatibility:
+    # sw: f=specs/behavior/features/init/initialization.feature
+    # sw: s=@bdd-init-creates-dotfile
     def test_hidden_config_path_still_works_when_explicit(self, tmp_path: Path) -> None:
         run_init(config_path=tmp_path / ".specweave.toml", project_root=tmp_path)
         assert (tmp_path / ".specweave.toml").exists()
 
 
 class TestInitIdempotency:
-    # specweave: feature=specs/behavior/features/init/initialization.feature
-    # specweave: scenario=@bdd-init-idempotent
+    # sw: f=specs/behavior/features/init/initialization.feature
+    # sw: s=@bdd-init-idempotent
     def test_does_not_overwrite_existing_config(self, tmp_path: Path) -> None:
         config_path = tmp_path / "specweave.toml"
         config_path.write_text("schema_version = 1\ncustom = true\n")
@@ -82,8 +84,8 @@ class TestInitIdempotency:
         assert config_path.read_text() == original
         assert any("already exists" in w for w in result.warnings)
 
-    # specweave: feature=specs/behavior/features/init/initialization.feature
-    # specweave: scenario=@bdd-init-refuses-overwrite-readme
+    # sw: f=specs/behavior/features/init/initialization.feature
+    # sw: s=@bdd-init-refuses-overwrite-readme
     def test_does_not_overwrite_non_specweave_readme(self, tmp_path: Path) -> None:
         readme = tmp_path / "specs" / "behavior" / "README.md"
         readme.parent.mkdir(parents=True)
@@ -96,8 +98,8 @@ class TestInitIdempotency:
         assert readme.read_text() == "# My custom project\n"
         assert readme in result.skipped
 
-    # specweave: feature=specs/behavior/features/init/initialization.feature
-    # specweave: scenario=@bdd-init-warns-existing-config
+    # sw: f=specs/behavior/features/init/initialization.feature
+    # sw: s=@bdd-init-warns-existing-config
     def test_reports_existing_directories(self, tmp_path: Path) -> None:
         (tmp_path / "specs" / "behavior" / "evidence").mkdir(parents=True)
         result = run_init(
@@ -108,8 +110,8 @@ class TestInitIdempotency:
 
 
 class TestInitForce:
-    # specweave: feature=specs/behavior/features/init/initialization.feature
-    # specweave: scenario=@bdd-init-force-overwrites-readme
+    # sw: f=specs/behavior/features/init/initialization.feature
+    # sw: s=@bdd-init-force-overwrites-readme
     def test_force_overwrites_generated_config_only(self, tmp_path: Path) -> None:
         config_path = tmp_path / "specweave.toml"
         config_path.write_text("schema_version = 1\nold = true\n")
@@ -121,8 +123,8 @@ class TestInitForce:
 
 
 class TestInitDryRun:
-    # specweave: feature=specs/behavior/features/init/initialization.feature
-    # specweave: scenario=@bdd-init-dry-run
+    # sw: f=specs/behavior/features/init/initialization.feature
+    # sw: s=@bdd-init-dry-run
     def test_writes_nothing(self, tmp_path: Path) -> None:
         result = run_init(
             config_path=tmp_path / "specweave.toml",
@@ -154,8 +156,8 @@ class TestInitJsonShape:
 
 
 class TestReadmeIsSpecweaveManaged:
-    # specweave: feature=specs/behavior/features/init/initialization.feature
-    # specweave: scenario=@bdd-init-creates-readme
+    # sw: f=specs/behavior/features/init/initialization.feature
+    # sw: s=@bdd-init-creates-readme
     def test_nonexistent(self) -> None:
         assert _readme_is_specweave_managed(Path("/fake")) is False
 

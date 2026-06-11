@@ -19,15 +19,15 @@ FEATURE = "specs/behavior/features/config/configuration.feature"
 
 
 class TestFindConfig:
-    # specweave: feature=specs/behavior/features/config/configuration.feature
-    # specweave: scenario=@bdd-config-discovery-finds-dotfile
+    # sw: f=specs/behavior/features/config/configuration.feature
+    # sw: s=@bdd-config-discovery-finds-public
     def test_prefers_explicit(self, tmp_path: Path) -> None:
         config_file = tmp_path / "my-config.toml"
         config_file.write_text("schema_version = 1\n")
         assert find_config(config_file) == config_file
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature
-    # specweave: scenario=@bdd-config-discovery-prefers-public
+    # sw: f=specs/behavior/features/config/configuration.feature
+    # sw: s=@bdd-config-discovery-prefers-public
     def test_prefers_public_over_dotfile(self, tmp_path: Path) -> None:
         (tmp_path / ".specweave.toml").write_text("schema_version = 1\n")
         (tmp_path / "specweave.toml").write_text("schema_version = 1\n")
@@ -35,21 +35,21 @@ class TestFindConfig:
         assert found is not None
         assert found.name == "specweave.toml"
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature
-    # specweave: scenario=@bdd-config-discovery-returns-none
+    # sw: f=specs/behavior/features/config/configuration.feature
+    # sw: s=@bdd-config-discovery-returns-none
     def test_returns_none_when_missing(self, tmp_path: Path) -> None:
         assert find_config(tmp_path) is None
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature
-    # specweave: scenario=@bdd-config-discovery-finds-hidden
+    # sw: f=specs/behavior/features/config/configuration.feature
+    # sw: s=@bdd-config-discovery-finds-dotfile
     def test_finds_hidden_config(self, tmp_path: Path) -> None:
         (tmp_path / ".specweave.toml").write_text("schema_version = 1\n")
         found = find_config(tmp_path)
         assert found is not None
         assert found.name == ".specweave.toml"
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature
-    # specweave: scenario=@bdd-config-discovery-walks-parents
+    # sw: f=specs/behavior/features/config/configuration.feature
+    # sw: s=@bdd-config-discovery-walks-parents
     def test_walks_up_directories(self, tmp_path: Path) -> None:
         (tmp_path / "specweave.toml").write_text("schema_version = 1\n")
         child = tmp_path / "sub" / "deep"
@@ -60,8 +60,8 @@ class TestFindConfig:
 
 
 class TestLoadConfig:
-    # specweave: feature=specs/behavior/features/config/configuration.feature
-    # specweave: scenario=@bdd-config-load-defaults
+    # sw: f=specs/behavior/features/config/configuration.feature
+    # sw: s=@bdd-config-load-defaults
     def test_defaults_when_missing(self) -> None:
         config = load_config(Path("/nonexistent"))
         assert config.schema_version == 1
@@ -69,16 +69,16 @@ class TestLoadConfig:
         assert config.paths.features_dir == Path("specs/behavior/features")
         assert config.paths.evidence_dir == Path("specs/behavior/evidence")
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature
-    # specweave: scenario=@bdd-config-rejects-unsupported-schema
+    # sw: f=specs/behavior/features/config/configuration.feature
+    # sw: s=@bdd-config-rejects-unsupported-schema
     def test_rejects_unsupported_schema(self, tmp_path: Path) -> None:
         config_file = tmp_path / "specweave.toml"
         config_file.write_text("schema_version = 99\n")
         with pytest.raises(ValueError, match="Unsupported"):
             load_config(config_file)
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature
-    # specweave: scenario=@bdd-config-load-from-file
+    # sw: f=specs/behavior/features/config/configuration.feature
+    # sw: s=@bdd-config-load-from-file
     def test_normalizes_paths(self, tmp_path: Path) -> None:
         config_file = tmp_path / "specweave.toml"
         config_file.write_text(
@@ -151,16 +151,16 @@ class TestLoadConfig:
 
 
 class TestRenderDefaultConfig:
-    # specweave: feature=specs/behavior/features/config/configuration.feature
-    # specweave: scenario=@bdd-config-render-behavior
+    # sw: f=specs/behavior/features/config/configuration.feature
+    # sw: s=@bdd-config-render-behavior
     def test_renders_behavior(self) -> None:
         text = render_default_config(spelling="behavior")
         assert 'spelling = "behavior"' in text
         assert 'evidence_dir = "specs/behavior/evidence"' in text
         assert 'reports_state_dir = "specs/behavior/reports/specweave"' in text
 
-    # specweave: feature=specs/behavior/features/config/configuration.feature
-    # specweave: scenario=@bdd-config-render-behaviour
+    # sw: f=specs/behavior/features/config/configuration.feature
+    # sw: s=@bdd-config-render-behaviour
     def test_renders_behaviour(self) -> None:
         text = render_default_config(spelling="behaviour")
         assert 'spelling = "behaviour"' in text

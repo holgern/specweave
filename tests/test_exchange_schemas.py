@@ -10,6 +10,8 @@ def _load(name: str) -> dict[str, object]:
     return json.loads((SCHEMA_DIR / name).read_text(encoding="utf-8"))
 
 
+# sw: f=specs/behavior/features/exchange/schemas.feature
+# sw: s=@bdd-exchange-schema-valid
 def test_exchange_schemas_are_json_schema_documents() -> None:
     for name in (
         "combi.trace.v1.schema.json",
@@ -23,6 +25,8 @@ def test_exchange_schemas_are_json_schema_documents() -> None:
         assert schema["required"]
 
 
+# sw: f=specs/behavior/features/exchange/schemas.feature
+# sw: s=@bdd-exchange-combi-trace-schema
 def test_trace_schema_representative_payload_contract() -> None:
     schema = _load("combi.trace.v1.schema.json")
     good_payload = {
@@ -38,15 +42,31 @@ def test_trace_schema_representative_payload_contract() -> None:
     assert not set(schema["required"]) <= set(bad_payload)
 
 
-def test_exchange_schema_required_fields_match_current_payloads() -> None:
-    payloads = {
-        "specweave.taskledger-bdd-export.v1.schema.json": {
+def _assert_required_fields(name: str, payload: dict[str, object]) -> None:
+    schema = _load(name)
+    assert set(schema["required"]) <= set(payload)
+
+
+# sw: f=specs/behavior/features/exchange/schemas.feature
+# sw: s=@bdd-exchange-taskledger-schema
+def test_taskledger_schema_representative_payload_contract() -> None:
+    _assert_required_fields(
+        "specweave.taskledger-bdd-export.v1.schema.json",
+        {
             "task_id": "task-0001",
             "feature": "Login",
             "rules": [],
             "examples": [],
         },
-        "specweave.behavior-evidence.v1.schema.json": {
+    )
+
+
+# sw: f=specs/behavior/features/exchange/schemas.feature
+# sw: s=@bdd-exchange-evidence-schema
+def test_evidence_schema_representative_payload_contract() -> None:
+    _assert_required_fields(
+        "specweave.behavior-evidence.v1.schema.json",
+        {
             "schema_version": 2,
             "generated_by": "specweave",
             "task_id": "task-0001",
@@ -55,7 +75,15 @@ def test_exchange_schema_required_fields_match_current_payloads() -> None:
             "criteria": [],
             "scenarios": [],
         },
-        "specweave.archledger-candidate.v1.schema.json": {
+    )
+
+
+# sw: f=specs/behavior/features/exchange/schemas.feature
+# sw: s=@bdd-exchange-archledger-schema
+def test_archledger_schema_representative_payload_contract() -> None:
+    _assert_required_fields(
+        "specweave.archledger-candidate.v1.schema.json",
+        {
             "schema": "specweave.archledger-candidate.v1",
             "producer": "specweave",
             "candidate": {
@@ -65,7 +93,4 @@ def test_exchange_schema_required_fields_match_current_payloads() -> None:
                 "status": "draft",
             },
         },
-    }
-    for name, payload in payloads.items():
-        schema = _load(name)
-        assert set(schema["required"]) <= set(payload)
+    )

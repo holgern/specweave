@@ -10,6 +10,8 @@ from specweave.translate.naming import step_function_name
 from specweave.translate.spec_to_code import bind_feature, draft_feature
 
 
+# sw: f=specs/behavior/features/translation/spec-to-code.feature
+# sw: s=@bdd-spec-to-code-step-name
 def test_step_function_name_basic() -> None:
     """step_function_name generates predictable names."""
     name = step_function_name("Given a registered user exists")
@@ -19,6 +21,8 @@ def test_step_function_name_basic() -> None:
     assert name == "step_when_the_user_submits_an_invalid_password"
 
 
+# sw: f=specs/behavior/features/translation/spec-to-code.feature
+# sw: s=@bdd-spec-to-code-dedup
 def test_step_function_name_dedup() -> None:
     """Duplicate step texts get unique suffixes."""
     name1 = step_function_name("Given a step", existing=frozenset())
@@ -27,6 +31,8 @@ def test_step_function_name_dedup() -> None:
     assert name2.endswith("_2")
 
 
+# sw: f=specs/behavior/features/translation/spec-to-code.feature
+# sw: s=@bdd-spec-to-code-draft
 def test_draft_feature_creates_file() -> None:
     """draft_feature creates a valid .feature file from JSON."""
     json_data = json.dumps(
@@ -54,6 +60,8 @@ def test_draft_feature_creates_file() -> None:
         assert "Given the system is ready" in content
 
 
+# sw: f=specs/behavior/features/translation/spec-to-code.feature
+# sw: s=@bdd-spec-to-code-bind-behave
 def test_bind_feature_creates_skeleton() -> None:
     """bind_feature creates a Python step skeleton file."""
     feature_text = """@taskledger:TL-0042
@@ -83,6 +91,8 @@ Feature: Password login
         assert "raise NotImplementedError" in content
 
 
+# sw: f=specs/behavior/features/translation/spec-to-code.feature
+# sw: s=@bdd-spec-to-code-bind-unsupported
 def test_bind_unsupported_backend_raises() -> None:
     """Unknown backends raise ValueError."""
     import tempfile

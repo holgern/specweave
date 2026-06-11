@@ -36,8 +36,8 @@ def _feature_spec() -> TaskBddSpec:
     )
 
 
-# specweave: feature=specs/behavior/features/integrations/archledger.feature
-# specweave: scenario=@bdd-archledger-candidate
+# sw: f=specs/behavior/features/integrations/archledger.feature
+# sw: s=@bdd-archledger-candidate
 def test_render_candidate_markdown() -> None:
     """archledger command renders candidate markdown."""
     feature = task_bdd_to_feature(_feature_spec())
@@ -68,8 +68,8 @@ def test_render_candidate_from_parsed_feature(tmp_path) -> None:  # type: ignore
     assert f"- Feature file: {feature_path}" in markdown
 
 
-# specweave: feature=specs/behavior/features/integrations/archledger.feature
-# specweave: scenario=@bdd-archledger-unknown-bdd
+# sw: f=specs/behavior/features/integrations/archledger.feature
+# sw: s=@bdd-archledger-unknown-bdd
 def test_unknown_bdd_id_raises() -> None:
     """archledger errors on unknown @bdd-* id."""
     feature = task_bdd_to_feature(_feature_spec())
@@ -81,8 +81,8 @@ def test_unknown_bdd_id_raises() -> None:
         raise AssertionError("expected ValueError for unknown bdd id")
 
 
-# specweave: feature=specs/behavior/features/integrations/archledger.feature
-# specweave: scenario=@bdd-archledger-candidate-only
+# sw: f=specs/behavior/features/integrations/archledger.feature
+# sw: s=@bdd-archledger-candidate-only
 def test_write_candidate_file(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """archledger produces candidates, not accepted records."""
     feature = task_bdd_to_feature(_feature_spec())

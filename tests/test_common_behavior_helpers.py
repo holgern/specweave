@@ -18,14 +18,16 @@ FEATURE = "specs/behavior/features/common/behavior-helpers.feature"
 
 
 class TestFeatureStem:
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature
-    # specweave: scenario=@bdd-feature-stem-markdown
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-feature-stem-markdown
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-feature-stem-legacy-markdown
     def test_feature_md(self) -> None:
         """feature_stem handles .feature suffix."""
         assert feature_stem(Path("auth/login.feature")) == "login"
 
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature
-    # specweave: scenario=@bdd-feature-stem-classic
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-feature-stem-classic
     def test_classic_feature(self) -> None:
         """feature_stem handles .feature suffix."""
         assert feature_stem(Path("auth/login.feature")) == "login"
@@ -40,28 +42,28 @@ class TestFeatureStem:
 
 
 class TestSlugify:
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature
-    # specweave: scenario=@bdd-slugify-basic
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-slugify-basic
     def test_basic(self) -> None:
         """Slugify converts text to lowercase slug."""
         assert slugify("My Feature Title") == "my-feature-title"
 
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature
-    # specweave: scenario=@bdd-slugify-special-chars
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-slugify-special-chars
     def test_special_chars(self) -> None:
         """Slugify replaces special characters with hyphens."""
         assert slugify("feature@name!") == "feature-name"
 
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature
-    # specweave: scenario=@bdd-slugify-empty
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-slugify-empty
     def test_empty(self) -> None:
         """Slugify returns \"behavior\" for empty input."""
         assert slugify("") == "behavior"
 
 
 class TestFeatureIdentity:
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature
-    # specweave: scenario=@bdd-feature-identity-from-path
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-feature-identity-from-path
     def test_from_path(self) -> None:
         """Feature identity derives area from parent directory."""
         area, slug = feature_identity(
@@ -70,8 +72,8 @@ class TestFeatureIdentity:
         assert area == "auth"
         assert slug == "login"
 
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature
-    # specweave: scenario=@bdd-feature-identity-no-area
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-feature-identity-no-area
     def test_no_area(self) -> None:
         """Feature identity uses \"behavior\" when no area directory."""
         area, slug = feature_identity(Path("specs/behavior/features/login.feature"))
@@ -80,8 +82,8 @@ class TestFeatureIdentity:
 
 
 class TestCanonicalTestPath:
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature
-    # specweave: scenario=@bdd-canonical-test-path
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-canonical-test-path
     def test_derives_path(self) -> None:
         """Test path is derived from feature path."""
         result = canonical_test_path(Path("specs/behavior/features/auth/login.feature"))
@@ -115,8 +117,8 @@ class TestIterFeatureScenarios:
             ),
         )
 
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature
-    # specweave: scenario=@bdd-iter-scenarios-top-level
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-iter-scenarios-top-level
     def test_yields_top_level(self) -> None:
         """Iterator yields top-level scenarios."""
         feature = self._make_feature_with_top_level()
@@ -125,8 +127,8 @@ class TestIterFeatureScenarios:
         assert len(top) == 1
         assert top[0][0] is None
 
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature
-    # specweave: scenario=@bdd-iter-scenarios-in-rules
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-iter-scenarios-in-rules
     def test_yields_from_rules(self) -> None:
         """Iterator yields scenarios from rules."""
         feature = self._make_feature_with_top_level()
@@ -138,8 +140,8 @@ class TestIterFeatureScenarios:
 
 
 class TestScenarioIdValue:
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature
-    # specweave: scenario=@bdd-scenario-id-value
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-scenario-id-value
     def test_returns_first_bdd_tag(self) -> None:
         """scenario_id_value returns first @bdd-* tag."""
         scenario = Scenario(
@@ -150,8 +152,8 @@ class TestScenarioIdValue:
         )
         assert scenario_id_value(scenario) == "bdd-example"
 
-    # specweave: feature=specs/behavior/features/common/behavior-helpers.feature
-    # specweave: scenario=@bdd-scenario-id-missing
+    # sw: f=specs/behavior/features/common/behavior-helpers.feature
+    # sw: s=@bdd-scenario-id-missing
     def test_returns_empty_when_no_bdd(self) -> None:
         """scenario_id_value returns empty string when no @bdd-* tag."""
         scenario = Scenario(

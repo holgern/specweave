@@ -14,6 +14,8 @@ def setup_function() -> None:
         shutil.rmtree(REPORT_DIR)
 
 
+# sw: f=specs/behavior/features/runners/command.feature
+# sw: s=@bdd-runner-success
 def test_run_success() -> None:
     """Run a successful command and verify summary.json."""
     exit_code = run_command(["python", "-c", "print('ok')"])
@@ -28,6 +30,8 @@ def test_run_success() -> None:
     assert summary["runner"] == "command"
 
 
+# sw: f=specs/behavior/features/runners/command.feature
+# sw: s=@bdd-runner-failure
 def test_run_failure() -> None:
     """Run a failing command and verify failed summary."""
     exit_code = run_command(["python", "-c", "exit(1)"])
@@ -41,6 +45,8 @@ def test_run_failure() -> None:
     assert summary["exit_code"] == 1
 
 
+# sw: f=specs/behavior/features/runners/command.feature
+# sw: s=@bdd-runner-not-found
 def test_run_not_found() -> None:
     """Run a non-existent command returns error."""
     exit_code = run_command(["nonexistent_command_xyz123"])
@@ -53,6 +59,8 @@ def test_run_not_found() -> None:
     assert summary["status"] == "error"
 
 
+# sw: f=specs/behavior/features/runners/command.feature
+# sw: s=@bdd-runner-capture
 def test_run_captures_stdout_stderr() -> None:
     """Stdout and stderr are captured to files."""
     cmd = [

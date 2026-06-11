@@ -112,8 +112,8 @@ def test_bdd_export_and_import_round_trip(tmp_path) -> None:  # type: ignore[no-
     assert data["examples"][0]["acceptance_criteria"] == ["ac-0001"]
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-exit-normalize-failed
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-exit-normalize-failed
 def test_report_normalize_writes_json_and_exits_nonzero_on_failure(
     tmp_path,
 ) -> None:  # type: ignore[no-untyped-def]
@@ -290,8 +290,8 @@ Feature: Plan gates
     return path
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-behavior-check
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-behavior-check
 def test_behavior_check_accepts_canonical_feature(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     _write_plan_gates_feature(tmp_path)
@@ -313,8 +313,8 @@ def test_behavior_check_warns_on_deprecated_specs_bdd_path(
     assert "SWBEH015" in result.stdout
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-behavior-generate-tests
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-behavior-generate-tests
 def test_behavior_generate_tests_creates_plain_pytest(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     feature_path = _write_plan_gates_feature(tmp_path)
@@ -329,8 +329,8 @@ def test_behavior_generate_tests_creates_plain_pytest(tmp_path, monkeypatch) -> 
     assert "scenarios(" not in content
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-behavior-index
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-behavior-index
 def test_behavior_index_writes_markdown_and_manifest(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     feature_path = _write_plan_gates_feature(tmp_path)
@@ -417,8 +417,8 @@ def test_behavior_commands_use_configured_default_paths(
     assert (tmp_path / "custom/manifest.json").exists()
     assert feature_path.exists()
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-behavior-coverage
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-behavior-coverage
 def test_behavior_coverage_reports_bound_scenarios(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     feature_path = _write_plan_gates_feature(tmp_path)
@@ -485,8 +485,8 @@ def test_behavior_coverage_feature_filter(tmp_path, monkeypatch) -> None:  # typ
         tmp_path,
         "tests/test_auth_login.py",
         """
-# specweave: feature=specs/behavior/features/auth/login.feature
-# specweave: scenario=@bdd-login-rejects-invalid-password
+# sw: f=specs/behavior/features/auth/login.feature
+# sw: s=@bdd-login-rejects-invalid-password
 def test_rejects_invalid_password() -> None:
     pass
 """,
@@ -512,8 +512,8 @@ def test_rejects_invalid_password() -> None:
     assert "specs/behavior/features/config/configuration.feature" not in result.stdout
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-review-coverage-both-directions
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-review-coverage-both-directions
 def test_review_coverage_both_directions_text(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     _write_behavior_feature(
@@ -542,8 +542,8 @@ def test_valid_login() -> None:
     assert "Pytest -> features" in result.stdout
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-behavior-coverage-view-test-json
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-behavior-coverage-view-test-json
 def test_behavior_coverage_view_test_json(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     _write_behavior_feature(
@@ -573,8 +573,6 @@ def test_valid_login() -> None:
     assert "unmapped_tests" in data
 
 
-# specweave: feature=specs/behavior/features/review/spec-review.feature
-# specweave: scenario=@bdd-review-warning-scenario-once
 def test_review_specs_prints_scenario_only_once(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     _write_behavior_feature(
@@ -603,8 +601,8 @@ def test_behavior_mappings_lists_comment_and_marker_sources(
         tmp_path,
         "tests/test_auth_login.py",
         """
-# specweave: feature=specs/behavior/features/auth/login.feature
-# specweave: scenario=@bdd-login-rejects-invalid-password
+# sw: f=specs/behavior/features/auth/login.feature
+# sw: s=@bdd-login-rejects-invalid-password
 def test_rejects_invalid_password() -> None:
     pass
 """,
@@ -646,8 +644,8 @@ def test_loads_config() -> None:
     assert "tests/test_config.py::test_loads_config" in result.stdout
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-behavior-import-report
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-behavior-import-report
 def test_behavior_import_report_maps_pytest_nodeid(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     feature_path = _write_plan_gates_feature(tmp_path)
@@ -700,8 +698,8 @@ def test_behavior_import_report_maps_pytest_nodeid(tmp_path, monkeypatch) -> Non
     )
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-config-option
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-config-option
 def test_config_option(tmp_path) -> None:
     """--config selects an explicit config path."""
     config_file = tmp_path / "custom.toml"
@@ -719,8 +717,8 @@ def test_init_respects_explicit_hidden_config(tmp_path, monkeypatch) -> None:  #
     assert not (tmp_path / "specweave.toml").exists()
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-json-output
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-json-output
 def test_json_output(tmp_path, monkeypatch) -> None:
     """--json produces machine-readable output."""
     monkeypatch.chdir(tmp_path)
@@ -730,8 +728,8 @@ def test_json_output(tmp_path, monkeypatch) -> None:
     assert "schema_version" in data
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-json-init
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-json-init
 def test_json_init(tmp_path, monkeypatch) -> None:
     """init --json produces machine-readable output."""
     monkeypatch.chdir(tmp_path)
@@ -741,8 +739,8 @@ def test_json_init(tmp_path, monkeypatch) -> None:
     assert data.get("command") == "init"
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-bdd-check-alias
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-bdd-check-alias
 def test_bdd_check_alias(tmp_path, monkeypatch) -> None:
     """bdd check is an alias for behavior check."""
     monkeypatch.chdir(tmp_path)
@@ -751,8 +749,8 @@ def test_bdd_check_alias(tmp_path, monkeypatch) -> None:
     assert result.exit_code == 0, result.stdout
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-bdd-index-alias
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-bdd-index-alias
 def test_bdd_index_alias(tmp_path, monkeypatch) -> None:
     """bdd index is an alias for behavior index."""
     monkeypatch.chdir(tmp_path)
@@ -761,8 +759,8 @@ def test_bdd_index_alias(tmp_path, monkeypatch) -> None:
     assert result.exit_code == 0, result.stdout
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-create-feature
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-create-feature
 def test_create_feature(tmp_path, monkeypatch) -> None:
     """create feature writes a new Gherkin feature file."""
     monkeypatch.chdir(tmp_path)
@@ -788,8 +786,8 @@ def test_create_feature(tmp_path, monkeypatch) -> None:
     assert result.exit_code == 0, result.stdout
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-create-gherkin
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-create-gherkin
 def test_create_gherkin(tmp_path, monkeypatch) -> None:
     """create gherkin generates features from tests."""
     monkeypatch.chdir(tmp_path)
@@ -812,8 +810,8 @@ def test_create_gherkin(tmp_path, monkeypatch) -> None:
     assert result.exit_code == 0, result.stdout
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-create-plan
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-create-plan
 def test_create_plan(tmp_path, monkeypatch) -> None:
     """create plan generates an implementation plan."""
     monkeypatch.chdir(tmp_path)
@@ -826,8 +824,8 @@ def test_create_plan(tmp_path, monkeypatch) -> None:
     assert out.exists()
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-exit-doctor-failed
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-exit-doctor-failed
 def test_exit_doctor_failed(tmp_path, monkeypatch) -> None:
     """doctor exits non-zero when errors found."""
     monkeypatch.chdir(tmp_path)
@@ -839,8 +837,8 @@ def test_exit_doctor_failed(tmp_path, monkeypatch) -> None:
     assert "SWDOC" in result.stdout or result.exit_code != 0
 
 
-# specweave: feature=specs/behavior/features/cli/cli-contract.feature
-# specweave: scenario=@bdd-cli-exit-check-errors
+# sw: f=specs/behavior/features/cli/cli-contract.feature
+# sw: s=@bdd-cli-exit-check-errors
 def test_exit_check_errors(tmp_path, monkeypatch) -> None:
     """behavior check exits non-zero on lint errors."""
     monkeypatch.chdir(tmp_path)

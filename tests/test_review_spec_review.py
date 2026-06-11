@@ -38,8 +38,8 @@ def _write_behavior_feature(path: Path, *, scenario_id: str, title: str) -> None
 
 
 class TestReviewReportsMissingBindings:
-    # specweave: feature=specs/behavior/features/review/spec-review.feature
-    # specweave: scenario=@bdd-review-counts
+    # sw: f=specs/behavior/features/review/spec-review.feature
+    # sw: s=@bdd-review-counts
     def test_no_features(self, tmp_path: Path) -> None:
         """Review reports feature and scenario statistics."""
         config = SpecWeaveConfig(
@@ -52,8 +52,8 @@ class TestReviewReportsMissingBindings:
         result = run_review(config=config)
         assert result["summary"]["features"] == 0
 
-    # specweave: feature=specs/behavior/features/review/spec-review.feature
-    # specweave: scenario=@bdd-review-missing-bindings
+    # sw: f=specs/behavior/features/review/spec-review.feature
+    # sw: s=@bdd-review-missing-bindings
     def test_feature_with_no_test(self, tmp_path: Path) -> None:
         """Review warns about unbound scenarios."""
         features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
@@ -76,8 +76,8 @@ class TestReviewReportsMissingBindings:
 
 
 class TestReviewReportsNeedsReview:
-    # specweave: feature=specs/behavior/features/review/spec-review.feature
-    # specweave: scenario=@bdd-review-needs-review
+    # sw: f=specs/behavior/features/review/spec-review.feature
+    # sw: s=@bdd-review-needs-review
     def test_needs_review_flagged(self, tmp_path: Path) -> None:
         """Review warns about @needs-review scenarios."""
         features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
@@ -127,8 +127,8 @@ class TestReviewJsonShape:
 
 
 class TestReviewAggregatesCoverage:
-    # specweave: feature=specs/behavior/features/review/spec-review.feature
-    # specweave: scenario=@bdd-review-deprecated-paths
+    # sw: f=specs/behavior/features/review/spec-review.feature
+    # sw: s=@bdd-review-deprecated-paths
     def test_stale_mapping_causes_failed_review(self, tmp_path: Path) -> None:
         """Review warns about deprecated paths (stale mapping)."""
         features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
@@ -159,8 +159,8 @@ class TestReviewAggregatesCoverage:
         assert result["summary"]["stale_bindings"] == 1
         assert any(finding["code"] == "SWCOV002" for finding in result["findings"])
 
-    # specweave: feature=specs/behavior/features/review/spec-review.feature
-    # specweave: scenario=@bdd-review-forbidden-pytest-bdd
+    # sw: f=specs/behavior/features/review/spec-review.feature
+    # sw: s=@bdd-review-forbidden-pytest-bdd
     def test_forbidden_pytest_bdd(self, tmp_path: Path) -> None:
         """Review errors on pytest-bdd usage."""
         features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
@@ -184,8 +184,8 @@ class TestReviewAggregatesCoverage:
         result = run_review(config=config)
         assert any(f["code"] == "SWREV003" for f in result["findings"])
 
-    # specweave: feature=specs/behavior/features/review/spec-review.feature
-    # specweave: scenario=@bdd-review-lint-findings
+    # sw: f=specs/behavior/features/review/spec-review.feature
+    # sw: s=@bdd-review-lint-findings
     def test_lint_findings(self, tmp_path: Path) -> None:
         """Review includes lint errors and warnings."""
         features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
@@ -217,8 +217,8 @@ class TestReviewAggregatesCoverage:
         assert any(f["code"] in lint_codes for f in result["findings"])
 
 
-# specweave: feature=specs/behavior/features/review/spec-review.feature
-# specweave: scenario=@bdd-review-coverage-summary-both-directions
+# sw: f=specs/behavior/features/review/spec-review.feature
+# sw: s=@bdd-review-coverage-summary-both-directions
 def test_review_summary_includes_pytest_reverse_counts(tmp_path: Path) -> None:
     features_dir = tmp_path / "specs" / "behavior" / "features" / "auth"
     tests_dir = tmp_path / "tests"
@@ -246,8 +246,8 @@ def test_review_summary_includes_pytest_reverse_counts(tmp_path: Path) -> None:
     assert result["summary"]["pytest_unmapped"] == 1
 
 
-# specweave: feature=specs/behavior/features/review/spec-review.feature
-# specweave: scenario=@bdd-review-warning-scenario-once
+# sw: f=specs/behavior/features/review/spec-review.feature
+# sw: s=@bdd-review-warning-scenario-once
 def test_review_missing_binding_message_does_not_duplicate_scenario_id(
     tmp_path: Path,
 ) -> None:

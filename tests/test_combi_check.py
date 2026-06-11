@@ -16,6 +16,8 @@ def _write(path: Path, text: str) -> Path:
     return path
 
 
+# sw: f=specs/behavior/features/integrations/combi.feature
+# sw: s=@bdd-combi-check-gaps
 def test_combi_check_writes_json_and_human_diagnostics(tmp_path: Path) -> None:
     _write(
         tmp_path / "specs/behavior/features/core/login.feature",
@@ -58,6 +60,8 @@ def test_combi_check_writes_json_and_human_diagnostics(tmp_path: Path) -> None:
     }
 
 
+# sw: f=specs/behavior/features/integrations/combi.feature
+# sw: s=@bdd-combi-check-strict
 def test_combi_check_strict_fails_on_missing_bdd_id(tmp_path: Path) -> None:
     _write(
         tmp_path / "specs/behavior/features/core/login.feature",

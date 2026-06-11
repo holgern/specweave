@@ -28,6 +28,8 @@ def _write_feature(path: Path) -> None:
 
 
 class TestCreatePlan:
+    # sw: f=specs/behavior/features/planning/create-plan.feature
+    # sw: s=@bdd-plan-create
     def test_creates_plan_from_feature(self, tmp_path: Path) -> None:
         features_dir = tmp_path / "specs" / "behavior" / "features"
         feature_path = features_dir / "billing" / "invoice-export.feature"
@@ -42,6 +44,8 @@ class TestCreatePlan:
         assert "Implementation TODOs" in content
         assert "Validation" in content
 
+    # sw: f=specs/behavior/features/planning/create-plan.feature
+    # sw: s=@bdd-plan-includes-scenario-steps
     def test_plan_includes_scenario_steps(self, tmp_path: Path) -> None:
         features_dir = tmp_path / "specs" / "behavior" / "features"
         feature_path = features_dir / "billing" / "invoice-export.feature"
@@ -54,6 +58,8 @@ class TestCreatePlan:
         assert "When the user exports" in content
         assert "Then a PDF file is generated" in content
 
+    # sw: f=specs/behavior/features/planning/create-plan.feature
+    # sw: s=@bdd-plan-validation-commands
     def test_plan_includes_validation_commands(self, tmp_path: Path) -> None:
         features_dir = tmp_path / "specs" / "behavior" / "features"
         feature_path = features_dir / "billing" / "invoice-export.feature"

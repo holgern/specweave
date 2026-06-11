@@ -24,6 +24,8 @@ def _write_test_file(content: str) -> Path:
     return Path(tmp.name)
 
 
+# sw: f=specs/behavior/features/python-inspect/ast-reader.feature
+# sw: s=@bdd-ast-extract-test-functions
 def test_extract_test_functions() -> None:
     """AST reader finds test_* functions."""
     code = """
@@ -43,6 +45,8 @@ def test_rejects_invalid_password():
         path.unlink()
 
 
+# sw: f=specs/behavior/features/python-inspect/ast-reader.feature
+# sw: s=@bdd-ast-ignores-non-test
 def test_extract_ignores_non_test_functions() -> None:
     """Non test_* functions are ignored."""
     code = """
@@ -57,6 +61,8 @@ def helper():
         path.unlink()
 
 
+# sw: f=specs/behavior/features/python-inspect/ast-reader.feature
+# sw: s=@bdd-ast-assert-equals
 def test_describe_assert_equals() -> None:
     """assert a == b becomes 'a equals b'."""
     import ast
@@ -71,6 +77,8 @@ def test_describe_assert_equals() -> None:
     assert "42" in result
 
 
+# sw: f=specs/behavior/features/python-inspect/ast-reader.feature
+# sw: s=@bdd-ast-assert-is-none
 def test_describe_assert_is_none() -> None:
     """assert x is None becomes 'x is None'."""
     import ast
@@ -85,6 +93,8 @@ def test_describe_assert_is_none() -> None:
     assert "None" in result
 
 
+# sw: f=specs/behavior/features/python-inspect/ast-reader.feature
+# sw: s=@bdd-ast-assert-truthy
 def test_describe_assert_truthy() -> None:
     """assert x becomes 'x is truthy'."""
     import ast
@@ -96,6 +106,8 @@ def test_describe_assert_truthy() -> None:
     assert result == "user is truthy"
 
 
+# sw: f=specs/behavior/features/python-inspect/ast-reader.feature
+# sw: s=@bdd-ast-assert-call
 def test_describe_assert_call() -> None:
     """assert func() becomes 'func succeeds'."""
     import ast
@@ -108,6 +120,8 @@ def test_describe_assert_call() -> None:
     assert "succeeds" in result
 
 
+# sw: f=specs/behavior/features/python-inspect/ast-reader.feature
+# sw: s=@bdd-ast-discover-marker
 def test_discover_specweave_marker_mapping() -> None:
     code = """
 import pytest
@@ -134,10 +148,12 @@ def test_agent_cannot_start_implementation_before_plan_approval():
         path.unlink()
 
 
+# sw: f=specs/behavior/features/python-inspect/ast-reader.feature
+# sw: s=@bdd-ast-discover-comment
 def test_discover_specweave_comment_mapping() -> None:
     code = """
-# specweave: feature=specs/behavior/features/sync/git-sync.feature
-# specweave: scenario=@bdd-imports-pytest-report
+# sw: f=specs/behavior/features/sync/git-sync.feature
+# sw: s=@bdd-imports-pytest-report
 def test_imports_pytest_report():
     pass
 """
@@ -192,6 +208,8 @@ def test_imports_pytest_report():
         path.unlink()
 
 
+# sw: f=specs/behavior/features/python-inspect/ast-reader.feature
+# sw: s=@bdd-ast-discover-docstring
 def test_docstring_mapping_accepts_feature_md(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
     feature_path = (
@@ -261,8 +279,8 @@ def test_collect_pytest_tests_keeps_unmapped_tests(tmp_path: Path, monkeypatch) 
     first.parent.mkdir(parents=True, exist_ok=True)
     first.write_text(
         """
-# specweave: feature=specs/behavior/features/auth/login.feature
-# specweave: scenario=@bdd-login-valid
+# sw: f=specs/behavior/features/auth/login.feature
+# sw: s=@bdd-login-valid
 def test_valid_login() -> None:
     pass
 """,

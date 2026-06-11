@@ -45,8 +45,8 @@ def _setup_project(tmp_path: Path) -> dict:
     }
 
 
-# specweave: feature=specs/behavior/features/behavior/index.feature
-# specweave: scenario=@bdd-index-generates-markdown
+# sw: f=specs/behavior/features/behavior/index.feature
+# sw: s=@bdd-index-generates-markdown
 def test_index_generates_markdown(tmp_path: Path) -> None:
     """Index generates Markdown with feature listing."""
     paths = _setup_project(tmp_path)
@@ -59,8 +59,8 @@ def test_index_generates_markdown(tmp_path: Path) -> None:
     assert isinstance(markdown, str)
 
 
-# specweave: feature=specs/behavior/features/behavior/index.feature
-# specweave: scenario=@bdd-index-generates-manifest
+# sw: f=specs/behavior/features/behavior/index.feature
+# sw: s=@bdd-index-generates-manifest
 def test_index_generates_manifest(tmp_path: Path) -> None:
     """Index generates JSON manifest with scenario mappings."""
     paths = _setup_project(tmp_path)
@@ -73,8 +73,8 @@ def test_index_generates_manifest(tmp_path: Path) -> None:
     assert result["schema_version"] == 1
 
 
-# specweave: feature=specs/behavior/features/behavior/index.feature
-# specweave: scenario=@bdd-index-scenario-entries
+# sw: f=specs/behavior/features/behavior/index.feature
+# sw: s=@bdd-index-scenario-entries
 def test_index_scenario_entries(tmp_path: Path) -> None:
     """Manifest includes scenario entries with automation status."""
     paths = _setup_project(tmp_path)
@@ -86,8 +86,8 @@ def test_index_scenario_entries(tmp_path: Path) -> None:
     assert len(result["features"]) >= 1
 
 
-# specweave: feature=specs/behavior/features/behavior/index.feature
-# specweave: scenario=@bdd-index-unbound-scenario
+# sw: f=specs/behavior/features/behavior/index.feature
+# sw: s=@bdd-index-unbound-scenario
 def test_index_unbound_scenario(tmp_path: Path) -> None:
     """Manifest marks unbound scenarios as missing."""
     features_dir = tmp_path / "specs" / "behavior" / "features"
@@ -114,8 +114,8 @@ def test_index_unbound_scenario(tmp_path: Path) -> None:
     assert len(result["features"]) >= 1
 
 
-# specweave: feature=specs/behavior/features/behavior/index.feature
-# specweave: scenario=@bdd-index-evidence-status
+# sw: f=specs/behavior/features/behavior/index.feature
+# sw: s=@bdd-index-evidence-status
 def test_index_evidence_status(tmp_path: Path) -> None:
     """Manifest includes latest evidence status when available."""
     paths = _setup_project(tmp_path)
@@ -127,8 +127,8 @@ def test_index_evidence_status(tmp_path: Path) -> None:
     assert "schema_version" in result
 
 
-# specweave: feature=specs/behavior/features/behavior/index.feature
-# specweave: scenario=@bdd-index-rules
+# sw: f=specs/behavior/features/behavior/index.feature
+# sw: s=@bdd-index-rules
 def test_index_rules(tmp_path: Path) -> None:
     """Manifest preserves Rule structure."""
     features_dir = tmp_path / "specs" / "behavior" / "features"

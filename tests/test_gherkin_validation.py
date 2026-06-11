@@ -222,6 +222,8 @@ Feature: F2
 
 
 class TestValidateMarkdownUnsupported:
+    # sw: f=specs/behavior/features/gherkin/markdown.feature
+    # sw: s=@bdd-validation-rejects-markdown
     def test_rejects_markdown_features(self) -> None:
         text = """\
 # Feature: F

@@ -12,8 +12,8 @@ from specweave.gherkin.writer import write_feature
 FEATURE = "specs/behavior/features/gherkin/parser.feature"
 
 
-# specweave: feature=specs/behavior/features/gherkin/parser.feature
-# specweave: scenario=@bdd-parser-classic-feature
+# sw: f=specs/behavior/features/gherkin/parser.feature
+# sw: s=@bdd-parser-classic-feature
 def test_parse_simple_feature() -> None:
     """Parser extracts feature title and scenarios."""
     text = """@taskledger:TL-0042
@@ -56,8 +56,8 @@ Feature: With comments
     assert feature.scenarios[0].steps[0].text == "something"
 
 
-# specweave: feature=specs/behavior/features/gherkin/parser.feature
-# specweave: scenario=@bdd-parser-classic-tags
+# sw: f=specs/behavior/features/gherkin/parser.feature
+# sw: s=@bdd-parser-classic-tags
 def test_parse_no_tags() -> None:
     """Parser preserves tags on features, rules, and scenarios."""
     text = """Feature: No tags
@@ -68,8 +68,8 @@ def test_parse_no_tags() -> None:
     assert feature.tags == ()
 
 
-# specweave: feature=specs/behavior/features/gherkin/parser.feature
-# specweave: scenario=@bdd-parser-requires-feature-line
+# sw: f=specs/behavior/features/gherkin/parser.feature
+# sw: s=@bdd-parser-requires-feature-line
 def test_parse_missing_feature_raises() -> None:
     """Parser raises ValueError without Feature line."""
     with pytest.raises(ValueError, match="Expected 'Feature:'"):
@@ -135,8 +135,8 @@ def test_parse_mixed_tag_styles() -> None:
     assert feature.scenarios[0].tags == ("ac-0001", "bdd-0001", "rule-0001")
 
 
-# specweave: feature=specs/behavior/features/gherkin/parser.feature
-# specweave: scenario=@bdd-parser-classic-rules
+# sw: f=specs/behavior/features/gherkin/parser.feature
+# sw: s=@bdd-parser-classic-rules
 def test_parse_rule_block() -> None:
     """Parser extracts Rule blocks."""
     text = """@task-0123
@@ -202,8 +202,8 @@ def test_scenario_after_rule_belongs_to_rule() -> None:
     assert feature.scenarios == ()
 
 
-# specweave: feature=specs/behavior/features/gherkin/parser.feature
-# specweave: scenario=@bdd-parser-classic-top-level-scenarios
+# sw: f=specs/behavior/features/gherkin/parser.feature
+# sw: s=@bdd-parser-classic-top-level-scenarios
 def test_top_level_scenario_before_rule_stays_top_level() -> None:
     """Parser handles top-level scenarios outside rules."""
     text = """Feature: Before rule
@@ -221,8 +221,8 @@ def test_top_level_scenario_before_rule_stays_top_level() -> None:
     assert feature.rules[0].scenarios[0].title == "Inside"
 
 
-# specweave: feature=specs/behavior/features/gherkin/parser.feature
-# specweave: scenario=@bdd-parser-classic-description
+# sw: f=specs/behavior/features/gherkin/parser.feature
+# sw: s=@bdd-parser-classic-description
 def test_parse_feature_description() -> None:
     """Parser preserves feature and scenario descriptions."""
     text = """Feature: Documented
@@ -290,8 +290,8 @@ Feature: Plan gates
     assert scenario.tags == ("bdd-implementation-blocked-before-plan-acceptance",)
 
 
-# specweave: feature=specs/behavior/features/gherkin/parser.feature
-# specweave: scenario=@bdd-parser-dispatch-classic
+# sw: f=specs/behavior/features/gherkin/parser.feature
+# sw: s=@bdd-parser-dispatch-classic
 def test_parser_dispatch_classic_suffix(tmp_path: Path) -> None:
     """Parser selects classic parser for .feature files."""
     classic_path = tmp_path / "test.feature"
@@ -311,9 +311,22 @@ def test_parser_dispatch_classic_suffix(tmp_path: Path) -> None:
     assert feature.title == "Test"
 
 
-# specweave: feature=specs/behavior/features/gherkin/parser.feature
-# specweave: scenario=@bdd-parser-rejects-markdown-path
+# sw: f=specs/behavior/features/gherkin/markdown.feature
+# sw: s=@bdd-markdown-parser-rejects-path
 def test_parser_rejects_markdown_feature_path(tmp_path: Path) -> None:
+    markdown_path = tmp_path / "test.feature.md"
+    markdown_path.write_text("# Feature: Test\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="no longer supported"):
+        parse_feature(
+            markdown_path.read_text(encoding="utf-8"),
+            source_path=markdown_path,
+        )
+
+
+# sw: f=specs/behavior/features/gherkin/parser.feature
+# sw: s=@bdd-parser-rejects-markdown-path
+def test_classic_parser_rejects_markdown_feature_path(tmp_path: Path) -> None:
     markdown_path = tmp_path / "test.feature.md"
     markdown_path.write_text("# Feature: Test\n", encoding="utf-8")
 

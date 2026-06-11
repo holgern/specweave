@@ -2,9 +2,162 @@
   "command": "behavior mappings",
   "items": [
     {
+      "feature": "specs/behavior/features/backends/pytest-bdd.feature",
+      "function_name": "test_pytest_bdd_dedups_repeated_steps",
+      "line": 83,
+      "nodeid": "tests/test_backends_pytest_bdd.py::test_pytest_bdd_dedups_repeated_steps",
+      "scenario": "@bdd-backend-pytest-bdd-dedup",
+      "source": "comment",
+      "test_file": "tests/test_backends_pytest_bdd.py"
+    },
+    {
+      "feature": "specs/behavior/features/backends/pytest-bdd.feature",
+      "function_name": "test_pytest_bdd_collects_rule_scenarios",
+      "line": 99,
+      "nodeid": "tests/test_backends_pytest_bdd.py::test_pytest_bdd_collects_rule_scenarios",
+      "scenario": "@bdd-backend-pytest-bdd-rule-scenarios",
+      "source": "comment",
+      "test_file": "tests/test_backends_pytest_bdd.py"
+    },
+    {
+      "feature": "specs/behavior/features/backends/pytest-bdd.feature",
+      "function_name": "test_pytest_bdd_skeleton_shape",
+      "line": 64,
+      "nodeid": "tests/test_backends_pytest_bdd.py::test_pytest_bdd_skeleton_shape",
+      "scenario": "@bdd-backend-pytest-bdd-skeleton",
+      "source": "comment",
+      "test_file": "tests/test_backends_pytest_bdd.py"
+    },
+    {
+      "feature": "specs/behavior/features/backends/pytest-bdd.feature",
+      "function_name": "test_pytest_bdd_uses_source_path_filename",
+      "line": 127,
+      "nodeid": "tests/test_backends_pytest_bdd.py::test_pytest_bdd_uses_source_path_filename",
+      "scenario": "@bdd-backend-pytest-bdd-source-path",
+      "source": "comment",
+      "test_file": "tests/test_backends_pytest_bdd.py"
+    },
+    {
+      "feature": "specs/behavior/features/backends/pytest-bdd.feature",
+      "function_name": "test_backend_registry_contents",
+      "line": 42,
+      "nodeid": "tests/test_backends_pytest_bdd.py::test_backend_registry_contents",
+      "scenario": "@bdd-backend-registry",
+      "source": "comment",
+      "test_file": "tests/test_backends_pytest_bdd.py"
+    },
+    {
+      "feature": "specs/behavior/features/backends/pytest-bdd.feature",
+      "function_name": "test_unsupported_cucumber_backends_message",
+      "line": 50,
+      "nodeid": "tests/test_backends_pytest_bdd.py::test_unsupported_cucumber_backends_message",
+      "scenario": "@bdd-backend-unsupported",
+      "source": "comment",
+      "test_file": "tests/test_backends_pytest_bdd.py"
+    },
+    {
+      "feature": "specs/behavior/features/bdd/convert.feature",
+      "function_name": "test_and_but_steps_group_correctly",
+      "line": 129,
+      "nodeid": "tests/test_bdd_convert.py::test_and_but_steps_group_correctly",
+      "scenario": "@bdd-bridge-and-but-steps",
+      "source": "comment",
+      "test_file": "tests/test_bdd_convert.py"
+    },
+    {
+      "feature": "specs/behavior/features/bdd/convert.feature",
+      "function_name": "test_export_to_target_gherkin",
+      "line": 36,
+      "nodeid": "tests/test_bdd_convert.py::test_export_to_target_gherkin",
+      "scenario": "@bdd-bridge-export-to-gherkin",
+      "source": "comment",
+      "test_file": "tests/test_bdd_convert.py"
+    },
+    {
+      "feature": "specs/behavior/features/bdd/convert.feature",
+      "function_name": "test_json_round_trip",
+      "line": 154,
+      "nodeid": "tests/test_bdd_convert.py::test_json_round_trip",
+      "scenario": "@bdd-bridge-json-roundtrip",
+      "source": "comment",
+      "test_file": "tests/test_bdd_convert.py"
+    },
+    {
+      "feature": "specs/behavior/features/bdd/convert.feature",
+      "function_name": "test_json_to_feature_to_json_round_trip",
+      "line": 169,
+      "nodeid": "tests/test_bdd_convert.py::test_json_to_feature_to_json_round_trip",
+      "scenario": "@bdd-bridge-json-to-feature-to-json",
+      "source": "comment",
+      "test_file": "tests/test_bdd_convert.py"
+    },
+    {
+      "feature": "specs/behavior/features/bdd/convert.feature",
+      "function_name": "test_multiple_ac_tags_and_extra_tags",
+      "line": 76,
+      "nodeid": "tests/test_bdd_convert.py::test_multiple_ac_tags_and_extra_tags",
+      "scenario": "@bdd-bridge-multiple-ac",
+      "source": "comment",
+      "test_file": "tests/test_bdd_convert.py"
+    },
+    {
+      "feature": "specs/behavior/features/bdd/convert.feature",
+      "function_name": "test_round_trip_preserves_ids",
+      "line": 56,
+      "nodeid": "tests/test_bdd_convert.py::test_round_trip_preserves_ids",
+      "scenario": "@bdd-bridge-roundtrip-ids",
+      "source": "comment",
+      "test_file": "tests/test_bdd_convert.py"
+    },
+    {
+      "feature": "specs/behavior/features/bdd/convert.feature",
+      "function_name": "test_top_level_examples_become_top_level_scenarios",
+      "line": 104,
+      "nodeid": "tests/test_bdd_convert.py::test_top_level_examples_become_top_level_scenarios",
+      "scenario": "@bdd-bridge-top-level",
+      "source": "comment",
+      "test_file": "tests/test_bdd_convert.py"
+    },
+    {
+      "feature": "specs/behavior/features/behavior/autolink.feature",
+      "function_name": "test_autolink_reports_ambiguous_equal_score",
+      "line": 143,
+      "nodeid": "tests/test_behavior_autolink.py::test_autolink_reports_ambiguous_equal_score",
+      "scenario": "@bdd-autolink-ambiguous-candidate",
+      "source": "comment",
+      "test_file": "tests/test_behavior_autolink.py"
+    },
+    {
+      "feature": "specs/behavior/features/behavior/autolink.feature",
+      "function_name": "test_autolink_apply_writes_mapping_comments",
+      "line": 69,
+      "nodeid": "tests/test_behavior_autolink.py::test_autolink_apply_writes_mapping_comments",
+      "scenario": "@bdd-autolink-generated-id-apply",
+      "source": "comment",
+      "test_file": "tests/test_behavior_autolink.py"
+    },
+    {
+      "feature": "specs/behavior/features/behavior/autolink.feature",
+      "function_name": "test_autolink_dry_run_does_not_write",
+      "line": 52,
+      "nodeid": "tests/test_behavior_autolink.py::test_autolink_dry_run_does_not_write",
+      "scenario": "@bdd-autolink-generated-id-dry-run",
+      "source": "comment",
+      "test_file": "tests/test_behavior_autolink.py"
+    },
+    {
+      "feature": "specs/behavior/features/behavior/autolink.feature",
+      "function_name": "test_autolink_uses_config_paths",
+      "line": 202,
+      "nodeid": "tests/test_behavior_autolink.py::test_autolink_uses_config_paths",
+      "scenario": "@bdd-autolink-refresh-wrapper",
+      "source": "comment",
+      "test_file": "tests/test_behavior_autolink.py"
+    },
+    {
       "feature": "specs/behavior/features/behavior/coverage.feature",
       "function_name": "test_render_coverage_text_both_directions",
-      "line": 379,
+      "line": 413,
       "nodeid": "tests/test_behavior_coverage.py::test_render_coverage_text_both_directions",
       "scenario": "@bdd-coverage-both-directions-render",
       "source": "comment",
@@ -22,7 +175,7 @@
     {
       "feature": "specs/behavior/features/behavior/coverage.feature",
       "function_name": "test_coverage_candidate_tests_are_hints_not_bindings",
-      "line": 345,
+      "line": 379,
       "nodeid": "tests/test_behavior_coverage.py::test_coverage_candidate_tests_are_hints_not_bindings",
       "scenario": "@bdd-coverage-candidate-tests",
       "source": "comment",
@@ -30,8 +183,17 @@
     },
     {
       "feature": "specs/behavior/features/behavior/coverage.feature",
+      "function_name": "test_coverage_matches_mapping_on_class_test_method",
+      "line": 318,
+      "nodeid": "tests/test_behavior_coverage.py::test_coverage_matches_mapping_on_class_test_method",
+      "scenario": "@bdd-coverage-class-method-mapping",
+      "source": "comment",
+      "test_file": "tests/test_behavior_coverage.py"
+    },
+    {
+      "feature": "specs/behavior/features/behavior/coverage.feature",
       "function_name": "test_coverage_deprecated_paths",
-      "line": 231,
+      "line": 233,
       "nodeid": "tests/test_behavior_coverage.py::test_coverage_deprecated_paths",
       "scenario": "@bdd-coverage-deprecated-paths",
       "source": "comment",
@@ -49,7 +211,7 @@
     {
       "feature": "specs/behavior/features/behavior/coverage.feature",
       "function_name": "test_coverage_manual_scenario_skipped",
-      "line": 263,
+      "line": 265,
       "nodeid": "tests/test_behavior_coverage.py::test_coverage_manual_scenario_skipped",
       "scenario": "@bdd-coverage-manual-scenario",
       "source": "comment",
@@ -58,7 +220,7 @@
     {
       "feature": "specs/behavior/features/behavior/coverage.feature",
       "function_name": "test_coverage_missing_test_file",
-      "line": 191,
+      "line": 193,
       "nodeid": "tests/test_behavior_coverage.py::test_coverage_missing_test_file",
       "scenario": "@bdd-coverage-missing-test-file",
       "source": "comment",
@@ -66,8 +228,17 @@
     },
     {
       "feature": "specs/behavior/features/behavior/coverage.feature",
+      "function_name": "test_behavior_coverage_ignores_pytest_bdd_text",
+      "line": 171,
+      "nodeid": "tests/test_behavior_coverage.py::test_behavior_coverage_ignores_pytest_bdd_text",
+      "scenario": "@bdd-coverage-missing-test-file-reason",
+      "source": "comment",
+      "test_file": "tests/test_behavior_coverage.py"
+    },
+    {
+      "feature": "specs/behavior/features/behavior/coverage.feature",
       "function_name": "test_coverage_marks_stale_pytest_test_in_reverse_inventory",
-      "line": 316,
+      "line": 350,
       "nodeid": "tests/test_behavior_coverage.py::test_coverage_marks_stale_pytest_test_in_reverse_inventory",
       "scenario": "@bdd-coverage-pytest-stale",
       "source": "comment",
@@ -76,7 +247,7 @@
     {
       "feature": "specs/behavior/features/behavior/coverage.feature",
       "function_name": "test_coverage_lists_unmapped_pytest_tests",
-      "line": 286,
+      "line": 288,
       "nodeid": "tests/test_behavior_coverage.py::test_coverage_lists_unmapped_pytest_tests",
       "scenario": "@bdd-coverage-pytest-unmapped",
       "source": "comment",
@@ -85,7 +256,7 @@
     {
       "feature": "specs/behavior/features/behavior/coverage.feature",
       "function_name": "test_coverage_stale_feature_binding",
-      "line": 210,
+      "line": 212,
       "nodeid": "tests/test_behavior_coverage.py::test_coverage_stale_feature_binding",
       "scenario": "@bdd-coverage-stale-binding",
       "source": "comment",
@@ -112,7 +283,7 @@
     {
       "feature": "specs/behavior/features/behavior/generation.feature",
       "function_name": "test_generate_batch",
-      "line": 170,
+      "line": 168,
       "nodeid": "tests/test_behavior_generation.py::test_generate_batch",
       "scenario": "@bdd-generate-batch",
       "source": "comment",
@@ -133,15 +304,6 @@
       "line": 91,
       "nodeid": "tests/test_behavior_generation.py::test_generate_docstring",
       "scenario": "@bdd-generate-docstring",
-      "source": "comment",
-      "test_file": "tests/test_behavior_generation.py"
-    },
-    {
-      "feature": "specs/behavior/features/behavior/generation.feature",
-      "function_name": "test_generate_avoids_long_specweave_mapping_lines",
-      "line": 134,
-      "nodeid": "tests/test_behavior_generation.py::test_generate_avoids_long_specweave_mapping_lines",
-      "scenario": "@bdd-generate-long-mapping-lines",
       "source": "comment",
       "test_file": "tests/test_behavior_generation.py"
     },
@@ -292,7 +454,7 @@
     {
       "feature": "specs/behavior/features/cli/cli-contract.feature",
       "function_name": "test_bdd_check_alias",
-      "line": 746,
+      "line": 744,
       "nodeid": "tests/test_cli_cli_contract.py::test_bdd_check_alias",
       "scenario": "@bdd-cli-bdd-check-alias",
       "source": "comment",
@@ -301,7 +463,7 @@
     {
       "feature": "specs/behavior/features/cli/cli-contract.feature",
       "function_name": "test_bdd_index_alias",
-      "line": 756,
+      "line": 754,
       "nodeid": "tests/test_cli_cli_contract.py::test_bdd_index_alias",
       "scenario": "@bdd-cli-bdd-index-alias",
       "source": "comment",
@@ -346,7 +508,7 @@
     {
       "feature": "specs/behavior/features/cli/cli-contract.feature",
       "function_name": "test_behavior_import_report_maps_pytest_nodeid",
-      "line": 651,
+      "line": 649,
       "nodeid": "tests/test_cli_cli_contract.py::test_behavior_import_report_maps_pytest_nodeid",
       "scenario": "@bdd-cli-behavior-import-report",
       "source": "comment",
@@ -364,7 +526,7 @@
     {
       "feature": "specs/behavior/features/cli/cli-contract.feature",
       "function_name": "test_config_option",
-      "line": 705,
+      "line": 703,
       "nodeid": "tests/test_cli_cli_contract.py::test_config_option",
       "scenario": "@bdd-cli-config-option",
       "source": "comment",
@@ -373,7 +535,7 @@
     {
       "feature": "specs/behavior/features/cli/cli-contract.feature",
       "function_name": "test_create_feature",
-      "line": 766,
+      "line": 764,
       "nodeid": "tests/test_cli_cli_contract.py::test_create_feature",
       "scenario": "@bdd-cli-create-feature",
       "source": "comment",
@@ -382,7 +544,7 @@
     {
       "feature": "specs/behavior/features/cli/cli-contract.feature",
       "function_name": "test_create_gherkin",
-      "line": 793,
+      "line": 791,
       "nodeid": "tests/test_cli_cli_contract.py::test_create_gherkin",
       "scenario": "@bdd-cli-create-gherkin",
       "source": "comment",
@@ -391,7 +553,7 @@
     {
       "feature": "specs/behavior/features/cli/cli-contract.feature",
       "function_name": "test_create_plan",
-      "line": 817,
+      "line": 815,
       "nodeid": "tests/test_cli_cli_contract.py::test_create_plan",
       "scenario": "@bdd-cli-create-plan",
       "source": "comment",
@@ -400,7 +562,7 @@
     {
       "feature": "specs/behavior/features/cli/cli-contract.feature",
       "function_name": "test_exit_check_errors",
-      "line": 844,
+      "line": 842,
       "nodeid": "tests/test_cli_cli_contract.py::test_exit_check_errors",
       "scenario": "@bdd-cli-exit-check-errors",
       "source": "comment",
@@ -409,7 +571,7 @@
     {
       "feature": "specs/behavior/features/cli/cli-contract.feature",
       "function_name": "test_exit_doctor_failed",
-      "line": 831,
+      "line": 829,
       "nodeid": "tests/test_cli_cli_contract.py::test_exit_doctor_failed",
       "scenario": "@bdd-cli-exit-doctor-failed",
       "source": "comment",
@@ -427,7 +589,7 @@
     {
       "feature": "specs/behavior/features/cli/cli-contract.feature",
       "function_name": "test_json_init",
-      "line": 735,
+      "line": 733,
       "nodeid": "tests/test_cli_cli_contract.py::test_json_init",
       "scenario": "@bdd-cli-json-init",
       "source": "comment",
@@ -436,7 +598,7 @@
     {
       "feature": "specs/behavior/features/cli/cli-contract.feature",
       "function_name": "test_json_output",
-      "line": 724,
+      "line": 722,
       "nodeid": "tests/test_cli_cli_contract.py::test_json_output",
       "scenario": "@bdd-cli-json-output",
       "source": "comment",
@@ -454,8 +616,8 @@
     {
       "feature": "specs/behavior/features/common/behavior-helpers.feature",
       "function_name": "test_derives_path",
-      "line": 85,
-      "nodeid": "tests/test_common_behavior_helpers.py::test_derives_path",
+      "line": 87,
+      "nodeid": "tests/test_common_behavior_helpers.py::TestCanonicalTestPath::test_derives_path",
       "scenario": "@bdd-canonical-test-path",
       "source": "comment",
       "test_file": "tests/test_common_behavior_helpers.py"
@@ -463,8 +625,8 @@
     {
       "feature": "specs/behavior/features/common/behavior-helpers.feature",
       "function_name": "test_from_path",
-      "line": 65,
-      "nodeid": "tests/test_common_behavior_helpers.py::test_from_path",
+      "line": 67,
+      "nodeid": "tests/test_common_behavior_helpers.py::TestFeatureIdentity::test_from_path",
       "scenario": "@bdd-feature-identity-from-path",
       "source": "comment",
       "test_file": "tests/test_common_behavior_helpers.py"
@@ -472,8 +634,8 @@
     {
       "feature": "specs/behavior/features/common/behavior-helpers.feature",
       "function_name": "test_no_area",
-      "line": 75,
-      "nodeid": "tests/test_common_behavior_helpers.py::test_no_area",
+      "line": 77,
+      "nodeid": "tests/test_common_behavior_helpers.py::TestFeatureIdentity::test_no_area",
       "scenario": "@bdd-feature-identity-no-area",
       "source": "comment",
       "test_file": "tests/test_common_behavior_helpers.py"
@@ -481,8 +643,8 @@
     {
       "feature": "specs/behavior/features/common/behavior-helpers.feature",
       "function_name": "test_classic_feature",
-      "line": 29,
-      "nodeid": "tests/test_common_behavior_helpers.py::test_classic_feature",
+      "line": 31,
+      "nodeid": "tests/test_common_behavior_helpers.py::TestFeatureStem::test_classic_feature",
       "scenario": "@bdd-feature-stem-classic",
       "source": "comment",
       "test_file": "tests/test_common_behavior_helpers.py"
@@ -490,17 +652,17 @@
     {
       "feature": "specs/behavior/features/common/behavior-helpers.feature",
       "function_name": "test_feature_md",
-      "line": 23,
-      "nodeid": "tests/test_common_behavior_helpers.py::test_feature_md",
-      "scenario": "@bdd-feature-stem-markdown",
+      "line": 25,
+      "nodeid": "tests/test_common_behavior_helpers.py::TestFeatureStem::test_feature_md",
+      "scenario": "@bdd-feature-stem-legacy-markdown",
       "source": "comment",
       "test_file": "tests/test_common_behavior_helpers.py"
     },
     {
       "feature": "specs/behavior/features/common/behavior-helpers.feature",
       "function_name": "test_yields_from_rules",
-      "line": 130,
-      "nodeid": "tests/test_common_behavior_helpers.py::test_yields_from_rules",
+      "line": 132,
+      "nodeid": "tests/test_common_behavior_helpers.py::TestIterFeatureScenarios::test_yields_from_rules",
       "scenario": "@bdd-iter-scenarios-in-rules",
       "source": "comment",
       "test_file": "tests/test_common_behavior_helpers.py"
@@ -508,8 +670,8 @@
     {
       "feature": "specs/behavior/features/common/behavior-helpers.feature",
       "function_name": "test_yields_top_level",
-      "line": 120,
-      "nodeid": "tests/test_common_behavior_helpers.py::test_yields_top_level",
+      "line": 122,
+      "nodeid": "tests/test_common_behavior_helpers.py::TestIterFeatureScenarios::test_yields_top_level",
       "scenario": "@bdd-iter-scenarios-top-level",
       "source": "comment",
       "test_file": "tests/test_common_behavior_helpers.py"
@@ -517,8 +679,8 @@
     {
       "feature": "specs/behavior/features/common/behavior-helpers.feature",
       "function_name": "test_returns_empty_when_no_bdd",
-      "line": 155,
-      "nodeid": "tests/test_common_behavior_helpers.py::test_returns_empty_when_no_bdd",
+      "line": 157,
+      "nodeid": "tests/test_common_behavior_helpers.py::TestScenarioIdValue::test_returns_empty_when_no_bdd",
       "scenario": "@bdd-scenario-id-missing",
       "source": "comment",
       "test_file": "tests/test_common_behavior_helpers.py"
@@ -526,8 +688,8 @@
     {
       "feature": "specs/behavior/features/common/behavior-helpers.feature",
       "function_name": "test_returns_first_bdd_tag",
-      "line": 143,
-      "nodeid": "tests/test_common_behavior_helpers.py::test_returns_first_bdd_tag",
+      "line": 145,
+      "nodeid": "tests/test_common_behavior_helpers.py::TestScenarioIdValue::test_returns_first_bdd_tag",
       "scenario": "@bdd-scenario-id-value",
       "source": "comment",
       "test_file": "tests/test_common_behavior_helpers.py"
@@ -535,8 +697,8 @@
     {
       "feature": "specs/behavior/features/common/behavior-helpers.feature",
       "function_name": "test_basic",
-      "line": 45,
-      "nodeid": "tests/test_common_behavior_helpers.py::test_basic",
+      "line": 47,
+      "nodeid": "tests/test_common_behavior_helpers.py::TestSlugify::test_basic",
       "scenario": "@bdd-slugify-basic",
       "source": "comment",
       "test_file": "tests/test_common_behavior_helpers.py"
@@ -544,8 +706,8 @@
     {
       "feature": "specs/behavior/features/common/behavior-helpers.feature",
       "function_name": "test_empty",
-      "line": 57,
-      "nodeid": "tests/test_common_behavior_helpers.py::test_empty",
+      "line": 59,
+      "nodeid": "tests/test_common_behavior_helpers.py::TestSlugify::test_empty",
       "scenario": "@bdd-slugify-empty",
       "source": "comment",
       "test_file": "tests/test_common_behavior_helpers.py"
@@ -553,27 +715,27 @@
     {
       "feature": "specs/behavior/features/common/behavior-helpers.feature",
       "function_name": "test_special_chars",
-      "line": 51,
-      "nodeid": "tests/test_common_behavior_helpers.py::test_special_chars",
+      "line": 53,
+      "nodeid": "tests/test_common_behavior_helpers.py::TestSlugify::test_special_chars",
       "scenario": "@bdd-slugify-special-chars",
       "source": "comment",
       "test_file": "tests/test_common_behavior_helpers.py"
     },
     {
       "feature": "specs/behavior/features/config/configuration.feature",
-      "function_name": "test_prefers_explicit",
-      "line": 24,
-      "nodeid": "tests/test_config_configuration.py::test_prefers_explicit",
+      "function_name": "test_finds_hidden_config",
+      "line": 45,
+      "nodeid": "tests/test_config_configuration.py::TestFindConfig::test_finds_hidden_config",
       "scenario": "@bdd-config-discovery-finds-dotfile",
       "source": "comment",
       "test_file": "tests/test_config_configuration.py"
     },
     {
       "feature": "specs/behavior/features/config/configuration.feature",
-      "function_name": "test_finds_hidden_config",
-      "line": 45,
-      "nodeid": "tests/test_config_configuration.py::test_finds_hidden_config",
-      "scenario": "@bdd-config-discovery-finds-hidden",
+      "function_name": "test_prefers_explicit",
+      "line": 24,
+      "nodeid": "tests/test_config_configuration.py::TestFindConfig::test_prefers_explicit",
+      "scenario": "@bdd-config-discovery-finds-public",
       "source": "comment",
       "test_file": "tests/test_config_configuration.py"
     },
@@ -581,7 +743,7 @@
       "feature": "specs/behavior/features/config/configuration.feature",
       "function_name": "test_prefers_public_over_dotfile",
       "line": 31,
-      "nodeid": "tests/test_config_configuration.py::test_prefers_public_over_dotfile",
+      "nodeid": "tests/test_config_configuration.py::TestFindConfig::test_prefers_public_over_dotfile",
       "scenario": "@bdd-config-discovery-prefers-public",
       "source": "comment",
       "test_file": "tests/test_config_configuration.py"
@@ -590,7 +752,7 @@
       "feature": "specs/behavior/features/config/configuration.feature",
       "function_name": "test_returns_none_when_missing",
       "line": 40,
-      "nodeid": "tests/test_config_configuration.py::test_returns_none_when_missing",
+      "nodeid": "tests/test_config_configuration.py::TestFindConfig::test_returns_none_when_missing",
       "scenario": "@bdd-config-discovery-returns-none",
       "source": "comment",
       "test_file": "tests/test_config_configuration.py"
@@ -599,7 +761,7 @@
       "feature": "specs/behavior/features/config/configuration.feature",
       "function_name": "test_walks_up_directories",
       "line": 53,
-      "nodeid": "tests/test_config_configuration.py::test_walks_up_directories",
+      "nodeid": "tests/test_config_configuration.py::TestFindConfig::test_walks_up_directories",
       "scenario": "@bdd-config-discovery-walks-parents",
       "source": "comment",
       "test_file": "tests/test_config_configuration.py"
@@ -608,7 +770,7 @@
       "feature": "specs/behavior/features/config/configuration.feature",
       "function_name": "test_defaults_when_missing",
       "line": 65,
-      "nodeid": "tests/test_config_configuration.py::test_defaults_when_missing",
+      "nodeid": "tests/test_config_configuration.py::TestLoadConfig::test_defaults_when_missing",
       "scenario": "@bdd-config-load-defaults",
       "source": "comment",
       "test_file": "tests/test_config_configuration.py"
@@ -617,7 +779,7 @@
       "feature": "specs/behavior/features/config/configuration.feature",
       "function_name": "test_normalizes_paths",
       "line": 82,
-      "nodeid": "tests/test_config_configuration.py::test_normalizes_paths",
+      "nodeid": "tests/test_config_configuration.py::TestLoadConfig::test_normalizes_paths",
       "scenario": "@bdd-config-load-from-file",
       "source": "comment",
       "test_file": "tests/test_config_configuration.py"
@@ -626,7 +788,7 @@
       "feature": "specs/behavior/features/config/configuration.feature",
       "function_name": "test_rejects_unsupported_schema",
       "line": 74,
-      "nodeid": "tests/test_config_configuration.py::test_rejects_unsupported_schema",
+      "nodeid": "tests/test_config_configuration.py::TestLoadConfig::test_rejects_unsupported_schema",
       "scenario": "@bdd-config-rejects-unsupported-schema",
       "source": "comment",
       "test_file": "tests/test_config_configuration.py"
@@ -635,7 +797,7 @@
       "feature": "specs/behavior/features/config/configuration.feature",
       "function_name": "test_renders_behavior",
       "line": 156,
-      "nodeid": "tests/test_config_configuration.py::test_renders_behavior",
+      "nodeid": "tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_behavior",
       "scenario": "@bdd-config-render-behavior",
       "source": "comment",
       "test_file": "tests/test_config_configuration.py"
@@ -644,7 +806,7 @@
       "feature": "specs/behavior/features/config/configuration.feature",
       "function_name": "test_renders_behaviour",
       "line": 164,
-      "nodeid": "tests/test_config_configuration.py::test_renders_behaviour",
+      "nodeid": "tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_behaviour",
       "scenario": "@bdd-config-render-behaviour",
       "source": "comment",
       "test_file": "tests/test_config_configuration.py"
@@ -653,7 +815,7 @@
       "feature": "specs/behavior/features/doctor/diagnostics.feature",
       "function_name": "test_detects_deprecated",
       "line": 129,
-      "nodeid": "tests/test_doctor_diagnostics.py::test_detects_deprecated",
+      "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_detects_deprecated",
       "scenario": "@bdd-doctor-deprecated-paths",
       "source": "comment",
       "test_file": "tests/test_doctor_diagnostics.py"
@@ -662,7 +824,7 @@
       "feature": "specs/behavior/features/doctor/diagnostics.feature",
       "function_name": "test_detects_duplicates",
       "line": 103,
-      "nodeid": "tests/test_doctor_diagnostics.py::test_detects_duplicates",
+      "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorReportsDuplicateBddTags::test_detects_duplicates",
       "scenario": "@bdd-doctor-duplicate-bdd-tags",
       "source": "comment",
       "test_file": "tests/test_doctor_diagnostics.py"
@@ -671,7 +833,7 @@
       "feature": "specs/behavior/features/doctor/diagnostics.feature",
       "function_name": "test_fix_creates_missing_dirs",
       "line": 148,
-      "nodeid": "tests/test_doctor_diagnostics.py::test_fix_creates_missing_dirs",
+      "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorFix::test_fix_creates_missing_dirs",
       "scenario": "@bdd-doctor-fix-creates-directories",
       "source": "comment",
       "test_file": "tests/test_doctor_diagnostics.py"
@@ -680,7 +842,7 @@
       "feature": "specs/behavior/features/doctor/diagnostics.feature",
       "function_name": "test_no_config_warning",
       "line": 93,
-      "nodeid": "tests/test_doctor_diagnostics.py::test_no_config_warning",
+      "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorReportsMissing::test_no_config_warning",
       "scenario": "@bdd-doctor-missing-config",
       "source": "comment",
       "test_file": "tests/test_doctor_diagnostics.py"
@@ -689,7 +851,7 @@
       "feature": "specs/behavior/features/doctor/diagnostics.feature",
       "function_name": "test_reports_missing_features_dir",
       "line": 69,
-      "nodeid": "tests/test_doctor_diagnostics.py::test_reports_missing_features_dir",
+      "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorReportsMissing::test_reports_missing_features_dir",
       "scenario": "@bdd-doctor-missing-directories",
       "source": "comment",
       "test_file": "tests/test_doctor_diagnostics.py"
@@ -698,7 +860,7 @@
       "feature": "specs/behavior/features/doctor/diagnostics.feature",
       "function_name": "test_unsupported_schema",
       "line": 168,
-      "nodeid": "tests/test_doctor_diagnostics.py::test_unsupported_schema",
+      "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorFix::test_unsupported_schema",
       "scenario": "@bdd-doctor-unsupported-schema",
       "source": "comment",
       "test_file": "tests/test_doctor_diagnostics.py"
@@ -707,10 +869,55 @@
       "feature": "specs/behavior/features/doctor/diagnostics.feature",
       "function_name": "test_passes_initialized_project",
       "line": 16,
-      "nodeid": "tests/test_doctor_diagnostics.py::test_passes_initialized_project",
+      "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorPasses::test_passes_initialized_project",
       "scenario": "@bdd-doctor-validates-features",
       "source": "comment",
       "test_file": "tests/test_doctor_diagnostics.py"
+    },
+    {
+      "feature": "specs/behavior/features/exchange/schemas.feature",
+      "function_name": "test_archledger_schema_representative_payload_contract",
+      "line": 83,
+      "nodeid": "tests/test_exchange_schemas.py::test_archledger_schema_representative_payload_contract",
+      "scenario": "@bdd-exchange-archledger-schema",
+      "source": "comment",
+      "test_file": "tests/test_exchange_schemas.py"
+    },
+    {
+      "feature": "specs/behavior/features/exchange/schemas.feature",
+      "function_name": "test_trace_schema_representative_payload_contract",
+      "line": 30,
+      "nodeid": "tests/test_exchange_schemas.py::test_trace_schema_representative_payload_contract",
+      "scenario": "@bdd-exchange-combi-trace-schema",
+      "source": "comment",
+      "test_file": "tests/test_exchange_schemas.py"
+    },
+    {
+      "feature": "specs/behavior/features/exchange/schemas.feature",
+      "function_name": "test_evidence_schema_representative_payload_contract",
+      "line": 66,
+      "nodeid": "tests/test_exchange_schemas.py::test_evidence_schema_representative_payload_contract",
+      "scenario": "@bdd-exchange-evidence-schema",
+      "source": "comment",
+      "test_file": "tests/test_exchange_schemas.py"
+    },
+    {
+      "feature": "specs/behavior/features/exchange/schemas.feature",
+      "function_name": "test_exchange_schemas_are_json_schema_documents",
+      "line": 15,
+      "nodeid": "tests/test_exchange_schemas.py::test_exchange_schemas_are_json_schema_documents",
+      "scenario": "@bdd-exchange-schema-valid",
+      "source": "comment",
+      "test_file": "tests/test_exchange_schemas.py"
+    },
+    {
+      "feature": "specs/behavior/features/exchange/schemas.feature",
+      "function_name": "test_taskledger_schema_representative_payload_contract",
+      "line": 52,
+      "nodeid": "tests/test_exchange_schemas.py::test_taskledger_schema_representative_payload_contract",
+      "scenario": "@bdd-exchange-taskledger-schema",
+      "source": "comment",
+      "test_file": "tests/test_exchange_schemas.py"
     },
     {
       "feature": "specs/behavior/features/gherkin/lint.feature",
@@ -821,6 +1028,114 @@
       "test_file": "tests/test_gherkin_lint.py"
     },
     {
+      "feature": "specs/behavior/features/gherkin/markdown.feature",
+      "function_name": "test_lint_rejects_markdown_feature_file",
+      "line": 194,
+      "nodeid": "tests/test_gherkin_lint.py::test_lint_rejects_markdown_feature_file",
+      "scenario": "@bdd-lint-rejects-markdown-file",
+      "source": "comment",
+      "test_file": "tests/test_gherkin_lint.py"
+    },
+    {
+      "feature": "specs/behavior/features/gherkin/markdown.feature",
+      "function_name": "test_parser_rejects_markdown_feature_path",
+      "line": 316,
+      "nodeid": "tests/test_gherkin_parser.py::test_parser_rejects_markdown_feature_path",
+      "scenario": "@bdd-markdown-parser-rejects-path",
+      "source": "comment",
+      "test_file": "tests/test_gherkin_parser.py"
+    },
+    {
+      "feature": "specs/behavior/features/gherkin/markdown.feature",
+      "function_name": "test_rejects_markdown_features",
+      "line": 227,
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateMarkdownUnsupported::test_rejects_markdown_features",
+      "scenario": "@bdd-validation-rejects-markdown",
+      "source": "comment",
+      "test_file": "tests/test_gherkin_validation.py"
+    },
+    {
+      "feature": "specs/behavior/features/gherkin/official.feature",
+      "function_name": "test_compile_pickles_smoke",
+      "line": 88,
+      "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_compile_pickles_smoke",
+      "scenario": "@bdd-official-compile-pickles",
+      "source": "comment",
+      "test_file": "tests/test_gherkin_official.py"
+    },
+    {
+      "feature": "specs/behavior/features/gherkin/official.feature",
+      "function_name": "test_empty_feature_tags",
+      "line": 94,
+      "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_empty_feature_tags",
+      "scenario": "@bdd-official-parse-no-tags",
+      "source": "comment",
+      "test_file": "tests/test_gherkin_official.py"
+    },
+    {
+      "feature": "specs/behavior/features/gherkin/official.feature",
+      "function_name": "test_parses_rule_and_scenario_tags",
+      "line": 62,
+      "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_parses_rule_and_scenario_tags",
+      "scenario": "@bdd-official-parse-rules",
+      "source": "comment",
+      "test_file": "tests/test_gherkin_official.py"
+    },
+    {
+      "feature": "specs/behavior/features/gherkin/official.feature",
+      "function_name": "test_parses_simple_feature",
+      "line": 47,
+      "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_parses_simple_feature",
+      "scenario": "@bdd-official-parse-simple",
+      "source": "comment",
+      "test_file": "tests/test_gherkin_official.py"
+    },
+    {
+      "feature": "specs/behavior/features/gherkin/official.feature",
+      "function_name": "test_preserves_description",
+      "line": 101,
+      "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_preserves_description",
+      "scenario": "@bdd-official-preserve-description",
+      "source": "comment",
+      "test_file": "tests/test_gherkin_official.py"
+    },
+    {
+      "feature": "specs/behavior/features/gherkin/official.feature",
+      "function_name": "test_rejects_invalid_gherkin",
+      "line": 75,
+      "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_rejects_invalid_gherkin",
+      "scenario": "@bdd-official-reject-invalid",
+      "source": "comment",
+      "test_file": "tests/test_gherkin_official.py"
+    },
+    {
+      "feature": "specs/behavior/features/gherkin/official.feature",
+      "function_name": "test_accepts_source_path",
+      "line": 81,
+      "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_accepts_source_path",
+      "scenario": "@bdd-official-source-path",
+      "source": "comment",
+      "test_file": "tests/test_gherkin_official.py"
+    },
+    {
+      "feature": "specs/behavior/features/gherkin/official.feature",
+      "function_name": "test_validates_invalid",
+      "line": 114,
+      "nodeid": "tests/test_gherkin_official.py::TestValidateClassicWithOfficial::test_validates_invalid",
+      "scenario": "@bdd-official-validate-invalid",
+      "source": "comment",
+      "test_file": "tests/test_gherkin_official.py"
+    },
+    {
+      "feature": "specs/behavior/features/gherkin/official.feature",
+      "function_name": "test_validates_valid",
+      "line": 109,
+      "nodeid": "tests/test_gherkin_official.py::TestValidateClassicWithOfficial::test_validates_valid",
+      "scenario": "@bdd-official-validate-valid",
+      "source": "comment",
+      "test_file": "tests/test_gherkin_official.py"
+    },
+    {
       "feature": "specs/behavior/features/gherkin/parser.feature",
       "function_name": "test_parse_feature_description",
       "line": 226,
@@ -876,9 +1191,9 @@
     },
     {
       "feature": "specs/behavior/features/gherkin/parser.feature",
-      "function_name": "test_parser_rejects_markdown_feature_path",
-      "line": 316,
-      "nodeid": "tests/test_gherkin_parser.py::test_parser_rejects_markdown_feature_path",
+      "function_name": "test_classic_parser_rejects_markdown_feature_path",
+      "line": 329,
+      "nodeid": "tests/test_gherkin_parser.py::test_classic_parser_rejects_markdown_feature_path",
       "scenario": "@bdd-parser-rejects-markdown-path",
       "source": "comment",
       "test_file": "tests/test_gherkin_parser.py"
@@ -941,8 +1256,17 @@
       "feature": "specs/behavior/features/init/initialization.feature",
       "function_name": "test_creates_behaviour_layout",
       "line": 49,
-      "nodeid": "tests/test_init_initialization.py::test_creates_behaviour_layout",
+      "nodeid": "tests/test_init_initialization.py::TestInitBritishSpelling::test_creates_behaviour_layout",
       "scenario": "@bdd-init-british-spelling",
+      "source": "comment",
+      "test_file": "tests/test_init_initialization.py"
+    },
+    {
+      "feature": "specs/behavior/features/init/initialization.feature",
+      "function_name": "test_hidden_config_path_still_works_when_explicit",
+      "line": 70,
+      "nodeid": "tests/test_init_initialization.py::TestInitCompatibility::test_hidden_config_path_still_works_when_explicit",
+      "scenario": "@bdd-init-creates-dotfile",
       "source": "comment",
       "test_file": "tests/test_init_initialization.py"
     },
@@ -950,7 +1274,7 @@
       "feature": "specs/behavior/features/init/initialization.feature",
       "function_name": "test_creates_behavior_paths",
       "line": 37,
-      "nodeid": "tests/test_init_initialization.py::test_creates_behavior_paths",
+      "nodeid": "tests/test_init_initialization.py::TestInitDefault::test_creates_behavior_paths",
       "scenario": "@bdd-init-creates-gitkeep",
       "source": "comment",
       "test_file": "tests/test_init_initialization.py"
@@ -959,7 +1283,7 @@
       "feature": "specs/behavior/features/init/initialization.feature",
       "function_name": "test_creates_default_config_and_layout",
       "line": 15,
-      "nodeid": "tests/test_init_initialization.py::test_creates_default_config_and_layout",
+      "nodeid": "tests/test_init_initialization.py::TestInitDefault::test_creates_default_config_and_layout",
       "scenario": "@bdd-init-creates-public-config",
       "source": "comment",
       "test_file": "tests/test_init_initialization.py"
@@ -967,8 +1291,8 @@
     {
       "feature": "specs/behavior/features/init/initialization.feature",
       "function_name": "test_nonexistent",
-      "line": 159,
-      "nodeid": "tests/test_init_initialization.py::test_nonexistent",
+      "line": 161,
+      "nodeid": "tests/test_init_initialization.py::TestReadmeIsSpecweaveManaged::test_nonexistent",
       "scenario": "@bdd-init-creates-readme",
       "source": "comment",
       "test_file": "tests/test_init_initialization.py"
@@ -976,8 +1300,8 @@
     {
       "feature": "specs/behavior/features/init/initialization.feature",
       "function_name": "test_writes_nothing",
-      "line": 126,
-      "nodeid": "tests/test_init_initialization.py::test_writes_nothing",
+      "line": 128,
+      "nodeid": "tests/test_init_initialization.py::TestInitDryRun::test_writes_nothing",
       "scenario": "@bdd-init-dry-run",
       "source": "comment",
       "test_file": "tests/test_init_initialization.py"
@@ -985,8 +1309,8 @@
     {
       "feature": "specs/behavior/features/init/initialization.feature",
       "function_name": "test_force_overwrites_generated_config_only",
-      "line": 113,
-      "nodeid": "tests/test_init_initialization.py::test_force_overwrites_generated_config_only",
+      "line": 115,
+      "nodeid": "tests/test_init_initialization.py::TestInitForce::test_force_overwrites_generated_config_only",
       "scenario": "@bdd-init-force-overwrites-readme",
       "source": "comment",
       "test_file": "tests/test_init_initialization.py"
@@ -994,8 +1318,8 @@
     {
       "feature": "specs/behavior/features/init/initialization.feature",
       "function_name": "test_does_not_overwrite_existing_config",
-      "line": 76,
-      "nodeid": "tests/test_init_initialization.py::test_does_not_overwrite_existing_config",
+      "line": 78,
+      "nodeid": "tests/test_init_initialization.py::TestInitIdempotency::test_does_not_overwrite_existing_config",
       "scenario": "@bdd-init-idempotent",
       "source": "comment",
       "test_file": "tests/test_init_initialization.py"
@@ -1003,8 +1327,8 @@
     {
       "feature": "specs/behavior/features/init/initialization.feature",
       "function_name": "test_does_not_overwrite_non_specweave_readme",
-      "line": 87,
-      "nodeid": "tests/test_init_initialization.py::test_does_not_overwrite_non_specweave_readme",
+      "line": 89,
+      "nodeid": "tests/test_init_initialization.py::TestInitIdempotency::test_does_not_overwrite_non_specweave_readme",
       "scenario": "@bdd-init-refuses-overwrite-readme",
       "source": "comment",
       "test_file": "tests/test_init_initialization.py"
@@ -1012,8 +1336,8 @@
     {
       "feature": "specs/behavior/features/init/initialization.feature",
       "function_name": "test_reports_existing_directories",
-      "line": 101,
-      "nodeid": "tests/test_init_initialization.py::test_reports_existing_directories",
+      "line": 103,
+      "nodeid": "tests/test_init_initialization.py::TestInitIdempotency::test_reports_existing_directories",
       "scenario": "@bdd-init-warns-existing-config",
       "source": "comment",
       "test_file": "tests/test_init_initialization.py"
@@ -1044,6 +1368,24 @@
       "scenario": "@bdd-archledger-unknown-bdd",
       "source": "comment",
       "test_file": "tests/test_integrations_archledger.py"
+    },
+    {
+      "feature": "specs/behavior/features/integrations/combi.feature",
+      "function_name": "test_combi_check_writes_json_and_human_diagnostics",
+      "line": 21,
+      "nodeid": "tests/test_combi_check.py::test_combi_check_writes_json_and_human_diagnostics",
+      "scenario": "@bdd-combi-check-gaps",
+      "source": "comment",
+      "test_file": "tests/test_combi_check.py"
+    },
+    {
+      "feature": "specs/behavior/features/integrations/combi.feature",
+      "function_name": "test_combi_check_strict_fails_on_missing_bdd_id",
+      "line": 65,
+      "nodeid": "tests/test_combi_check.py::test_combi_check_strict_fails_on_missing_bdd_id",
+      "scenario": "@bdd-combi-check-strict",
+      "source": "comment",
+      "test_file": "tests/test_combi_check.py"
     },
     {
       "feature": "specs/behavior/features/integrations/taskledger.feature",
@@ -1080,6 +1422,114 @@
       "scenario": "@bdd-taskledger-import",
       "source": "comment",
       "test_file": "tests/test_integrations_taskledger.py"
+    },
+    {
+      "feature": "specs/behavior/features/planning/create-plan.feature",
+      "function_name": "test_creates_plan_from_feature",
+      "line": 33,
+      "nodeid": "tests/test_plan.py::TestCreatePlan::test_creates_plan_from_feature",
+      "scenario": "@bdd-plan-create",
+      "source": "comment",
+      "test_file": "tests/test_plan.py"
+    },
+    {
+      "feature": "specs/behavior/features/planning/create-plan.feature",
+      "function_name": "test_plan_includes_scenario_steps",
+      "line": 49,
+      "nodeid": "tests/test_plan.py::TestCreatePlan::test_plan_includes_scenario_steps",
+      "scenario": "@bdd-plan-includes-scenario-steps",
+      "source": "comment",
+      "test_file": "tests/test_plan.py"
+    },
+    {
+      "feature": "specs/behavior/features/planning/create-plan.feature",
+      "function_name": "test_plan_includes_validation_commands",
+      "line": 63,
+      "nodeid": "tests/test_plan.py::TestCreatePlan::test_plan_includes_validation_commands",
+      "scenario": "@bdd-plan-validation-commands",
+      "source": "comment",
+      "test_file": "tests/test_plan.py"
+    },
+    {
+      "feature": "specs/behavior/features/python-inspect/ast-reader.feature",
+      "function_name": "test_describe_assert_call",
+      "line": 111,
+      "nodeid": "tests/test_python_ast_reader.py::test_describe_assert_call",
+      "scenario": "@bdd-ast-assert-call",
+      "source": "comment",
+      "test_file": "tests/test_python_ast_reader.py"
+    },
+    {
+      "feature": "specs/behavior/features/python-inspect/ast-reader.feature",
+      "function_name": "test_describe_assert_equals",
+      "line": 66,
+      "nodeid": "tests/test_python_ast_reader.py::test_describe_assert_equals",
+      "scenario": "@bdd-ast-assert-equals",
+      "source": "comment",
+      "test_file": "tests/test_python_ast_reader.py"
+    },
+    {
+      "feature": "specs/behavior/features/python-inspect/ast-reader.feature",
+      "function_name": "test_describe_assert_is_none",
+      "line": 82,
+      "nodeid": "tests/test_python_ast_reader.py::test_describe_assert_is_none",
+      "scenario": "@bdd-ast-assert-is-none",
+      "source": "comment",
+      "test_file": "tests/test_python_ast_reader.py"
+    },
+    {
+      "feature": "specs/behavior/features/python-inspect/ast-reader.feature",
+      "function_name": "test_describe_assert_truthy",
+      "line": 98,
+      "nodeid": "tests/test_python_ast_reader.py::test_describe_assert_truthy",
+      "scenario": "@bdd-ast-assert-truthy",
+      "source": "comment",
+      "test_file": "tests/test_python_ast_reader.py"
+    },
+    {
+      "feature": "specs/behavior/features/python-inspect/ast-reader.feature",
+      "function_name": "test_discover_specweave_comment_mapping",
+      "line": 153,
+      "nodeid": "tests/test_python_ast_reader.py::test_discover_specweave_comment_mapping",
+      "scenario": "@bdd-ast-discover-comment",
+      "source": "comment",
+      "test_file": "tests/test_python_ast_reader.py"
+    },
+    {
+      "feature": "specs/behavior/features/python-inspect/ast-reader.feature",
+      "function_name": "test_docstring_mapping_accepts_feature_md",
+      "line": 213,
+      "nodeid": "tests/test_python_ast_reader.py::test_docstring_mapping_accepts_feature_md",
+      "scenario": "@bdd-ast-discover-docstring",
+      "source": "comment",
+      "test_file": "tests/test_python_ast_reader.py"
+    },
+    {
+      "feature": "specs/behavior/features/python-inspect/ast-reader.feature",
+      "function_name": "test_discover_specweave_marker_mapping",
+      "line": 125,
+      "nodeid": "tests/test_python_ast_reader.py::test_discover_specweave_marker_mapping",
+      "scenario": "@bdd-ast-discover-marker",
+      "source": "comment",
+      "test_file": "tests/test_python_ast_reader.py"
+    },
+    {
+      "feature": "specs/behavior/features/python-inspect/ast-reader.feature",
+      "function_name": "test_extract_test_functions",
+      "line": 29,
+      "nodeid": "tests/test_python_ast_reader.py::test_extract_test_functions",
+      "scenario": "@bdd-ast-extract-test-functions",
+      "source": "comment",
+      "test_file": "tests/test_python_ast_reader.py"
+    },
+    {
+      "feature": "specs/behavior/features/python-inspect/ast-reader.feature",
+      "function_name": "test_extract_ignores_non_test_functions",
+      "line": 50,
+      "nodeid": "tests/test_python_ast_reader.py::test_extract_ignores_non_test_functions",
+      "scenario": "@bdd-ast-ignores-non-test",
+      "source": "comment",
+      "test_file": "tests/test_python_ast_reader.py"
     },
     {
       "feature": "specs/behavior/features/reports/fail-closed.feature",
@@ -1355,7 +1805,7 @@
       "feature": "specs/behavior/features/review/spec-review.feature",
       "function_name": "test_no_features",
       "line": 43,
-      "nodeid": "tests/test_review_spec_review.py::test_no_features",
+      "nodeid": "tests/test_review_spec_review.py::TestReviewReportsMissingBindings::test_no_features",
       "scenario": "@bdd-review-counts",
       "source": "comment",
       "test_file": "tests/test_review_spec_review.py"
@@ -1373,7 +1823,7 @@
       "feature": "specs/behavior/features/review/spec-review.feature",
       "function_name": "test_stale_mapping_causes_failed_review",
       "line": 132,
-      "nodeid": "tests/test_review_spec_review.py::test_stale_mapping_causes_failed_review",
+      "nodeid": "tests/test_review_spec_review.py::TestReviewAggregatesCoverage::test_stale_mapping_causes_failed_review",
       "scenario": "@bdd-review-deprecated-paths",
       "source": "comment",
       "test_file": "tests/test_review_spec_review.py"
@@ -1382,7 +1832,7 @@
       "feature": "specs/behavior/features/review/spec-review.feature",
       "function_name": "test_forbidden_pytest_bdd",
       "line": 164,
-      "nodeid": "tests/test_review_spec_review.py::test_forbidden_pytest_bdd",
+      "nodeid": "tests/test_review_spec_review.py::TestReviewAggregatesCoverage::test_forbidden_pytest_bdd",
       "scenario": "@bdd-review-forbidden-pytest-bdd",
       "source": "comment",
       "test_file": "tests/test_review_spec_review.py"
@@ -1391,7 +1841,7 @@
       "feature": "specs/behavior/features/review/spec-review.feature",
       "function_name": "test_lint_findings",
       "line": 189,
-      "nodeid": "tests/test_review_spec_review.py::test_lint_findings",
+      "nodeid": "tests/test_review_spec_review.py::TestReviewAggregatesCoverage::test_lint_findings",
       "scenario": "@bdd-review-lint-findings",
       "source": "comment",
       "test_file": "tests/test_review_spec_review.py"
@@ -1400,7 +1850,7 @@
       "feature": "specs/behavior/features/review/spec-review.feature",
       "function_name": "test_feature_with_no_test",
       "line": 57,
-      "nodeid": "tests/test_review_spec_review.py::test_feature_with_no_test",
+      "nodeid": "tests/test_review_spec_review.py::TestReviewReportsMissingBindings::test_feature_with_no_test",
       "scenario": "@bdd-review-missing-bindings",
       "source": "comment",
       "test_file": "tests/test_review_spec_review.py"
@@ -1409,19 +1859,10 @@
       "feature": "specs/behavior/features/review/spec-review.feature",
       "function_name": "test_needs_review_flagged",
       "line": 81,
-      "nodeid": "tests/test_review_spec_review.py::test_needs_review_flagged",
+      "nodeid": "tests/test_review_spec_review.py::TestReviewReportsNeedsReview::test_needs_review_flagged",
       "scenario": "@bdd-review-needs-review",
       "source": "comment",
       "test_file": "tests/test_review_spec_review.py"
-    },
-    {
-      "feature": "specs/behavior/features/review/spec-review.feature",
-      "function_name": "test_review_specs_prints_scenario_only_once",
-      "line": 578,
-      "nodeid": "tests/test_cli_cli_contract.py::test_review_specs_prints_scenario_only_once",
-      "scenario": "@bdd-review-warning-scenario-once",
-      "source": "comment",
-      "test_file": "tests/test_cli_cli_contract.py"
     },
     {
       "feature": "specs/behavior/features/review/spec-review.feature",
@@ -1433,10 +1874,64 @@
       "test_file": "tests/test_review_spec_review.py"
     },
     {
+      "feature": "specs/behavior/features/runners/command.feature",
+      "function_name": "test_run_captures_stdout_stderr",
+      "line": 64,
+      "nodeid": "tests/test_runner_command.py::test_run_captures_stdout_stderr",
+      "scenario": "@bdd-runner-capture",
+      "source": "comment",
+      "test_file": "tests/test_runner_command.py"
+    },
+    {
+      "feature": "specs/behavior/features/runners/command.feature",
+      "function_name": "test_run_failure",
+      "line": 35,
+      "nodeid": "tests/test_runner_command.py::test_run_failure",
+      "scenario": "@bdd-runner-failure",
+      "source": "comment",
+      "test_file": "tests/test_runner_command.py"
+    },
+    {
+      "feature": "specs/behavior/features/runners/command.feature",
+      "function_name": "test_run_not_found",
+      "line": 50,
+      "nodeid": "tests/test_runner_command.py::test_run_not_found",
+      "scenario": "@bdd-runner-not-found",
+      "source": "comment",
+      "test_file": "tests/test_runner_command.py"
+    },
+    {
+      "feature": "specs/behavior/features/runners/command.feature",
+      "function_name": "test_run_success",
+      "line": 19,
+      "nodeid": "tests/test_runner_command.py::test_run_success",
+      "scenario": "@bdd-runner-success",
+      "source": "comment",
+      "test_file": "tests/test_runner_command.py"
+    },
+    {
+      "feature": "specs/behavior/features/trace/trace.feature",
+      "function_name": "test_trace_by_bdd_id_reports_mapping_and_missing_evidence_gap",
+      "line": 21,
+      "nodeid": "tests/test_trace.py::test_trace_by_bdd_id_reports_mapping_and_missing_evidence_gap",
+      "scenario": "@bdd-trace-by-id",
+      "source": "comment",
+      "test_file": "tests/test_trace.py"
+    },
+    {
+      "feature": "specs/behavior/features/trace/trace.feature",
+      "function_name": "test_trace_rejects_markdown_feature_path",
+      "line": 72,
+      "nodeid": "tests/test_trace.py::test_trace_rejects_markdown_feature_path",
+      "scenario": "@bdd-trace-by-path",
+      "source": "comment",
+      "test_file": "tests/test_trace.py"
+    },
+    {
       "feature": "specs/behavior/features/translation/pytest-to-gherkin.feature",
       "function_name": "test_basic",
       "line": 40,
-      "nodeid": "tests/test_translation_pytest_to_gherkin.py::test_basic",
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestSlug::test_basic",
       "scenario": "@bdd-translate-discovers-tests",
       "source": "comment",
       "test_file": "tests/test_translation_pytest_to_gherkin.py"
@@ -1445,7 +1940,7 @@
       "feature": "specs/behavior/features/translation/pytest-to-gherkin.feature",
       "function_name": "test_writes_nothing",
       "line": 212,
-      "nodeid": "tests/test_translation_pytest_to_gherkin.py::test_writes_nothing",
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinDryRun::test_writes_nothing",
       "scenario": "@bdd-translate-dry-run",
       "source": "comment",
       "test_file": "tests/test_translation_pytest_to_gherkin.py"
@@ -1454,7 +1949,7 @@
       "feature": "specs/behavior/features/translation/pytest-to-gherkin.feature",
       "function_name": "test_force_overwrites_manual",
       "line": 246,
-      "nodeid": "tests/test_translation_pytest_to_gherkin.py::test_force_overwrites_manual",
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinJsonShape::test_force_overwrites_manual",
       "scenario": "@bdd-translate-force-overwrite",
       "source": "comment",
       "test_file": "tests/test_translation_pytest_to_gherkin.py"
@@ -1463,7 +1958,7 @@
       "feature": "specs/behavior/features/translation/pytest-to-gherkin.feature",
       "function_name": "test_simple",
       "line": 52,
-      "nodeid": "tests/test_translation_pytest_to_gherkin.py::test_simple",
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestDeriveArea::test_simple",
       "scenario": "@bdd-translate-group-by-file",
       "source": "comment",
       "test_file": "tests/test_translation_pytest_to_gherkin.py"
@@ -1472,7 +1967,7 @@
       "feature": "specs/behavior/features/translation/pytest-to-gherkin.feature",
       "function_name": "test_marks_needs_review",
       "line": 91,
-      "nodeid": "tests/test_translation_pytest_to_gherkin.py::test_marks_needs_review",
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinFromSinglePytestFile::test_marks_needs_review",
       "scenario": "@bdd-translate-marks-generated",
       "source": "comment",
       "test_file": "tests/test_translation_pytest_to_gherkin.py"
@@ -1481,13 +1976,67 @@
       "feature": "specs/behavior/features/translation/pytest-to-gherkin.feature",
       "function_name": "test_skips_manual_file_without_force",
       "line": 168,
-      "nodeid": "tests/test_translation_pytest_to_gherkin.py::test_skips_manual_file_without_force",
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinPreservesExisting::test_skips_manual_file_without_force",
       "scenario": "@bdd-translate-preserve-manual",
       "source": "comment",
       "test_file": "tests/test_translation_pytest_to_gherkin.py"
+    },
+    {
+      "feature": "specs/behavior/features/translation/spec-to-code.feature",
+      "function_name": "test_bind_feature_creates_skeleton",
+      "line": 65,
+      "nodeid": "tests/test_spec_to_code.py::test_bind_feature_creates_skeleton",
+      "scenario": "@bdd-spec-to-code-bind-behave",
+      "source": "comment",
+      "test_file": "tests/test_spec_to_code.py"
+    },
+    {
+      "feature": "specs/behavior/features/translation/spec-to-code.feature",
+      "function_name": "test_bind_feature_writes_pytest_bdd_file",
+      "line": 114,
+      "nodeid": "tests/test_backends_pytest_bdd.py::test_bind_feature_writes_pytest_bdd_file",
+      "scenario": "@bdd-spec-to-code-bind-pytest-bdd",
+      "source": "comment",
+      "test_file": "tests/test_backends_pytest_bdd.py"
+    },
+    {
+      "feature": "specs/behavior/features/translation/spec-to-code.feature",
+      "function_name": "test_bind_unsupported_backend_raises",
+      "line": 96,
+      "nodeid": "tests/test_spec_to_code.py::test_bind_unsupported_backend_raises",
+      "scenario": "@bdd-spec-to-code-bind-unsupported",
+      "source": "comment",
+      "test_file": "tests/test_spec_to_code.py"
+    },
+    {
+      "feature": "specs/behavior/features/translation/spec-to-code.feature",
+      "function_name": "test_step_function_name_dedup",
+      "line": 26,
+      "nodeid": "tests/test_spec_to_code.py::test_step_function_name_dedup",
+      "scenario": "@bdd-spec-to-code-dedup",
+      "source": "comment",
+      "test_file": "tests/test_spec_to_code.py"
+    },
+    {
+      "feature": "specs/behavior/features/translation/spec-to-code.feature",
+      "function_name": "test_draft_feature_creates_file",
+      "line": 36,
+      "nodeid": "tests/test_spec_to_code.py::test_draft_feature_creates_file",
+      "scenario": "@bdd-spec-to-code-draft",
+      "source": "comment",
+      "test_file": "tests/test_spec_to_code.py"
+    },
+    {
+      "feature": "specs/behavior/features/translation/spec-to-code.feature",
+      "function_name": "test_step_function_name_basic",
+      "line": 15,
+      "nodeid": "tests/test_spec_to_code.py::test_step_function_name_basic",
+      "scenario": "@bdd-spec-to-code-step-name",
+      "source": "comment",
+      "test_file": "tests/test_spec_to_code.py"
     }
   ],
-  "mappings_total": 165,
+  "mappings_total": 226,
   "schema_version": 1,
   "tests_dir": "tests"
 }

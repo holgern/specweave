@@ -35,8 +35,8 @@ _SIMPLE_TEST = "def test_valid_login():\n    assert user is not None\n"
 
 
 class TestSlug:
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature
-    # specweave: scenario=@bdd-translate-discovers-tests
+    # sw: f=specs/behavior/features/translation/pytest-to-gherkin.feature
+    # sw: s=@bdd-translate-discovers-tests
     def test_basic(self) -> None:
         """Generation finds test functions in pytest files."""
         assert _slug("Password Reset") == "password-reset"
@@ -47,8 +47,8 @@ class TestSlug:
 
 
 class TestDeriveArea:
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature
-    # specweave: scenario=@bdd-translate-group-by-file
+    # sw: f=specs/behavior/features/translation/pytest-to-gherkin.feature
+    # sw: s=@bdd-translate-group-by-file
     def test_simple(self, tmp_path: Path) -> None:
         """Generation groups scenarios by test file."""
         tests_dir = tmp_path / "tests"
@@ -86,8 +86,8 @@ class TestCreateGherkinFromSinglePytestFile:
         assert result["created"] == 1
         assert len(result["results"]) == 1
 
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature
-    # specweave: scenario=@bdd-translate-marks-generated
+    # sw: f=specs/behavior/features/translation/pytest-to-gherkin.feature
+    # sw: s=@bdd-translate-marks-generated
     def test_marks_needs_review(self, tmp_path: Path) -> None:
         """Generated features have @generated tag."""
         test_file = _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)
@@ -163,8 +163,8 @@ class TestCreateGherkinGroupsByArea:
 
 
 class TestCreateGherkinPreservesExisting:
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature
-    # specweave: scenario=@bdd-translate-preserve-manual
+    # sw: f=specs/behavior/features/translation/pytest-to-gherkin.feature
+    # sw: s=@bdd-translate-preserve-manual
     def test_skips_manual_file_without_force(self, tmp_path: Path) -> None:
         """Generation does not overwrite manual feature files."""
         test_file = _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)
@@ -207,8 +207,8 @@ class TestCreateGherkinPreservesExisting:
 
 
 class TestCreateGherkinDryRun:
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature
-    # specweave: scenario=@bdd-translate-dry-run
+    # sw: f=specs/behavior/features/translation/pytest-to-gherkin.feature
+    # sw: s=@bdd-translate-dry-run
     def test_writes_nothing(self, tmp_path: Path) -> None:
         """Dry-run reports without writing files."""
         test_file = _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)
@@ -241,8 +241,8 @@ class TestCreateGherkinJsonShape:
             assert "status" in r
             assert "scenario_ids" in r
 
-    # specweave:feature=specs/behavior/features/translation/pytest-to-gherkin.feature
-    # specweave: scenario=@bdd-translate-force-overwrite
+    # sw: f=specs/behavior/features/translation/pytest-to-gherkin.feature
+    # sw: s=@bdd-translate-force-overwrite
     def test_force_overwrites_manual(self, tmp_path: Path) -> None:
         """Generation overwrites with --force."""
         test_file = _write_pytest_file(tmp_path, "test_auth_login.py", _SIMPLE_TEST)

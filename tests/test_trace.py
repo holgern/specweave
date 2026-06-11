@@ -16,6 +16,8 @@ def _write(path: Path, text: str) -> Path:
     return path
 
 
+# sw: f=specs/behavior/features/trace/trace.feature
+# sw: s=@bdd-trace-by-id
 def test_trace_by_bdd_id_reports_mapping_and_missing_evidence_gap(
     tmp_path: Path,
 ) -> None:
@@ -65,6 +67,8 @@ def test_trace_by_bdd_id_reports_mapping_and_missing_evidence_gap(
     ]
 
 
+# sw: f=specs/behavior/features/trace/trace.feature
+# sw: s=@bdd-trace-by-path
 def test_trace_rejects_markdown_feature_path(tmp_path: Path) -> None:
     feature = _write(
         tmp_path / "specs/behavior/features/core/login.feature.md",

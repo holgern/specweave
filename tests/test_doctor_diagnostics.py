@@ -11,8 +11,8 @@ FEATURE = "specs/behavior/features/doctor/diagnostics.feature"
 
 
 class TestDoctorPasses:
-    # specweave: feature=specs/behavior/features/doctor/diagnostics.feature
-    # specweave: scenario=@bdd-doctor-validates-features
+    # sw: f=specs/behavior/features/doctor/diagnostics.feature
+    # sw: s=@bdd-doctor-validates-features
     def test_passes_initialized_project(self, tmp_path: Path) -> None:
         """Doctor reports feature lint errors."""
         from specweave.init import run_init
@@ -64,8 +64,8 @@ class TestDoctorPasses:
 
 
 class TestDoctorReportsMissing:
-    # specweave: feature=specs/behavior/features/doctor/diagnostics.feature
-    # specweave: scenario=@bdd-doctor-missing-directories
+    # sw: f=specs/behavior/features/doctor/diagnostics.feature
+    # sw: s=@bdd-doctor-missing-directories
     def test_reports_missing_features_dir(self, tmp_path: Path) -> None:
         """Doctor warns about missing directories."""
         config = SpecWeaveConfig(
@@ -88,8 +88,8 @@ class TestDoctorReportsMissing:
         result = run_doctor(config=config)
         assert any("SWDOC007" in item.get("code", "") for item in result["items"])
 
-    # specweave: feature=specs/behavior/features/doctor/diagnostics.feature
-    # specweave: scenario=@bdd-doctor-missing-config
+    # sw: f=specs/behavior/features/doctor/diagnostics.feature
+    # sw: s=@bdd-doctor-missing-config
     def test_no_config_warning(self, tmp_path: Path, monkeypatch) -> None:
         """Doctor warns when no config file exists."""
         monkeypatch.chdir(tmp_path)
@@ -98,8 +98,8 @@ class TestDoctorReportsMissing:
 
 
 class TestDoctorReportsDuplicateBddTags:
-    # specweave: feature=specs/behavior/features/doctor/diagnostics.feature
-    # specweave: scenario=@bdd-doctor-duplicate-bdd-tags
+    # sw: f=specs/behavior/features/doctor/diagnostics.feature
+    # sw: s=@bdd-doctor-duplicate-bdd-tags
     def test_detects_duplicates(self, tmp_path: Path) -> None:
         """Doctor errors on duplicate @bdd-* tags."""
         features_dir = tmp_path / "features"
@@ -124,8 +124,8 @@ class TestDoctorReportsDuplicateBddTags:
 
 
 class TestDoctorReportsDeprecatedPaths:
-    # specweave: feature=specs/behavior/features/doctor/diagnostics.feature
-    # specweave: scenario=@bdd-doctor-deprecated-paths
+    # sw: f=specs/behavior/features/doctor/diagnostics.feature
+    # sw: s=@bdd-doctor-deprecated-paths
     def test_detects_deprecated(self, tmp_path: Path, monkeypatch) -> None:
         """Doctor warns about deprecated feature paths."""
         monkeypatch.chdir(tmp_path)
@@ -143,8 +143,8 @@ class TestDoctorReportsDeprecatedPaths:
 
 
 class TestDoctorFix:
-    # specweave: feature=specs/behavior/features/doctor/diagnostics.feature
-    # specweave: scenario=@bdd-doctor-fix-creates-directories
+    # sw: f=specs/behavior/features/doctor/diagnostics.feature
+    # sw: s=@bdd-doctor-fix-creates-directories
     def test_fix_creates_missing_dirs(self, tmp_path: Path) -> None:
         """Doctor --fix creates missing directories."""
         config = SpecWeaveConfig(
@@ -163,8 +163,8 @@ class TestDoctorFix:
         assert (tmp_path / "specs" / "behavior" / "evidence").is_dir()
         assert (tmp_path / "specs" / "behavior" / "mappings").is_dir()
 
-    # specweave: feature=specs/behavior/features/doctor/diagnostics.feature
-    # specweave: scenario=@bdd-doctor-unsupported-schema
+    # sw: f=specs/behavior/features/doctor/diagnostics.feature
+    # sw: s=@bdd-doctor-unsupported-schema
     def test_unsupported_schema(self, tmp_path: Path) -> None:
         """Doctor errors on unsupported schema version."""
         config = SpecWeaveConfig(schema_version=99)

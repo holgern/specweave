@@ -31,6 +31,8 @@ def _sample_spec() -> TaskBddSpec:
     )
 
 
+# sw: f=specs/behavior/features/bdd/convert.feature
+# sw: s=@bdd-bridge-export-to-gherkin
 def test_export_to_target_gherkin() -> None:
     """A task BDD spec exports to the guide's target Gherkin format."""
     feature = task_bdd_to_feature(_sample_spec())
@@ -49,6 +51,8 @@ def test_export_to_target_gherkin() -> None:
     assert "      Then taskledger rejects the transition" in output
 
 
+# sw: f=specs/behavior/features/bdd/convert.feature
+# sw: s=@bdd-bridge-roundtrip-ids
 def test_round_trip_preserves_ids() -> None:
     """Export then import preserves task/rule/bdd/ac ids."""
     spec = _sample_spec()
@@ -67,6 +71,8 @@ def test_round_trip_preserves_ids() -> None:
     assert example.then == ("taskledger rejects the transition",)
 
 
+# sw: f=specs/behavior/features/bdd/convert.feature
+# sw: s=@bdd-bridge-multiple-ac
 def test_multiple_ac_tags_and_extra_tags() -> None:
     """Multiple ac-* tags and custom tags survive a round trip."""
     spec = TaskBddSpec(
@@ -93,6 +99,8 @@ def test_multiple_ac_tags_and_extra_tags() -> None:
     assert example.id == "bdd-0001"
 
 
+# sw: f=specs/behavior/features/bdd/convert.feature
+# sw: s=@bdd-bridge-top-level
 def test_top_level_examples_become_top_level_scenarios() -> None:
     """An example without a rule_id renders as a top-level scenario."""
     spec = TaskBddSpec(
@@ -116,6 +124,8 @@ def test_top_level_examples_become_top_level_scenarios() -> None:
     assert feature.scenarios[0].title == "Loose"
 
 
+# sw: f=specs/behavior/features/bdd/convert.feature
+# sw: s=@bdd-bridge-and-but-steps
 def test_and_but_steps_group_correctly() -> None:
     """And/But steps continue the previous Given/When/Then section."""
     spec = TaskBddSpec(
@@ -139,6 +149,8 @@ def test_and_but_steps_group_correctly() -> None:
     assert example.then == ("it works", "no error")
 
 
+# sw: f=specs/behavior/features/bdd/convert.feature
+# sw: s=@bdd-bridge-json-roundtrip
 def test_json_round_trip(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """save_task_bdd_json + load_task_bdd_json is idempotent."""
     spec = _sample_spec()
@@ -152,6 +164,8 @@ def test_json_round_trip(tmp_path) -> None:  # type: ignore[no-untyped-def]
     assert data["examples"][0]["acceptance_criteria"] == ["ac-0001"]
 
 
+# sw: f=specs/behavior/features/bdd/convert.feature
+# sw: s=@bdd-bridge-json-to-feature-to-json
 def test_json_to_feature_to_json_round_trip(tmp_path) -> None:  # type: ignore[no-untyped-def]
     """Acceptance criteria JSON -> feature -> back to JSON keeps ids."""
     src = tmp_path / "in.json"

@@ -45,8 +45,8 @@ def _write_test(path: Path, content: str) -> Path:
     return path
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-bound-scenario
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-bound-scenario
 def test_behavior_coverage_feature_md_bound_by_comment(
     tmp_path: Path, monkeypatch
 ) -> None:
@@ -63,8 +63,8 @@ def test_behavior_coverage_feature_md_bound_by_comment(
     _write_test(
         tests_dir / "test_auth_login.py",
         """
-# specweave: feature=specs/behavior/features/auth/login.feature
-# specweave: scenario=@bdd-login-rejects-invalid-password
+# sw: f=specs/behavior/features/auth/login.feature
+# sw: s=@bdd-login-rejects-invalid-password
 def test_rejects_invalid_password() -> None:
     pass
 """,
@@ -76,8 +76,8 @@ def test_rejects_invalid_password() -> None:
     assert result["missing_bindings"] == []
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-unbound-scenario
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-unbound-scenario
 def test_behavior_coverage_does_not_match_by_title(tmp_path: Path, monkeypatch) -> None:
     """Coverage reports missing bindings."""
     monkeypatch.chdir(tmp_path)
@@ -106,8 +106,8 @@ def test_reject_invalid_password() -> None:
     )
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-stale-scenario
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-stale-scenario
 def test_behavior_coverage_reports_stale_markdown_mapping(
     tmp_path: Path, monkeypatch
 ) -> None:
@@ -124,8 +124,8 @@ def test_behavior_coverage_reports_stale_markdown_mapping(
     _write_test(
         tests_dir / "test_auth_login.py",
         """
-# specweave: feature=specs/behavior/features/auth/login.feature
-# specweave: scenario=@bdd-login-unknown
+# sw: f=specs/behavior/features/auth/login.feature
+# sw: s=@bdd-login-unknown
 def test_rejects_invalid_password() -> None:
     pass
 """,
@@ -137,8 +137,8 @@ def test_rejects_invalid_password() -> None:
     assert result["stale_bindings"][0]["reason"] == "missing_scenario"
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-forbidden-pytest-bdd
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-forbidden-pytest-bdd
 def test_behavior_coverage_reports_forbidden_pytest_bdd_usage(
     tmp_path: Path, monkeypatch
 ) -> None:
@@ -166,6 +166,8 @@ scenarios("login.feature")
     assert result["forbidden_pytest_bdd_usages"] == ["tests/test_auth_login.py"]
 
 
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-missing-test-file-reason
 def test_behavior_coverage_ignores_pytest_bdd_text(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
     features_dir = tmp_path / "specs" / "behavior" / "features"
@@ -186,8 +188,8 @@ def test_text() -> None:
     assert result["forbidden_pytest_bdd_usages"] == []
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-missing-test-file
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-missing-test-file
 def test_coverage_missing_test_file(tmp_path: Path, monkeypatch) -> None:
     """Coverage reports missing test files."""
     monkeypatch.chdir(tmp_path)
@@ -205,8 +207,8 @@ def test_coverage_missing_test_file(tmp_path: Path, monkeypatch) -> None:
     assert result["missing_bindings"][0]["reason"] == "missing_test_file"
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-stale-binding
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-stale-binding
 def test_coverage_stale_feature_binding(tmp_path: Path, monkeypatch) -> None:
     """Coverage reports bindings to non-existent features."""
     monkeypatch.chdir(tmp_path)
@@ -216,8 +218,8 @@ def test_coverage_stale_feature_binding(tmp_path: Path, monkeypatch) -> None:
     _write_test(
         tests_dir / "test_auth_login.py",
         """
-# specweave: feature=specs/behavior/features/auth/nonexistent.feature
-# specweave: scenario=@bdd-login-valid
+# sw: f=specs/behavior/features/auth/nonexistent.feature
+# sw: s=@bdd-login-valid
 def test_valid_login() -> None:
     pass
 """,
@@ -226,8 +228,8 @@ def test_valid_login() -> None:
     assert any(b["reason"] == "missing_feature" for b in result["stale_bindings"])
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-deprecated-paths
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-deprecated-paths
 def test_coverage_deprecated_paths(tmp_path: Path, monkeypatch) -> None:
     """Coverage reports deprecated feature paths."""
     monkeypatch.chdir(tmp_path)
@@ -243,8 +245,8 @@ def test_coverage_deprecated_paths(tmp_path: Path, monkeypatch) -> None:
     _write_test(
         tests_dir / "test_auth_login.py",
         """
-# specweave: feature=specs/bdd/features/auth/login.feature
-# specweave: scenario=@bdd-login-valid
+# sw: f=specs/bdd/features/auth/login.feature
+# sw: s=@bdd-login-valid
 def test_valid_login() -> None:
     pass
 """,
@@ -258,8 +260,8 @@ def test_valid_login() -> None:
     assert len(result["deprecated_paths"]) > 0
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-manual-scenario
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-manual-scenario
 def test_coverage_manual_scenario_skipped(tmp_path: Path, monkeypatch) -> None:
     """Coverage skips scenarios tagged @manual."""
     monkeypatch.chdir(tmp_path)
@@ -281,8 +283,8 @@ def test_coverage_manual_scenario_skipped(tmp_path: Path, monkeypatch) -> None:
     assert len(manual_missing) == 0
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-pytest-unmapped
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-pytest-unmapped
 def test_coverage_lists_unmapped_pytest_tests(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
     features_dir = tmp_path / "specs" / "behavior" / "features"
@@ -311,8 +313,8 @@ def test_valid_login() -> None:
     )
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-class-method-mapping
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-class-method-mapping
 def test_coverage_matches_mapping_on_class_test_method(
     tmp_path: Path, monkeypatch
 ) -> None:
@@ -343,8 +345,8 @@ class TestLogin:
     assert result["pytest_tests_unmapped"] == 0
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-pytest-stale
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-pytest-stale
 def test_coverage_marks_stale_pytest_test_in_reverse_inventory(
     tmp_path: Path, monkeypatch
 ) -> None:
@@ -360,8 +362,8 @@ def test_coverage_marks_stale_pytest_test_in_reverse_inventory(
     _write_test(
         tests_dir / "test_auth_login.py",
         """
-# specweave: feature=specs/behavior/features/auth/login.feature
-# specweave: scenario=@bdd-login-missing
+# sw: f=specs/behavior/features/auth/login.feature
+# sw: s=@bdd-login-missing
 def test_valid_login() -> None:
     pass
 """,
@@ -372,8 +374,8 @@ def test_valid_login() -> None:
     assert result["tests"][0]["items"][0]["status"] == "stale"
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-candidate-tests
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-candidate-tests
 def test_coverage_candidate_tests_are_hints_not_bindings(
     tmp_path: Path, monkeypatch
 ) -> None:
@@ -406,8 +408,8 @@ def test_reject_invalid_password() -> None:
     )
 
 
-# specweave: feature=specs/behavior/features/behavior/coverage.feature
-# specweave: scenario=@bdd-coverage-both-directions-render
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-both-directions-render
 def test_render_coverage_text_both_directions(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
     features_dir = tmp_path / "specs" / "behavior" / "features"
@@ -428,8 +430,8 @@ def test_valid_login() -> None:
     _write_test(
         tests_dir / "test_config_configuration.py",
         """
-# specweave: feature=specs/behavior/features/config/configuration.feature
-# specweave: scenario=@bdd-config-missing
+# sw: f=specs/behavior/features/config/configuration.feature
+# sw: s=@bdd-config-missing
 def test_loads_hidden_config() -> None:
     pass
 """,

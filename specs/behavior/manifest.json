@@ -12,8 +12,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_backends_pytest_bdd.py::test_backend_registry_contents",
+                "status": "bound",
                 "test_file": "tests/test_backends_pytest_bdd.py"
               },
               "id": "bdd-backend-registry",
@@ -26,8 +26,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_backends_pytest_bdd.py::test_unsupported_cucumber_backends_message",
+                "status": "bound",
                 "test_file": "tests/test_backends_pytest_bdd.py"
               },
               "id": "bdd-backend-unsupported",
@@ -47,8 +47,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_backends_pytest_bdd.py::test_pytest_bdd_skeleton_shape",
+                "status": "bound",
                 "test_file": "tests/test_backends_pytest_bdd.py"
               },
               "id": "bdd-backend-pytest-bdd-skeleton",
@@ -61,8 +61,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_backends_pytest_bdd.py::test_pytest_bdd_dedups_repeated_steps",
+                "status": "bound",
                 "test_file": "tests/test_backends_pytest_bdd.py"
               },
               "id": "bdd-backend-pytest-bdd-dedup",
@@ -75,8 +75,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_backends_pytest_bdd.py::test_pytest_bdd_collects_rule_scenarios",
+                "status": "bound",
                 "test_file": "tests/test_backends_pytest_bdd.py"
               },
               "id": "bdd-backend-pytest-bdd-rule-scenarios",
@@ -89,8 +89,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_backends_pytest_bdd.py::test_pytest_bdd_uses_source_path_filename",
+                "status": "bound",
                 "test_file": "tests/test_backends_pytest_bdd.py"
               },
               "id": "bdd-backend-pytest-bdd-source-path",
@@ -123,8 +123,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_bdd_convert.py::test_export_to_target_gherkin",
+                "status": "bound",
                 "test_file": "tests/test_bdd_convert.py"
               },
               "id": "bdd-bridge-export-to-gherkin",
@@ -144,8 +144,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_bdd_convert.py::test_round_trip_preserves_ids",
+                "status": "bound",
                 "test_file": "tests/test_bdd_convert.py"
               },
               "id": "bdd-bridge-roundtrip-ids",
@@ -158,8 +158,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_bdd_convert.py::test_multiple_ac_tags_and_extra_tags",
+                "status": "bound",
                 "test_file": "tests/test_bdd_convert.py"
               },
               "id": "bdd-bridge-multiple-ac",
@@ -179,8 +179,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_bdd_convert.py::test_top_level_examples_become_top_level_scenarios",
+                "status": "bound",
                 "test_file": "tests/test_bdd_convert.py"
               },
               "id": "bdd-bridge-top-level",
@@ -200,8 +200,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_bdd_convert.py::test_and_but_steps_group_correctly",
+                "status": "bound",
                 "test_file": "tests/test_bdd_convert.py"
               },
               "id": "bdd-bridge-and-but-steps",
@@ -221,8 +221,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_bdd_convert.py::test_json_round_trip",
+                "status": "bound",
                 "test_file": "tests/test_bdd_convert.py"
               },
               "id": "bdd-bridge-json-roundtrip",
@@ -235,8 +235,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_bdd_convert.py::test_json_to_feature_to_json_round_trip",
+                "status": "bound",
                 "test_file": "tests/test_bdd_convert.py"
               },
               "id": "bdd-bridge-json-to-feature-to-json",
@@ -269,8 +269,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_behavior_autolink.py::test_autolink_dry_run_does_not_write",
+                "status": "bound",
                 "test_file": "tests/test_behavior_autolink.py"
               },
               "id": "bdd-autolink-generated-id-dry-run",
@@ -285,8 +285,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_behavior_autolink.py::test_autolink_apply_writes_mapping_comments",
+                "status": "bound",
                 "test_file": "tests/test_behavior_autolink.py"
               },
               "id": "bdd-autolink-generated-id-apply",
@@ -301,8 +301,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_behavior_autolink.py::test_autolink_reports_ambiguous_equal_score",
+                "status": "bound",
                 "test_file": "tests/test_behavior_autolink.py"
               },
               "id": "bdd-autolink-ambiguous-candidate",
@@ -316,8 +316,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_behavior_autolink.py::test_autolink_uses_config_paths",
+                "status": "bound",
                 "test_file": "tests/test_behavior_autolink.py"
               },
               "id": "bdd-autolink-refresh-wrapper",
@@ -500,12 +500,26 @@
             {
               "automation": {
                 "backend": "pytest",
+                "nodeid": "tests/test_behavior_coverage.py::test_coverage_matches_mapping_on_class_test_method",
+                "status": "bound",
+                "test_file": "tests/test_behavior_coverage.py"
+              },
+              "id": "bdd-coverage-class-method-mapping",
+              "line": 74,
+              "tags": [
+                "bdd-coverage-class-method-mapping"
+              ],
+              "title": "Coverage matches mappings on pytest class methods"
+            },
+            {
+              "automation": {
+                "backend": "pytest",
                 "nodeid": "tests/test_behavior_coverage.py::test_coverage_lists_unmapped_pytest_tests",
                 "status": "bound",
                 "test_file": "tests/test_behavior_coverage.py"
               },
               "id": "bdd-coverage-pytest-unmapped",
-              "line": 74,
+              "line": 81,
               "tags": [
                 "bdd-coverage-pytest-unmapped"
               ],
@@ -519,7 +533,7 @@
                 "test_file": "tests/test_behavior_coverage.py"
               },
               "id": "bdd-coverage-pytest-stale",
-              "line": 81,
+              "line": 88,
               "tags": [
                 "bdd-coverage-pytest-stale"
               ],
@@ -533,7 +547,7 @@
                 "test_file": "tests/test_behavior_coverage.py"
               },
               "id": "bdd-coverage-both-directions-render",
-              "line": 88,
+              "line": 95,
               "tags": [
                 "bdd-coverage-both-directions-render"
               ],
@@ -549,12 +563,12 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_behavior_coverage.py::test_behavior_coverage_ignores_pytest_bdd_text",
+                "status": "bound",
                 "test_file": "tests/test_behavior_coverage.py"
               },
               "id": "bdd-coverage-missing-test-file-reason",
-              "line": 97,
+              "line": 104,
               "tags": [
                 "bdd-coverage-missing-test-file-reason"
               ],
@@ -568,7 +582,7 @@
                 "test_file": "tests/test_behavior_coverage.py"
               },
               "id": "bdd-coverage-candidate-tests",
-              "line": 103,
+              "line": 110,
               "tags": [
                 "bdd-coverage-candidate-tests"
               ],
@@ -1272,7 +1286,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_common_behavior_helpers.py::test_basic",
+                "nodeid": "tests/test_common_behavior_helpers.py::TestSlugify::test_basic",
                 "status": "bound",
                 "test_file": "tests/test_common_behavior_helpers.py"
               },
@@ -1286,7 +1300,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_common_behavior_helpers.py::test_special_chars",
+                "nodeid": "tests/test_common_behavior_helpers.py::TestSlugify::test_special_chars",
                 "status": "bound",
                 "test_file": "tests/test_common_behavior_helpers.py"
               },
@@ -1300,7 +1314,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_common_behavior_helpers.py::test_empty",
+                "nodeid": "tests/test_common_behavior_helpers.py::TestSlugify::test_empty",
                 "status": "bound",
                 "test_file": "tests/test_common_behavior_helpers.py"
               },
@@ -1321,7 +1335,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_common_behavior_helpers.py::test_from_path",
+                "nodeid": "tests/test_common_behavior_helpers.py::TestFeatureIdentity::test_from_path",
                 "status": "bound",
                 "test_file": "tests/test_common_behavior_helpers.py"
               },
@@ -1335,7 +1349,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_common_behavior_helpers.py::test_no_area",
+                "nodeid": "tests/test_common_behavior_helpers.py::TestFeatureIdentity::test_no_area",
                 "status": "bound",
                 "test_file": "tests/test_common_behavior_helpers.py"
               },
@@ -1349,7 +1363,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_common_behavior_helpers.py::test_classic_feature",
+                "nodeid": "tests/test_common_behavior_helpers.py::TestFeatureStem::test_classic_feature",
                 "status": "bound",
                 "test_file": "tests/test_common_behavior_helpers.py"
               },
@@ -1363,8 +1377,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_common_behavior_helpers.py::TestFeatureStem::test_feature_md",
+                "status": "bound",
                 "test_file": "tests/test_common_behavior_helpers.py"
               },
               "id": "bdd-feature-stem-legacy-markdown",
@@ -1384,7 +1398,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_common_behavior_helpers.py::test_derives_path",
+                "nodeid": "tests/test_common_behavior_helpers.py::TestCanonicalTestPath::test_derives_path",
                 "status": "bound",
                 "test_file": "tests/test_common_behavior_helpers.py"
               },
@@ -1405,7 +1419,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_common_behavior_helpers.py::test_yields_top_level",
+                "nodeid": "tests/test_common_behavior_helpers.py::TestIterFeatureScenarios::test_yields_top_level",
                 "status": "bound",
                 "test_file": "tests/test_common_behavior_helpers.py"
               },
@@ -1419,7 +1433,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_common_behavior_helpers.py::test_yields_from_rules",
+                "nodeid": "tests/test_common_behavior_helpers.py::TestIterFeatureScenarios::test_yields_from_rules",
                 "status": "bound",
                 "test_file": "tests/test_common_behavior_helpers.py"
               },
@@ -1440,7 +1454,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_common_behavior_helpers.py::test_returns_first_bdd_tag",
+                "nodeid": "tests/test_common_behavior_helpers.py::TestScenarioIdValue::test_returns_first_bdd_tag",
                 "status": "bound",
                 "test_file": "tests/test_common_behavior_helpers.py"
               },
@@ -1454,7 +1468,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_common_behavior_helpers.py::test_returns_empty_when_no_bdd",
+                "nodeid": "tests/test_common_behavior_helpers.py::TestScenarioIdValue::test_returns_empty_when_no_bdd",
                 "status": "bound",
                 "test_file": "tests/test_common_behavior_helpers.py"
               },
@@ -1488,8 +1502,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_config_configuration.py::TestFindConfig::test_prefers_explicit",
+                "status": "bound",
                 "test_file": "tests/test_config_configuration.py"
               },
               "id": "bdd-config-discovery-finds-public",
@@ -1502,7 +1516,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_config_configuration.py::test_prefers_explicit",
+                "nodeid": "tests/test_config_configuration.py::TestFindConfig::test_finds_hidden_config",
                 "status": "bound",
                 "test_file": "tests/test_config_configuration.py"
               },
@@ -1516,7 +1530,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_config_configuration.py::test_prefers_public_over_dotfile",
+                "nodeid": "tests/test_config_configuration.py::TestFindConfig::test_prefers_public_over_dotfile",
                 "status": "bound",
                 "test_file": "tests/test_config_configuration.py"
               },
@@ -1530,7 +1544,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_config_configuration.py::test_walks_up_directories",
+                "nodeid": "tests/test_config_configuration.py::TestFindConfig::test_walks_up_directories",
                 "status": "bound",
                 "test_file": "tests/test_config_configuration.py"
               },
@@ -1544,7 +1558,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_config_configuration.py::test_returns_none_when_missing",
+                "nodeid": "tests/test_config_configuration.py::TestFindConfig::test_returns_none_when_missing",
                 "status": "bound",
                 "test_file": "tests/test_config_configuration.py"
               },
@@ -1565,7 +1579,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_config_configuration.py::test_defaults_when_missing",
+                "nodeid": "tests/test_config_configuration.py::TestLoadConfig::test_defaults_when_missing",
                 "status": "bound",
                 "test_file": "tests/test_config_configuration.py"
               },
@@ -1579,7 +1593,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_config_configuration.py::test_normalizes_paths",
+                "nodeid": "tests/test_config_configuration.py::TestLoadConfig::test_normalizes_paths",
                 "status": "bound",
                 "test_file": "tests/test_config_configuration.py"
               },
@@ -1600,7 +1614,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_config_configuration.py::test_rejects_unsupported_schema",
+                "nodeid": "tests/test_config_configuration.py::TestLoadConfig::test_rejects_unsupported_schema",
                 "status": "bound",
                 "test_file": "tests/test_config_configuration.py"
               },
@@ -1621,7 +1635,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_config_configuration.py::test_renders_behavior",
+                "nodeid": "tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_behavior",
                 "status": "bound",
                 "test_file": "tests/test_config_configuration.py"
               },
@@ -1635,7 +1649,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_config_configuration.py::test_renders_behaviour",
+                "nodeid": "tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_behaviour",
                 "status": "bound",
                 "test_file": "tests/test_config_configuration.py"
               },
@@ -1669,7 +1683,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_doctor_diagnostics.py::test_no_config_warning",
+                "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorReportsMissing::test_no_config_warning",
                 "status": "bound",
                 "test_file": "tests/test_doctor_diagnostics.py"
               },
@@ -1683,7 +1697,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_doctor_diagnostics.py::test_unsupported_schema",
+                "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorFix::test_unsupported_schema",
                 "status": "bound",
                 "test_file": "tests/test_doctor_diagnostics.py"
               },
@@ -1704,7 +1718,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_doctor_diagnostics.py::test_reports_missing_features_dir",
+                "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorReportsMissing::test_reports_missing_features_dir",
                 "status": "bound",
                 "test_file": "tests/test_doctor_diagnostics.py"
               },
@@ -1718,7 +1732,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_doctor_diagnostics.py::test_fix_creates_missing_dirs",
+                "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorFix::test_fix_creates_missing_dirs",
                 "status": "bound",
                 "test_file": "tests/test_doctor_diagnostics.py"
               },
@@ -1739,7 +1753,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_doctor_diagnostics.py::test_detects_deprecated",
+                "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_detects_deprecated",
                 "status": "bound",
                 "test_file": "tests/test_doctor_diagnostics.py"
               },
@@ -1760,7 +1774,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_doctor_diagnostics.py::test_detects_duplicates",
+                "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorReportsDuplicateBddTags::test_detects_duplicates",
                 "status": "bound",
                 "test_file": "tests/test_doctor_diagnostics.py"
               },
@@ -1781,7 +1795,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_doctor_diagnostics.py::test_passes_initialized_project",
+                "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorPasses::test_passes_initialized_project",
                 "status": "bound",
                 "test_file": "tests/test_doctor_diagnostics.py"
               },
@@ -1815,8 +1829,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_exchange_schemas.py::test_exchange_schemas_are_json_schema_documents",
+                "status": "bound",
                 "test_file": "tests/test_exchange_schemas.py"
               },
               "id": "bdd-exchange-schema-valid",
@@ -1836,8 +1850,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_exchange_schemas.py::test_trace_schema_representative_payload_contract",
+                "status": "bound",
                 "test_file": "tests/test_exchange_schemas.py"
               },
               "id": "bdd-exchange-combi-trace-schema",
@@ -1850,8 +1864,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_exchange_schemas.py::test_taskledger_schema_representative_payload_contract",
+                "status": "bound",
                 "test_file": "tests/test_exchange_schemas.py"
               },
               "id": "bdd-exchange-taskledger-schema",
@@ -1864,8 +1878,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_exchange_schemas.py::test_evidence_schema_representative_payload_contract",
+                "status": "bound",
                 "test_file": "tests/test_exchange_schemas.py"
               },
               "id": "bdd-exchange-evidence-schema",
@@ -1878,8 +1892,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_exchange_schemas.py::test_archledger_schema_representative_payload_contract",
+                "status": "bound",
                 "test_file": "tests/test_exchange_schemas.py"
               },
               "id": "bdd-exchange-archledger-schema",
@@ -2121,9 +2135,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_gherkin_markdown.py"
+                "nodeid": "tests/test_gherkin_parser.py::test_parser_rejects_markdown_feature_path",
+                "status": "bound",
+                "test_file": "tests/test_gherkin_parser.py"
               },
               "id": "bdd-markdown-parser-rejects-path",
               "line": 11,
@@ -2142,9 +2156,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_gherkin_markdown.py"
+                "nodeid": "tests/test_gherkin_lint.py::test_lint_rejects_markdown_feature_file",
+                "status": "bound",
+                "test_file": "tests/test_gherkin_lint.py"
               },
               "id": "bdd-lint-rejects-markdown-file",
               "line": 20,
@@ -2163,9 +2177,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_gherkin_markdown.py"
+                "nodeid": "tests/test_gherkin_validation.py::TestValidateMarkdownUnsupported::test_rejects_markdown_features",
+                "status": "bound",
+                "test_file": "tests/test_gherkin_validation.py"
               },
               "id": "bdd-validation-rejects-markdown",
               "line": 29,
@@ -2197,8 +2211,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_parses_simple_feature",
+                "status": "bound",
                 "test_file": "tests/test_gherkin_official.py"
               },
               "id": "bdd-official-parse-simple",
@@ -2211,8 +2225,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_parses_rule_and_scenario_tags",
+                "status": "bound",
                 "test_file": "tests/test_gherkin_official.py"
               },
               "id": "bdd-official-parse-rules",
@@ -2225,8 +2239,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_empty_feature_tags",
+                "status": "bound",
                 "test_file": "tests/test_gherkin_official.py"
               },
               "id": "bdd-official-parse-no-tags",
@@ -2239,8 +2253,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_accepts_source_path",
+                "status": "bound",
                 "test_file": "tests/test_gherkin_official.py"
               },
               "id": "bdd-official-source-path",
@@ -2253,8 +2267,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_compile_pickles_smoke",
+                "status": "bound",
                 "test_file": "tests/test_gherkin_official.py"
               },
               "id": "bdd-official-compile-pickles",
@@ -2274,8 +2288,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_gherkin_official.py::TestValidateClassicWithOfficial::test_validates_valid",
+                "status": "bound",
                 "test_file": "tests/test_gherkin_official.py"
               },
               "id": "bdd-official-validate-valid",
@@ -2288,8 +2302,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_gherkin_official.py::TestValidateClassicWithOfficial::test_validates_invalid",
+                "status": "bound",
                 "test_file": "tests/test_gherkin_official.py"
               },
               "id": "bdd-official-validate-invalid",
@@ -2309,8 +2323,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_rejects_invalid_gherkin",
+                "status": "bound",
                 "test_file": "tests/test_gherkin_official.py"
               },
               "id": "bdd-official-reject-invalid",
@@ -2323,8 +2337,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_preserves_description",
+                "status": "bound",
                 "test_file": "tests/test_gherkin_official.py"
               },
               "id": "bdd-official-preserve-description",
@@ -2434,7 +2448,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_gherkin_parser.py::test_parser_rejects_markdown_feature_path",
+                "nodeid": "tests/test_gherkin_parser.py::test_classic_parser_rejects_markdown_feature_path",
                 "status": "bound",
                 "test_file": "tests/test_gherkin_parser.py"
               },
@@ -2593,7 +2607,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_init_initialization.py::test_creates_default_config_and_layout",
+                "nodeid": "tests/test_init_initialization.py::TestInitDefault::test_creates_default_config_and_layout",
                 "status": "bound",
                 "test_file": "tests/test_init_initialization.py"
               },
@@ -2607,8 +2621,8 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
+                "nodeid": "tests/test_init_initialization.py::TestInitCompatibility::test_hidden_config_path_still_works_when_explicit",
+                "status": "bound",
                 "test_file": "tests/test_init_initialization.py"
               },
               "id": "bdd-init-creates-dotfile",
@@ -2621,7 +2635,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_init_initialization.py::test_nonexistent",
+                "nodeid": "tests/test_init_initialization.py::TestReadmeIsSpecweaveManaged::test_nonexistent",
                 "status": "bound",
                 "test_file": "tests/test_init_initialization.py"
               },
@@ -2635,7 +2649,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_init_initialization.py::test_creates_behavior_paths",
+                "nodeid": "tests/test_init_initialization.py::TestInitDefault::test_creates_behavior_paths",
                 "status": "bound",
                 "test_file": "tests/test_init_initialization.py"
               },
@@ -2656,7 +2670,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_init_initialization.py::test_does_not_overwrite_existing_config",
+                "nodeid": "tests/test_init_initialization.py::TestInitIdempotency::test_does_not_overwrite_existing_config",
                 "status": "bound",
                 "test_file": "tests/test_init_initialization.py"
               },
@@ -2677,7 +2691,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_init_initialization.py::test_creates_behaviour_layout",
+                "nodeid": "tests/test_init_initialization.py::TestInitBritishSpelling::test_creates_behaviour_layout",
                 "status": "bound",
                 "test_file": "tests/test_init_initialization.py"
               },
@@ -2698,7 +2712,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_init_initialization.py::test_writes_nothing",
+                "nodeid": "tests/test_init_initialization.py::TestInitDryRun::test_writes_nothing",
                 "status": "bound",
                 "test_file": "tests/test_init_initialization.py"
               },
@@ -2719,7 +2733,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_init_initialization.py::test_does_not_overwrite_non_specweave_readme",
+                "nodeid": "tests/test_init_initialization.py::TestInitIdempotency::test_does_not_overwrite_non_specweave_readme",
                 "status": "bound",
                 "test_file": "tests/test_init_initialization.py"
               },
@@ -2733,7 +2747,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_init_initialization.py::test_force_overwrites_generated_config_only",
+                "nodeid": "tests/test_init_initialization.py::TestInitForce::test_force_overwrites_generated_config_only",
                 "status": "bound",
                 "test_file": "tests/test_init_initialization.py"
               },
@@ -2754,7 +2768,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_init_initialization.py::test_reports_existing_directories",
+                "nodeid": "tests/test_init_initialization.py::TestInitIdempotency::test_reports_existing_directories",
                 "status": "bound",
                 "test_file": "tests/test_init_initialization.py"
               },
@@ -2857,9 +2871,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_integrations_combi.py"
+                "nodeid": "tests/test_combi_check.py::test_combi_check_writes_json_and_human_diagnostics",
+                "status": "bound",
+                "test_file": "tests/test_combi_check.py"
               },
               "id": "bdd-combi-check-gaps",
               "line": 11,
@@ -2878,9 +2892,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_integrations_combi.py"
+                "nodeid": "tests/test_combi_check.py::test_combi_check_strict_fails_on_missing_bdd_id",
+                "status": "bound",
+                "test_file": "tests/test_combi_check.py"
               },
               "id": "bdd-combi-check-strict",
               "line": 24,
@@ -3002,9 +3016,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_planning_create_plan.py"
+                "nodeid": "tests/test_plan.py::TestCreatePlan::test_creates_plan_from_feature",
+                "status": "bound",
+                "test_file": "tests/test_plan.py"
               },
               "id": "bdd-plan-create",
               "line": 11,
@@ -3016,9 +3030,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_planning_create_plan.py"
+                "nodeid": "tests/test_plan.py::TestCreatePlan::test_plan_includes_scenario_steps",
+                "status": "bound",
+                "test_file": "tests/test_plan.py"
               },
               "id": "bdd-plan-includes-scenario-steps",
               "line": 20,
@@ -3030,9 +3044,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_planning_create_plan.py"
+                "nodeid": "tests/test_plan.py::TestCreatePlan::test_plan_includes_validation_commands",
+                "status": "bound",
+                "test_file": "tests/test_plan.py"
               },
               "id": "bdd-plan-validation-commands",
               "line": 28,
@@ -3064,9 +3078,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_python_inspect_ast_reader.py"
+                "nodeid": "tests/test_python_ast_reader.py::test_extract_test_functions",
+                "status": "bound",
+                "test_file": "tests/test_python_ast_reader.py"
               },
               "id": "bdd-ast-extract-test-functions",
               "line": 12,
@@ -3078,9 +3092,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_python_inspect_ast_reader.py"
+                "nodeid": "tests/test_python_ast_reader.py::test_extract_ignores_non_test_functions",
+                "status": "bound",
+                "test_file": "tests/test_python_ast_reader.py"
               },
               "id": "bdd-ast-ignores-non-test",
               "line": 20,
@@ -3099,9 +3113,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_python_inspect_ast_reader.py"
+                "nodeid": "tests/test_python_ast_reader.py::test_describe_assert_equals",
+                "status": "bound",
+                "test_file": "tests/test_python_ast_reader.py"
               },
               "id": "bdd-ast-assert-equals",
               "line": 28,
@@ -3113,9 +3127,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_python_inspect_ast_reader.py"
+                "nodeid": "tests/test_python_ast_reader.py::test_describe_assert_is_none",
+                "status": "bound",
+                "test_file": "tests/test_python_ast_reader.py"
               },
               "id": "bdd-ast-assert-is-none",
               "line": 36,
@@ -3127,9 +3141,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_python_inspect_ast_reader.py"
+                "nodeid": "tests/test_python_ast_reader.py::test_describe_assert_truthy",
+                "status": "bound",
+                "test_file": "tests/test_python_ast_reader.py"
               },
               "id": "bdd-ast-assert-truthy",
               "line": 43,
@@ -3141,9 +3155,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_python_inspect_ast_reader.py"
+                "nodeid": "tests/test_python_ast_reader.py::test_describe_assert_call",
+                "status": "bound",
+                "test_file": "tests/test_python_ast_reader.py"
               },
               "id": "bdd-ast-assert-call",
               "line": 49,
@@ -3162,9 +3176,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_python_inspect_ast_reader.py"
+                "nodeid": "tests/test_python_ast_reader.py::test_discover_specweave_marker_mapping",
+                "status": "bound",
+                "test_file": "tests/test_python_ast_reader.py"
               },
               "id": "bdd-ast-discover-marker",
               "line": 57,
@@ -3176,9 +3190,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_python_inspect_ast_reader.py"
+                "nodeid": "tests/test_python_ast_reader.py::test_discover_specweave_comment_mapping",
+                "status": "bound",
+                "test_file": "tests/test_python_ast_reader.py"
               },
               "id": "bdd-ast-discover-comment",
               "line": 66,
@@ -3190,9 +3204,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_python_inspect_ast_reader.py"
+                "nodeid": "tests/test_python_ast_reader.py::test_docstring_mapping_accepts_feature_md",
+                "status": "bound",
+                "test_file": "tests/test_python_ast_reader.py"
               },
               "id": "bdd-ast-discover-docstring",
               "line": 75,
@@ -3787,7 +3801,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_review_spec_review.py::test_no_features",
+                "nodeid": "tests/test_review_spec_review.py::TestReviewReportsMissingBindings::test_no_features",
                 "status": "bound",
                 "test_file": "tests/test_review_spec_review.py"
               },
@@ -3808,7 +3822,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_review_spec_review.py::test_feature_with_no_test",
+                "nodeid": "tests/test_review_spec_review.py::TestReviewReportsMissingBindings::test_feature_with_no_test",
                 "status": "bound",
                 "test_file": "tests/test_review_spec_review.py"
               },
@@ -3829,7 +3843,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_review_spec_review.py::test_needs_review_flagged",
+                "nodeid": "tests/test_review_spec_review.py::TestReviewReportsNeedsReview::test_needs_review_flagged",
                 "status": "bound",
                 "test_file": "tests/test_review_spec_review.py"
               },
@@ -3850,7 +3864,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_review_spec_review.py::test_stale_mapping_causes_failed_review",
+                "nodeid": "tests/test_review_spec_review.py::TestReviewAggregatesCoverage::test_stale_mapping_causes_failed_review",
                 "status": "bound",
                 "test_file": "tests/test_review_spec_review.py"
               },
@@ -3871,7 +3885,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_review_spec_review.py::test_forbidden_pytest_bdd",
+                "nodeid": "tests/test_review_spec_review.py::TestReviewAggregatesCoverage::test_forbidden_pytest_bdd",
                 "status": "bound",
                 "test_file": "tests/test_review_spec_review.py"
               },
@@ -3892,7 +3906,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_review_spec_review.py::test_lint_findings",
+                "nodeid": "tests/test_review_spec_review.py::TestReviewAggregatesCoverage::test_lint_findings",
                 "status": "bound",
                 "test_file": "tests/test_review_spec_review.py"
               },
@@ -3961,9 +3975,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_runners_command.py"
+                "nodeid": "tests/test_runner_command.py::test_run_success",
+                "status": "bound",
+                "test_file": "tests/test_runner_command.py"
               },
               "id": "bdd-runner-success",
               "line": 11,
@@ -3982,9 +3996,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_runners_command.py"
+                "nodeid": "tests/test_runner_command.py::test_run_failure",
+                "status": "bound",
+                "test_file": "tests/test_runner_command.py"
               },
               "id": "bdd-runner-failure",
               "line": 23,
@@ -4003,9 +4017,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_runners_command.py"
+                "nodeid": "tests/test_runner_command.py::test_run_not_found",
+                "status": "bound",
+                "test_file": "tests/test_runner_command.py"
               },
               "id": "bdd-runner-not-found",
               "line": 33,
@@ -4024,9 +4038,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_runners_command.py"
+                "nodeid": "tests/test_runner_command.py::test_run_captures_stdout_stderr",
+                "status": "bound",
+                "test_file": "tests/test_runner_command.py"
               },
               "id": "bdd-runner-capture",
               "line": 42,
@@ -4058,9 +4072,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_trace_trace.py"
+                "nodeid": "tests/test_trace.py::test_trace_by_bdd_id_reports_mapping_and_missing_evidence_gap",
+                "status": "bound",
+                "test_file": "tests/test_trace.py"
               },
               "id": "bdd-trace-by-id",
               "line": 11,
@@ -4079,9 +4093,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_trace_trace.py"
+                "nodeid": "tests/test_trace.py::test_trace_rejects_markdown_feature_path",
+                "status": "bound",
+                "test_file": "tests/test_trace.py"
               },
               "id": "bdd-trace-by-path",
               "line": 24,
@@ -4113,7 +4127,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_translation_pytest_to_gherkin.py::test_basic",
+                "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestSlug::test_basic",
                 "status": "bound",
                 "test_file": "tests/test_translation_pytest_to_gherkin.py"
               },
@@ -4127,7 +4141,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_translation_pytest_to_gherkin.py::test_simple",
+                "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestDeriveArea::test_simple",
                 "status": "bound",
                 "test_file": "tests/test_translation_pytest_to_gherkin.py"
               },
@@ -4148,7 +4162,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_translation_pytest_to_gherkin.py::test_skips_manual_file_without_force",
+                "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinPreservesExisting::test_skips_manual_file_without_force",
                 "status": "bound",
                 "test_file": "tests/test_translation_pytest_to_gherkin.py"
               },
@@ -4162,7 +4176,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_translation_pytest_to_gherkin.py::test_force_overwrites_manual",
+                "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinJsonShape::test_force_overwrites_manual",
                 "status": "bound",
                 "test_file": "tests/test_translation_pytest_to_gherkin.py"
               },
@@ -4183,7 +4197,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_translation_pytest_to_gherkin.py::test_marks_needs_review",
+                "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinFromSinglePytestFile::test_marks_needs_review",
                 "status": "bound",
                 "test_file": "tests/test_translation_pytest_to_gherkin.py"
               },
@@ -4204,7 +4218,7 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "tests/test_translation_pytest_to_gherkin.py::test_writes_nothing",
+                "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinDryRun::test_writes_nothing",
                 "status": "bound",
                 "test_file": "tests/test_translation_pytest_to_gherkin.py"
               },
@@ -4238,9 +4252,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_translation_spec_to_code.py"
+                "nodeid": "tests/test_spec_to_code.py::test_step_function_name_basic",
+                "status": "bound",
+                "test_file": "tests/test_spec_to_code.py"
               },
               "id": "bdd-spec-to-code-step-name",
               "line": 12,
@@ -4252,9 +4266,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_translation_spec_to_code.py"
+                "nodeid": "tests/test_spec_to_code.py::test_step_function_name_dedup",
+                "status": "bound",
+                "test_file": "tests/test_spec_to_code.py"
               },
               "id": "bdd-spec-to-code-dedup",
               "line": 19,
@@ -4273,9 +4287,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_translation_spec_to_code.py"
+                "nodeid": "tests/test_spec_to_code.py::test_draft_feature_creates_file",
+                "status": "bound",
+                "test_file": "tests/test_spec_to_code.py"
               },
               "id": "bdd-spec-to-code-draft",
               "line": 28,
@@ -4294,9 +4308,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_translation_spec_to_code.py"
+                "nodeid": "tests/test_spec_to_code.py::test_bind_feature_creates_skeleton",
+                "status": "bound",
+                "test_file": "tests/test_spec_to_code.py"
               },
               "id": "bdd-spec-to-code-bind-behave",
               "line": 40,
@@ -4308,9 +4322,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_translation_spec_to_code.py"
+                "nodeid": "tests/test_backends_pytest_bdd.py::test_bind_feature_writes_pytest_bdd_file",
+                "status": "bound",
+                "test_file": "tests/test_backends_pytest_bdd.py"
               },
               "id": "bdd-spec-to-code-bind-pytest-bdd",
               "line": 49,
@@ -4322,9 +4336,9 @@
             {
               "automation": {
                 "backend": "pytest",
-                "nodeid": "",
-                "status": "missing",
-                "test_file": "tests/test_translation_spec_to_code.py"
+                "nodeid": "tests/test_spec_to_code.py::test_bind_unsupported_backend_raises",
+                "status": "bound",
+                "test_file": "tests/test_spec_to_code.py"
               },
               "id": "bdd-spec-to-code-bind-unsupported",
               "line": 57,
