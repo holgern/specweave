@@ -70,6 +70,13 @@ Feature: Static behavior coverage checks
 
   Rule: Coverage can be viewed from pytest back to features
 
+    @bdd-coverage-class-method-mapping
+    Example: Coverage matches mappings on pytest class methods
+      Given a mapped pytest method belongs to a test class
+      When specweave builds the behavior coverage
+      Then the class-qualified pytest test is counted as mapped
+      And the pytest test is not counted as unmapped
+
     @bdd-coverage-pytest-unmapped
     Example: Coverage reports unmapped pytest tests
       Given a pytest test function without a SpecWeave mapping

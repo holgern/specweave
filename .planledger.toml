@@ -1,0 +1,6 @@
+[project]
+name = "specweave"
+uuid = "777c8141-f9a4-4eb0-b4c3-731032c84c4a"
+
+[storage]
+planledger_dir = "../planledger-state/specweave"

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import ast
 import re
-from collections.abc import Iterable
+from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -206,6 +206,28 @@ def _docstring_mapping(
     return None
 
 
+def _pytest_test_functions(
+    tree: ast.Module,
+) -> Iterator[
+    tuple[ast.FunctionDef | ast.AsyncFunctionDef, str | None]
+]:
+    """Yield pytest tests with the class segment used in their node IDs."""
+
+    for node in tree.body:
+        if isinstance(
+            node, (ast.FunctionDef, ast.AsyncFunctionDef)
+        ) and node.name.startswith("test_"):
+            yield node, None
+            continue
+        if not isinstance(node, ast.ClassDef) or not node.name.startswith("Test"):
+            continue
+        for child in node.body:
+            if isinstance(
+                child, (ast.FunctionDef, ast.AsyncFunctionDef)
+            ) and child.name.startswith("test_"):
+                yield child, node.name
+
+
 def discover_specweave_tests(path: Path) -> list[SpecweaveTestMapping]:
     """Discover plain-pytest SpecWeave mappings from *path*."""
 
@@ -216,11 +238,8 @@ def discover_specweave_tests(path: Path) -> list[SpecweaveTestMapping]:
     test_file = _display_path(path)
 
     mappings: list[SpecweaveTestMapping] = []
-    for node in ast.walk(tree):
-        if not isinstance(
-            node, (ast.FunctionDef, ast.AsyncFunctionDef)
-        ) or not node.name.startswith("test_"):
-            continue
+
+    for node, class_name in _pytest_test_functions(tree):
         mapping = _marker_mapping(node, constants)
         source_name = "marker"
         if mapping is None:
@@ -232,11 +251,12 @@ def discover_specweave_tests(path: Path) -> list[SpecweaveTestMapping]:
         if mapping is None:
             continue
         feature, scenario = mapping
+        qualname = f"{class_name}::{node.name}" if class_name else node.name
         mappings.append(
             SpecweaveTestMapping(
                 function_name=node.name,
                 test_file=test_file,
-                nodeid=f"{test_file}::{node.name}",
+                nodeid=f"{test_file}::{qualname}",
                 feature=feature,
                 scenario=scenario,
                 line=node.lineno,
@@ -252,34 +272,23 @@ def _pytest_test_items(
     lines = source.splitlines()
     items: list[PytestTestItem] = []
 
-    def visit(body: list[ast.stmt], class_name: str | None = None) -> None:
-        for node in body:
-            if isinstance(node, ast.ClassDef):
-                nested_class = node.name if node.name.startswith("Test") else None
-                visit(list(node.body), nested_class)
-                continue
-            if not isinstance(
-                node, (ast.FunctionDef, ast.AsyncFunctionDef)
-            ) or not node.name.startswith("test_"):
-                continue
-            decorator_lines = [decorator.lineno for decorator in node.decorator_list]
-            insert_line = min(decorator_lines, default=node.lineno)
-            source_line = lines[node.lineno - 1] if node.lineno <= len(lines) else ""
-            indent = source_line[: len(source_line) - len(source_line.lstrip())]
-            qualname = f"{class_name}::{node.name}" if class_name else node.name
-            items.append(
-                PytestTestItem(
-                    function_name=node.name,
-                    test_file=test_file,
-                    nodeid=f"{test_file}::{qualname}",
-                    line=node.lineno,
-                    insert_line=insert_line,
-                    indent=indent,
-                    class_name=class_name,
-                )
+    for node, class_name in _pytest_test_functions(tree):
+        decorator_lines = [decorator.lineno for decorator in node.decorator_list]
+        insert_line = min(decorator_lines, default=node.lineno)
+        source_line = lines[node.lineno - 1] if node.lineno <= len(lines) else ""
+        indent = source_line[: len(source_line) - len(source_line.lstrip())]
+        qualname = f"{class_name}::{node.name}" if class_name else node.name
+        items.append(
+            PytestTestItem(
+                function_name=node.name,
+                test_file=test_file,
+                nodeid=f"{test_file}::{qualname}",
+                line=node.lineno,
+                insert_line=insert_line,
+                indent=indent,
+                class_name=class_name,
             )
-
-    visit(list(tree.body))
+        )
     return sorted(items, key=lambda item: item.line)
 
 

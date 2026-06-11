@@ -312,6 +312,38 @@ def test_valid_login() -> None:
 
 
 # specweave: feature=specs/behavior/features/behavior/coverage.feature
+# specweave: scenario=@bdd-coverage-class-method-mapping
+def test_coverage_matches_mapping_on_class_test_method(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    tests_dir = tmp_path / "tests"
+    _write_behavior_feature(
+        features_dir / "auth" / "login.feature",
+        title="Login",
+        scenario_id="@bdd-login-valid",
+        scenario_title="Valid login",
+    )
+    _write_test(
+        tests_dir / "test_auth_login.py",
+        """
+class TestLogin:
+    # sw: f=specs/behavior/features/auth/login.feature
+    # sw: s=@bdd-login-valid
+    def test_valid_login(self) -> None:
+        pass
+""",
+    )
+
+    result = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
+
+    assert result["pytest_tests_total"] == 1
+    assert result["pytest_tests_mapped"] == 1
+    assert result["pytest_tests_unmapped"] == 0
+
+
+# specweave: feature=specs/behavior/features/behavior/coverage.feature
 # specweave: scenario=@bdd-coverage-pytest-stale
 def test_coverage_marks_stale_pytest_test_in_reverse_inventory(
     tmp_path: Path, monkeypatch

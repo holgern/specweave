@@ -282,3 +282,90 @@ def test_loads_hidden_config() -> None:
         "tests/test_auth_login.py::test_valid_login",
         "tests/test_config.py::test_loads_hidden_config",
     ]
+
+
+def test_discover_specweave_tests_qualifies_class_mapping_nodeids(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    path = tmp_path / "tests" / "test_auth_login.py"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        '''
+import pytest
+
+
+class TestLogin:
+    # sw: f=specs/behavior/features/auth/login.feature
+    # sw: s=@bdd-login-valid
+    def test_valid_login(self) -> None:
+        pass
+
+    @pytest.mark.specweave(
+        feature="specs/behavior/features/auth/login.feature",
+        scenario="@bdd-login-marker",
+    )
+    async def test_marker_mapping(self) -> None:
+        pass
+
+    def test_docstring_mapping(self) -> None:
+        """
+        specs/behavior/features/auth/login.feature
+        @bdd-login-docstring
+        """
+        pass
+
+
+def test_top_level_mapping() -> None:
+    """
+    specs/behavior/features/auth/login.feature
+    @bdd-login-top-level
+    """
+    pass
+''',
+        encoding="utf-8",
+    )
+
+    mappings = discover_specweave_tests(path)
+
+    assert [mapping.nodeid for mapping in mappings] == [
+        "tests/test_auth_login.py::TestLogin::test_valid_login",
+        "tests/test_auth_login.py::TestLogin::test_marker_mapping",
+        "tests/test_auth_login.py::TestLogin::test_docstring_mapping",
+        "tests/test_auth_login.py::test_top_level_mapping",
+    ]
+    assert [mapping.source for mapping in mappings] == [
+        "comment",
+        "marker",
+        "docstring",
+        "docstring",
+    ]
+
+
+def test_pytest_discovery_ignores_non_collectible_class_nesting(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    path = tmp_path / "tests" / "test_auth_login.py"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        """
+class LoginTests:
+    def test_not_collectible(self) -> None:
+        pass
+
+
+class TestLogin:
+    class TestNested:
+        def test_not_collectible(self) -> None:
+            pass
+
+    def test_collectible(self) -> None:
+        pass
+""",
+        encoding="utf-8",
+    )
+
+    assert [item.nodeid for item in discover_pytest_tests(path)] == [
+        "tests/test_auth_login.py::TestLogin::test_collectible"
+    ]
