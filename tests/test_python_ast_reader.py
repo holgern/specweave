@@ -387,3 +387,23 @@ class TestLogin:
     assert [item.nodeid for item in discover_pytest_tests(path)] == [
         "tests/test_auth_login.py::TestLogin::test_collectible"
     ]
+
+
+
+# sw: f=specs/behavior/features/python-inspect/ast-reader.feature
+# sw: s=@bdd-ast-discover-intentional-unmapped-waiver
+def test_discover_pytest_tests_preserves_intentional_unmapped_waiver() -> None:
+    code = """
+# sw: unmapped=parser unit edge case; no behavior scenario
+@pytest.mark.parametrize("value", ["a", "b"])
+def test_parser_edge_case(value):
+    pass
+"""
+    path = _write_test_file(code)
+    try:
+        items = discover_pytest_tests(path)
+        assert len(items) == 1
+        assert items[0].unmapped_reason == "parser unit edge case; no behavior scenario"
+        assert items[0].unmapped_source == "comment"
+    finally:
+        path.unlink()

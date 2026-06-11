@@ -444,3 +444,103 @@ def test_loads_hidden_config() -> None:
     assert "Pytest -> features" in rendered
     assert "Unmapped pytest tests" in rendered
     assert "Missing scenario bindings" in rendered
+
+
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-pytest-intentional-unmapped
+def test_coverage_accepts_intentional_unmapped_pytest_tests(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    tests_dir = tmp_path / "tests"
+    _write_behavior_feature(
+        features_dir / "auth" / "login.feature",
+        title="Login",
+        scenario_id="@bdd-login-valid",
+        scenario_title="Valid login",
+    )
+    _write_test(
+        tests_dir / "test_auth_login.py",
+        """
+# sw: f=specs/behavior/features/auth/login.feature
+# sw: s=@bdd-login-valid
+def test_valid_login() -> None:
+    pass
+
+# sw: unmapped=unit helper; no user-visible behavior
+def test_helper_normalization() -> None:
+    pass
+""",
+    )
+
+    result = build_behavior_coverage(features_dir=features_dir, tests_dir=tests_dir)
+
+    assert result["status"] == "passed"
+    assert result["pytest_tests_total"] == 2
+    assert result["pytest_tests_mapped"] == 1
+    assert result["pytest_tests_unmapped"] == 0
+    assert result["pytest_tests_waived"] == 1
+    helper = next(
+        item
+        for group in result["tests"]
+        for item in group["items"]
+        if item["function_name"] == "test_helper_normalization"
+    )
+    assert helper["status"] == "waived"
+    assert helper["waiver"]["reason"] == "unit helper; no user-visible behavior"
+
+
+# sw: f=specs/behavior/features/behavior/coverage.feature
+# sw: s=@bdd-coverage-pytest-intentional-unmapped-policy-file
+def test_coverage_accepts_intentional_unmapped_policy_file(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    features_dir = tmp_path / "specs" / "behavior" / "features"
+    tests_dir = tmp_path / "tests"
+    mapping_dir = tmp_path / "specs" / "behavior" / "mappings"
+    _write_behavior_feature(
+        features_dir / "auth" / "login.feature",
+        title="Login",
+        scenario_id="@bdd-login-valid",
+        scenario_title="Valid login",
+    )
+    _write_test(
+        tests_dir / "test_auth_login.py",
+        """
+# sw: f=specs/behavior/features/auth/login.feature
+# sw: s=@bdd-login-valid
+def test_valid_login() -> None:
+    pass
+
+def test_helper_normalization() -> None:
+    pass
+""",
+    )
+    mapping_dir.mkdir(parents=True)
+    (mapping_dir / "intentional-unmapped.json").write_text(
+        '{"items":[{"nodeid":"tests/test_auth_login.py::test_helper_normalization",'
+        '"reason":"unit helper; no user-visible behavior"}]}',
+        encoding="utf-8",
+    )
+
+    result = build_behavior_coverage(
+        features_dir=features_dir,
+        tests_dir=tests_dir,
+        mapping_dir=mapping_dir,
+    )
+
+    assert result["status"] == "passed"
+    assert result["pytest_tests_unmapped"] == 0
+    assert result["pytest_tests_waived"] == 1
+    helper = next(
+        item
+        for group in result["tests"]
+        for item in group["items"]
+        if item["function_name"] == "test_helper_normalization"
+    )
+    assert helper["status"] == "waived"
+    assert helper["waiver"]["source"] == (
+        "specs/behavior/mappings/intentional-unmapped.json"
+    )

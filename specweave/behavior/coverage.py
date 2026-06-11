@@ -198,6 +198,38 @@ def _candidate_test_item(item: dict[str, Any], *, reason: str) -> dict[str, Any]
     }
 
 
+def _intentional_unmapped_path(features_dir: Path, mapping_dir: Path | None) -> Path:
+    if mapping_dir is not None:
+        return mapping_dir / "intentional-unmapped.json"
+    return features_dir.parent / "mappings" / "intentional-unmapped.json"
+
+
+def _load_intentional_unmapped(path: Path) -> dict[str, dict[str, str]]:
+    if not path.exists():
+        return {}
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(raw, list):
+        items = raw
+    elif isinstance(raw, dict):
+        items = raw.get("items", [])
+    else:
+        return {}
+
+    waivers: dict[str, dict[str, str]] = {}
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        nodeid = str(item.get("nodeid") or "").strip()
+        if not nodeid:
+            continue
+        reason = str(item.get("reason") or "intentional-unmapped").strip()
+        waivers[_normalize_nodeid(nodeid)] = {
+            "reason": reason or "intentional-unmapped",
+            "source": display_path(path),
+        }
+    return waivers
+
+
 def _candidate_tests_for_missing_scenario(
     *,
     feature_ref: str,
@@ -247,6 +279,7 @@ def _test_inventory(
     test_items: list[PytestTestItem],
     mappings: list[SpecweaveTestMapping],
     expected_scenarios: dict[tuple[str, str], dict[str, Any]],
+    intentional_unmapped: dict[str, dict[str, str]],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     _, mappings_by_nodeid = _mapping_lookup(mappings)
     grouped: dict[str, list[dict[str, Any]]] = {}
@@ -262,7 +295,17 @@ def _test_inventory(
             mapping for mapping in linked if _mapping_valid(mapping, expected_scenarios)
         ]
         primary_mapping = valid[0] if valid else (linked[0] if linked else None)
-        if not linked:
+        waiver = (
+            {
+                "reason": test_item.unmapped_reason,
+                "source": test_item.unmapped_source or "comment",
+            }
+            if test_item.unmapped_reason
+            else intentional_unmapped.get(nodeid)
+        )
+        if not linked and waiver:
+            status = "waived"
+        elif not linked:
             status = "unmapped"
         elif valid:
             status = "mapped"
@@ -277,6 +320,7 @@ def _test_inventory(
             "mapping": (
                 None if primary_mapping is None else _mapping_target(primary_mapping)
             ),
+            "waiver": waiver,
             "test_file": test_item.test_file,
         }
         grouped.setdefault(test_item.test_file, []).append(entry)
@@ -288,12 +332,15 @@ def _test_inventory(
         mapped = sum(1 for item in items if item["status"] == "mapped")
         unmapped = sum(1 for item in items if item["status"] == "unmapped")
         stale = sum(1 for item in items if item["status"] == "stale")
+        waived = sum(1 for item in items if item["status"] == "waived")
         if mapped == len(items):
             status = "mapped"
         elif unmapped == len(items):
             status = "unmapped"
         elif stale == len(items):
             status = "stale"
+        elif waived == len(items):
+            status = "waived"
         else:
             status = "mixed"
         tests.append(
@@ -304,6 +351,7 @@ def _test_inventory(
                 "mapped": mapped,
                 "unmapped": unmapped,
                 "stale": stale,
+                "waived": waived,
                 "items": items,
             }
         )
@@ -323,6 +371,7 @@ def _summary_lines(data: dict[str, Any]) -> list[str]:
         f"pytest tests: {data['pytest_tests_total']}, "
         f"mapped: {data['pytest_tests_mapped']}, "
         f"unmapped: {data['pytest_tests_unmapped']}, "
+        f"waived: {data['pytest_tests_waived']}, "
         f"stale mappings: {data['pytest_mappings_stale']}"
     )
     return [
@@ -389,6 +438,7 @@ def build_behavior_coverage(
     tests_dir: Path = PYTEST_TESTS_DIR,
     feature_path: Path | None = None,
     test_file: Path | None = None,
+    mapping_dir: Path | None = None,
 ) -> dict[str, Any]:
     """Build the coverage report for canonical behavior specs."""
 
@@ -421,7 +471,11 @@ def build_behavior_coverage(
     feature_refs = {feature_ref for _, _, feature_ref, _ in feature_specs}
     mapping_by_key, _ = _mapping_lookup(mappings)
     test_items = collect_pytest_tests(test_files)
-    tests, unmapped_tests = _test_inventory(test_items, mappings, expected_scenarios)
+    intentional_unmapped_path = _intentional_unmapped_path(features_dir, mapping_dir)
+    intentional_unmapped = _load_intentional_unmapped(intentional_unmapped_path)
+    tests, unmapped_tests = _test_inventory(
+        test_items, mappings, expected_scenarios, intentional_unmapped
+    )
     unmapped_tests_by_file: dict[str, list[dict[str, Any]]] = {}
     for item in unmapped_tests:
         unmapped_tests_by_file.setdefault(str(item["test_file"]), []).append(item)
@@ -568,11 +622,17 @@ def build_behavior_coverage(
         1 for group in tests for item in group["items"] if item["status"] == "mapped"
     )
     pytest_tests_unmapped = len(unmapped_tests)
+    pytest_tests_waived = sum(
+        1 for group in tests for item in group["items"] if item["status"] == "waived"
+    )
     pytest_mappings_stale = sum(
         1 for group in tests for item in group["items"] if item["status"] == "stale"
     )
     pytest_coverage_percent = (
-        round((pytest_tests_mapped / pytest_tests_total) * 100.0, 1)
+        round(
+            ((pytest_tests_mapped + pytest_tests_waived) / pytest_tests_total) * 100.0,
+            1,
+        )
         if pytest_tests_total
         else 0.0
     )
@@ -614,6 +674,7 @@ def build_behavior_coverage(
                 "tests_total": pytest_tests_total,
                 "mapped": pytest_tests_mapped,
                 "unmapped": pytest_tests_unmapped,
+                "waived": pytest_tests_waived,
                 "stale": pytest_mappings_stale,
                 "coverage_percent": pytest_coverage_percent,
             },
@@ -635,8 +696,10 @@ def build_behavior_coverage(
         "pytest_tests_total": pytest_tests_total,
         "pytest_tests_mapped": pytest_tests_mapped,
         "pytest_tests_unmapped": pytest_tests_unmapped,
+        "pytest_tests_waived": pytest_tests_waived,
         "pytest_mappings_stale": pytest_mappings_stale,
         "pytest_coverage_percent": pytest_coverage_percent,
+        "intentional_unmapped_path": display_path(intentional_unmapped_path),
         "features": features,
         "tests": tests,
         "missing_bindings": missing_bindings,
@@ -776,6 +839,11 @@ def _render_test_groups(groups: list[dict[str, Any]], *, show: str) -> list[str]
                 lines.append(
                     f"  ! {item['nodeid']} -> {mapping.get('feature', '')} "
                     f"{mapping.get('scenario', '')} [stale]"
+                )
+            elif item["status"] == "waived":
+                waiver = item["waiver"] or {}
+                lines.append(
+                    f"  ◌ {item['nodeid']} [waived: {waiver.get('reason', '')}]"
                 )
             else:
                 lines.append(f"  ✗ {item['nodeid']} [unmapped]")
@@ -969,6 +1037,11 @@ def _render_test_groups_markdown(
                     f"- `{item['nodeid']}` -> `{mapping.get('feature', '')}` "
                     f"`{mapping.get('scenario', '')}` **[stale]**"
                 )
+            elif item["status"] == "waived":
+                waiver = item["waiver"] or {}
+                lines.append(
+                    f"- `{item['nodeid']}` **[waived]** — {waiver.get('reason', '')}"
+                )
             else:
                 lines.append(f"- `{item['nodeid']}` **[unmapped]**")
         lines.append("")
@@ -1026,10 +1099,12 @@ def render_coverage_markdown(
         f"{data['scenarios_waived']} waived"
     )
     pytest_summary = (
-        f"**Pytest coverage:** {data['pytest_tests_mapped']}/"
-        f"{data['pytest_tests_total']} mapped "
+        "**Pytest coverage:** "
+        f"{data['pytest_tests_mapped'] + data['pytest_tests_waived']}/"
+        f"{data['pytest_tests_total']} accepted "
         f"({data['pytest_coverage_percent']:.1f}%), "
         f"{data['pytest_tests_unmapped']} unmapped, "
+        f"{data['pytest_tests_waived']} waived, "
         f"{data['pytest_mappings_stale']} stale"
     )
     lines = [

@@ -443,6 +443,7 @@ def behavior_coverage(
             tests_dir=resolved_tests,
             feature_path=feature,
             test_file=test_file,
+            mapping_dir=cli_ctx.config.paths.mapping_dir,
         )
         if output_format == "json":
             rendered = _dump_json(data)
@@ -597,7 +598,9 @@ def behavior_refresh(
         coverage = mappings = index = True
     if coverage:
         data = build_behavior_coverage(
-            features_dir=paths.features_dir, tests_dir=paths.tests_dir
+            features_dir=paths.features_dir,
+            tests_dir=paths.tests_dir,
+            mapping_dir=paths.mapping_dir,
         )
         out = paths.reports_state_dir / "coverage-gaps.md"
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -1096,6 +1099,7 @@ def review_coverage(
             tests_dir=resolved_tests,
             feature_path=feature,
             test_file=test_file,
+            mapping_dir=cli_ctx.config.paths.mapping_dir,
         )
         if output_format == "json":
             rendered = _dump_json(data)

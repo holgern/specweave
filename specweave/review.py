@@ -57,6 +57,7 @@ def run_review(
     coverage = build_behavior_coverage(
         features_dir=features_dir,
         tests_dir=tests_dir,
+        mapping_dir=config.paths.mapping_dir,
     )
 
     features_total = coverage["features_total"]
@@ -65,6 +66,7 @@ def run_review(
     pytest_tests_total = coverage["pytest_tests_total"]
     pytest_tests_mapped = coverage["pytest_tests_mapped"]
     pytest_tests_unmapped = coverage["pytest_tests_unmapped"]
+    pytest_tests_waived = coverage.get("pytest_tests_waived", 0)
     missing_bindings = coverage["missing_bindings"]
     stale_bindings = coverage.get("stale_bindings", [])
     duplicate_bindings = coverage.get("duplicate_bindings", [])
@@ -185,6 +187,7 @@ def run_review(
             "pytest_tests": pytest_tests_total,
             "pytest_mapped": pytest_tests_mapped,
             "pytest_unmapped": pytest_tests_unmapped,
+            "pytest_waived": pytest_tests_waived,
             "missing_bindings": len(missing_bindings),
             "stale_bindings": len(stale_bindings),
             "duplicate_bindings": len(duplicate_bindings),

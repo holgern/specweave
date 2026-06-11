@@ -12,9 +12,11 @@ from specweave.gherkin.model import Scenario, Step
 from specweave.python_inspect.assertions import describe_assert
 
 _SPECWEAVE_COMMENT_RE = re.compile(
-    r"#\s*(?:specweave|sw):\s*(feature|scenario|f|s)\s*=\s*(.+?)\s*$"
+    r"#\s*(?:specweave|sw):\s*(feature|scenario|f|s|unmapped|u)\s*=\s*(.*?)\s*$"
 )
-_SPECWEAVE_BLOCK_RE = re.compile(r"#\s*(feature|scenario|f|s)\s*:\s*(.+?)\s*$")
+_SPECWEAVE_BLOCK_RE = re.compile(
+    r"#\s*(feature|scenario|f|s|unmapped|u)\s*:\s*(.*?)\s*$"
+)
 _SPECWEAVE_FEATURE_RE = re.compile(
     r"specs/behavior/features/[^\s\"']+\.feature(?:\.md)?"
 )
@@ -44,6 +46,8 @@ class PytestTestItem:
     insert_line: int
     indent: str
     class_name: str | None = None
+    unmapped_reason: str | None = None
+    unmapped_source: str | None = None
 
 
 def extract_test_scenarios(path: Path) -> list[Scenario]:
@@ -133,7 +137,7 @@ def _marker_mapping(
 
 
 def _canonical_comment_key(key: str) -> str:
-    return {"f": "feature", "s": "scenario"}.get(key, key)
+    return {"f": "feature", "s": "scenario", "u": "unmapped"}.get(key, key)
 
 
 def _comment_values(lines: list[str], index: int) -> tuple[dict[str, str], int]:
@@ -161,8 +165,8 @@ def _comment_values(lines: list[str], index: int) -> tuple[dict[str, str], int]:
     return values, index
 
 
-def _comment_mappings(source: str) -> dict[int, tuple[str, str]]:
-    mappings: dict[int, tuple[str, str]] = {}
+def _comment_metadata(source: str) -> dict[int, dict[str, str]]:
+    metadata: dict[int, dict[str, str]] = {}
     lines = source.splitlines()
     index = 0
     while index < len(lines):
@@ -176,18 +180,25 @@ def _comment_mappings(source: str) -> dict[int, tuple[str, str]]:
                 if stripped.startswith("def test_") or stripped.startswith(
                     "async def test_"
                 ):
-                    feature = values.get("feature")
-                    scenario = values.get("scenario")
-                    if feature and scenario:
-                        mappings[index + 1] = (
-                            _normalize_feature_mapping(feature),
-                            scenario,
-                        )
+                    metadata[index + 1] = dict(values)
                     index += 1
                     continue
             index = max(index, start + 1)
             continue
         index += 1
+    return metadata
+
+
+def _comment_mappings(source: str) -> dict[int, tuple[str, str]]:
+    mappings: dict[int, tuple[str, str]] = {}
+    for line, values in _comment_metadata(source).items():
+        feature = values.get("feature")
+        scenario = values.get("scenario")
+        if feature and scenario:
+            mappings[line] = (
+                _normalize_feature_mapping(feature),
+                scenario,
+            )
     return mappings
 
 
@@ -270,6 +281,7 @@ def _pytest_test_items(
     tree: ast.Module, test_file: str, source: str
 ) -> list[PytestTestItem]:
     lines = source.splitlines()
+    comment_metadata = _comment_metadata(source)
     items: list[PytestTestItem] = []
 
     for node, class_name in _pytest_test_functions(tree):
@@ -278,6 +290,10 @@ def _pytest_test_items(
         source_line = lines[node.lineno - 1] if node.lineno <= len(lines) else ""
         indent = source_line[: len(source_line) - len(source_line.lstrip())]
         qualname = f"{class_name}::{node.name}" if class_name else node.name
+        metadata = comment_metadata.get(node.lineno, {})
+        unmapped_reason = metadata.get("unmapped")
+        if unmapped_reason is not None:
+            unmapped_reason = unmapped_reason.strip() or "intentional-unmapped"
         items.append(
             PytestTestItem(
                 function_name=node.name,
@@ -287,6 +303,8 @@ def _pytest_test_items(
                 insert_line=insert_line,
                 indent=indent,
                 class_name=class_name,
+                unmapped_reason=unmapped_reason,
+                unmapped_source="comment" if unmapped_reason else None,
             )
         )
     return sorted(items, key=lambda item: item.line)

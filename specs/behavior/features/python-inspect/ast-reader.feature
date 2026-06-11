@@ -80,3 +80,10 @@ Feature: AST-based Python test inspection
       And the mapping feature path matches the canonical feature path
       And the mapping scenario matches the bdd-id
       And the mapping source is "docstring"
+
+    @bdd-ast-discover-intentional-unmapped-waiver
+    Example: AST reader preserves intentional unmapped pytest waivers
+      Given a Python test function preceded by `# sw: unmapped=...`
+      When specweave discovers pytest tests in the file
+      Then the pytest test item contains the waiver reason
+      And the waiver source is "comment"

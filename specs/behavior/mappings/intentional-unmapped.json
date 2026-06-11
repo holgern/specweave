@@ -1,0 +1,594 @@
+{
+  "items": [
+    {
+      "nodeid": "tests/test_behavior_autolink.py::test_autolink_generated_id_top_level_function",
+      "reason": "autolink implementation edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_behavior_autolink.py::test_autolink_preserves_decorators",
+      "reason": "autolink implementation edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_behavior_autolink.py::test_autolink_class_method_uses_method_indentation",
+      "reason": "autolink implementation edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_behavior_autolink.py::test_autolink_skips_existing_mapping",
+      "reason": "autolink implementation edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_behavior_autolink.py::test_autolink_rewrites_duplicate_occurrences_only_when_enabled",
+      "reason": "autolink implementation edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_behavior_autolink.py::test_autolink_json_shape",
+      "reason": "autolink implementation edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_behavior_generation.py::test_generate_avoids_long_specweave_mapping_lines",
+      "reason": "technical regression below behavior-scenario granularity; review before committing"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_help_exits_0",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_version_exits_0",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_bdd_export_and_import_round_trip",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_report_normalize_passing_exits_0",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_report_inspect_prints_summary",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_archledger_candidate_command",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_bind_pytest_bdd_backend",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_behavior_check_warns_on_deprecated_specs_bdd_path",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_behavior_index_accepts_tests_alias",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_behavior_commands_use_configured_default_paths",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_behavior_coverage_text_shows_missing",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_behavior_coverage_feature_filter",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_review_specs_prints_scenario_only_once",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_behavior_mappings_lists_comment_and_marker_sources",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_cli_contract.py::test_init_respects_explicit_hidden_config",
+      "reason": "CLI regression/compatibility checks not yet promoted to behavior scenarios"
+    },
+    {
+      "nodeid": "tests/test_cli_json.py::TestRootJson::test_json_version",
+      "reason": "CLI JSON/root option regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_cli_json.py::TestRootJson::test_human_version",
+      "reason": "CLI JSON/root option regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_cli_json.py::TestRootJson::test_json_init_dry_run",
+      "reason": "CLI JSON/root option regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_cli_json.py::TestRootJson::test_human_init",
+      "reason": "CLI JSON/root option regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_cli_json.py::TestRootJson::test_json_init_british",
+      "reason": "CLI JSON/root option regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_cli_json.py::TestRootJson::test_json_doctor",
+      "reason": "CLI JSON/root option regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_cli_json.py::TestRootJson::test_json_review_specs",
+      "reason": "CLI JSON/root option regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_cli_json.py::TestRootJson::test_config_option",
+      "reason": "CLI JSON/root option regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_cli_json.py::TestInitIdempotency::test_init_twice_no_force",
+      "reason": "CLI JSON/root option regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_common_behavior_helpers.py::TestFeatureStem::test_deep_path",
+      "reason": "path/name helper unit checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_common_behavior_helpers.py::TestFeatureStem::test_other_extension",
+      "reason": "path/name helper unit checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestLoadConfig::test_loads_all_sections",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestLoadConfig::test_resolves_paths_from_config_project_root",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestLoadConfig::test_rejects_unsupported_group_by",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestLoadConfig::test_gherkin_fields_preserved",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestRenderDefaultConfig::test_is_valid_toml",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestRenderDefaultConfig::test_roundtrip",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_classic_only_defaults",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestSpecWeavePaths::test_defaults",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestSpecWeavePaths::test_frozen",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestSpecWeaveConfig::test_defaults",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestSpecWeaveConfig::test_frozen",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::test_specweave_skill_uses_canonical_report_paths",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestSpecWeaveGherkin::test_default_official_parser_is_false",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestSpecWeaveGherkin::test_default_keyword_is_example",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestSpecWeaveGherkin::test_compile_pickles_without_official_raises",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_config_configuration.py::TestSpecWeaveGherkin::test_compile_pickles_with_official_ok",
+      "reason": "configuration loader unit/regression checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_create_feature_json.py::TestParseFeatureDraft::test_parses_title_and_tags",
+      "reason": "feature draft/JSON command edge-case checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_create_feature_json.py::TestParseFeatureDraft::test_parses_rules_and_scenarios",
+      "reason": "feature draft/JSON command edge-case checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_create_feature_json.py::TestParseFeatureDraft::test_parses_steps",
+      "reason": "feature draft/JSON command edge-case checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_create_feature_json.py::TestParseFeatureDraft::test_load_from_file",
+      "reason": "feature draft/JSON command edge-case checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_create_feature_json.py::TestWriteDraftFeature::test_writes_classic_feature",
+      "reason": "feature draft/JSON command edge-case checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_create_feature_json.py::TestCreateFeatureFromJson::test_cli_from_json",
+      "reason": "feature draft/JSON command edge-case checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_create_feature_json.py::TestCreateFeatureFromJson::test_cli_from_json_dry_run",
+      "reason": "feature draft/JSON command edge-case checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_create_feature_json.py::TestCreateFeatureFromJson::test_cli_from_json_refuses_existing",
+      "reason": "feature draft/JSON command edge-case checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_create_feature_json.py::TestCreateFeatureFromJson::test_cli_from_json_force_overwrites",
+      "reason": "feature draft/JSON command edge-case checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_create_feature_json.py::TestCreateFeatureFromJson::test_cli_legacy_path_still_works",
+      "reason": "feature draft/JSON command edge-case checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_create_feature_json.py::TestCreateFeatureFromJson::test_cli_legacy_dry_run_writes_nothing",
+      "reason": "feature draft/JSON command edge-case checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_create_feature_json.py::TestCreateFeatureFromJson::test_cli_legacy_rejects_empty_area",
+      "reason": "feature draft/JSON command edge-case checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorPasses::test_explicit_config_uses_resolved_paths_without_relative_warnings",
+      "reason": "doctor diagnostic edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_doctor_diagnostics.py::TestDoctorReportsMissing::test_reports_missing_tests_dir",
+      "reason": "doctor diagnostic edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_official.py::TestMissingOfficialDependency::test_import_error_message_mentions_extra",
+      "reason": "technical regression below behavior-scenario granularity; review before committing"
+    },
+    {
+      "nodeid": "tests/test_gherkin_parser.py::test_parse_ignores_comments_and_blanks",
+      "reason": "parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_parser.py::test_parse_multiple_scenarios",
+      "reason": "parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_parser.py::test_parse_and_but_keywords",
+      "reason": "parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_parser.py::test_parse_multi_tag_line",
+      "reason": "parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_parser.py::test_parse_mixed_tag_styles",
+      "reason": "parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_parser.py::test_parse_multiple_rules_and_scenarios",
+      "reason": "parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_parser.py::test_scenario_after_rule_belongs_to_rule",
+      "reason": "parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_parser.py::test_parse_target_example_round_trip",
+      "reason": "parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_parser.py::test_parse_example_keyword_and_line_numbers",
+      "reason": "parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicValid::test_valid_simple_feature",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicValid::test_valid_with_rule",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicValid::test_valid_with_tags",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicValid::test_valid_with_description",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicValid::test_valid_with_and_but",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicValid::test_valid_with_example_keyword",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicValid::test_valid_with_comments",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicUnsupported::test_rejects_background",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicUnsupported::test_rejects_scenario_outline",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicUnsupported::test_rejects_scenario_template",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicUnsupported::test_rejects_examples_keyword",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicUnsupported::test_rejects_data_table",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicUnsupported::test_rejects_doc_string",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicUnsupported::test_rejects_wildcard_step",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicUnsupported::test_rejects_junk_line_in_scenario_after_steps",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicUnsupported::test_rejects_multiple_features",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicUnsupported::test_rejects_missing_feature",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_validation.py::TestValidateClassicUnsupported::test_includes_source_path_in_error",
+      "reason": "validation edge-case matrix below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_writer.py::test_multiple_scenarios",
+      "reason": "writer unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_writer.py::test_multi_tag_scenario_on_one_line",
+      "reason": "writer unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_writer.py::TestWriterRejectsUnsupportedKeywords::test_rejects_scenario_outline_in_classic",
+      "reason": "writer unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_writer.py::TestWriterRejectsUnsupportedKeywords::test_rejects_scenario_template_in_classic",
+      "reason": "writer unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_gherkin_writer.py::TestWriterRejectsUnsupportedKeywords::test_accepts_example_keyword",
+      "reason": "writer unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_init_initialization.py::TestInitJsonShape::test_json_shape",
+      "reason": "init idempotency/safety checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_init_initialization.py::TestReadmeIsSpecweaveManaged::test_non_managed_content",
+      "reason": "init idempotency/safety checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_init_initialization.py::TestReadmeIsSpecweaveManaged::test_managed_content",
+      "reason": "init idempotency/safety checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_integrations_archledger.py::test_render_candidate_from_parsed_feature",
+      "reason": "technical regression below behavior-scenario granularity; review before committing"
+    },
+    {
+      "nodeid": "tests/test_integrations_taskledger.py::test_load_legacy_mvp_shape",
+      "reason": "Taskledger integration conversion edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_integrations_taskledger.py::test_task_id_from_report_missing_is_empty",
+      "reason": "Taskledger integration conversion edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_integrations_taskledger.py::test_write_evidence_round_trip",
+      "reason": "Taskledger integration conversion edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_integrations_taskledger.py::test_write_evidence_explicit_task_id",
+      "reason": "Taskledger integration conversion edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_integrations_taskledger.py::test_import_taskledger_to_canonical_behavior_feature",
+      "reason": "Taskledger integration conversion edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_integrations_taskledger.py::test_import_taskledger_writes_classic_feature",
+      "reason": "Taskledger integration conversion edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_python_ast_reader.py::test_discover_specweave_short_comment_mapping",
+      "reason": "AST reader unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_python_ast_reader.py::test_discover_specweave_block_comment_mapping",
+      "reason": "AST reader unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_python_ast_reader.py::test_discover_pytest_tests_lists_all_test_functions",
+      "reason": "AST reader unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_python_ast_reader.py::test_collect_pytest_tests_keeps_unmapped_tests",
+      "reason": "AST reader unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_python_ast_reader.py::test_discover_specweave_tests_qualifies_class_mapping_nodeids",
+      "reason": "AST reader unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_python_ast_reader.py::test_pytest_discovery_ignores_non_collectible_class_nesting",
+      "reason": "AST reader unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_fail_closed.py::test_scenario_without_bdd_tag_is_unlinked",
+      "reason": "fail-closed report edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_fail_closed.py::test_title_only_never_drives_matching",
+      "reason": "fail-closed report edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_fail_closed.py::test_passing_report_only_when_all_gates_pass",
+      "reason": "fail-closed report edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_mapping.py::test_summarize_fails_on_skipped_unless_allowed",
+      "reason": "coverage aggregation unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_mapping.py::test_summarize_fails_on_undefined_and_pending",
+      "reason": "coverage aggregation unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_mapping.py::test_matching_never_uses_title",
+      "reason": "coverage aggregation unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_mapping.py::test_require_expected_coverage_all_present_passes",
+      "reason": "coverage aggregation unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_mapping.py::test_require_expected_coverage_only_failing_counts_as_missing",
+      "reason": "coverage aggregation unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_mapping.py::test_empty_expected_is_passing",
+      "reason": "coverage aggregation unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_mapping.py::test_fail_closed_no_passing_scenario",
+      "reason": "coverage aggregation unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_parsers.py::test_junit_tags_from_properties",
+      "reason": "report parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_parsers.py::test_normalize_junit_skipped_fails_closed",
+      "reason": "report parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_parsers.py::test_normalize_junit_all_passed",
+      "reason": "report parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_parsers.py::test_parse_pytest_junit_case_nodeid_and_file",
+      "reason": "report parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_parsers.py::test_parse_junit_preserves_nodeid_and_test_file",
+      "reason": "report parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_parsers.py::test_skipped_fails_closed_by_default",
+      "reason": "report parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_parsers.py::test_allow_skipped_does_not_fail",
+      "reason": "report parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_parsers.py::test_failed_step_fails_scenario_and_report",
+      "reason": "report parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_parsers.py::test_normalized_dict_shape",
+      "reason": "report parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_reports_parsers.py::test_unsupported_format_raises",
+      "reason": "report parser unit edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_review_spec_review.py::TestReviewJsonShape::test_json_shape",
+      "reason": "technical regression below behavior-scenario granularity; review before committing"
+    },
+    {
+      "nodeid": "tests/test_taskledger_draft.py::TestTaskledgerDraft::test_creates_draft_from_feature",
+      "reason": "Taskledger draft JSON/unit checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_taskledger_draft.py::TestTaskledgerDraft::test_draft_does_not_require_taskledger_import",
+      "reason": "Taskledger draft JSON/unit checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_taskledger_draft.py::TestTaskledgerDraft::test_draft_json_is_valid",
+      "reason": "Taskledger draft JSON/unit checks below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestSlug::test_special_chars",
+      "reason": "translation helper edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestDeriveArea::test_nested",
+      "reason": "translation helper edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestDeriveFeatureTitle::test_test_prefix",
+      "reason": "translation helper edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestDeriveFeatureTitle::test_test_suffix",
+      "reason": "translation helper edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinFromSinglePytestFile::test_creates_feature",
+      "reason": "translation helper edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinFromSinglePytestFile::test_includes_bdd_id",
+      "reason": "translation helper edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinGroupsByArea::test_groups_by_file",
+      "reason": "translation helper edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinGroupsByArea::test_rejects_unsupported_grouping",
+      "reason": "translation helper edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinGroupsByArea::test_duplicate_ids_are_deterministic",
+      "reason": "translation helper edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinPreservesExisting::test_preserves_existing_bdd_id",
+      "reason": "translation helper edge cases below behavior-scenario granularity"
+    },
+    {
+      "nodeid": "tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinJsonShape::test_json_shape",
+      "reason": "translation helper edge cases below behavior-scenario granularity"
+    }
+  ],
+  "note": "Draft starter policy generated from current reverse coverage gaps. Review each item before committing.",
+  "schema_version": 1
+}

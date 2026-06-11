@@ -84,6 +84,21 @@ Feature: Static behavior coverage checks
       Then the pytest test appears in unmapped_tests
       And the pytest-side summary counts it as unmapped
 
+    @bdd-coverage-pytest-intentional-unmapped
+    Example: Coverage accepts explicitly waived pytest tests
+      Given a pytest test function with an intentional unmapped waiver
+      When specweave builds the behavior coverage
+      Then the pytest test appears with status "waived"
+      And the pytest test is not counted as unmapped
+      And reverse coverage does not fail because of that test
+
+    @bdd-coverage-pytest-intentional-unmapped-policy-file
+    Example: Coverage accepts intentional unmapped policy files
+      Given an intentional unmapped policy lists a pytest node id
+      When specweave builds the behavior coverage
+      Then the pytest test appears with status "waived"
+      And the policy-file waiver keeps reverse coverage fail-closed for new tests
+
     @bdd-coverage-pytest-stale
     Example: Coverage reports stale pytest mappings in the pytest view
       Given a pytest test function mapped to a missing scenario id
