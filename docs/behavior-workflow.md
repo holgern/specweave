@@ -1,6 +1,6 @@
 # Behavior Workflow
 
-The canonical workflow is classic Gherkin under `specs/behavior/features` plus
+The canonical workflow is classic Gherkin under `specs/behaviour/features` plus
 plain pytest under `tests`.
 
 ## 1. Initialize
@@ -27,7 +27,7 @@ specweave create feature \
 Brownfield from tests:
 
 ```bash
-specweave create gherkin --from-tests tests --out specs/behavior/features
+specweave create gherkin --from-tests tests --out specs/behaviour/features
 specweave review specs
 ```
 
@@ -37,15 +37,15 @@ Start traceability work with SpecWeave's review commands instead of broad source
 
 ```bash
 specweave review specs
-specweave review coverage --view both --show gaps --format markdown --out specs/behavior/reports/specweave/coverage-gaps.md
-specweave behavior mappings --tests tests --format json
+specweave review coverage --view both --show gaps --format markdown --out specs/behaviour/reports/specweave/coverage-gaps.md
+specweave behaviour mappings --tests tests --format json
 ```
 
 If features were generated from pytest and coverage shows many candidate tests, run a dry-run autolink first:
 
 ```bash
-specweave behavior autolink --features specs/behavior/features --tests tests --strategy generated-id
-specweave behavior autolink --features specs/behavior/features --tests tests --strategy generated-id --apply
+specweave behaviour autolink --features specs/behaviour/features --tests tests --strategy generated-id
+specweave behaviour autolink --features specs/behaviour/features --tests tests --strategy generated-id --apply
 ```
 
 Review the dry-run before using `--apply`. Autolink creates traceability metadata only. It does not validate behavior evidence.
@@ -53,8 +53,8 @@ Review the dry-run before using `--apply`. Autolink creates traceability metadat
 ## 4. Generate index and tests
 
 ```bash
-specweave behavior generate-tests --features specs/behavior/features --tests-dir tests
-specweave behavior index --features specs/behavior/features --out specs/behavior/README.md --manifest specs/behavior/manifest.json --tests-dir tests
+specweave behaviour generate-tests --features specs/behaviour/features --tests-dir tests
+specweave behaviour index --features specs/behaviour/features --out specs/behaviour/README.md --manifest specs/behaviour/manifest.json --tests-dir tests
 ```
 
 ## 5. Check static coverage in both directions
@@ -68,20 +68,19 @@ Use feature-side gaps to add missing `@pytest.mark.specweave` mappings or short 
 ## 5. Import evidence
 
 ```bash
-pytest --junitxml=specs/behavior/reports/pytest-junit.xml
-specweave behavior import-report specs/behavior/reports/pytest-junit.xml --format junit-xml
+pytest --junitxml=specs/behaviour/reports/pytest-junit.xml
+specweave behaviour import-report specs/behaviour/reports/pytest-junit.xml --format junit-xml
 ```
 
-Normalized evidence is written to `specs/behavior/evidence`. Generated runner
-artifacts belong under `specs/behavior/reports` and `specs/behavior/reports/specweave`.
-
+Normalized evidence is written to `specs/behaviour/evidence`. Generated runner
+artifacts belong under `specs/behaviour/reports` and `specs/behaviour/reports/specweave`.
 
 ## Refresh common artifacts
 
 Use the wrapper when you need the standard coverage, mapping inventory, and index artifacts from config paths:
 
 ```bash
-specweave behavior refresh --coverage --mappings --index
+specweave behaviour refresh --coverage --mappings --index
 ```
 
 This avoids repeated shell redirection and keeps output paths consistent.

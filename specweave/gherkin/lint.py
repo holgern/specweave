@@ -22,6 +22,8 @@ _DEPRECATED_PATH_SEGMENTS = (
     "tests/bdd/features",
     "tests/behavior/features",
 )
+_CANONICAL_FEATURE_ROOT = Path("specs/behaviour/features")
+_LEGACY_FEATURE_ROOT = Path("specs/behavior/features")
 
 
 @dataclass(frozen=True)
@@ -83,8 +85,30 @@ def _feature_display_path(path: Path) -> str:
     return _display_path(path).replace("\\", "/")
 
 
+def _path_under_root(path: Path, root: Path) -> bool:
+    parts = Path(_feature_display_path(path)).parts
+    root_parts = root.parts
+    for index in range(len(parts) - len(root_parts) + 1):
+        if parts[index : index + len(root_parts)] == root_parts:
+            return True
+    return False
+
+
+def _relative_feature_path(path: Path, root: Path) -> Path:
+    parts = Path(_feature_display_path(path)).parts
+    root_parts = root.parts
+    for index in range(len(parts) - len(root_parts) + 1):
+        if parts[index : index + len(root_parts)] == root_parts:
+            return Path(*parts[index + len(root_parts) :])
+    raise ValueError(f"{path!s} is not under {root!s}")
+
+
 def _canonical_root(path: Path) -> bool:
-    return _feature_display_path(path).startswith("specs/behavior/features/")
+    return _path_under_root(path, _CANONICAL_FEATURE_ROOT)
+
+
+def _legacy_compatibility_root(path: Path) -> bool:
+    return _path_under_root(path, _LEGACY_FEATURE_ROOT)
 
 
 def _is_deprecated_path(path: Path) -> bool:
@@ -124,7 +148,7 @@ def _feature_path_findings(path: Path) -> list[LintFinding]:
             )
         )
         return findings
-    if not _canonical_root(path):
+    if not _canonical_root(path) and not _legacy_compatibility_root(path):
         findings.append(
             LintFinding(
                 code="SWBEH009",
@@ -132,13 +156,16 @@ def _feature_path_findings(path: Path) -> list[LintFinding]:
                 path=display,
                 message=(
                     "Canonical behavior feature must live under "
-                    "specs/behavior/features."
+                    "specs/behaviour/features."
                 ),
             )
         )
         return findings
 
-    relative = Path(display).relative_to(BEHAVIOR_FEATURES_DIR)
+    relative_root = (
+        _CANONICAL_FEATURE_ROOT if _canonical_root(path) else _LEGACY_FEATURE_ROOT
+    )
+    relative = _relative_feature_path(path, relative_root)
     if len(relative.parts) != 2:
         findings.append(
             LintFinding(
@@ -147,7 +174,7 @@ def _feature_path_findings(path: Path) -> list[LintFinding]:
                 path=display,
                 message=(
                     "Canonical feature path should match "
-                    "specs/behavior/features/<area>/<feature>.feature."
+                    "specs/behaviour/features/<area>/<feature>.feature."
                 ),
             )
         )

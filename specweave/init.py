@@ -5,10 +5,15 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from specweave.config import SpecWeavePaths, render_default_config
+from specweave.config import (
+    SpecWeaveBehaviourPaths,
+    SpecWeavePaths,
+    SpecWeaveSpecificationPaths,
+    render_default_config,
+)
 
-_BEHAVIOR_README_CONTENT = """\
-# Behavior specifications
+_BEHAVIOUR_README_CONTENT = """\
+# Behaviour specifications
 
 This directory is managed by SpecWeave.
 
@@ -23,6 +28,7 @@ Use:
 ```bash
 specweave doctor
 specweave review specs
+specweave behaviour check
 specweave create gherkin --from-tests tests
 ```
 
@@ -33,6 +39,118 @@ Rules:
 - use stable `@bdd-*` tags for scenarios/examples;
 - use `@ac-*` tags only when validating a task acceptance criterion;
 - do not rely on scenario titles as validation keys.
+"""
+
+_SPECIFICATIONS_README_CONTENT = """\
+# Specifications
+
+This directory is managed by SpecWeave.
+
+Canonical specification files live under:
+
+```text
+product.spec.md
+capabilities/*.spec.md
+interfaces/*.spec.md
+integrations/*.spec.md
+```
+
+Use:
+
+```bash
+specweave doctor
+specweave review specifications
+specweave specifications index
+specweave specifications coverage --view both --show gaps
+```
+
+Rules:
+
+- keep stable requirement ids such as `REQ-*`, `INV-*`, and `IF-*`;
+- keep verification links explicit;
+- treat missing or skipped evidence as fail-closed;
+- keep specification ownership separate from behaviour feature files.
+"""
+
+_PRODUCT_SPEC_CONTENT = """\
+---
+id: SPEC-PRODUCT
+title: Product specification
+kind: product-spec
+status: active
+version: 1
+---
+
+# Product specification
+
+## Intent
+
+SpecWeave keeps behaviour specs, specification requirements,
+pytest verification, and validation evidence traceable.
+
+## Requirements
+
+### REQ-PRODUCT-001 — Support behaviour and specifications
+
+SpecWeave SHALL support BDD behaviour feature files and
+SDD specification Markdown files as first-class specification inputs.
+
+Verification:
+- manual: define project-specific verification
+
+### REQ-PRODUCT-002 — Keep plain pytest as default enforcement
+
+SpecWeave SHALL support plain pytest as the default verification mechanism.
+
+Verification:
+- manual: define project-specific verification
+"""
+
+_CAPABILITY_SPEC_CONTENT = """\
+---
+id: SPEC-COV
+title: Coverage and reverse coverage
+kind: capability-spec
+status: active
+version: 1
+---
+
+# Coverage and reverse coverage
+
+## Intent
+
+SpecWeave reports traceability gaps between specification units and pytest tests.
+
+## Requirements
+
+### REQ-COV-001 — Bidirectional coverage
+
+SpecWeave SHALL report coverage from specification units to pytest tests
+and from pytest tests back to specification units.
+
+Verification:
+- manual: define project-specific verification
+"""
+
+_CLI_SPEC_CONTENT = """\
+---
+id: SPEC-CLI
+title: CLI interface
+kind: interface-spec
+status: active
+version: 1
+---
+
+# CLI interface
+
+## Requirements
+
+### IF-CLI-001 — Mode-specific command groups
+
+SpecWeave SHALL expose command groups for behaviour specs and specification specs.
+
+Verification:
+- manual: define project-specific verification
 """
 
 
@@ -58,52 +176,75 @@ def _readme_is_specweave_managed(path: Path) -> bool:
 
 def _resolve_paths(paths: SpecWeavePaths, root: Path) -> SpecWeavePaths:
     """Resolve all relative paths under *root*."""
+
+    def resolve(path: Path) -> Path:
+        return path if path.is_absolute() else root / path
+
+    behaviour = SpecWeaveBehaviourPaths(
+        root=resolve(paths.behaviour.root),
+        features_dir=resolve(paths.behaviour.features_dir),
+        readme=resolve(paths.behaviour.readme),
+        manifest=resolve(paths.behaviour.manifest),
+        mappings_dir=resolve(paths.behaviour.mappings_dir),
+        evidence_dir=resolve(paths.behaviour.evidence_dir),
+        reports_dir=resolve(paths.behaviour.reports_dir),
+        reports_state_dir=resolve(paths.behaviour.reports_state_dir),
+    )
+    specifications = None
+    if paths.specifications is not None:
+        specifications = SpecWeaveSpecificationPaths(
+            root=resolve(paths.specifications.root),
+            product_spec=resolve(paths.specifications.product_spec),
+            readme=resolve(paths.specifications.readme),
+            manifest=resolve(paths.specifications.manifest),
+            capabilities_dir=resolve(paths.specifications.capabilities_dir),
+            interfaces_dir=resolve(paths.specifications.interfaces_dir),
+            integrations_dir=resolve(paths.specifications.integrations_dir),
+            mappings_dir=resolve(paths.specifications.mappings_dir),
+            evidence_dir=resolve(paths.specifications.evidence_dir),
+            reports_dir=resolve(paths.specifications.reports_dir),
+            reports_state_dir=resolve(paths.specifications.reports_state_dir),
+        )
     return SpecWeavePaths(
-        specs_root=root / paths.specs_root,
-        features_dir=root / paths.features_dir,
-        behavior_readme=root / paths.behavior_readme,
-        manifest=root / paths.manifest,
-        tests_dir=root / paths.tests_dir,
-        reports_dir=root / paths.reports_dir,
-        evidence_dir=root / paths.evidence_dir,
-        reports_state_dir=root / paths.reports_state_dir,
-        mapping_dir=root / paths.mapping_dir,
+        specs_root=resolve(paths.specs_root),
+        tests_dir=resolve(paths.tests_dir),
+        behaviour=behaviour,
+        specifications=specifications,
     )
 
 
 def run_init(
     *,
     config_path: Path = Path("specweave.toml"),
-    spelling: str = "behavior",
+    spelling: str = "behaviour",
+    mode: str = "behaviour",
     force: bool = False,
     dry_run: bool = False,
     project_root: Path | None = None,
+    upgrade_layout: bool = False,
 ) -> InitResult:
-    """Run ``specweave init`` and return an ``InitResult``.
+    """Run ``specweave init`` and return an ``InitResult``."""
+    normalized_mode = {"behavior": "behaviour"}.get(mode, mode)
+    if normalized_mode not in {"behaviour", "specifications", "both"}:
+        raise ValueError(
+            "Unsupported init mode: "
+            f"{mode}; expected behaviour, specifications, or both."
+        )
 
-    Parameters
-    ----------
-    config_path:
-        Target config file path (e.g. ``specweave.toml`` or ``.specweave.toml``).
-    spelling:
-        ``"behavior"`` or ``"behaviour"``.
-    force:
-        When true, overwrite existing generated files.
-    dry_run:
-        When true, compute the result but write nothing.
-    project_root:
-        Root directory to resolve relative paths against. Defaults to cwd.
-    """
-    from specweave.config import SpecWeaveConfig
-
-    config_text = render_default_config(spelling=spelling)
-    config = SpecWeaveConfig(spelling=spelling)
+    config_text = render_default_config(spelling=spelling, mode=normalized_mode)
 
     if project_root is None:
         project_root = Path.cwd()
 
-    raw_paths = (
-        config.paths if config.spelling == spelling else _paths_for_spelling(spelling)
+    raw_paths = SpecWeavePaths(
+        specs_root=Path("specs"),
+        tests_dir=Path("tests"),
+        behaviour=_behaviour_paths_for_spelling(spelling),
+        specifications=(
+            SpecWeaveSpecificationPaths()
+            if normalized_mode in {"specifications", "both"}
+            else None
+        ),
     )
     paths = _resolve_paths(raw_paths, project_root)
 
@@ -112,7 +253,19 @@ def run_init(
     skipped: list[Path] = []
     warnings: list[str] = []
 
-    # Config file
+    if (
+        upgrade_layout
+        and normalized_mode in {"behaviour", "both"}
+        and spelling == "behaviour"
+    ):
+        _upgrade_behaviour_layout(
+            project_root=project_root,
+            dry_run=dry_run,
+            created=created,
+            existing=existing,
+            warnings=warnings,
+        )
+
     if config_path.exists() and not force:
         existing.append(config_path)
         warnings.append(
@@ -128,59 +281,30 @@ def run_init(
             config_path.parent.mkdir(parents=True, exist_ok=True)
             config_path.write_text(config_text, encoding="utf-8")
 
-    # Directories to create
-    dirs = [
-        paths.specs_root,
-        paths.features_dir,
-        paths.evidence_dir,
-        paths.mapping_dir,
-        paths.reports_dir,
-        paths.reports_state_dir,
-    ]
+    if normalized_mode in {"behaviour", "both"}:
+        _create_behaviour_layout(
+            paths=paths.behaviour,
+            created=created,
+            existing=existing,
+            skipped=skipped,
+            warnings=warnings,
+            dry_run=dry_run,
+            force=force,
+        )
 
-    for d in dirs:
-        if d.exists():
-            existing.append(d)
-        else:
-            created.append(d)
-            if not dry_run:
-                d.mkdir(parents=True, exist_ok=True)
-
-    # Git placeholders keep empty managed directories present in source control.
-    if config.gitkeep:
-        gitkeep_paths = [
-            paths.features_dir / ".gitkeep",
-            paths.evidence_dir / ".gitkeep",
-            paths.mapping_dir / ".gitkeep",
-            paths.reports_state_dir / ".gitkeep",
-        ]
-        for gitkeep_path in gitkeep_paths:
-            if gitkeep_path.exists():
-                existing.append(gitkeep_path)
-            else:
-                created.append(gitkeep_path)
-                if not dry_run:
-                    gitkeep_path.parent.mkdir(parents=True, exist_ok=True)
-                    gitkeep_path.touch()
-
-    # README
-    readme_path = paths.behavior_readme
-    if readme_path.exists():
-        if not _readme_is_specweave_managed(readme_path):
-            skipped.append(readme_path)
-            warnings.append(
-                f"README {readme_path} has non-SpecWeave content;"
-                " skipping. Use --force to overwrite."
-            )
-        else:
-            existing.append(readme_path)
-            if force and not dry_run:
-                readme_path.write_text(_BEHAVIOR_README_CONTENT, encoding="utf-8")
-    else:
-        created.append(readme_path)
-        if not dry_run:
-            readme_path.parent.mkdir(parents=True, exist_ok=True)
-            readme_path.write_text(_BEHAVIOR_README_CONTENT, encoding="utf-8")
+    if (
+        normalized_mode in {"specifications", "both"}
+        and paths.specifications is not None
+    ):
+        _create_specifications_layout(
+            paths=paths.specifications,
+            created=created,
+            existing=existing,
+            skipped=skipped,
+            warnings=warnings,
+            dry_run=dry_run,
+            force=force,
+        )
 
     return InitResult(
         config_path=config_path,
@@ -189,6 +313,236 @@ def run_init(
         skipped=tuple(skipped),
         warnings=tuple(warnings),
     )
+
+
+def _behaviour_paths_for_spelling(spelling: str) -> SpecWeaveBehaviourPaths:
+    root = Path(f"specs/{spelling}")
+    reports_dir = root / "reports"
+    return SpecWeaveBehaviourPaths(
+        root=root,
+        features_dir=root / "features",
+        readme=root / "README.md",
+        manifest=root / "manifest.json",
+        mappings_dir=root / "mappings",
+        evidence_dir=root / "evidence",
+        reports_dir=reports_dir,
+        reports_state_dir=reports_dir / "specweave",
+    )
+
+
+def _create_behaviour_layout(
+    *,
+    paths: SpecWeaveBehaviourPaths,
+    created: list[Path],
+    existing: list[Path],
+    skipped: list[Path],
+    warnings: list[str],
+    dry_run: bool,
+    force: bool,
+) -> None:
+    dirs = [
+        paths.root,
+        paths.features_dir,
+        paths.evidence_dir,
+        paths.mappings_dir,
+        paths.reports_dir,
+        paths.reports_state_dir,
+    ]
+    _ensure_dirs(dirs, created=created, existing=existing, dry_run=dry_run)
+    _ensure_gitkeeps(
+        [
+            paths.features_dir / ".gitkeep",
+            paths.evidence_dir / ".gitkeep",
+            paths.mappings_dir / ".gitkeep",
+            paths.reports_state_dir / ".gitkeep",
+        ],
+        created=created,
+        existing=existing,
+        dry_run=dry_run,
+    )
+    _write_managed_file(
+        path=paths.readme,
+        content=_BEHAVIOUR_README_CONTENT,
+        created=created,
+        existing=existing,
+        skipped=skipped,
+        warnings=warnings,
+        dry_run=dry_run,
+        force=force,
+        allow_overwrite_if_managed=True,
+    )
+
+
+def _create_specifications_layout(
+    *,
+    paths: SpecWeaveSpecificationPaths,
+    created: list[Path],
+    existing: list[Path],
+    skipped: list[Path],
+    warnings: list[str],
+    dry_run: bool,
+    force: bool,
+) -> None:
+    dirs = [
+        paths.root,
+        paths.capabilities_dir,
+        paths.interfaces_dir,
+        paths.integrations_dir,
+        paths.mappings_dir,
+        paths.evidence_dir,
+        paths.reports_dir,
+        paths.reports_state_dir,
+    ]
+    _ensure_dirs(dirs, created=created, existing=existing, dry_run=dry_run)
+    _ensure_gitkeeps(
+        [
+            paths.capabilities_dir / ".gitkeep",
+            paths.interfaces_dir / ".gitkeep",
+            paths.integrations_dir / ".gitkeep",
+            paths.mappings_dir / ".gitkeep",
+            paths.evidence_dir / ".gitkeep",
+            paths.reports_state_dir / ".gitkeep",
+        ],
+        created=created,
+        existing=existing,
+        dry_run=dry_run,
+    )
+    _write_managed_file(
+        path=paths.readme,
+        content=_SPECIFICATIONS_README_CONTENT,
+        created=created,
+        existing=existing,
+        skipped=skipped,
+        warnings=warnings,
+        dry_run=dry_run,
+        force=force,
+        allow_overwrite_if_managed=True,
+    )
+    _write_managed_file(
+        path=paths.product_spec,
+        content=_PRODUCT_SPEC_CONTENT,
+        created=created,
+        existing=existing,
+        skipped=skipped,
+        warnings=warnings,
+        dry_run=dry_run,
+        force=force,
+        allow_overwrite_if_managed=False,
+    )
+    _write_managed_file(
+        path=paths.capabilities_dir / "coverage.spec.md",
+        content=_CAPABILITY_SPEC_CONTENT,
+        created=created,
+        existing=existing,
+        skipped=skipped,
+        warnings=warnings,
+        dry_run=dry_run,
+        force=force,
+        allow_overwrite_if_managed=False,
+    )
+    _write_managed_file(
+        path=paths.interfaces_dir / "cli.spec.md",
+        content=_CLI_SPEC_CONTENT,
+        created=created,
+        existing=existing,
+        skipped=skipped,
+        warnings=warnings,
+        dry_run=dry_run,
+        force=force,
+        allow_overwrite_if_managed=False,
+    )
+
+
+def _ensure_dirs(
+    dirs: list[Path],
+    *,
+    created: list[Path],
+    existing: list[Path],
+    dry_run: bool,
+) -> None:
+    for directory in dirs:
+        if directory.exists():
+            existing.append(directory)
+        else:
+            created.append(directory)
+            if not dry_run:
+                directory.mkdir(parents=True, exist_ok=True)
+
+
+def _ensure_gitkeeps(
+    files: list[Path],
+    *,
+    created: list[Path],
+    existing: list[Path],
+    dry_run: bool,
+) -> None:
+    for file_path in files:
+        if file_path.exists():
+            existing.append(file_path)
+        else:
+            created.append(file_path)
+            if not dry_run:
+                file_path.parent.mkdir(parents=True, exist_ok=True)
+                file_path.touch()
+
+
+def _write_managed_file(
+    *,
+    path: Path,
+    content: str,
+    created: list[Path],
+    existing: list[Path],
+    skipped: list[Path],
+    warnings: list[str],
+    dry_run: bool,
+    force: bool,
+    allow_overwrite_if_managed: bool,
+) -> None:
+    if path.exists():
+        if allow_overwrite_if_managed and _readme_is_specweave_managed(path):
+            existing.append(path)
+            if force and not dry_run:
+                path.write_text(content, encoding="utf-8")
+            return
+        if force:
+            existing.append(path)
+            if not dry_run:
+                path.write_text(content, encoding="utf-8")
+            return
+        skipped.append(path)
+        warnings.append(f"{path} already exists; use --force to overwrite.")
+        return
+
+    created.append(path)
+    if not dry_run:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+
+
+def _upgrade_behaviour_layout(
+    *,
+    project_root: Path,
+    dry_run: bool,
+    created: list[Path],
+    existing: list[Path],
+    warnings: list[str],
+) -> None:
+    legacy_root = project_root / "specs" / "behavior"
+    canonical_root = project_root / "specs" / "behaviour"
+    if not legacy_root.exists():
+        return
+    if canonical_root.exists():
+        existing.append(canonical_root)
+        warnings.append(
+            "Canonical specs/behaviour already exists; "
+            "skipping upgrade from specs/behavior."
+        )
+        return
+    created.append(canonical_root)
+    warnings.append("Upgrading legacy specs/behavior layout to specs/behaviour.")
+    if not dry_run:
+        canonical_root.parent.mkdir(parents=True, exist_ok=True)
+        legacy_root.rename(canonical_root)
 
 
 def init_result_to_dict(result: InitResult) -> dict:
@@ -203,19 +557,3 @@ def init_result_to_dict(result: InitResult) -> dict:
         "skipped": [str(p) for p in result.skipped],
         "warnings": list(result.warnings),
     }
-
-
-def _paths_for_spelling(spelling: str) -> SpecWeavePaths:
-    spec_segment = f"specs/{spelling}"
-    report_segment = f"reports/{spelling}"
-
-    return SpecWeavePaths(
-        specs_root=Path(spec_segment),
-        features_dir=Path(f"{spec_segment}/features"),
-        behavior_readme=Path(f"{spec_segment}/README.md"),
-        manifest=Path(f"{spec_segment}/manifest.json"),
-        reports_dir=Path(report_segment),
-        evidence_dir=Path(f"{spec_segment}/evidence"),
-        reports_state_dir=Path(f"{report_segment}/specweave"),
-        mapping_dir=Path(f"{spec_segment}/mappings"),
-    )

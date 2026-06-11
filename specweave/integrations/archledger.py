@@ -19,6 +19,7 @@ from pathlib import Path
 
 from specweave.gherkin.model import Feature, Rule, Scenario
 from specweave.reports.mapping import extract_ids_from_tags
+from specweave.specifications.model import SpecificationDocument
 
 
 def _first_tag(tags: tuple[str, ...], prefix: str) -> str | None:
@@ -108,7 +109,67 @@ def write_archledger_candidate(feature: Feature, bdd_id: str, out: str | Path) -
     out_path.write_text(text, encoding="utf-8")
 
 
+def render_archledger_requirement_candidate(
+    document: SpecificationDocument, requirement_id: str
+) -> str:
+    """Render candidate Archledger markdown for a specification requirement."""
+    requirement = next(
+        (item for item in document.requirements if item.id == requirement_id),
+        None,
+    )
+    if requirement is None:
+        raise ValueError(
+            f"No requirement id {requirement_id!r} in specification {document.title!r}"
+        )
+
+    source_lines = [
+        f"- Specification document: {document.spec_id}",
+        f"- Requirement: {requirement.id}",
+        f"- Source file: {document.path}",
+    ]
+    for link in requirement.links:
+        source_lines.append(f"- Link: {link}")
+
+    verification_lines = [
+        f"- {ref.kind}: {ref.target}" for ref in requirement.verification_refs
+    ] or ["- manual: define project-specific verification"]
+
+    sections = [
+        f"# Candidate specification record: {requirement.title}",
+        "",
+        "## Source",
+        "",
+        *source_lines,
+        "",
+        "## Requirement",
+        "",
+        requirement.body or "(no body text)",
+        "",
+        "## Verification",
+        "",
+        *verification_lines,
+        "",
+        "## Rationale",
+        "",
+        requirement.rationale
+        or "Specification requirement candidate for architecture/spec tracking.",
+    ]
+    return "\n".join(sections) + "\n"
+
+
+def write_archledger_requirement_candidate(
+    document: SpecificationDocument, requirement_id: str, out: str | Path
+) -> None:
+    """Render the requirement candidate and write it to *out* as markdown."""
+    text = render_archledger_requirement_candidate(document, requirement_id)
+    out_path = Path(out)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(text, encoding="utf-8")
+
+
 __all__ = [
     "render_archledger_candidate",
+    "render_archledger_requirement_candidate",
     "write_archledger_candidate",
+    "write_archledger_requirement_candidate",
 ]

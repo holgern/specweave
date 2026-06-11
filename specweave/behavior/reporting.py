@@ -11,6 +11,7 @@ from specweave.config import BEHAVIOR_MANIFEST_PATH, PYTEST_TESTS_DIR
 from specweave.python_inspect.ast_reader import (
     SpecweaveTestMapping,
     collect_specweave_tests,
+    is_behavior_mapping,
 )
 from specweave.reports.junit_xml import parse_pytest_junit_cases
 
@@ -95,6 +96,7 @@ def _mapping_indexes(
             candidate for candidate in tests_dir.rglob("*.py") if candidate.is_file()
         )
     )
+    mappings = [mapping for mapping in mappings if is_behavior_mapping(mapping)]
     mappings.extend(_manifest_mappings(manifest_path))
     by_nodeid: dict[str, SpecweaveTestMapping] = {}
     by_file_and_function: dict[tuple[str, str], SpecweaveTestMapping] = {}

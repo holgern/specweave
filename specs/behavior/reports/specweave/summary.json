@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "generated_by": "specweave",
+  "runner": "command",
+  "command": [
+    "python",
+    "-c",
+    "import sys; sys.stdout.write('out'); sys.stderr.write('err')"
+  ],
+  "exit_code": 0,
+  "status": "passed",
+  "started_at": "2026-06-11T11:24:06.600385+00:00",
+  "finished_at": "2026-06-11T11:24:06.600385+00:00",
+  "duration_seconds": 0.10692268899583723,
+  "scenarios": 0,
+  "failed": 0,
+  "evidence": [
+    "specs/behavior/reports/specweave/summary.json",
+    "specweave/stdout.txt",
+    "specweave/stderr.txt"
+  ],
+  "criteria": []
+}

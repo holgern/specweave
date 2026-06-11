@@ -5,17 +5,7 @@ from __future__ import annotations
 from specweave.config import SpecWeaveConfig
 
 
-def run_review(
-    *,
-    config: SpecWeaveConfig | None = None,
-) -> dict:
-    """Run a comprehensive spec review and return a JSON-serialisable result.
-
-    Reuses existing lint, coverage, and index modules.
-    """
-    if config is None:
-        config = SpecWeaveConfig()
-
+def _run_behaviour_review(config: SpecWeaveConfig) -> dict:
     features_dir = config.paths.features_dir
     tests_dir = config.paths.tests_dir
 
@@ -23,14 +13,9 @@ def run_review(
     warnings_count = 0
     errors_count = 0
 
-    # 1. Feature file discovery
-    from specweave.gherkin.lint import collect_feature_files
+    from specweave.gherkin.lint import collect_feature_files, lint_feature_files
 
     feature_files = collect_feature_files((features_dir,))
-
-    # 2. Lint
-    from specweave.gherkin.lint import lint_feature_files
-
     lint_results = lint_feature_files(
         (features_dir,),
         strict=False,
@@ -51,7 +36,6 @@ def run_review(
         else:
             warnings_count += 1
 
-    # 3. Coverage
     from specweave.behavior.coverage import build_behavior_coverage
 
     coverage = build_behavior_coverage(
@@ -112,7 +96,6 @@ def run_review(
         )
         warnings_count += 1
 
-    # 4. Needs-review check
     for feature_path in feature_files:
         try:
             text = feature_path.read_text(encoding="utf-8")
@@ -143,7 +126,6 @@ def run_review(
                     )
                     warnings_count += 1
 
-    # 5. Deprecated paths
     for dep_path in coverage.get("deprecated_paths", []):
         findings.append(
             {
@@ -155,7 +137,6 @@ def run_review(
         )
         warnings_count += 1
 
-    # 6. Forbidden pytest-bdd usage
     for usage in coverage.get("forbidden_pytest_bdd_usages", []):
         findings.append(
             {
@@ -178,7 +159,7 @@ def run_review(
 
     return {
         "schema_version": 1,
-        "command": "review specs",
+        "command": "review behaviour",
         "status": status,
         "summary": {
             "features": features_total,
@@ -196,4 +177,107 @@ def run_review(
             "warnings": warnings_count,
         },
         "findings": findings,
+    }
+
+
+def run_review(
+    *,
+    config: SpecWeaveConfig | None = None,
+    mode: str = "both",
+) -> dict:
+    """Run a behaviour/specifications review and return a JSON-serialisable result."""
+    if config is None:
+        config = SpecWeaveConfig()
+
+    normalized_mode = {
+        "behavior": "behaviour",
+        "bdd": "behaviour",
+        "sdd": "specifications",
+        "specs": "both",
+    }.get(mode, mode)
+
+    if normalized_mode == "behaviour":
+        return _run_behaviour_review(config)
+
+    if normalized_mode == "specifications":
+        if config.paths.specifications is None:
+            return {
+                "schema_version": 1,
+                "command": "review specifications",
+                "status": "passed",
+                "summary": {
+                    "documents": 0,
+                    "requirements": 0,
+                    "verified": 0,
+                    "missing": 0,
+                    "reverse_gaps": 0,
+                    "warnings": 0,
+                    "errors": 0,
+                },
+                "findings": [],
+            }
+        from specweave.specifications.review import run_specifications_review
+
+        return run_specifications_review(
+            root=config.paths.specifications.root,
+            tests_dir=config.paths.tests_dir,
+            mapping_dir=config.paths.specifications.mappings_dir,
+            require_verification=(
+                config.specifications.require_verification
+                if config.specifications is not None
+                else True
+            ),
+        )
+
+    if config.paths.specifications is None:
+        result = _run_behaviour_review(config)
+        result["command"] = "review specs"
+        return result
+
+    behaviour_review = _run_behaviour_review(config)
+    specifications_review = (
+        run_review(config=config, mode="specifications")
+        if config.paths.specifications is not None
+        else None
+    )
+
+    status = "passed"
+    if behaviour_review["status"] != "passed":
+        status = "failed"
+    if (
+        specifications_review is not None
+        and specifications_review["status"] != "passed"
+    ):
+        status = "failed"
+
+    return {
+        "schema_version": 1,
+        "command": "review specs",
+        "status": status,
+        "summary": {
+            "behaviour": behaviour_review["summary"],
+            "specifications": (
+                specifications_review["summary"]
+                if specifications_review is not None
+                else None
+            ),
+            "warnings": behaviour_review["summary"].get("warnings", 0)
+            + (
+                specifications_review["summary"].get("warnings", 0)
+                if specifications_review is not None
+                else 0
+            ),
+            "errors": behaviour_review["summary"].get("errors", 0)
+            + (
+                specifications_review["summary"].get("errors", 0)
+                if specifications_review is not None
+                else 0
+            ),
+        },
+        "modes": {
+            "behaviour": behaviour_review,
+            "specifications": specifications_review,
+        },
+        "findings": behaviour_review["findings"]
+        + ([] if specifications_review is None else specifications_review["findings"]),
     }

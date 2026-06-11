@@ -14,14 +14,16 @@ Generated from archledger records. Do not edit this generated file directly.
 ## Overview
 
 SpecWeave is a Python CLI and library that translates between canonical Gherkin
-behavior specifications, plain pytest enforcement, and normalized BDD execution
-evidence. It is not a task ledger, architecture ledger, or CI system.
+behaviour specifications, Markdown specification requirements, plain pytest
+enforcement, and normalized execution evidence. It is not a task ledger,
+architecture ledger, or CI system.
 
 ## Goals
 
-1. **Keep behavior intent readable.** Gherkin `.feature` (Markdown) files
-   under `specs/behavior/features/<area>/` serve as the human-readable source of
-   truth for what a system should do.
+1. **Keep behaviour intent readable.** Gherkin `.feature` files under
+   `specs/behaviour/features/<area>/` serve as one human-readable source of
+   truth for what a system should do, while `specs/specifications/*.spec.md`
+   captures requirement-centric specifications.
 2. **Keep executable validation traceable.** Plain pytest tests under `tests/`
    are the default enforcement path. SpecWeave maps between Gherkin scenarios
    and pytest via stable `@bdd-*` tags, not scenario titles.
@@ -123,8 +125,8 @@ expose a network API.
 
 - **CLI** (`specweave` console script): Typer-based CLI with `--config`,
   `--json` root options. Human and machine-readable output.
-- **Filesystem**: canonical layout of `specs/behavior/features/<area>/`,
-  `tests/`, `specs/behavior/reports/`, `.specweave/`.
+- **Filesystem**: canonical layout of `specs/behaviour/features/<area>/`,
+  `specs/specifications/`, `tests/`, and per-mode reports/evidence directories.
 - **Taskledger integration**: file-based JSON exchange
   (`specweave/integrations/taskledger.py`). SpecWeave reads task-BDD JSON and
   writes evidence JSON. It never approves plans or manages task lifecycle.

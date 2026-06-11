@@ -85,3 +85,61 @@ def test_trace_rejects_markdown_feature_path(tmp_path: Path) -> None:
     assert result.exit_code != 0
     assert result.exception is not None
     assert "no longer supported" in str(result.exception)
+
+
+def test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    _write(
+        tmp_path / "specs/specifications/product.spec.md",
+        """\
+---
+id: SPEC-PRODUCT
+title: Product specification
+kind: product-spec
+status: active
+---
+
+# Product specification
+
+## Requirements
+
+### REQ-COV-001 — Bidirectional coverage
+
+SpecWeave SHALL report coverage in both directions.
+""",
+    )
+    _write(
+        tmp_path / "tests/test_specs.py",
+        "# specweave:\n"
+        "#   spec: specs/specifications/product.spec.md\n"
+        "#   requirement: REQ-COV-001\n"
+        "def test_bidirectional_coverage() -> None:\n"
+        "    assert True\n",
+    )
+
+    result = runner.invoke(
+        app,
+        [
+            "trace",
+            "REQ-COV-001",
+            "--format",
+            "json",
+            "--tests",
+            str(tmp_path / "tests"),
+        ],
+    )
+
+    assert result.exit_code == 0
+    payload = json.loads(result.stdout)
+    trace = payload["traces"][0]
+    assert trace["subject"]["type"] == "requirement"
+    assert trace["subject"]["id"] == "REQ-COV-001"
+    assert trace["test_refs"][0]["function_name"] == "test_bidirectional_coverage"
+    assert trace["gaps"] == [
+        {
+            "code": "missing_evidence",
+            "message": "No imported evidence references this requirement.",
+        }
+    ]

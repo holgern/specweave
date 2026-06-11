@@ -23,7 +23,10 @@ from specweave.config import (
 from specweave.gherkin.lint import collect_feature_files
 from specweave.gherkin.model import Scenario
 from specweave.gherkin.parser import parse_feature
-from specweave.python_inspect.ast_reader import collect_specweave_tests
+from specweave.python_inspect.ast_reader import (
+    collect_specweave_tests,
+    is_behavior_mapping,
+)
 
 
 def _load_evidence(evidence_dir: Path) -> dict[tuple[str, str], str]:
@@ -61,6 +64,8 @@ def _mapping_lookup(tests_dir: Path) -> dict[tuple[str, str], dict[str, str]]:
     )
     by_key: dict[tuple[str, str], dict[str, str]] = {}
     for mapping in mappings:
+        if not is_behavior_mapping(mapping):
+            continue
         by_key[(mapping.feature, mapping.scenario)] = {
             "test_file": mapping.test_file,
             "nodeid": mapping.nodeid,

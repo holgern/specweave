@@ -5,6 +5,7 @@ Generated from `specs/behavior/features`.
 ## backends
 
 ### pytest-bdd step-skeleton backend
+
 - Path: `specs/behavior/features/backends/pytest-bdd.feature`
 - Summary: SpecWeave provides a legacy/bridge backend that generates pytest-bdd step
 
@@ -23,6 +24,7 @@ Generated from `specs/behavior/features`.
 ## bdd
 
 ### Task-BDD JSON to Gherkin conversion
+
 - Path: `specs/behavior/features/bdd/convert.feature`
 - Summary: SpecWeave converts between its internal Task-BDD JSON model and canonical
 
@@ -51,6 +53,7 @@ Generated from `specs/behavior/features`.
 ## behavior
 
 ### Behavior autolink
+
 - Path: `specs/behavior/features/behavior/autolink.feature`
 - Summary: SpecWeave can convert high-confidence generated scenario ids into explicit pytest mappings.
 
@@ -62,6 +65,7 @@ Generated from `specs/behavior/features`.
 - `bdd-autolink-refresh-wrapper` Refresh regenerates common behavior artifacts -> `tests/test_behavior_autolink.py::test_autolink_uses_config_paths` (bound)
 
 ### Static behavior coverage checks
+
 - Path: `specs/behavior/features/behavior/coverage.feature`
 - Summary: specweave behavior coverage checks the mapping between behavior feature
 
@@ -101,6 +105,7 @@ Generated from `specs/behavior/features`.
 - `bdd-coverage-candidate-tests` Coverage suggests candidate tests without binding by title -> `tests/test_behavior_coverage.py::test_coverage_candidate_tests_are_hints_not_bindings` (bound)
 
 ### Plain pytest skeleton generation
+
 - Path: `specs/behavior/features/behavior/generation.feature`
 - Summary: specweave behavior generate-tests creates plain pytest test skeletons
 
@@ -125,6 +130,7 @@ Generated from `specs/behavior/features`.
 - `bdd-generate-batch` Generation processes all features in a directory -> `tests/test_behavior_generation.py::test_generate_batch` (bound)
 
 ### Behavior index and manifest generation
+
 - Path: `specs/behavior/features/behavior/index.feature`
 - Summary: specweave behavior index generates a Markdown index and JSON manifest
 
@@ -144,6 +150,7 @@ Generated from `specs/behavior/features`.
 - `bdd-index-rules` Manifest preserves Rule structure -> `tests/test_behavior_index.py::test_index_rules` (bound)
 
 ### Behavior evidence import from pytest reports
+
 - Path: `specs/behavior/features/behavior/reporting.feature`
 - Summary: specweave behavior import-report imports pytest/JUnit XML reports into
 
@@ -164,6 +171,7 @@ Generated from `specs/behavior/features`.
 ## cli
 
 ### SpecWeave CLI contract
+
 - Path: `specs/behavior/features/cli/cli-contract.feature`
 - Summary: The SpecWeave CLI provides commands for behavior-driven development
 
@@ -203,6 +211,7 @@ Generated from `specs/behavior/features`.
 ## common
 
 ### Behavior helper functions
+
 - Path: `specs/behavior/features/common/behavior-helpers.feature`
 - Summary: The behavior.common module provides shared helpers for slugification,
 
@@ -236,6 +245,7 @@ Generated from `specs/behavior/features`.
 ## config
 
 ### SpecWeave configuration management
+
 - Path: `specs/behavior/features/config/configuration.feature`
 - Summary: SpecWeave loads project configuration from TOML files, discovers config
 
@@ -264,6 +274,7 @@ Generated from `specs/behavior/features`.
 ## doctor
 
 ### SpecWeave project diagnostics
+
 - Path: `specs/behavior/features/doctor/diagnostics.feature`
 - Summary: specweave doctor checks the project setup, config, paths, and feature
 
@@ -292,6 +303,7 @@ Generated from `specs/behavior/features`.
 ## exchange
 
 ### Exchange schema contracts
+
 - Path: `specs/behavior/features/exchange/schemas.feature`
 - Summary: SpecWeave defines JSON Schema documents for its file-based exchange
 
@@ -309,6 +321,7 @@ Generated from `specs/behavior/features`.
 ## gherkin
 
 ### Gherkin feature file linting
+
 - Path: `specs/behavior/features/gherkin/lint.feature`
 - Summary: The linter checks canonical behavior feature files for structural problems,
 
@@ -337,6 +350,7 @@ Generated from `specs/behavior/features`.
 - `bdd-lint-strict-unsupported` Strict mode warns on Scenario Outline -> `tests/test_gherkin_lint.py::test_lint_strict_unsupported` (bound)
 
 ### Legacy Markdown feature files are rejected
+
 - Path: `specs/behavior/features/gherkin/markdown.feature`
 - Summary: SpecWeave uses classic `.feature` files as the only canonical behavior-spec
 
@@ -353,6 +367,7 @@ Generated from `specs/behavior/features`.
 - `bdd-validation-rejects-markdown` Markdown validation fails closed -> `tests/test_gherkin_validation.py::TestValidateMarkdownUnsupported::test_rejects_markdown_features` (bound)
 
 ### Official Cucumber Gherkin parser adapter
+
 - Path: `specs/behavior/features/gherkin/official.feature`
 - Summary: SpecWeave wraps the official `gherkin-official` parser to validate classic
 
@@ -375,6 +390,7 @@ Generated from `specs/behavior/features`.
 - `bdd-official-preserve-description` Parser preserves multi-line descriptions through official parser -> `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_preserves_description` (bound)
 
 ### Gherkin feature file parsing
+
 - Path: `specs/behavior/features/gherkin/parser.feature`
 - Summary: The Gherkin parser reads classic feature text and produces
 
@@ -396,6 +412,7 @@ Generated from `specs/behavior/features`.
 - `bdd-parser-requires-feature-line` Parser raises ValueError without Feature line -> `tests/test_gherkin_parser.py::test_parse_missing_feature_raises` (bound)
 
 ### Gherkin feature file writing
+
 - Path: `specs/behavior/features/gherkin/writer.feature`
 - Summary: The Gherkin writer serializes Feature dataclass instances back to
 
@@ -410,6 +427,7 @@ Generated from `specs/behavior/features`.
 ## init
 
 ### SpecWeave project initialization
+
 - Path: `specs/behavior/features/init/initialization.feature`
 - Summary: specweave init creates the config file and directory layout for a new
 
@@ -444,6 +462,7 @@ Generated from `specs/behavior/features`.
 ## integrations
 
 ### Archledger integration
+
 - Path: `specs/behavior/features/integrations/archledger.feature`
 - Summary: SpecWeave generates Archledger candidate markdown for scenarios that are
 
@@ -457,6 +476,7 @@ Generated from `specs/behavior/features`.
 - `bdd-archledger-candidate-only` archledger produces candidates, not accepted records -> `tests/test_integrations_archledger.py::test_write_candidate_file` (bound)
 
 ### Combined cross-tool diagnostics
+
 - Path: `specs/behavior/features/integrations/combi.feature`
 - Summary: SpecWeave combi check performs a cross-cutting diagnostic that validates
 
@@ -469,6 +489,7 @@ Generated from `specs/behavior/features`.
 - `bdd-combi-check-strict` Scenario without @bdd-\* tag fails in strict mode -> `tests/test_combi_check.py::test_combi_check_strict_fails_on_missing_bdd_id` (bound)
 
 ### Taskledger integration
+
 - Path: `specs/behavior/features/integrations/taskledger.feature`
 - Summary: SpecWeave exchanges files with Taskledger for task drafts and behavior
 
@@ -488,6 +509,7 @@ Generated from `specs/behavior/features`.
 ## planning
 
 ### Implementation plan generation from features
+
 - Path: `specs/behavior/features/planning/create-plan.feature`
 - Summary: SpecWeave generates implementation-plan Markdown from a Gherkin feature
 
@@ -500,6 +522,7 @@ Generated from `specs/behavior/features`.
 ## python-inspect
 
 ### AST-based Python test inspection
+
 - Path: `specs/behavior/features/python-inspect/ast-reader.feature`
 - Summary: SpecWeave inspects Python test files via AST (abstract syntax tree) without
 
@@ -524,6 +547,7 @@ Generated from `specs/behavior/features`.
 ## reports
 
 ### Fail-closed evidence semantics
+
 - Path: `specs/behavior/features/reports/fail-closed.feature`
 - Summary: SpecWeave enforces fail-closed semantics for acceptance criteria. A
 
@@ -552,6 +576,7 @@ Generated from `specs/behavior/features`.
 - `bdd-fail-closed-exit-code-not-evidence` Passing exit code does not override failed scenarios -> `tests/test_reports_fail_closed.py::test_exit_code_not_used_as_evidence` (bound)
 
 ### Report tag mapping and acceptance coverage
+
 - Path: `specs/behavior/features/reports/mapping.feature`
 - Summary: The reports.mapping module extracts BDD and acceptance criterion IDs
 
@@ -568,6 +593,7 @@ Generated from `specs/behavior/features`.
 - `bdd-criteria-missing-coverage` Expected AC with no scenarios fails coverage -> `tests/test_reports_mapping.py::test_require_expected_coverage_missing_fails` (bound)
 
 ### Report normalization and evidence generation
+
 - Path: `specs/behavior/features/reports/normalization.feature`
 - Summary: specweave report normalize parses runner-native reports (JUnit XML,
 
@@ -594,6 +620,7 @@ Generated from `specs/behavior/features`.
 - `bdd-normalize-evidence-json` Normalization writes Taskledger evidence JSON -> `tests/test_reports_normalization.py::test_normalize_evidence_json` (bound)
 
 ### Report format parsers
+
 - Path: `specs/behavior/features/reports/parsers.feature`
 - Summary: SpecWeave parses JUnit XML and Cucumber JSON reports into ScenarioResult
 
@@ -611,6 +638,7 @@ Generated from `specs/behavior/features`.
 ## review
 
 ### Behavior spec review
+
 - Path: `specs/behavior/features/review/spec-review.feature`
 - Summary: specweave review specs aggregates lint, coverage, and convention findings
 
@@ -646,6 +674,7 @@ Generated from `specs/behavior/features`.
 ## runners
 
 ### Delegated command runner
+
 - Path: `specs/behavior/features/runners/command.feature`
 - Summary: SpecWeave delegates external command execution through a runner that
 
@@ -668,6 +697,7 @@ Generated from `specs/behavior/features`.
 ## trace
 
 ### End-to-end traceability bundle extraction
+
 - Path: `specs/behavior/features/trace/trace.feature`
 - Summary: SpecWeave trace extracts a traceability bundle for a given `@bdd-*` id
 
@@ -682,6 +712,7 @@ Generated from `specs/behavior/features`.
 ## translation
 
 ### Brownfield pytest-to-Gherkin generation
+
 - Path: `specs/behavior/features/translation/pytest-to-gherkin.feature`
 - Summary: specweave create gherkin generates draft Gherkin feature files from
 
@@ -704,6 +735,7 @@ Generated from `specs/behavior/features`.
 - `bdd-translate-dry-run` Dry-run reports without writing files -> `tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinDryRun::test_writes_nothing` (bound)
 
 ### Gherkin-to-test skeleton generation
+
 - Path: `specs/behavior/features/translation/spec-to-code.feature`
 - Summary: SpecWeave generates test skeletons from Gherkin features. It produces step
 

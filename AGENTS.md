@@ -20,6 +20,7 @@ It is not Taskledger, Archledger, or CI.
 - do not create commits
 
 - when using the SpecWeave skill, read `skills/specweave/SKILL.md` from this repository before any globally installed SpecWeave skill and state the loaded skill path
+
 ## Canonical layout
 
 ```text
@@ -74,6 +75,7 @@ Archledger owns:
 - plain pytest under `tests/` is the default enforcement path
 
 Do not match validation by scenario title.
+
 - start coverage linking work with `specweave review coverage --view both --show gaps` before broad source or test greps
 - do not treat bare `@bdd-*` docstring text as a pytest mapping unless the same mapping also includes the feature path
 - end SpecWeave task summaries with Summary, Files changed, Validation, Coverage result, and Remaining work sections

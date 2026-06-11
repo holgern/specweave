@@ -152,14 +152,14 @@ def test_lint_canonical_path(tmp_path: Path) -> None:
 # sw: s=@bdd-lint-area-subdirectory
 def test_lint_area_subdirectory(tmp_path: Path) -> None:
     """Lint warns when feature is not in area subdirectory."""
-    d = tmp_path / "specs" / "behavior" / "features"
+    d = tmp_path / "specs" / "behaviour" / "features"
     d.mkdir(parents=True)
     _write_feature(
         d / "test.feature",
         "Feature: F\n  Example: E\n    Given x\n    When y\n    Then z\n",
     )
     findings = lint_feature_files([d / "test.feature"])
-    assert any(f.code == "SWBEH009" for f in findings)
+    assert any(f.code == "SWBEH010" for f in findings)
 
 
 # sw: f=specs/behavior/features/gherkin/lint.feature

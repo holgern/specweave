@@ -383,18 +383,16 @@ def test_behavior_index_accepts_tests_alias(tmp_path, monkeypatch) -> None:  # t
     assert (tmp_path / "alias-manifest.json").exists()
 
 
-def test_behavior_commands_use_configured_default_paths(
-    tmp_path, monkeypatch
-) -> None:  # type: ignore[no-untyped-def]
+def test_behavior_commands_use_configured_default_paths(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.chdir(tmp_path)
     config_file = tmp_path / "specweave.toml"
     config_file.write_text(
         "schema_version = 1\n"
         "[paths]\n"
-        "features_dir = \"specs/behavior/features\"\n"
-        "tests_dir = \"custom/tests\"\n"
-        "behavior_readme = \"custom/README.md\"\n"
-        "manifest = \"custom/manifest.json\"\n",
+        'features_dir = "specs/behavior/features"\n'
+        'tests_dir = "custom/tests"\n'
+        'behavior_readme = "custom/README.md"\n'
+        'manifest = "custom/manifest.json"\n',
         encoding="utf-8",
     )
     feature_path = _write_plan_gates_feature(tmp_path)
@@ -416,6 +414,7 @@ def test_behavior_commands_use_configured_default_paths(
     assert (tmp_path / "custom/README.md").exists()
     assert (tmp_path / "custom/manifest.json").exists()
     assert feature_path.exists()
+
 
 # sw: f=specs/behavior/features/cli/cli-contract.feature
 # sw: s=@bdd-cli-behavior-coverage
@@ -850,3 +849,75 @@ def test_exit_check_errors(tmp_path, monkeypatch) -> None:
     )
     result = runner.invoke(app, ["behavior", "check"])
     assert result.exit_code != 0 or "SWBEH" in result.stdout
+
+
+def _write_specification_doc(
+    tmp_path: Path,
+    *,
+    relative_path: str,
+    spec_id: str,
+    requirement_id: str,
+) -> Path:
+    path = tmp_path / relative_path
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        f"""\
+---
+id: {spec_id}
+title: {spec_id}
+kind: capability-spec
+status: active
+---
+
+# {spec_id}
+
+## Requirements
+
+### {requirement_id} — Coverage
+
+SpecWeave SHALL report coverage in both directions.
+
+Verification:
+- manual: define project-specific verification
+""",
+        encoding="utf-8",
+    )
+    return path
+
+
+def test_specifications_index_writes_markdown_and_manifest(
+    tmp_path, monkeypatch
+) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    _write_specification_doc(
+        tmp_path,
+        relative_path="specs/specifications/product.spec.md",
+        spec_id="SPEC-PRODUCT",
+        requirement_id="REQ-PRODUCT-001",
+    )
+    _write_specification_doc(
+        tmp_path,
+        relative_path="specs/specifications/capabilities/coverage.spec.md",
+        spec_id="SPEC-COV",
+        requirement_id="REQ-COV-001",
+    )
+
+    result = runner.invoke(app, ["specifications", "index"])
+
+    assert result.exit_code == 0, result.stdout
+    assert (tmp_path / "specs/specifications/README.md").exists()
+    assert (tmp_path / "specs/specifications/manifest.json").exists()
+
+
+def test_sdd_index_alias(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    _write_specification_doc(
+        tmp_path,
+        relative_path="specs/specifications/product.spec.md",
+        spec_id="SPEC-PRODUCT",
+        requirement_id="REQ-PRODUCT-001",
+    )
+
+    result = runner.invoke(app, ["sdd", "index"])
+
+    assert result.exit_code == 0, result.stdout

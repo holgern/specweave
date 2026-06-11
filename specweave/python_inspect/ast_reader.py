@@ -11,14 +11,20 @@ from pathlib import Path
 from specweave.gherkin.model import Scenario, Step
 from specweave.python_inspect.assertions import describe_assert
 
-_SPECWEAVE_COMMENT_RE = re.compile(
-    r"#\s*(?:specweave|sw):\s*(feature|scenario|f|s|unmapped|u)\s*=\s*(.*?)\s*$"
-)
+_SPECWEAVE_COMMENT_RE = re.compile(r"#\s*(?:specweave|sw):\s*(.*?)\s*$")
 _SPECWEAVE_BLOCK_RE = re.compile(
-    r"#\s*(feature|scenario|f|s|unmapped|u)\s*:\s*(.*?)\s*$"
+    r"#\s*(feature|scenario|spec|requirement|f|s|unmapped|u)\s*:\s*(.*?)\s*$"
 )
 _SPECWEAVE_FEATURE_RE = re.compile(
-    r"specs/behavior/features/[^\s\"']+\.feature(?:\.md)?"
+    r"specs/behavio(?:r|ur)/features/[^\s\"']+\.feature(?:\.md)?"
+)
+_SPECWEAVE_SPEC_RE = re.compile(r"specs/specifications/[^\s\"']+\.spec\.md")
+_SPECWEAVE_REQUIREMENT_RE = re.compile(
+    r"\b(?:REQ|INV|IF|DATA|NFR|NGOAL|RISK|OPEN)-[A-Z0-9-]+\b"
+)
+_SPECWEAVE_PAIR_RE = re.compile(
+    r"(?P<key>feature|scenario|spec|requirement|f|s|unmapped|u)\s*=\s*"
+    r"(?P<value>.*?)(?=(?:\s+(?:feature|scenario|spec|requirement|f|s|unmapped|u)\s*=)|$)"
 )
 
 
@@ -29,10 +35,13 @@ class SpecweaveTestMapping:
     function_name: str
     test_file: str
     nodeid: str
-    feature: str
-    scenario: str
     line: int
     source: str
+    feature: str | None = None
+    scenario: str | None = None
+    spec: str | None = None
+    requirement: str | None = None
+    diagnostics: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -110,16 +119,90 @@ def _dotted_name(node: ast.AST) -> str | None:
     return None
 
 
-def _normalize_feature_mapping(feature: str) -> str:
+def _resolve_project_relative(
+    path_text: str, reference_path: Path | None
+) -> Path | None:
+    candidate = Path(path_text)
+    if candidate.exists():
+        return candidate
+    if candidate.is_absolute() or reference_path is None:
+        return None
+    for ancestor in (reference_path.parent, *reference_path.parents):
+        resolved = ancestor / candidate
+        if resolved.exists():
+            return resolved
+    return None
+
+
+def _normalize_feature_mapping(
+    feature: str, *, reference_path: Path | None = None
+) -> str:
     candidate = Path(feature)
     if candidate.exists():
         return _display_path(candidate)
+    resolved = _resolve_project_relative(feature, reference_path)
+    if resolved is not None:
+        return _display_path(resolved)
     return feature
 
 
-def _marker_mapping(
-    node: ast.FunctionDef | ast.AsyncFunctionDef, constants: dict[str, str]
-) -> tuple[str, str] | None:
+def _normalize_spec_mapping(spec: str, *, reference_path: Path | None = None) -> str:
+    candidate = Path(spec)
+    if candidate.exists():
+        return _display_path(candidate)
+    resolved = _resolve_project_relative(spec, reference_path)
+    if resolved is not None:
+        return _display_path(resolved)
+    return spec
+
+
+def _mapping_entries(
+    *,
+    feature: str | None = None,
+    scenario: str | None = None,
+    spec: str | None = None,
+    requirement: str | None = None,
+    reference_path: Path | None = None,
+) -> tuple[list[dict[str, str]], tuple[str, ...]]:
+    entries: list[dict[str, str]] = []
+    diagnostics: list[str] = []
+    if feature is not None or scenario is not None:
+        if feature and scenario:
+            entries.append(
+                {
+                    "feature": _normalize_feature_mapping(
+                        feature, reference_path=reference_path
+                    ),
+                    "scenario": scenario,
+                }
+            )
+        else:
+            diagnostics.append(
+                "Incomplete behaviour mapping requires both feature and scenario."
+            )
+    if spec is not None or requirement is not None:
+        if spec and requirement:
+            entries.append(
+                {
+                    "spec": _normalize_spec_mapping(
+                        spec, reference_path=reference_path
+                    ),
+                    "requirement": requirement,
+                }
+            )
+        else:
+            diagnostics.append(
+                "Incomplete specifications mapping requires both spec and requirement."
+            )
+    return entries, tuple(diagnostics)
+
+
+def _marker_mappings(
+    node: ast.FunctionDef | ast.AsyncFunctionDef,
+    constants: dict[str, str],
+    *,
+    source_path: Path,
+) -> tuple[list[dict[str, str]], tuple[str, ...]]:
     for decorator in node.decorator_list:
         if not isinstance(decorator, ast.Call):
             continue
@@ -131,24 +214,43 @@ def _marker_mapping(
         scenario = _resolve_string(
             kwargs.get("scenario", ast.Constant(None)), constants
         )
-        if feature and scenario:
-            return _normalize_feature_mapping(feature), scenario
-    return None
+        spec = _resolve_string(kwargs.get("spec", ast.Constant(None)), constants)
+        requirement = _resolve_string(
+            kwargs.get("requirement", ast.Constant(None)), constants
+        )
+        return _mapping_entries(
+            feature=feature,
+            scenario=scenario,
+            spec=spec,
+            requirement=requirement,
+            reference_path=source_path,
+        )
+    return [], ()
 
 
 def _canonical_comment_key(key: str) -> str:
     return {"f": "feature", "s": "scenario", "u": "unmapped"}.get(key, key)
 
 
+def _inline_comment_values(line: str) -> dict[str, str]:
+    values: dict[str, str] = {}
+    match = _SPECWEAVE_COMMENT_RE.match(line.strip())
+    if match is None:
+        return values
+    for pair in _SPECWEAVE_PAIR_RE.finditer(match.group(1).strip()):
+        values[_canonical_comment_key(pair.group("key"))] = pair.group("value").strip()
+    return values
+
+
 def _comment_values(lines: list[str], index: int) -> tuple[dict[str, str], int]:
     values: dict[str, str] = {}
-    match = _SPECWEAVE_COMMENT_RE.match(lines[index].strip())
-    if match is not None:
+    inline_values = _inline_comment_values(lines[index])
+    if inline_values:
         while index < len(lines):
-            match = _SPECWEAVE_COMMENT_RE.match(lines[index].strip())
-            if match is None:
+            current_values = _inline_comment_values(lines[index])
+            if not current_values:
                 break
-            values[_canonical_comment_key(match.group(1))] = match.group(2).strip()
+            values.update(current_values)
             index += 1
         return values, index
 
@@ -189,39 +291,38 @@ def _comment_metadata(source: str) -> dict[int, dict[str, str]]:
     return metadata
 
 
-def _comment_mappings(source: str) -> dict[int, tuple[str, str]]:
-    mappings: dict[int, tuple[str, str]] = {}
+def _comment_mappings(source: str) -> dict[int, dict[str, str]]:
+    mappings: dict[int, dict[str, str]] = {}
     for line, values in _comment_metadata(source).items():
-        feature = values.get("feature")
-        scenario = values.get("scenario")
-        if feature and scenario:
-            mappings[line] = (
-                _normalize_feature_mapping(feature),
-                scenario,
-            )
+        if values:
+            mappings[line] = dict(values)
     return mappings
 
 
 def _docstring_mapping(
     node: ast.FunctionDef | ast.AsyncFunctionDef,
-) -> tuple[str, str] | None:
+    *,
+    source_path: Path,
+) -> tuple[list[dict[str, str]], tuple[str, ...]]:
     docstring = ast.get_docstring(node, clean=False)
     if not docstring:
-        return None
+        return [], ()
     feature_match = _SPECWEAVE_FEATURE_RE.search(docstring)
     scenario_match = re.search(r"@bdd-[A-Za-z0-9][A-Za-z0-9_-]*", docstring)
-    if feature_match and scenario_match:
-        return _normalize_feature_mapping(feature_match.group(0)), scenario_match.group(
-            0
-        )
-    return None
+    spec_match = _SPECWEAVE_SPEC_RE.search(docstring)
+    requirement_match = _SPECWEAVE_REQUIREMENT_RE.search(docstring)
+    return _mapping_entries(
+        feature=feature_match.group(0) if feature_match else None,
+        scenario=scenario_match.group(0) if scenario_match else None,
+        spec=spec_match.group(0) if spec_match else None,
+        requirement=requirement_match.group(0) if requirement_match else None,
+        reference_path=source_path,
+    )
 
 
 def _pytest_test_functions(
     tree: ast.Module,
-) -> Iterator[
-    tuple[ast.FunctionDef | ast.AsyncFunctionDef, str | None]
-]:
+) -> Iterator[tuple[ast.FunctionDef | ast.AsyncFunctionDef, str | None]]:
     """Yield pytest tests with the class segment used in their node IDs."""
 
     for node in tree.body:
@@ -251,29 +352,42 @@ def discover_specweave_tests(path: Path) -> list[SpecweaveTestMapping]:
     mappings: list[SpecweaveTestMapping] = []
 
     for node, class_name in _pytest_test_functions(tree):
-        mapping = _marker_mapping(node, constants)
-        source_name = "marker"
-        if mapping is None:
-            mapping = comment_mappings.get(node.lineno)
-            source_name = "comment"
-        if mapping is None:
-            mapping = _docstring_mapping(node)
-            source_name = "docstring"
-        if mapping is None:
-            continue
-        feature, scenario = mapping
-        qualname = f"{class_name}::{node.name}" if class_name else node.name
-        mappings.append(
-            SpecweaveTestMapping(
-                function_name=node.name,
-                test_file=test_file,
-                nodeid=f"{test_file}::{qualname}",
-                feature=feature,
-                scenario=scenario,
-                line=node.lineno,
-                source=source_name,
-            )
+        mapping_entries, diagnostics = _marker_mappings(
+            node, constants, source_path=path
         )
+        source_name = "marker"
+        if not mapping_entries and not diagnostics:
+            values = comment_mappings.get(node.lineno)
+            if values is not None:
+                mapping_entries, diagnostics = _mapping_entries(
+                    feature=values.get("feature"),
+                    scenario=values.get("scenario"),
+                    spec=values.get("spec"),
+                    requirement=values.get("requirement"),
+                    reference_path=path,
+                )
+            source_name = "comment"
+        if not mapping_entries and not diagnostics:
+            mapping_entries, diagnostics = _docstring_mapping(node, source_path=path)
+            source_name = "docstring"
+        if not mapping_entries:
+            continue
+        qualname = f"{class_name}::{node.name}" if class_name else node.name
+        for entry in mapping_entries:
+            mappings.append(
+                SpecweaveTestMapping(
+                    function_name=node.name,
+                    test_file=test_file,
+                    nodeid=f"{test_file}::{qualname}",
+                    feature=entry.get("feature"),
+                    scenario=entry.get("scenario"),
+                    spec=entry.get("spec"),
+                    requirement=entry.get("requirement"),
+                    line=node.lineno,
+                    source=source_name,
+                    diagnostics=diagnostics,
+                )
+            )
     return mappings
 
 
@@ -335,6 +449,18 @@ def collect_pytest_tests(paths: Iterable[Path]) -> list[PytestTestItem]:
     for path in paths:
         items.extend(discover_pytest_tests(path))
     return items
+
+
+def is_behavior_mapping(mapping: SpecweaveTestMapping) -> bool:
+    """Return true when *mapping* targets a behaviour scenario."""
+
+    return mapping.feature is not None and mapping.scenario is not None
+
+
+def is_specification_mapping(mapping: SpecweaveTestMapping) -> bool:
+    """Return true when *mapping* targets a specification requirement."""
+
+    return mapping.spec is not None and mapping.requirement is not None
 
 
 def _function_to_scenario(
@@ -420,6 +546,8 @@ __all__ = [
     "discover_pytest_tests",
     "discover_specweave_tests",
     "extract_test_scenarios",
+    "is_behavior_mapping",
+    "is_specification_mapping",
     "extract_module_docstring",
     "extract_class_rules",
 ]

@@ -6,6 +6,7 @@ from pathlib import Path
 from typer.testing import CliRunner
 
 from specweave.cli import app
+from specweave.integrations.combi import run_combi_check
 
 runner = CliRunner()
 
@@ -87,3 +88,48 @@ def test_combi_check_strict_fails_on_missing_bdd_id(tmp_path: Path) -> None:
 
     assert result.exit_code == 1
     assert "ERROR missing_bdd_id" in result.stdout
+
+
+def test_combi_check_includes_specification_requirements(tmp_path: Path) -> None:
+    _write(
+        tmp_path / "specs/specifications/product.spec.md",
+        """\
+---
+id: SPEC-PRODUCT
+title: Product specification
+kind: product-spec
+status: active
+---
+
+# Product specification
+
+## Requirements
+
+### REQ-COV-001 — Bidirectional coverage
+
+SpecWeave SHALL report coverage in both directions.
+""",
+    )
+    _write(
+        tmp_path / "tests/test_specs.py",
+        "# specweave:\n"
+        "#   spec: specs/specifications/product.spec.md\n"
+        "#   requirement: REQ-COV-001\n"
+        "def test_bidirectional_coverage() -> None:\n"
+        "    assert True\n",
+    )
+
+    payload = run_combi_check(
+        features_dir=tmp_path / "specs/behavior/features",
+        tests_dir=tmp_path / "tests",
+        taskledger_mappings=tmp_path / "specs/behavior/mappings/taskledger",
+        evidence_dir=tmp_path / "specs/behavior/evidence",
+        specifications_dir=tmp_path / "specs/specifications",
+        specifications_evidence_dir=tmp_path / "specs/specifications/evidence",
+        archledger_dir=tmp_path / ".archledger",
+    )
+
+    assert payload["summary"]["requirement_count"] == 1
+    assert {gap["code"] for gap in payload["gaps"]} == {
+        "missing_requirement_evidence",
+    }

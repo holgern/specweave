@@ -23,11 +23,12 @@ def main(
     ctx.obj = build_cli_context(config_path=config, json_output=json_output)
 
 
-# Sub-app for behavior-first commands.
+# Sub-app for behaviour-first commands.
 behavior_app = typer.Typer(
     no_args_is_help=True,
-    help="Work with canonical behavior specs and plain pytest enforcement.",
+    help="Work with canonical behaviour specs and plain pytest enforcement.",
 )
+app.add_typer(behavior_app, name="behaviour")
 app.add_typer(behavior_app, name="behavior")
 
 # Sub-app for BDD conversion commands.
@@ -35,6 +36,18 @@ bdd_app = typer.Typer(
     no_args_is_help=True, help="Convert between task-BDD JSON and feature files."
 )
 app.add_typer(bdd_app, name="bdd")
+
+specifications_app = typer.Typer(
+    no_args_is_help=True,
+    help="Work with specification documents and requirement traceability.",
+)
+app.add_typer(specifications_app, name="specifications")
+
+sdd_app = typer.Typer(
+    no_args_is_help=True,
+    help="Short alias for specification document commands.",
+)
+app.add_typer(sdd_app, name="sdd")
 
 # Sub-app for report normalization commands.
 report_app = typer.Typer(no_args_is_help=True, help="Normalize runner reports.")
@@ -148,7 +161,9 @@ def version(ctx: typer.Context) -> None:
 def init(
     ctx: typer.Context,
     public_config: Annotated[bool, typer.Option("--public-config")] = False,
-    spelling: Annotated[str, typer.Option("--spelling")] = "behavior",
+    spelling: Annotated[str, typer.Option("--spelling")] = "behaviour",
+    mode: Annotated[str, typer.Option("--mode")] = "behaviour",
+    upgrade_layout: Annotated[bool, typer.Option("--upgrade-layout")] = False,
     force: Annotated[bool, typer.Option("--force")] = False,
     dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
 ) -> None:
@@ -162,12 +177,18 @@ def init(
         config_path = cli_ctx.config_path
     else:
         config_path = Path("specweave.toml")
-    result = run_init(
-        config_path=config_path,
-        spelling=spelling,
-        force=force,
-        dry_run=dry_run,
-    )
+    try:
+        result = run_init(
+            config_path=config_path,
+            spelling=spelling,
+            mode=mode,
+            upgrade_layout=upgrade_layout,
+            force=force,
+            dry_run=dry_run,
+        )
+    except ValueError as exc:
+        typer.echo(str(exc), err=True)
+        raise typer.Exit(code=1) from exc
     if cli_ctx.json_output:
         typer.echo(_dump_json(init_result_to_dict(result)))
     else:
@@ -263,6 +284,36 @@ def _coverage_failed(
     if include_unmapped_tests:
         keys.append("unmapped_tests")
     return any(bool(data[key]) for key in keys)
+
+
+def _specifications_root(cli_ctx: CliContext) -> Path:
+    if cli_ctx.config.paths.specifications is not None:
+        return cli_ctx.config.paths.specifications.root
+    return Path("specs/specifications")
+
+
+def _specifications_readme(cli_ctx: CliContext) -> Path:
+    if cli_ctx.config.paths.specifications is not None:
+        return cli_ctx.config.paths.specifications.readme
+    return Path("specs/specifications/README.md")
+
+
+def _specifications_manifest(cli_ctx: CliContext) -> Path:
+    if cli_ctx.config.paths.specifications is not None:
+        return cli_ctx.config.paths.specifications.manifest
+    return Path("specs/specifications/manifest.json")
+
+
+def _specifications_mapping_dir(cli_ctx: CliContext) -> Path:
+    if cli_ctx.config.paths.specifications is not None:
+        return cli_ctx.config.paths.specifications.mappings_dir
+    return Path("specs/specifications/mappings")
+
+
+def _specifications_evidence_dir(cli_ctx: CliContext) -> Path:
+    if cli_ctx.config.paths.specifications is not None:
+        return cli_ctx.config.paths.specifications.evidence_dir
+    return Path("specs/specifications/evidence")
 
 
 @behavior_app.command("check")
@@ -634,7 +685,7 @@ def behavior_import_report(
     out: Annotated[Path | None, typer.Option("--out")] = None,
     tests_dir: Annotated[Path, typer.Option("--tests-dir")] = Path("tests"),
     manifest: Annotated[Path, typer.Option("--manifest")] = Path(
-        "specs/behavior/manifest.json"
+        "specs/behaviour/manifest.json"
     ),
 ) -> None:
     """Import a pytest/JUnit report into behavior evidence JSON."""
@@ -671,6 +722,194 @@ def behavior_import_taskledger(
 
     write_behavior_feature_from_taskledger(source, out)
     typer.echo(f"Wrote behavior feature to {out}")
+
+
+@specifications_app.command("check")
+def specifications_check(
+    ctx: typer.Context,
+    path: Annotated[Path | None, typer.Argument()] = None,
+    json_output: Annotated[bool, typer.Option("--json")] = False,
+) -> None:
+    """Lint specification Markdown files."""
+    from specweave.specifications.lint import lint_specification_files
+
+    cli_ctx: CliContext = ctx.obj
+    target = path or _specifications_root(cli_ctx)
+    findings = lint_specification_files(
+        [target],
+        require_verification=(
+            cli_ctx.config.specifications.require_verification
+            if cli_ctx.config.specifications is not None
+            else True
+        ),
+    )
+    if json_output:
+        typer.echo(
+            _dump_json(
+                {
+                    "schema_version": 1,
+                    "findings": [finding.to_dict() for finding in findings],
+                }
+            )
+        )
+    else:
+        for finding in findings:
+            location = finding.path
+            if finding.line is not None:
+                location = f"{location}:{finding.line}"
+            typer.echo(
+                f"{finding.level.upper()} {finding.code} {location} {finding.message}"
+            )
+    if any(finding.level == "error" for finding in findings):
+        raise typer.Exit(code=1)
+
+
+@specifications_app.command("index")
+def specifications_index(
+    ctx: typer.Context,
+    root: Annotated[Path | None, typer.Option("--root")] = None,
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+    manifest: Annotated[Path | None, typer.Option("--manifest")] = None,
+) -> None:
+    """Generate the specifications Markdown index and manifest."""
+    from specweave.specifications.index import write_specification_index
+    from specweave.specifications.lint import lint_specification_files
+
+    cli_ctx: CliContext = ctx.obj
+    resolved_root = root or _specifications_root(cli_ctx)
+    resolved_out = out or _specifications_readme(cli_ctx)
+    resolved_manifest = manifest or _specifications_manifest(cli_ctx)
+    findings = lint_specification_files(
+        [resolved_root],
+        require_verification=(
+            cli_ctx.config.specifications.require_verification
+            if cli_ctx.config.specifications is not None
+            else True
+        ),
+    )
+    errors = [finding for finding in findings if finding.level == "error"]
+    for finding in findings:
+        if finding.level != "warning":
+            continue
+        location = finding.path
+        if finding.line is not None:
+            location = f"{location}:{finding.line}"
+        typer.echo(
+            f"{finding.level.upper()} {finding.code} {location} {finding.message}"
+        )
+    if errors:
+        for finding in errors:
+            location = finding.path
+            if finding.line is not None:
+                location = f"{location}:{finding.line}"
+            typer.echo(
+                f"{finding.level.upper()} {finding.code} {location} {finding.message}"
+            )
+        raise typer.Exit(code=1)
+
+    index_path, manifest_path = write_specification_index(
+        root=resolved_root,
+        out=resolved_out,
+        manifest_path=resolved_manifest,
+    )
+    typer.echo(f"Wrote specifications index to {index_path}")
+    typer.echo(f"Wrote specifications manifest to {manifest_path}")
+
+
+@specifications_app.command("coverage")
+def specifications_coverage(
+    ctx: typer.Context,
+    root: Annotated[Path | None, typer.Option("--root")] = None,
+    tests: Annotated[Path | None, typer.Option("--tests")] = None,
+    view: Annotated[str, typer.Option("--view")] = "requirement",
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+    show: Annotated[str, typer.Option("--show")] = "all",
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+) -> None:
+    """Check static coverage between specifications and plain pytest tests."""
+    from specweave.specifications.coverage import (
+        build_specification_coverage,
+        render_specification_coverage_markdown,
+        render_specification_coverage_text,
+        write_specification_coverage_json,
+    )
+
+    cli_ctx: CliContext = ctx.obj
+    resolved_root = root or _specifications_root(cli_ctx)
+    resolved_tests = tests or cli_ctx.config.paths.tests_dir
+    data = build_specification_coverage(
+        root=resolved_root,
+        tests_dir=resolved_tests,
+        mapping_dir=_specifications_mapping_dir(cli_ctx),
+    )
+    if output_format == "json":
+        rendered = _dump_json(data)
+        if out is None:
+            typer.echo(rendered)
+        else:
+            write_specification_coverage_json(data, out)
+            typer.echo(f"Wrote specifications coverage to {out}")
+    elif output_format == "text":
+        rendered = render_specification_coverage_text(data, view=view, show=show)
+        if out is None:
+            typer.echo(rendered)
+        else:
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(rendered + "\n", encoding="utf-8")
+            typer.echo(f"Wrote specifications coverage to {out}")
+    elif output_format == "markdown":
+        rendered = render_specification_coverage_markdown(data, view=view, show=show)
+        if out is None:
+            typer.echo(rendered)
+        else:
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(rendered + "\n", encoding="utf-8")
+            typer.echo(f"Wrote specifications coverage to {out}")
+    else:
+        typer.echo(
+            f"Unsupported --format: {output_format}; expected json, text, or markdown.",
+            err=True,
+        )
+        raise typer.Exit(code=1)
+    if data["status"] != "passed":
+        raise typer.Exit(code=1)
+
+
+@specifications_app.command("import-report")
+def specifications_import_report(
+    ctx: typer.Context,
+    report: Annotated[Path, typer.Argument(help="Runner report to import.")],
+    fmt: Annotated[str, typer.Option("--format")] = "junit-xml",
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+    tests_dir: Annotated[Path | None, typer.Option("--tests-dir")] = None,
+    manifest: Annotated[Path | None, typer.Option("--manifest")] = None,
+) -> None:
+    """Import a pytest/JUnit report into specifications evidence JSON."""
+    from specweave.specifications.reporting import (
+        import_pytest_report,
+        write_specification_evidence_json,
+    )
+
+    if fmt != "junit-xml":
+        typer.echo(
+            "specifications import-report currently supports only --format junit-xml.",
+            err=True,
+        )
+        raise typer.Exit(code=1)
+
+    cli_ctx: CliContext = ctx.obj
+    payload = import_pytest_report(
+        report,
+        tests_dir=tests_dir or cli_ctx.config.paths.tests_dir,
+        manifest_path=manifest or _specifications_manifest(cli_ctx),
+    )
+    target = out or (
+        _specifications_evidence_dir(cli_ctx) / f"{report.stem}.pytest-evidence.json"
+    )
+    write_specification_evidence_json(payload, target)
+    typer.echo(f"Wrote pytest specifications evidence to {target}")
+    if payload.get("unmapped"):
+        raise typer.Exit(code=1)
 
 
 # --- compatibility aliases ---------------------------------------------------
@@ -897,6 +1136,73 @@ def report_inspect(
 # --- bdd subcommands -------------------------------------------------------
 
 
+@sdd_app.command("check")
+def sdd_check_alias(
+    ctx: typer.Context,
+    path: Annotated[Path | None, typer.Argument()] = None,
+    json_output: Annotated[bool, typer.Option("--json")] = False,
+) -> None:
+    """Compatibility alias for ``specweave specifications check``."""
+
+    specifications_check(ctx=ctx, path=path, json_output=json_output)
+
+
+@sdd_app.command("index")
+def sdd_index_alias(
+    ctx: typer.Context,
+    root: Annotated[Path | None, typer.Option("--root")] = None,
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+    manifest: Annotated[Path | None, typer.Option("--manifest")] = None,
+) -> None:
+    """Compatibility alias for ``specweave specifications index``."""
+
+    specifications_index(ctx=ctx, root=root, out=out, manifest=manifest)
+
+
+@sdd_app.command("coverage")
+def sdd_coverage_alias(
+    ctx: typer.Context,
+    root: Annotated[Path | None, typer.Option("--root")] = None,
+    tests: Annotated[Path | None, typer.Option("--tests")] = None,
+    view: Annotated[str, typer.Option("--view")] = "requirement",
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+    show: Annotated[str, typer.Option("--show")] = "all",
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+) -> None:
+    """Compatibility alias for ``specweave specifications coverage``."""
+
+    specifications_coverage(
+        ctx=ctx,
+        root=root,
+        tests=tests,
+        view=view,
+        output_format=output_format,
+        show=show,
+        out=out,
+    )
+
+
+@sdd_app.command("import-report")
+def sdd_import_report_alias(
+    ctx: typer.Context,
+    report: Annotated[Path, typer.Argument(help="Runner report to import.")],
+    fmt: Annotated[str, typer.Option("--format")] = "junit-xml",
+    out: Annotated[Path | None, typer.Option("--out")] = None,
+    tests_dir: Annotated[Path | None, typer.Option("--tests-dir")] = None,
+    manifest: Annotated[Path | None, typer.Option("--manifest")] = None,
+) -> None:
+    """Compatibility alias for ``specweave specifications import-report``."""
+
+    specifications_import_report(
+        ctx=ctx,
+        report=report,
+        fmt=fmt,
+        out=out,
+        tests_dir=tests_dir,
+        manifest=manifest,
+    )
+
+
 @bdd_app.command("export")
 def bdd_export(
     from_json: Annotated[Path, typer.Option("--from-json", help="Task-BDD JSON spec.")],
@@ -958,14 +1264,14 @@ def trace_command(
     target: str,
     format_name: Annotated[str, typer.Option("--format")] = "json",
     features: Annotated[Path, typer.Option("--features")] = Path(
-        "specs/behavior/features"
+        "specs/behaviour/features"
     ),
     tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
     evidence: Annotated[Path, typer.Option("--evidence")] = Path(
-        "specs/behavior/evidence"
+        "specs/behaviour/evidence"
     ),
     taskledger_mappings: Annotated[Path, typer.Option("--taskledger-mappings")] = Path(
-        "specs/behavior/mappings/taskledger"
+        "specs/behaviour/mappings/taskledger"
     ),
 ) -> None:
     """Emit a normalized behavior-centered trace bundle."""
@@ -991,14 +1297,14 @@ def trace_command(
 @combi_app.command("check")
 def combi_check(
     features: Annotated[Path, typer.Option("--features")] = Path(
-        "specs/behavior/features"
+        "specs/behaviour/features"
     ),
     tests: Annotated[Path, typer.Option("--tests")] = Path("tests"),
     taskledger_mappings: Annotated[Path, typer.Option("--taskledger-mappings")] = Path(
-        "specs/behavior/mappings/taskledger"
+        "specs/behaviour/mappings/taskledger"
     ),
     evidence: Annotated[Path, typer.Option("--evidence")] = Path(
-        "specs/behavior/evidence"
+        "specs/behaviour/evidence"
     ),
     archledger: Annotated[Path, typer.Option("--archledger")] = Path(".archledger"),
     json_path: Annotated[Path | None, typer.Option("--json")] = None,
@@ -1153,33 +1459,52 @@ def review_coverage(
 def review_specs(
     ctx: typer.Context,
 ) -> None:
-    """Review behavior specs for gaps and convention issues."""
+    """Review enabled specification modes for gaps and convention issues."""
     from specweave.review import run_review
 
     cli_ctx: CliContext = ctx.obj
-    result = run_review(config=cli_ctx.config)
+    result = run_review(config=cli_ctx.config, mode="both")
     if cli_ctx.json_output:
         typer.echo(_dump_json(result))
     else:
         summary = result["summary"]
         status = result["status"]
-        typer.echo(
-            f"SpecWeave review: {status}\n"
-            f"features: {summary['features']}, "
-            f"scenarios: {summary['scenarios']}, "
-            f"bound: {summary['bound']}, "
-            f"missing bindings: {summary['missing_bindings']}"
-        )
-        typer.echo(
-            f"pytest tests: {summary['pytest_tests']}, "
-            f"mapped: {summary['pytest_mapped']}, "
-            f"unmapped: {summary['pytest_unmapped']}, "
-            f"stale mappings: {summary['stale_bindings']}"
-        )
+        typer.echo(f"SpecWeave review: {status}")
+        if "behaviour" in summary:
+            behaviour = summary["behaviour"]
+            typer.echo(
+                "behaviour: "
+                f"features={behaviour['features']} "
+                f"scenarios={behaviour['scenarios']} "
+                f"bound={behaviour['bound']} "
+                f"missing={behaviour['missing_bindings']}"
+            )
+            specifications = summary.get("specifications")
+            if specifications is not None:
+                typer.echo(
+                    "specifications: "
+                    f"documents={specifications['documents']} "
+                    f"requirements={specifications['requirements']} "
+                    f"verified={specifications['verified']} "
+                    f"missing={specifications['missing']}"
+                )
+        else:
+            typer.echo(
+                f"features: {summary['features']}, "
+                f"scenarios: {summary['scenarios']}, "
+                f"bound: {summary['bound']}, "
+                f"missing bindings: {summary['missing_bindings']}"
+            )
+            typer.echo(
+                f"pytest tests: {summary['pytest_tests']}, "
+                f"mapped: {summary['pytest_mapped']}, "
+                f"unmapped: {summary['pytest_unmapped']}, "
+                f"stale mappings: {summary['stale_bindings']}"
+            )
         warnings_count = summary.get("warnings", 0)
         errors_count = summary.get("errors", 0)
         if warnings_count or errors_count:
-            typer.echo(f"warnings: {warnings_count}, errors: {errors_count}")
+            typer.echo(f"warnings={warnings_count} errors={errors_count}")
         typer.echo("")
         typer.echo("Run detailed coverage:")
         typer.echo("  specweave review coverage --view both --show gaps")
@@ -1199,6 +1524,73 @@ def review_specs(
         raise typer.Exit(code=1)
 
 
+@review_app_cli.command("behaviour")
+def review_behaviour(
+    ctx: typer.Context,
+) -> None:
+    """Review only behaviour specs for gaps and convention issues."""
+    from specweave.review import run_review
+
+    cli_ctx: CliContext = ctx.obj
+    result = run_review(config=cli_ctx.config, mode="behaviour")
+    if cli_ctx.json_output:
+        typer.echo(_dump_json(result))
+    else:
+        summary = result["summary"]
+        typer.echo(
+            f"SpecWeave review: {result['status']}\n"
+            f"features: {summary['features']}, "
+            f"scenarios: {summary['scenarios']}, "
+            f"bound: {summary['bound']}, "
+            f"missing bindings: {summary['missing_bindings']}"
+        )
+        typer.echo(
+            f"pytest tests: {summary['pytest_tests']}, "
+            f"mapped: {summary['pytest_mapped']}, "
+            f"unmapped: {summary['pytest_unmapped']}, "
+            f"stale mappings: {summary['stale_bindings']}"
+        )
+    if result["status"] != "passed":
+        raise typer.Exit(code=1)
+
+
+@review_app_cli.command("bdd")
+def review_bdd_alias(ctx: typer.Context) -> None:
+    """Compatibility alias for ``specweave review behaviour``."""
+
+    review_behaviour(ctx=ctx)
+
+
+@review_app_cli.command("specifications")
+def review_specifications(ctx: typer.Context) -> None:
+    """Review only specification documents for gaps and convention issues."""
+    from specweave.review import run_review
+
+    cli_ctx: CliContext = ctx.obj
+    result = run_review(config=cli_ctx.config, mode="specifications")
+    if cli_ctx.json_output:
+        typer.echo(_dump_json(result))
+    else:
+        summary = result["summary"]
+        typer.echo(
+            f"SpecWeave review: {result['status']}\n"
+            f"documents: {summary['documents']}, "
+            f"requirements: {summary['requirements']}, "
+            f"verified: {summary['verified']}, "
+            f"missing: {summary['missing']}, "
+            f"reverse gaps: {summary['reverse_gaps']}"
+        )
+    if result["status"] != "passed":
+        raise typer.Exit(code=1)
+
+
+@review_app_cli.command("sdd")
+def review_sdd_alias(ctx: typer.Context) -> None:
+    """Compatibility alias for ``specweave review specifications``."""
+
+    review_specifications(ctx=ctx)
+
+
 # --- create subcommands ----------------------------------------------------
 
 
@@ -1206,7 +1598,7 @@ def review_specs(
 def create_gherkin(
     ctx: typer.Context,
     from_tests: Annotated[list[Path], typer.Option("--from-tests")],
-    out: Annotated[Path, typer.Option("--out")] = Path("specs/behavior/features"),
+    out: Annotated[Path, typer.Option("--out")] = Path("specs/behaviour/features"),
     group_by: Annotated[str | None, typer.Option("--group-by")] = None,
     mode: Annotated[str, typer.Option("--mode")] = "create",
     force: Annotated[bool, typer.Option("--force")] = False,
@@ -1242,7 +1634,7 @@ def create_gherkin(
 def update_specs(
     ctx: typer.Context,
     from_tests: Annotated[list[Path], typer.Option("--from-tests")],
-    out: Annotated[Path, typer.Option("--out")] = Path("specs/behavior/features"),
+    out: Annotated[Path, typer.Option("--out")] = Path("specs/behaviour/features"),
 ) -> None:
     """Alias for ``create gherkin --mode update``."""
     create_gherkin(
@@ -1432,7 +1824,7 @@ def create_taskledger_task(
     ctx: typer.Context,
     feature: Annotated[Path, typer.Option("--feature")],
     out: Annotated[Path, typer.Option("--out")] = Path(
-        "specs/behavior/mappings/taskledger/draft.json"
+        "specs/behaviour/mappings/taskledger/draft.json"
     ),
 ) -> None:
     """Create a Taskledger task draft JSON from a feature file."""

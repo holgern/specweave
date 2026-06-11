@@ -5,8 +5,9 @@
 
 # specweave
 
-SpecWeave translates between canonical Gherkin behavior specs, plain pytest
-enforcement, and normalized execution evidence.
+SpecWeave translates between canonical Gherkin behaviour specs, Markdown
+specification requirements, plain pytest enforcement, and normalized execution
+evidence.
 
 It is not a task ledger, architecture ledger, or CI system.
 
@@ -14,34 +15,48 @@ It is not a task ledger, architecture ledger, or CI system.
 
 ```text
 specweave.toml
-specs/behavior/README.md
-specs/behavior/manifest.json
-specs/behavior/features/<area>/<feature>.feature
-specs/behavior/evidence/*.json
-specs/behavior/mappings/taskledger/*.json
+specs/behaviour/README.md
+specs/behaviour/manifest.json
+specs/behaviour/features/<area>/<feature>.feature
+specs/behaviour/evidence/*.json
+specs/behaviour/mappings/taskledger/*.json
+specs/specifications/README.md
+specs/specifications/manifest.json
+specs/specifications/product.spec.md
+specs/specifications/capabilities/*.spec.md
+specs/specifications/interfaces/*.spec.md
+specs/specifications/integrations/*.spec.md
+specs/specifications/evidence/*.json
 tests/test_<area>_<feature>.py
-specs/behavior/reports/*.xml
-specs/behavior/reports/specweave/*.json
+specs/behaviour/reports/*.xml
+specs/behaviour/reports/specweave/*.json
 ```
 
 Hidden `.specweave.toml` is still discovered for existing projects, but
 `specweave.toml` is the default config file and classic `.feature` is the only
 canonical feature format.
 
-## Behavior workflow
+Existing `specs/behavior/...` projects still work as deprecated compatibility
+layouts. New projects should use `specs/behaviour/...`.
+
+## Behaviour and specifications workflow
 
 ```bash
-specweave init
+specweave init --mode both
 specweave doctor
-specweave create gherkin --from-tests tests --out specs/behavior/features
+specweave create gherkin --from-tests tests --out specs/behaviour/features
 specweave review specs
 specweave review coverage --view both --show gaps
-specweave behavior autolink --strategy generated-id
-specweave behavior autolink --strategy generated-id --apply
-specweave behavior refresh --coverage --mappings --index
-specweave behavior generate-tests --features specs/behavior/features --tests-dir tests
-pytest --junitxml=specs/behavior/reports/pytest-junit.xml
-specweave behavior import-report specs/behavior/reports/pytest-junit.xml --format junit-xml
+specweave review specifications
+specweave behaviour autolink --strategy generated-id
+specweave behaviour autolink --strategy generated-id --apply
+specweave behaviour refresh --coverage --mappings --index
+specweave behaviour generate-tests --features specs/behaviour/features --tests-dir tests
+pytest --junitxml=specs/behaviour/reports/pytest-junit.xml
+specweave behaviour import-report specs/behaviour/reports/pytest-junit.xml --format junit-xml
+specweave specifications index
+specweave specifications coverage --view both --show gaps
+specweave specifications import-report build/reports/junit.xml --format junit-xml
 ```
 
 ## Classic Gherkin only
@@ -68,18 +83,19 @@ Legacy `.feature.md` files are no longer supported as canonical specs.
 
 ## Evidence and mappings
 
-- normalized evidence: `specs/behavior/evidence`
-- Taskledger mapping artifacts: `specs/behavior/mappings/taskledger`
-- generated runner output: `specs/behavior/reports`
-- SpecWeave runner summaries: `specs/behavior/reports/specweave`
+- behaviour evidence: `specs/behaviour/evidence`
+- behaviour Taskledger mappings: `specs/behaviour/mappings/taskledger`
+- specifications evidence: `specs/specifications/evidence`
+- generated runner output: `specs/behaviour/reports`
+- SpecWeave runner summaries: `specs/behaviour/reports/specweave`
 
 Import pytest/JUnit evidence with:
 
 ```bash
-specweave behavior import-report \
-  specs/behavior/reports/pytest-junit.xml \
+specweave behaviour import-report \
+  specs/behaviour/reports/pytest-junit.xml \
   --format junit-xml \
-  --out specs/behavior/evidence/pytest-evidence.json
+  --out specs/behaviour/evidence/pytest-evidence.json
 ```
 
 For new pytest mappings, prefer `@pytest.mark.specweave(...)` over long comment headers. Long feature paths and scenario ids can be split as adjacent Python string literals, which keeps generated tests Ruff-compatible while preserving exact mapping values.
@@ -89,20 +105,20 @@ For new pytest mappings, prefer `@pytest.mark.specweave(...)` over long comment 
 Taskledger exchange is file-based:
 
 ```bash
-specweave behavior import-taskledger \
-  specs/behavior/mappings/taskledger/task-0123.json \
-  --out specs/behavior/features/task-management/plan-gates.feature
+specweave behaviour import-taskledger \
+  specs/behaviour/mappings/taskledger/task-0123.json \
+  --out specs/behaviour/features/task-management/plan-gates.feature
 
 specweave create taskledger-task \
-  --feature specs/behavior/features/task-management/plan-gates.feature \
-  --out specs/behavior/mappings/taskledger/draft.json
+  --feature specs/behaviour/features/task-management/plan-gates.feature \
+  --out specs/behaviour/mappings/taskledger/draft.json
 ```
 
 Trace and cross-ledger diagnostics remain read-only:
 
 ```bash
 specweave trace @bdd-login-success --format json
-specweave combi check --json specs/behavior/reports/specweave/combi-check.json
+specweave combi check --json specs/behaviour/reports/specweave/combi-check.json
 ```
 
 ## Installation

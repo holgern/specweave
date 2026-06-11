@@ -9,8 +9,10 @@ from specweave.bdd.model import BddExample, BddRule, TaskBddSpec
 from specweave.gherkin.parser import parse_feature
 from specweave.integrations.archledger import (
     render_archledger_candidate,
+    render_archledger_requirement_candidate,
     write_archledger_candidate,
 )
+from specweave.specifications.parser import parse_specification
 
 FEATURE = "specs/behavior/features/integrations/archledger.feature"
 
@@ -92,6 +94,43 @@ def test_write_candidate_file(tmp_path) -> None:  # type: ignore[no-untyped-def]
     content = out.read_text(encoding="utf-8")
     assert "- Task: task-0123" in content
     assert "Given a task has a proposed plan" in content
+
+
+def test_render_requirement_candidate_markdown(tmp_path: Path) -> None:
+    path = tmp_path / "specs/specifications/product.spec.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        """\
+---
+id: SPEC-PRODUCT
+title: Product specification
+kind: product-spec
+status: active
+---
+
+# Product specification
+
+## Requirements
+
+### REQ-COV-001 — Bidirectional coverage
+
+SpecWeave SHALL report coverage in both directions.
+
+Verification:
+- pytest: tests/test_specs.py::test_bidirectional_coverage
+""",
+        encoding="utf-8",
+    )
+
+    markdown = render_archledger_requirement_candidate(
+        parse_specification(path),
+        "REQ-COV-001",
+    )
+
+    assert "# Candidate specification record: Bidirectional coverage" in markdown
+    assert "- Requirement: REQ-COV-001" in markdown
+    assert "- Source file:" in markdown
+    assert "- pytest: tests/test_specs.py::test_bidirectional_coverage" in markdown
 
 
 # --- helpers ---------------------------------------------------------------

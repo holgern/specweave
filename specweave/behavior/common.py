@@ -9,6 +9,8 @@ from pathlib import Path
 from specweave.config import BEHAVIOR_FEATURES_DIR, PYTEST_TESTS_DIR
 from specweave.gherkin.model import Feature, Rule, Scenario
 
+_LEGACY_BEHAVIOR_FEATURES_DIR = Path("specs/behavior/features")
+
 
 def display_path(path: Path) -> str:
     """Return *path* relative to the current directory when possible."""
@@ -75,9 +77,14 @@ def feature_identity(
 
     path = Path(feature_path)
     fs = feature_stem(path)
-    try:
-        relative = path.relative_to(features_root)
-    except ValueError:
+    relative = None
+    for root in (features_root, _LEGACY_BEHAVIOR_FEATURES_DIR):
+        try:
+            relative = path.relative_to(root)
+            break
+        except ValueError:
+            continue
+    if relative is None:
         return slugify(path.parent.name), slugify(fs)
 
     parent = relative.parent

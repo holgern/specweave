@@ -4,7 +4,12 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from specweave.config import SpecWeaveConfig, SpecWeavePaths, load_config
+from specweave.config import (
+    SpecWeaveConfig,
+    SpecWeavePaths,
+    SpecWeaveSpecificationPaths,
+    load_config,
+)
 from specweave.doctor import run_doctor
 
 FEATURE = "specs/behavior/features/doctor/diagnostics.feature"
@@ -20,15 +25,19 @@ class TestDoctorPasses:
         run_init(config_path=tmp_path / "specweave.toml", project_root=tmp_path)
         config = SpecWeaveConfig(
             paths=SpecWeavePaths(
-                specs_root=tmp_path / "specs" / "behavior",
-                features_dir=tmp_path / "specs" / "behavior" / "features",
-                behavior_readme=tmp_path / "specs" / "behavior" / "README.md",
-                manifest=tmp_path / "specs" / "behavior" / "manifest.json",
+                specs_root=tmp_path / "specs",
+                features_dir=tmp_path / "specs" / "behaviour" / "features",
+                behavior_readme=tmp_path / "specs" / "behaviour" / "README.md",
+                manifest=tmp_path / "specs" / "behaviour" / "manifest.json",
                 tests_dir=tmp_path / "tests",
-                reports_dir=tmp_path / "reports" / "behavior",
-                evidence_dir=tmp_path / "specs" / "behavior" / "evidence",
-                reports_state_dir=tmp_path / "reports" / "behavior" / "specweave",
-                mapping_dir=tmp_path / "specs" / "behavior" / "mappings",
+                reports_dir=tmp_path / "specs" / "behaviour" / "reports",
+                evidence_dir=tmp_path / "specs" / "behaviour" / "evidence",
+                reports_state_dir=tmp_path
+                / "specs"
+                / "behaviour"
+                / "reports"
+                / "specweave",
+                mapping_dir=tmp_path / "specs" / "behaviour" / "mappings",
             ),
         )
         (tmp_path / "tests").mkdir()
@@ -40,11 +49,11 @@ class TestDoctorPasses:
     ) -> None:
         project = tmp_path / "project"
         for path in (
-            project / "specs/behavior/features",
+            project / "specs/behaviour/features",
             project / "tests",
-            project / "specs/behavior/reports",
-            project / "specs/behavior/evidence",
-            project / "specs/behavior/mappings",
+            project / "specs/behaviour/reports",
+            project / "specs/behaviour/evidence",
+            project / "specs/behaviour/mappings",
         ):
             path.mkdir(parents=True)
         config_path = tmp_path / "specweave.toml"
@@ -134,12 +143,68 @@ class TestDoctorReportsDeprecatedPaths:
 
         config = SpecWeaveConfig(
             paths=SpecWeavePaths(
-                features_dir=tmp_path / "specs" / "behavior" / "features",
-                specs_root=tmp_path / "specs" / "behavior",
+                specs_root=tmp_path / "specs",
+                features_dir=tmp_path / "specs" / "behaviour" / "features",
             ),
         )
         result = run_doctor(config=config)
         assert any("SWDOC004" in i["code"] for i in result["items"])
+
+    def test_warns_for_deprecated_specs_behavior_layout(self, tmp_path: Path) -> None:
+        config = SpecWeaveConfig(
+            spelling="behavior",
+            paths=SpecWeavePaths(
+                specs_root=tmp_path / "specs",
+                features_dir=tmp_path / "specs" / "behavior" / "features",
+            ),
+        )
+
+        result = run_doctor(config=config)
+
+        assert any(i["code"] == "SWDOC012" for i in result["items"])
+
+
+class TestDoctorSpecifications:
+    def test_reports_missing_specifications_directories(self, tmp_path: Path) -> None:
+        config = SpecWeaveConfig(
+            paths=SpecWeavePaths(
+                specs_root=tmp_path / "specs",
+                features_dir=tmp_path / "specs" / "behaviour" / "features",
+                tests_dir=tmp_path / "tests",
+                reports_dir=tmp_path / "specs" / "behaviour" / "reports",
+                evidence_dir=tmp_path / "specs" / "behaviour" / "evidence",
+                mapping_dir=tmp_path / "specs" / "behaviour" / "mappings",
+                specifications=SpecWeaveSpecificationPaths(
+                    root=tmp_path / "specs" / "specifications",
+                    product_spec=tmp_path
+                    / "specs"
+                    / "specifications"
+                    / "product.spec.md",
+                    readme=tmp_path / "specs" / "specifications" / "README.md",
+                    manifest=tmp_path / "specs" / "specifications" / "manifest.json",
+                    capabilities_dir=tmp_path
+                    / "specs"
+                    / "specifications"
+                    / "capabilities",
+                    interfaces_dir=tmp_path / "specs" / "specifications" / "interfaces",
+                    integrations_dir=tmp_path
+                    / "specs"
+                    / "specifications"
+                    / "integrations",
+                    mappings_dir=tmp_path / "specs" / "specifications" / "mappings",
+                    evidence_dir=tmp_path / "specs" / "specifications" / "evidence",
+                    reports_dir=tmp_path / "specs" / "specifications" / "reports",
+                    reports_state_dir=tmp_path
+                    / "specs"
+                    / "specifications"
+                    / "reports"
+                    / "specweave",
+                ),
+            ),
+        )
+        result = run_doctor(config=config)
+        assert any(i["code"] == "SWDOC013" for i in result["items"])
+        assert any(i["code"] == "SWDOC019" for i in result["items"])
 
 
 class TestDoctorFix:
@@ -149,19 +214,19 @@ class TestDoctorFix:
         """Doctor --fix creates missing directories."""
         config = SpecWeaveConfig(
             paths=SpecWeavePaths(
-                features_dir=tmp_path / "specs" / "behavior" / "features",
+                features_dir=tmp_path / "specs" / "behaviour" / "features",
                 tests_dir=tmp_path / "tests",
-                reports_dir=tmp_path / "reports" / "behavior",
-                evidence_dir=tmp_path / "specs" / "behavior" / "evidence",
-                mapping_dir=tmp_path / "specs" / "behavior" / "mappings",
+                reports_dir=tmp_path / "specs" / "behaviour" / "reports",
+                evidence_dir=tmp_path / "specs" / "behaviour" / "evidence",
+                mapping_dir=tmp_path / "specs" / "behaviour" / "mappings",
             ),
         )
         run_doctor(config=config, fix=True)
-        assert (tmp_path / "specs" / "behavior" / "features").is_dir()
+        assert (tmp_path / "specs" / "behaviour" / "features").is_dir()
         assert (tmp_path / "tests").is_dir()
-        assert (tmp_path / "reports" / "behavior").is_dir()
-        assert (tmp_path / "specs" / "behavior" / "evidence").is_dir()
-        assert (tmp_path / "specs" / "behavior" / "mappings").is_dir()
+        assert (tmp_path / "specs" / "behaviour" / "reports").is_dir()
+        assert (tmp_path / "specs" / "behaviour" / "evidence").is_dir()
+        assert (tmp_path / "specs" / "behaviour" / "mappings").is_dir()
 
     # sw: f=specs/behavior/features/doctor/diagnostics.feature
     # sw: s=@bdd-doctor-unsupported-schema

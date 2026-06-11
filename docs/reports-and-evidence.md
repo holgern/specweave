@@ -9,20 +9,26 @@ SpecWeave normalizes execution evidence with fail-closed semantics.
 
 ## Default locations
 
-- runner reports: `specs/behavior/reports`
-- SpecWeave runner summaries: `specs/behavior/reports/specweave`
-- normalized evidence: `specs/behavior/evidence`
-- Taskledger mapping artifacts: `specs/behavior/mappings/taskledger`
+- behaviour runner reports: `specs/behaviour/reports`
+- behaviour runner summaries: `specs/behaviour/reports/specweave`
+- behaviour evidence: `specs/behaviour/evidence`
+- specifications evidence: `specs/specifications/evidence`
+- Taskledger mapping artifacts: `specs/behaviour/mappings/taskledger`
 
 ## Import example
 
 ```bash
-pytest --junitxml=specs/behavior/reports/pytest-junit.xml
+pytest --junitxml=specs/behaviour/reports/pytest-junit.xml
 
-specweave behavior import-report \
-  specs/behavior/reports/pytest-junit.xml \
+specweave behaviour import-report \
+  specs/behaviour/reports/pytest-junit.xml \
   --format junit-xml \
-  --out specs/behavior/evidence/pytest-evidence.json
+  --out specs/behaviour/evidence/pytest-evidence.json
+
+specweave specifications import-report \
+  build/reports/junit.xml \
+  --format junit-xml \
+  --out specs/specifications/evidence/junit.pytest-evidence.json
 ```
 
 ## Fail-closed rules
@@ -38,5 +44,5 @@ Passing evidence must not be inferred from:
 ```bash
 specweave review coverage --view both --show gaps
 specweave trace @bdd-user-login-success --format json
-specweave combi check --json specs/behavior/reports/specweave/combi-check.json
+specweave combi check --json specs/behaviour/reports/specweave/combi-check.json
 ```

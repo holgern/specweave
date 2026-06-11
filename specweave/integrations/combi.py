@@ -13,8 +13,20 @@ from specweave.behavior.common import (
 from specweave.config import BEHAVIOR_FEATURES_DIR, PYTEST_TESTS_DIR
 from specweave.gherkin.lint import collect_feature_files
 from specweave.gherkin.parser import parse_feature
-from specweave.python_inspect.ast_reader import collect_specweave_tests
-from specweave.trace import _evidence_refs, _load_json_files, _taskledger_refs
+from specweave.python_inspect.ast_reader import (
+    collect_specweave_tests,
+    is_specification_mapping,
+)
+from specweave.specifications.parser import (
+    collect_specification_files,
+    parse_specification,
+)
+from specweave.trace import (
+    _evidence_refs,
+    _load_json_files,
+    _specification_evidence_refs,
+    _taskledger_refs,
+)
 
 
 def _test_files(tests_dir: Path) -> list[Path]:
@@ -58,6 +70,8 @@ def run_combi_check(
     tests_dir: Path = PYTEST_TESTS_DIR,
     taskledger_mappings: Path = Path("specs/behavior/mappings/taskledger"),
     evidence_dir: Path = Path("specs/behavior/evidence"),
+    specifications_dir: Path = Path("specs/specifications"),
+    specifications_evidence_dir: Path = Path("specs/specifications/evidence"),
     archledger_dir: Path = Path(".archledger"),
 ) -> dict[str, Any]:
     """Audit Taskledger, SpecWeave, pytest, evidence, and Archledger links."""
@@ -67,6 +81,7 @@ def run_combi_check(
     mapping_keys = {(mapping.feature, mapping.scenario) for mapping in mappings}
     gaps: list[dict[str, str]] = []
     scenarios: list[dict[str, Any]] = []
+    requirements: list[dict[str, Any]] = []
     seen_ac_ids: set[str] = set()
 
     for feature_path in feature_files:
@@ -116,6 +131,46 @@ def run_combi_check(
                 }
             )
 
+    specification_mappings = [
+        mapping
+        for mapping in collect_specweave_tests(_test_files(tests_dir))
+        if is_specification_mapping(mapping)
+    ]
+    requirement_mapping_keys = {
+        (mapping.spec, mapping.requirement) for mapping in specification_mappings
+    }
+    if specifications_dir.exists():
+        for specification_path in collect_specification_files([specifications_dir]):
+            document = parse_specification(specification_path)
+            spec_ref = display_path(specification_path)
+            for requirement in document.requirements:
+                ref = f"{spec_ref}::{requirement.id}"
+                if (spec_ref, requirement.id) not in requirement_mapping_keys:
+                    gaps.append(
+                        _gap(
+                            "missing_requirement_mapping",
+                            "Requirement has no explicit pytest mapping.",
+                            ref=ref,
+                        )
+                    )
+                if not _specification_evidence_refs(
+                    specifications_evidence_dir, requirement.id
+                ):
+                    gaps.append(
+                        _gap(
+                            "missing_requirement_evidence",
+                            "Requirement has no imported evidence artifact.",
+                            ref=ref,
+                        )
+                    )
+                requirements.append(
+                    {
+                        "spec": spec_ref,
+                        "requirement": requirement.id,
+                        "title": requirement.title,
+                    }
+                )
+
     for mapping in mappings:
         if mapping.test_file and not Path(mapping.test_file).exists():
             gaps.append(
@@ -155,9 +210,11 @@ def run_combi_check(
             "status": archledger_status,
         },
         "scenarios": scenarios,
+        "requirements": requirements,
         "gaps": gaps,
         "summary": {
             "scenario_count": len(scenarios),
+            "requirement_count": len(requirements),
             "gap_count": len(gaps),
             "error_count": sum(1 for gap in gaps if gap["severity"] == "error"),
         },

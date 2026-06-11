@@ -208,6 +208,78 @@ def test_imports_pytest_report():
         path.unlink()
 
 
+def test_discover_specweave_requirement_comment_mapping() -> None:
+    code = """
+# specweave:
+#   spec: specs/specifications/capabilities/coverage.spec.md
+#   requirement: REQ-COV-001
+def test_reports_bidirectional_coverage():
+    pass
+"""
+    path = _write_test_file(code)
+    try:
+        mappings = discover_specweave_tests(path)
+        assert len(mappings) == 1
+        mapping = mappings[0]
+        assert mapping.spec == "specs/specifications/capabilities/coverage.spec.md"
+        assert mapping.requirement == "REQ-COV-001"
+        assert mapping.feature is None
+        assert mapping.scenario is None
+        assert mapping.source == "comment"
+    finally:
+        path.unlink()
+
+
+def test_discover_specweave_marker_requirement_mapping() -> None:
+    code = """
+import pytest
+
+SPEC_PATH = "specs/specifications/capabilities/coverage.spec.md"
+
+
+@pytest.mark.specweave(
+    spec=SPEC_PATH,
+    requirement="REQ-COV-001",
+)
+def test_reports_bidirectional_coverage():
+    pass
+"""
+    path = _write_test_file(code)
+    try:
+        mappings = discover_specweave_tests(path)
+        assert len(mappings) == 1
+        mapping = mappings[0]
+        assert mapping.spec == "specs/specifications/capabilities/coverage.spec.md"
+        assert mapping.requirement == "REQ-COV-001"
+        assert mapping.source == "marker"
+    finally:
+        path.unlink()
+
+
+def test_one_test_can_map_to_bdd_and_sdd() -> None:
+    code = """
+# specweave:
+#   feature: specs/behavior/features/sync/git-sync.feature
+#   scenario: @bdd-imports-pytest-report
+#   spec: specs/specifications/capabilities/coverage.spec.md
+#   requirement: REQ-COV-001
+def test_imports_pytest_report():
+    pass
+"""
+    path = _write_test_file(code)
+    try:
+        mappings = discover_specweave_tests(path)
+        assert len(mappings) == 2
+        bdd_mapping = next(
+            mapping for mapping in mappings if mapping.feature is not None
+        )
+        sdd_mapping = next(mapping for mapping in mappings if mapping.spec is not None)
+        assert bdd_mapping.scenario == "@bdd-imports-pytest-report"
+        assert sdd_mapping.requirement == "REQ-COV-001"
+    finally:
+        path.unlink()
+
+
 # sw: f=specs/behavior/features/python-inspect/ast-reader.feature
 # sw: s=@bdd-ast-discover-docstring
 def test_docstring_mapping_accepts_feature_md(tmp_path: Path, monkeypatch) -> None:
@@ -387,7 +459,6 @@ class TestLogin:
     assert [item.nodeid for item in discover_pytest_tests(path)] == [
         "tests/test_auth_login.py::TestLogin::test_collectible"
     ]
-
 
 
 # sw: f=specs/behavior/features/python-inspect/ast-reader.feature

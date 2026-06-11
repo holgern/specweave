@@ -19,28 +19,28 @@ class TestInitDefault:
         )
         assert result.config_path == tmp_path / "specweave.toml"
         assert (tmp_path / "specweave.toml").exists()
-        assert (tmp_path / "specs" / "behavior" / "evidence").is_dir()
-        assert (tmp_path / "specs" / "behavior" / "mappings").is_dir()
-        assert (tmp_path / "specs" / "behavior" / "reports" / "specweave").is_dir()
-        assert (tmp_path / "specs" / "behavior" / "README.md").exists()
-        assert (tmp_path / "specs" / "behavior" / "features" / ".gitkeep").exists()
-        assert (tmp_path / "specs" / "behavior" / "evidence" / ".gitkeep").exists()
-        assert (tmp_path / "specs" / "behavior" / "mappings" / ".gitkeep").exists()
+        assert (tmp_path / "specs" / "behaviour" / "evidence").is_dir()
+        assert (tmp_path / "specs" / "behaviour" / "mappings").is_dir()
+        assert (tmp_path / "specs" / "behaviour" / "reports" / "specweave").is_dir()
+        assert (tmp_path / "specs" / "behaviour" / "README.md").exists()
+        assert (tmp_path / "specs" / "behaviour" / "features" / ".gitkeep").exists()
+        assert (tmp_path / "specs" / "behaviour" / "evidence" / ".gitkeep").exists()
+        assert (tmp_path / "specs" / "behaviour" / "mappings" / ".gitkeep").exists()
         assert (
-            tmp_path / "specs" / "behavior" / "reports" / "specweave" / ".gitkeep"
+            tmp_path / "specs" / "behaviour" / "reports" / "specweave" / ".gitkeep"
         ).exists()
-        assert (tmp_path / "specs" / "behavior" / "reports").is_dir()
+        assert (tmp_path / "specs" / "behaviour" / "reports").is_dir()
         assert not (tmp_path / ".specweave").exists()
 
     # sw: f=specs/behavior/features/init/initialization.feature
     # sw: s=@bdd-init-creates-gitkeep
-    def test_creates_behavior_paths(self, tmp_path: Path) -> None:
+    def test_creates_behaviour_paths(self, tmp_path: Path) -> None:
         result = run_init(
             config_path=tmp_path / "specweave.toml",
             project_root=tmp_path,
         )
         created_names = [str(p) for p in result.created]
-        assert any("specs" in n and "behavior" in n for n in created_names)
+        assert any("specs" in n and "behaviour" in n for n in created_names)
 
 
 class TestInitBritishSpelling:
@@ -62,6 +62,75 @@ class TestInitBritishSpelling:
         assert (tmp_path / "specs" / "behaviour" / "evidence").is_dir()
         assert (tmp_path / "specs" / "behaviour" / "mappings").is_dir()
         assert (tmp_path / "specs" / "behaviour" / "reports" / "specweave").is_dir()
+
+    def test_creates_legacy_behavior_layout_when_explicit(self, tmp_path: Path) -> None:
+        run_init(
+            config_path=tmp_path / "specweave.toml",
+            spelling="behavior",
+            project_root=tmp_path,
+        )
+        assert (tmp_path / "specs" / "behavior" / "README.md").exists()
+
+
+class TestInitModes:
+    def test_mode_specifications_creates_specifications_layout(
+        self, tmp_path: Path
+    ) -> None:
+        run_init(
+            config_path=tmp_path / "specweave.toml",
+            mode="specifications",
+            project_root=tmp_path,
+        )
+        assert (tmp_path / "specs" / "specifications" / "README.md").exists()
+        assert (tmp_path / "specs" / "specifications" / "product.spec.md").exists()
+        assert (
+            tmp_path / "specs" / "specifications" / "capabilities" / "coverage.spec.md"
+        ).exists()
+        assert (
+            tmp_path / "specs" / "specifications" / "interfaces" / "cli.spec.md"
+        ).exists()
+        assert (
+            tmp_path / "specs" / "specifications" / "reports" / "specweave" / ".gitkeep"
+        ).exists()
+        assert not (tmp_path / "specs" / "behaviour").exists()
+
+    def test_mode_both_creates_both_layouts(self, tmp_path: Path) -> None:
+        run_init(
+            config_path=tmp_path / "specweave.toml",
+            mode="both",
+            project_root=tmp_path,
+        )
+        assert (tmp_path / "specs" / "behaviour" / "README.md").exists()
+        assert (tmp_path / "specs" / "specifications" / "README.md").exists()
+
+    def test_upgrade_layout_migrates_only_when_explicit(self, tmp_path: Path) -> None:
+        no_upgrade_root = tmp_path / "no-upgrade"
+        legacy_root = no_upgrade_root / "specs" / "behavior"
+        (legacy_root / "features").mkdir(parents=True)
+        (legacy_root / "README.md").write_text(
+            "This directory is managed by SpecWeave.\n"
+        )
+
+        run_init(
+            config_path=no_upgrade_root / "specweave.toml",
+            project_root=no_upgrade_root,
+        )
+        assert legacy_root.exists()
+
+        upgrade_root = tmp_path / "with-upgrade"
+        legacy_upgrade_root = upgrade_root / "specs" / "behavior"
+        (legacy_upgrade_root / "features").mkdir(parents=True)
+        (legacy_upgrade_root / "README.md").write_text(
+            "This directory is managed by SpecWeave.\n"
+        )
+        run_init(
+            config_path=upgrade_root / "specweave.toml",
+            project_root=upgrade_root,
+            force=True,
+            upgrade_layout=True,
+        )
+        assert not legacy_upgrade_root.exists()
+        assert (upgrade_root / "specs" / "behaviour").exists()
 
 
 class TestInitCompatibility:
@@ -87,7 +156,7 @@ class TestInitIdempotency:
     # sw: f=specs/behavior/features/init/initialization.feature
     # sw: s=@bdd-init-refuses-overwrite-readme
     def test_does_not_overwrite_non_specweave_readme(self, tmp_path: Path) -> None:
-        readme = tmp_path / "specs" / "behavior" / "README.md"
+        readme = tmp_path / "specs" / "behaviour" / "README.md"
         readme.parent.mkdir(parents=True)
         readme.write_text("# My custom project\n")
 
@@ -101,12 +170,12 @@ class TestInitIdempotency:
     # sw: f=specs/behavior/features/init/initialization.feature
     # sw: s=@bdd-init-warns-existing-config
     def test_reports_existing_directories(self, tmp_path: Path) -> None:
-        (tmp_path / "specs" / "behavior" / "evidence").mkdir(parents=True)
+        (tmp_path / "specs" / "behaviour" / "evidence").mkdir(parents=True)
         result = run_init(
             config_path=tmp_path / "specweave.toml",
             project_root=tmp_path,
         )
-        assert tmp_path / "specs" / "behavior" / "evidence" in result.existing
+        assert tmp_path / "specs" / "behaviour" / "evidence" in result.existing
 
 
 class TestInitForce:
@@ -132,8 +201,8 @@ class TestInitDryRun:
             project_root=tmp_path,
         )
         assert not (tmp_path / "specweave.toml").exists()
-        assert not (tmp_path / "specs" / "behavior" / "reports" / "specweave").exists()
-        assert not (tmp_path / "specs" / "behavior" / "evidence").exists()
+        assert not (tmp_path / "specs" / "behaviour" / "reports" / "specweave").exists()
+        assert not (tmp_path / "specs" / "behaviour" / "evidence").exists()
         assert len(result.created) > 0
 
 

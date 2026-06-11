@@ -22,6 +22,7 @@ from specweave.python_inspect.ast_reader import (
     SpecweaveTestMapping,
     collect_pytest_tests,
     collect_specweave_tests,
+    is_behavior_mapping,
 )
 
 _DEPRECATED_SCAN_PATHS = (
@@ -61,7 +62,12 @@ def _normalize_nodeid(nodeid: str) -> str:
 
 
 def _mapping_sort_key(mapping: SpecweaveTestMapping) -> tuple[str, str, str, int]:
-    return mapping.feature, mapping.scenario, mapping.test_file, mapping.line
+    return (
+        mapping.feature or "",
+        mapping.scenario or "",
+        mapping.test_file,
+        mapping.line,
+    )
 
 
 def _mapping_item(mapping: SpecweaveTestMapping) -> dict[str, Any]:
@@ -409,7 +415,12 @@ def build_behavior_mapping_inventory(
     """Return the raw explicit pytest mapping inventory."""
 
     mappings = sorted(
-        collect_specweave_tests(_test_files(tests_dir)), key=_mapping_sort_key
+        [
+            mapping
+            for mapping in collect_specweave_tests(_test_files(tests_dir))
+            if is_behavior_mapping(mapping)
+        ],
+        key=_mapping_sort_key,
     )
     items = [
         {
@@ -444,7 +455,14 @@ def build_behavior_coverage(
 
     feature_files = _feature_files(features_dir=features_dir, feature_path=feature_path)
     test_files = _selected_test_files(tests_dir, test_file)
-    mappings = sorted(collect_specweave_tests(test_files), key=_mapping_sort_key)
+    mappings = sorted(
+        [
+            mapping
+            for mapping in collect_specweave_tests(test_files)
+            if is_behavior_mapping(mapping)
+        ],
+        key=_mapping_sort_key,
+    )
 
     feature_specs: list[tuple[Path, Any, str, Path]] = []
     expected_scenarios: dict[tuple[str, str], dict[str, Any]] = {}

@@ -152,8 +152,7 @@ def test_generate_avoids_long_specweave_mapping_lines() -> None:
     code = generate_pytest_skeleton(
         feature,
         Path(
-            "specs/behavior/features/cli_command_contract/"
-            "cli-command-contract.feature"
+            "specs/behavior/features/cli_command_contract/cli-command-contract.feature"
         ),
     )
 

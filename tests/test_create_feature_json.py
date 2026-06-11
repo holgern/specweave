@@ -221,7 +221,7 @@ class TestCreateFeatureFromJson:
             ],
         )
         assert result.exit_code == 0, result.stdout
-        feature_path = tmp_path / "specs/behavior/features/auth/password-login.feature"
+        feature_path = tmp_path / "specs/behaviour/features/auth/password-login.feature"
         assert feature_path.exists()
         assert "Feature: Password login" in feature_path.read_text(encoding="utf-8")
 

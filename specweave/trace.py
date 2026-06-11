@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -14,7 +15,14 @@ from specweave.behavior.common import (
 from specweave.config import BEHAVIOR_FEATURES_DIR, PYTEST_TESTS_DIR
 from specweave.gherkin.lint import collect_feature_files
 from specweave.gherkin.parser import parse_feature
-from specweave.python_inspect.ast_reader import collect_specweave_tests
+from specweave.python_inspect.ast_reader import (
+    collect_specweave_tests,
+    is_specification_mapping,
+)
+from specweave.specifications.parser import (
+    collect_specification_files,
+    parse_specification,
+)
 
 
 def _test_files(tests_dir: Path) -> list[Path]:
@@ -76,6 +84,41 @@ def _taskledger_refs(mapping_dir: Path, bdd_id: str) -> list[dict[str, str]]:
     return refs
 
 
+def _specification_evidence_refs(
+    evidence_dir: Path, requirement_id: str
+) -> list[dict[str, str]]:
+    refs: list[dict[str, str]] = []
+    for path, data in _load_json_files(evidence_dir):
+        if not isinstance(data, dict):
+            continue
+        results = data.get("results")
+        if not isinstance(results, list):
+            continue
+        for result in results:
+            if not isinstance(result, dict):
+                continue
+            if result.get("id") != requirement_id:
+                continue
+            status = result.get("status")
+            refs.append(
+                {
+                    "path": display_path(path),
+                    "status": status if isinstance(status, str) else "unknown",
+                }
+            )
+            break
+    return refs
+
+
+def _looks_like_requirement_id(target: str) -> bool:
+    return bool(
+        re.match(
+            r"^(REQ|INV|IF|DATA|NFR|NGOAL|RISK|OPEN)-[A-Z0-9][A-Z0-9-]*$",
+            target,
+        )
+    )
+
+
 def build_trace_bundle(
     target: str,
     *,
@@ -83,8 +126,13 @@ def build_trace_bundle(
     tests_dir: Path = PYTEST_TESTS_DIR,
     evidence_dir: Path = Path("specs/behavior/evidence"),
     taskledger_mappings: Path = Path("specs/behavior/mappings/taskledger"),
+    specifications_dir: Path = Path("specs/specifications"),
+    specifications_evidence_dir: Path = Path("specs/specifications/evidence"),
+    specifications_taskledger_mappings: Path = Path(
+        "specs/specifications/mappings/taskledger"
+    ),
 ) -> dict[str, Any]:
-    """Return a normalized trace bundle for a BDD id or feature path."""
+    """Return a normalized trace bundle for a BDD id, requirement id, or spec path."""
 
     feature_files = (
         collect_feature_files((Path(target),))
@@ -169,6 +217,89 @@ def build_trace_bundle(
                     "test_refs": test_refs,
                     "evidence_refs": evidence_refs,
                     "taskledger_refs": task_refs,
+                    "status": {
+                        "evidence": evidence_refs[0]["status"]
+                        if evidence_refs
+                        else "missing"
+                    },
+                    "gaps": gaps,
+                }
+            )
+    specification_files = (
+        collect_specification_files([Path(target)])
+        if Path(target).exists() and str(target).endswith(".spec.md")
+        else collect_specification_files([specifications_dir])
+    )
+    requirement_target = target if _looks_like_requirement_id(target) else None
+    specification_mappings = [
+        mapping for mapping in mappings if is_specification_mapping(mapping)
+    ]
+    for specification_path in specification_files:
+        document = parse_specification(specification_path)
+        spec_ref = display_path(specification_path)
+        for requirement in document.requirements:
+            if Path(target).exists() and str(target).endswith(".spec.md"):
+                matched = True
+            else:
+                matched = requirement.id == requirement_target
+            if not matched:
+                continue
+            test_refs = [
+                {
+                    "test_file": mapping.test_file,
+                    "nodeid": mapping.nodeid,
+                    "function_name": mapping.function_name,
+                    "line": mapping.line,
+                    "source": mapping.source,
+                }
+                for mapping in specification_mappings
+                if mapping.spec == spec_ref and mapping.requirement == requirement.id
+            ]
+            evidence_refs = _specification_evidence_refs(
+                specifications_evidence_dir, requirement.id
+            )
+            task_refs = _taskledger_refs(
+                specifications_taskledger_mappings, requirement.id
+            )
+            gaps: list[dict[str, str]] = []
+            if not test_refs:
+                gaps.append(
+                    _gap(
+                        "missing_pytest_mapping",
+                        "No explicit pytest mapping was found for this requirement.",
+                    )
+                )
+            if not evidence_refs:
+                gaps.append(
+                    _gap(
+                        "missing_evidence",
+                        "No imported evidence references this requirement.",
+                    )
+                )
+            traces.append(
+                {
+                    "schema": "combi.trace.v1",
+                    "producer": "specweave",
+                    "subject": {
+                        "type": "requirement",
+                        "id": requirement.id,
+                    },
+                    "specification": {
+                        "path": spec_ref,
+                        "title": document.title,
+                        "document_id": document.spec_id,
+                    },
+                    "requirement": {
+                        "title": requirement.title,
+                        "line": requirement.line,
+                        "status": requirement.status,
+                        "kind": requirement.kind,
+                    },
+                    "source_refs": [spec_ref],
+                    "test_refs": test_refs,
+                    "evidence_refs": evidence_refs,
+                    "taskledger_refs": task_refs,
+                    "archledger_refs": [],
                     "status": {
                         "evidence": evidence_refs[0]["status"]
                         if evidence_refs
