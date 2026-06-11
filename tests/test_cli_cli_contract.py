@@ -19,6 +19,59 @@ def test_help_exits_0() -> None:
     result = runner.invoke(app, ["--help"])
     assert result.exit_code == 0
     assert "Usage" in result.stdout
+    assert "review golden" in result.stdout or "review" in result.stdout
+
+
+# sw: f=specs/behavior/features/review/project-health-review.feature
+# sw: s=@bdd-review-golden-command
+def test_review_golden_reports_agent_outputs(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.chdir(tmp_path)
+    _write(
+        tmp_path,
+        ".specweave.toml",
+        """schema_version = 1
+project_root = "."
+spelling = "behavior"
+
+[paths]
+tests_dir = "tests"
+
+[paths.behaviour]
+root = "specs/behavior"
+features_dir = "specs/behavior/features"
+readme = "specs/behavior/README.md"
+manifest = "specs/behavior/manifest.json"
+mappings_dir = "specs/behavior/mappings"
+evidence_dir = "specs/behavior/evidence"
+reports_dir = "specs/behavior/reports"
+reports_state_dir = "specs/behavior/reports/specweave"
+""",
+    )
+    feature = _write_behavior_feature(
+        tmp_path,
+        relative_path="specs/behavior/features/review/project-health-review.feature",
+        title="Review project health for release readiness",
+        scenario_id="@bdd-review-golden-command",
+        scenario_title="Golden review aggregates health checks",
+    )
+    _write(
+        tmp_path,
+        "tests/test_review_golden.py",
+        (
+            f"# sw: f={feature.as_posix()}\n"
+            "# sw: s=@bdd-review-golden-command\n"
+            "def test_review_golden_contract():\n"
+            "    assert True\n"
+        ),
+    )
+
+    result = runner.invoke(app, ["review", "golden"])
+
+    assert result.exit_code == 0, result.stdout
+    assert "SpecWeave golden review: passed" in result.stdout
+    assert Path("specs/behavior/reports/specweave/coverage-gaps.md").exists()
+    assert Path("specs/behavior/reports/specweave/mappings.json").exists()
+    assert Path("specs/behavior/reports/specweave/review.json").exists()
 
 
 def test_version_exits_0() -> None:

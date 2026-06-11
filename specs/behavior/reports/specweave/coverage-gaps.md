@@ -1,0 +1,1364 @@
+# Behavior coverage
+
+**Status:** failed
+
+**Scenario coverage:** 1/104 bound (1.0%), 103 missing, 0 waived
+**Pytest coverage:** 148/417 accepted (35.5%), 40 unmapped, 147 waived, 229 stale
+
+## Features -> pytest
+
+### Missing scenario bindings
+
+- `specs/behavior/features/authoring/canonical-feature-authoring.feature` `@bdd-create-feature-from-options` — Create a feature from command options
+  - expected: `tests/test_authoring_canonical_feature_authoring.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/canonical-feature-authoring.feature` `@bdd-create-feature-from-json-draft` — Create a feature from a JSON draft
+  - expected: `tests/test_authoring_canonical_feature_authoring.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/canonical-feature-authoring.feature` `@bdd-create-feature-refuses-overwrite` — Existing feature files are protected by default
+  - expected: `tests/test_authoring_canonical_feature_authoring.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/canonical-feature-authoring.feature` `@bdd-create-feature-dry-run` — Dry run reports the target without writing
+  - expected: `tests/test_authoring_canonical_feature_authoring.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/canonical-feature-authoring.feature` `@bdd-check-valid-feature` — Valid canonical features pass behavior check
+  - expected: `tests/test_authoring_canonical_feature_authoring.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/canonical-feature-authoring.feature` `@bdd-check-missing-bdd-id` — Scenarios without identifiers are reported
+  - expected: `tests/test_authoring_canonical_feature_authoring.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/canonical-feature-authoring.feature` `@bdd-check-missing-given-when-then` — Incomplete scenarios are reported
+  - expected: `tests/test_authoring_canonical_feature_authoring.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/canonical-feature-authoring.feature` `@bdd-check-markdown-feature-rejected` — Legacy markdown feature files are rejected
+  - expected: `tests/test_authoring_canonical_feature_authoring.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/gherkin-subset.feature` `@bdd-gherkin-accepts-rules-and-examples` — Rules and examples are preserved
+  - expected: `tests/test_authoring_gherkin_subset.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/gherkin-subset.feature` `@bdd-gherkin-accepts-and-but` — And and But steps remain attached to the scenario
+  - expected: `tests/test_authoring_gherkin_subset.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/gherkin-subset.feature` `@bdd-gherkin-official-parser-optional` — Official parser validation can be enabled
+  - expected: `tests/test_authoring_gherkin_subset.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/gherkin-subset.feature` `@bdd-gherkin-rejects-background` — Background is outside the supported subset
+  - expected: `tests/test_authoring_gherkin_subset.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/gherkin-subset.feature` `@bdd-gherkin-rejects-scenario-outline` — Scenario Outline is outside the supported subset
+  - expected: `tests/test_authoring_gherkin_subset.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/gherkin-subset.feature` `@bdd-gherkin-rejects-data-table` — Data tables are outside the supported subset
+  - expected: `tests/test_authoring_gherkin_subset.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/authoring/gherkin-subset.feature` `@bdd-gherkin-rejects-doc-string` — Doc strings are outside the supported subset
+  - expected: `tests/test_authoring_gherkin_subset.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/backends/step-skeleton-backends.feature` `@bdd-backend-registry` — Supported backends are registered
+  - expected: `tests/test_backends_step_skeleton_backends.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+- `specs/behavior/features/backends/step-skeleton-backends.feature` `@bdd-backend-behave-skeleton` — Behave skeleton contains step functions
+  - expected: `tests/test_backends_step_skeleton_backends.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+- `specs/behavior/features/backends/step-skeleton-backends.feature` `@bdd-backend-pytest-bdd-skeleton` — pytest-bdd skeleton contains scenarios and step decorators
+  - expected: `tests/test_backends_step_skeleton_backends.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+- `specs/behavior/features/backends/step-skeleton-backends.feature` `@bdd-backend-rule-scenarios-included` — Rule scenarios are included in backend skeletons
+  - expected: `tests/test_backends_step_skeleton_backends.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+- `specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature` `@bdd-generate-gherkin-from-tests` — Generate a feature from a pytest test file
+  - expected: `tests/test_brownfield_pytest_to_gherkin_discovery.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+- `specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature` `@bdd-generate-gherkin-groups-by-file` — Generated features are grouped by source test file
+  - expected: `tests/test_brownfield_pytest_to_gherkin_discovery.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+- `specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature` `@bdd-generate-gherkin-marks-review-needed` — Generated behavior is clearly marked for human review
+  - expected: `tests/test_brownfield_pytest_to_gherkin_discovery.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+- `specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature` `@bdd-generate-gherkin-preserves-manual-files` — Manual feature files are not overwritten
+  - expected: `tests/test_brownfield_pytest_to_gherkin_discovery.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+- `specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature` `@bdd-generate-gherkin-force-overwrites` — Force allows regenerating a feature
+  - expected: `tests/test_brownfield_pytest_to_gherkin_discovery.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+- `specs/behavior/features/cli/json-and-compatibility.feature` `@bdd-cli-global-json-version` — Version supports global JSON output
+  - expected: `tests/test_cli_json_and_compatibility.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest` (token_overlap)
+    - `tests/test_cli_cli_contract.py::test_sdd_index_alias` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+- `specs/behavior/features/cli/json-and-compatibility.feature` `@bdd-cli-create-feature-json` — Create feature reports machine-readable ids
+  - expected: `tests/test_cli_json_and_compatibility.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest` (token_overlap)
+    - `tests/test_cli_cli_contract.py::test_sdd_index_alias` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+- `specs/behavior/features/cli/json-and-compatibility.feature` `@bdd-cli-review-specs-json` — Review specs supports JSON output
+  - expected: `tests/test_cli_json_and_compatibility.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest` (token_overlap)
+    - `tests/test_cli_cli_contract.py::test_sdd_index_alias` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+- `specs/behavior/features/cli/json-and-compatibility.feature` `@bdd-cli-bdd-check-alias` — bdd check aliases behavior check
+  - expected: `tests/test_cli_json_and_compatibility.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest` (token_overlap)
+    - `tests/test_cli_cli_contract.py::test_sdd_index_alias` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+- `specs/behavior/features/cli/json-and-compatibility.feature` `@bdd-cli-bdd-coverage-alias` — bdd coverage aliases behavior coverage
+  - expected: `tests/test_cli_json_and_compatibility.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest` (token_overlap)
+    - `tests/test_cli_cli_contract.py::test_sdd_index_alias` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+- `specs/behavior/features/cli/json-and-compatibility.feature` `@bdd-cli-update-alias` — update aliases create gherkin update mode
+  - expected: `tests/test_cli_json_and_compatibility.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest` (token_overlap)
+    - `tests/test_cli_cli_contract.py::test_sdd_index_alias` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+- `specs/behavior/features/configuration/configuration-resolution.feature` `@bdd-config-prefers-public-config` — Public config is preferred over hidden config
+  - expected: `tests/test_configuration_configuration_resolution.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_config_configuration.py::TestLoadConfig::test_preserves_flat_behavior_path_fields` (token_overlap)
+    - `tests/test_config_configuration.py::TestLoadConfig::test_loads_specifications_paths` (token_overlap)
+    - `tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_both_modes` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+- `specs/behavior/features/configuration/configuration-resolution.feature` `@bdd-config-finds-hidden-config` — Hidden config remains supported for existing projects
+  - expected: `tests/test_configuration_configuration_resolution.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_config_configuration.py::TestLoadConfig::test_preserves_flat_behavior_path_fields` (token_overlap)
+    - `tests/test_config_configuration.py::TestLoadConfig::test_loads_specifications_paths` (token_overlap)
+    - `tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_both_modes` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+- `specs/behavior/features/configuration/configuration-resolution.feature` `@bdd-config-walks-parent-directories` — Commands run from subdirectories still find the project config
+  - expected: `tests/test_configuration_configuration_resolution.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_config_configuration.py::TestLoadConfig::test_preserves_flat_behavior_path_fields` (token_overlap)
+    - `tests/test_config_configuration.py::TestLoadConfig::test_loads_specifications_paths` (token_overlap)
+    - `tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_both_modes` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+- `specs/behavior/features/configuration/configuration-resolution.feature` `@bdd-config-explicit-path` — An explicit config path overrides discovery
+  - expected: `tests/test_configuration_configuration_resolution.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_config_configuration.py::TestLoadConfig::test_preserves_flat_behavior_path_fields` (token_overlap)
+    - `tests/test_config_configuration.py::TestLoadConfig::test_loads_specifications_paths` (token_overlap)
+    - `tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_both_modes` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+- `specs/behavior/features/configuration/configuration-resolution.feature` `@bdd-config-unsupported-schema-version` — Unsupported schema versions fail clearly
+  - expected: `tests/test_configuration_configuration_resolution.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_config_configuration.py::TestLoadConfig::test_preserves_flat_behavior_path_fields` (token_overlap)
+    - `tests/test_config_configuration.py::TestLoadConfig::test_loads_specifications_paths` (token_overlap)
+    - `tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_both_modes` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+- `specs/behavior/features/configuration/configuration-resolution.feature` `@bdd-config-unsupported-generation-grouping` — Unsupported pytest-to-Gherkin grouping fails closed
+  - expected: `tests/test_configuration_configuration_resolution.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_config_configuration.py::TestLoadConfig::test_preserves_flat_behavior_path_fields` (token_overlap)
+    - `tests/test_config_configuration.py::TestLoadConfig::test_loads_specifications_paths` (token_overlap)
+    - `tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_both_modes` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+- `specs/behavior/features/configuration/configuration-resolution.feature` `@bdd-config-pickles-require-official-parser` — Pickle compilation requires the official parser
+  - expected: `tests/test_configuration_configuration_resolution.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_config_configuration.py::TestLoadConfig::test_preserves_flat_behavior_path_fields` (token_overlap)
+    - `tests/test_config_configuration.py::TestLoadConfig::test_loads_specifications_paths` (token_overlap)
+    - `tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_both_modes` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+- `specs/behavior/features/enforcement/plain-pytest-generation.feature` `@bdd-generate-tests-single-feature` — Generate a pytest skeleton for one feature
+  - expected: `tests/test_enforcement_plain_pytest_generation.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_reverse_coverage_lists_unmapped_pytest_tests` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_intentional_unmapped_policy_waives_reverse_gap` (token_overlap)
+- `specs/behavior/features/enforcement/plain-pytest-generation.feature` `@bdd-generate-tests-batch` — Generate pytest skeletons for all features
+  - expected: `tests/test_enforcement_plain_pytest_generation.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_reverse_coverage_lists_unmapped_pytest_tests` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_intentional_unmapped_policy_waives_reverse_gap` (token_overlap)
+- `specs/behavior/features/enforcement/plain-pytest-generation.feature` `@bdd-generate-tests-stable-mapping-markers` — Generated tests contain explicit SpecWeave mappings
+  - expected: `tests/test_enforcement_plain_pytest_generation.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_reverse_coverage_lists_unmapped_pytest_tests` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_intentional_unmapped_policy_waives_reverse_gap` (token_overlap)
+- `specs/behavior/features/enforcement/plain-pytest-generation.feature` `@bdd-generate-tests-docstrings-and-steps` — Generated tests preserve scenario intent for developers
+  - expected: `tests/test_enforcement_plain_pytest_generation.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_reverse_coverage_lists_unmapped_pytest_tests` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_intentional_unmapped_policy_waives_reverse_gap` (token_overlap)
+- `specs/behavior/features/enforcement/plain-pytest-generation.feature` `@bdd-generate-tests-avoids-long-lines` — Mapping metadata does not force excessive source lines
+  - expected: `tests/test_enforcement_plain_pytest_generation.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_reverse_coverage_lists_unmapped_pytest_tests` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_intentional_unmapped_policy_waives_reverse_gap` (token_overlap)
+- `specs/behavior/features/evidence/report-normalization.feature` `@bdd-report-normalize-junit` — Normalize pytest JUnit XML
+  - expected: `tests/test_evidence_report_normalization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_imports_junit_xml_to_requirement_evidence` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_fail_closed_status_blocks_requirement` (token_overlap)
+- `specs/behavior/features/evidence/report-normalization.feature` `@bdd-report-normalize-cucumber` — Normalize Cucumber JSON
+  - expected: `tests/test_evidence_report_normalization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_imports_junit_xml_to_requirement_evidence` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_fail_closed_status_blocks_requirement` (token_overlap)
+- `specs/behavior/features/evidence/report-normalization.feature` `@bdd-report-normalize-rejects-unknown-format` — Unsupported report formats are rejected
+  - expected: `tests/test_evidence_report_normalization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_imports_junit_xml_to_requirement_evidence` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_fail_closed_status_blocks_requirement` (token_overlap)
+- `specs/behavior/features/evidence/report-normalization.feature` `@bdd-report-fail-closed-failed` — Failed scenarios block acceptance
+  - expected: `tests/test_evidence_report_normalization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_imports_junit_xml_to_requirement_evidence` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_fail_closed_status_blocks_requirement` (token_overlap)
+- `specs/behavior/features/evidence/report-normalization.feature` `@bdd-report-fail-closed-skipped` — Skipped scenarios block acceptance by default
+  - expected: `tests/test_evidence_report_normalization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_imports_junit_xml_to_requirement_evidence` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_fail_closed_status_blocks_requirement` (token_overlap)
+- `specs/behavior/features/evidence/report-normalization.feature` `@bdd-report-expect-ac` — Expected acceptance criteria must have passing evidence
+  - expected: `tests/test_evidence_report_normalization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_imports_junit_xml_to_requirement_evidence` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_fail_closed_status_blocks_requirement` (token_overlap)
+- `specs/behavior/features/evidence/report-normalization.feature` `@bdd-behavior-import-report-maps-tests` — Import pytest JUnit evidence through behavior mappings
+  - expected: `tests/test_evidence_report_normalization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_imports_junit_xml_to_requirement_evidence` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_fail_closed_status_blocks_requirement` (token_overlap)
+- `specs/behavior/features/evidence/report-normalization.feature` `@bdd-behavior-import-report-unmapped-fails` — Unmapped pytest results fail behavior evidence import
+  - expected: `tests/test_evidence_report_normalization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_imports_junit_xml_to_requirement_evidence` (token_overlap)
+    - `tests/test_specifications_reporting.py::test_fail_closed_status_blocks_requirement` (token_overlap)
+- `specs/behavior/features/execution/delegated-runner.feature` `@bdd-runner-success-summary` — Successful delegated command writes a passed summary
+  - expected: `tests/test_execution_delegated_runner.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/execution/delegated-runner.feature` `@bdd-runner-failure-summary` — Failing delegated command writes a failed summary
+  - expected: `tests/test_execution_delegated_runner.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/execution/delegated-runner.feature` `@bdd-runner-command-not-found` — Missing commands are reported as runner errors
+  - expected: `tests/test_execution_delegated_runner.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/integrations/archledger-trace.feature` `@bdd-archledger-candidate` — Render a candidate behavior record for one scenario
+  - expected: `tests/test_integrations_archledger_trace.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/integrations/archledger-trace.feature` `@bdd-archledger-unknown-bdd` — Unknown scenario ids fail clearly
+  - expected: `tests/test_integrations_archledger_trace.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/integrations/archledger-trace.feature` `@bdd-trace-by-bdd-id` — Trace a behavior scenario by id
+  - expected: `tests/test_integrations_archledger_trace.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/integrations/archledger-trace.feature` `@bdd-trace-rejects-markdown-feature-path` — Trace rejects legacy markdown feature paths
+  - expected: `tests/test_integrations_archledger_trace.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/integrations/combi-audit.feature` `@bdd-combi-reports-missing-pytest-mapping` — Missing pytest mapping appears as a combi gap
+  - expected: `tests/test_integrations_combi_audit.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_combi_check.py::test_combi_check_includes_specification_requirements` (token_overlap)
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/integrations/combi-audit.feature` `@bdd-combi-reports-missing-evidence` — Missing evidence appears as a combi gap
+  - expected: `tests/test_integrations_combi_audit.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_combi_check.py::test_combi_check_includes_specification_requirements` (token_overlap)
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/integrations/combi-audit.feature` `@bdd-combi-strict-fails-missing-bdd-id` — Strict mode fails on missing scenario identifiers
+  - expected: `tests/test_integrations_combi_audit.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_combi_check.py::test_combi_check_includes_specification_requirements` (token_overlap)
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/integrations/combi-audit.feature` `@bdd-combi-json-output` — Combi check can write a JSON report
+  - expected: `tests/test_integrations_combi_audit.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_combi_check.py::test_combi_check_includes_specification_requirements` (token_overlap)
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/integrations/taskledger-exchange.feature` `@bdd-taskledger-import-feature` — Import a Taskledger BDD export as a canonical feature
+  - expected: `tests/test_integrations_taskledger_exchange.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+- `specs/behavior/features/integrations/taskledger-exchange.feature` `@bdd-taskledger-import-legacy-shape` — Legacy Taskledger export shapes are accepted when possible
+  - expected: `tests/test_integrations_taskledger_exchange.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+- `specs/behavior/features/integrations/taskledger-exchange.feature` `@bdd-taskledger-bdd-round-trip` — Task-BDD JSON round-trips through Gherkin
+  - expected: `tests/test_integrations_taskledger_exchange.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+- `specs/behavior/features/integrations/taskledger-exchange.feature` `@bdd-taskledger-draft-from-feature` — Create a Taskledger task draft from behavior
+  - expected: `tests/test_integrations_taskledger_exchange.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+- `specs/behavior/features/integrations/taskledger-exchange.feature` `@bdd-taskledger-evidence-from-normalized-report` — Normalized BDD evidence can be written for Taskledger
+  - expected: `tests/test_integrations_taskledger_exchange.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+    - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap` (token_overlap)
+- `specs/behavior/features/navigation/behavior-index-and-manifest.feature` `@bdd-index-readable-feature-list` — Markdown index lists behavior features
+  - expected: `tests/test_navigation_behavior_index_and_manifest.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest` (token_overlap)
+    - `tests/test_cli_cli_contract.py::test_sdd_index_alias` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/navigation/behavior-index-and-manifest.feature` `@bdd-index-rules-and-scenarios` — Markdown index includes rules and scenarios
+  - expected: `tests/test_navigation_behavior_index_and_manifest.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest` (token_overlap)
+    - `tests/test_cli_cli_contract.py::test_sdd_index_alias` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/navigation/behavior-index-and-manifest.feature` `@bdd-index-evidence-status` — Markdown index includes latest evidence when available
+  - expected: `tests/test_navigation_behavior_index_and_manifest.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest` (token_overlap)
+    - `tests/test_cli_cli_contract.py::test_sdd_index_alias` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/navigation/behavior-index-and-manifest.feature` `@bdd-manifest-scenario-mappings` — Manifest records scenario mappings
+  - expected: `tests/test_navigation_behavior_index_and_manifest.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest` (token_overlap)
+    - `tests/test_cli_cli_contract.py::test_sdd_index_alias` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/navigation/behavior-index-and-manifest.feature` `@bdd-manifest-unbound-scenario` — Manifest marks unbound scenarios as missing
+  - expected: `tests/test_navigation_behavior_index_and_manifest.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest` (token_overlap)
+    - `tests/test_cli_cli_contract.py::test_sdd_index_alias` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/navigation/behavior-index-and-manifest.feature` `@bdd-manifest-fails-on-lint-errors` — Index generation refuses invalid feature files
+  - expected: `tests/test_navigation_behavior_index_and_manifest.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest` (token_overlap)
+    - `tests/test_cli_cli_contract.py::test_sdd_index_alias` (token_overlap)
+    - `tests/test_specifications_index.py::test_writes_manifest` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations` (token_overlap)
+    - `tests/test_specifications_index.py::test_includes_verification_refs` (token_overlap)
+- `specs/behavior/features/planning/implementation-plans.feature` `@bdd-plan-includes-feature-context` — Plan includes feature and scenario context
+  - expected: `tests/test_planning_implementation_plans.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/planning/implementation-plans.feature` `@bdd-plan-includes-test-targets` — Plan proposes pytest implementation targets
+  - expected: `tests/test_planning_implementation_plans.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/planning/implementation-plans.feature` `@bdd-plan-includes-validation-commands` — Plan includes SpecWeave validation commands
+  - expected: `tests/test_planning_implementation_plans.py`
+  - reason: `missing_test_file`
+- `specs/behavior/features/review/project-health-review.feature` `@bdd-doctor-passes-initialized-project` — Doctor passes for a complete configured project
+  - expected: `tests/test_review_project_health_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+- `specs/behavior/features/review/project-health-review.feature` `@bdd-doctor-fix-creates-missing-directories` — Doctor fix creates missing configured directories
+  - expected: `tests/test_review_project_health_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+- `specs/behavior/features/review/project-health-review.feature` `@bdd-doctor-duplicate-bdd-tags` — Doctor reports duplicate scenario identifiers
+  - expected: `tests/test_review_project_health_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+- `specs/behavior/features/review/project-health-review.feature` `@bdd-review-specs-summary` — Review specs reports feature and pytest coverage summary
+  - expected: `tests/test_review_project_health_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+- `specs/behavior/features/review/project-health-review.feature` `@bdd-review-specs-needs-review` — Review flags generated scenarios that still need review
+  - expected: `tests/test_review_project_health_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+- `specs/behavior/features/review/project-health-review.feature` `@bdd-refresh-common-artifacts` — Refresh rewrites index, mappings, and coverage reports
+  - expected: `tests/test_review_project_health_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout` (token_overlap)
+    - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories` (token_overlap)
+- `specs/behavior/features/review/static-coverage-review.feature` `@bdd-coverage-feature-bound` — Bound scenarios are counted as covered
+  - expected: `tests/test_review_static_coverage_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+- `specs/behavior/features/review/static-coverage-review.feature` `@bdd-coverage-feature-missing` — Missing scenario bindings are reported
+  - expected: `tests/test_review_static_coverage_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+- `specs/behavior/features/review/static-coverage-review.feature` `@bdd-coverage-stale-mapping` — Stale mappings are reported
+  - expected: `tests/test_review_static_coverage_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+- `specs/behavior/features/review/static-coverage-review.feature` `@bdd-coverage-duplicate-mapping` — Duplicate mappings are reported
+  - expected: `tests/test_review_static_coverage_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+- `specs/behavior/features/review/static-coverage-review.feature` `@bdd-coverage-test-unmapped` — Unmapped pytest tests are reported in reverse coverage
+  - expected: `tests/test_review_static_coverage_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+- `specs/behavior/features/review/static-coverage-review.feature` `@bdd-coverage-test-waived` — Intentional unmapped waivers are honored
+  - expected: `tests/test_review_static_coverage_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+- `specs/behavior/features/review/static-coverage-review.feature` `@bdd-coverage-both-directions` — Review coverage defaults to both directions
+  - expected: `tests/test_review_static_coverage_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+- `specs/behavior/features/review/static-coverage-review.feature` `@bdd-coverage-deprecated-paths` — Deprecated behavior paths fail coverage
+  - expected: `tests/test_review_static_coverage_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+- `specs/behavior/features/review/static-coverage-review.feature` `@bdd-coverage-forbidden-pytest-bdd` — pytest-bdd usage is rejected in the plain pytest workflow
+  - expected: `tests/test_review_static_coverage_review.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage` (token_overlap)
+    - `tests/test_specifications_review.py::test_review_specs_includes_both_modes` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage` (token_overlap)
+- `specs/behavior/features/setup/project-initialization.feature` `@bdd-init-default-layout` — Initialize a new project with default behavior paths
+  - expected: `tests/test_setup_project_initialization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_init_initialization.py::TestInitBritishSpelling::test_creates_legacy_behavior_layout_when_explicit` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_mode_specifications_creates_specifications_layout` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_mode_both_creates_both_layouts` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_upgrade_layout_migrates_only_when_explicit` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+- `specs/behavior/features/setup/project-initialization.feature` `@bdd-init-explicit-hidden-config` — Initialize with an explicitly requested hidden config file
+  - expected: `tests/test_setup_project_initialization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_init_initialization.py::TestInitBritishSpelling::test_creates_legacy_behavior_layout_when_explicit` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_mode_specifications_creates_specifications_layout` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_mode_both_creates_both_layouts` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_upgrade_layout_migrates_only_when_explicit` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+- `specs/behavior/features/setup/project-initialization.feature` `@bdd-init-british-spelling` — Initialize with British spelling when requested
+  - expected: `tests/test_setup_project_initialization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_init_initialization.py::TestInitBritishSpelling::test_creates_legacy_behavior_layout_when_explicit` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_mode_specifications_creates_specifications_layout` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_mode_both_creates_both_layouts` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_upgrade_layout_migrates_only_when_explicit` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+- `specs/behavior/features/setup/project-initialization.feature` `@bdd-init-idempotent` — Re-running init reports existing files instead of failing
+  - expected: `tests/test_setup_project_initialization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_init_initialization.py::TestInitBritishSpelling::test_creates_legacy_behavior_layout_when_explicit` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_mode_specifications_creates_specifications_layout` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_mode_both_creates_both_layouts` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_upgrade_layout_migrates_only_when_explicit` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+- `specs/behavior/features/setup/project-initialization.feature` `@bdd-init-preserves-non-managed-readme` — Init does not overwrite a project-owned README
+  - expected: `tests/test_setup_project_initialization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_init_initialization.py::TestInitBritishSpelling::test_creates_legacy_behavior_layout_when_explicit` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_mode_specifications_creates_specifications_layout` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_mode_both_creates_both_layouts` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_upgrade_layout_migrates_only_when_explicit` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+- `specs/behavior/features/setup/project-initialization.feature` `@bdd-init-force-overwrites-managed-config` — Force rewrites only SpecWeave-managed generated files
+  - expected: `tests/test_setup_project_initialization.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_init_initialization.py::TestInitBritishSpelling::test_creates_legacy_behavior_layout_when_explicit` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_mode_specifications_creates_specifications_layout` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_mode_both_creates_both_layouts` (token_overlap)
+    - `tests/test_init_initialization.py::TestInitModes::test_upgrade_layout_migrates_only_when_explicit` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+- `specs/behavior/features/traceability/mapping-and-autolink.feature` `@bdd-mappings-from-comments` — Mapping comments link a pytest test to a behavior scenario
+  - expected: `tests/test_traceability_mapping_and_autolink.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+- `specs/behavior/features/traceability/mapping-and-autolink.feature` `@bdd-mappings-from-docstring` — Docstring metadata is accepted as an explicit mapping
+  - expected: `tests/test_traceability_mapping_and_autolink.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+- `specs/behavior/features/traceability/mapping-and-autolink.feature` `@bdd-mappings-title-never-binds` — Similar titles are only suggestions
+  - expected: `tests/test_traceability_mapping_and_autolink.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+- `specs/behavior/features/traceability/mapping-and-autolink.feature` `@bdd-autolink-dry-run` — Dry-run proposes generated scenario mappings
+  - expected: `tests/test_traceability_mapping_and_autolink.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+- `specs/behavior/features/traceability/mapping-and-autolink.feature` `@bdd-autolink-apply` — Apply writes explicit mapping comments
+  - expected: `tests/test_traceability_mapping_and_autolink.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+- `specs/behavior/features/traceability/mapping-and-autolink.feature` `@bdd-autolink-ambiguous-match` — Ambiguous autolink candidates fail safe
+  - expected: `tests/test_traceability_mapping_and_autolink.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+- `specs/behavior/features/traceability/mapping-and-autolink.feature` `@bdd-autolink-check-mode` — Check mode fails when mappings would be created
+  - expected: `tests/test_traceability_mapping_and_autolink.py`
+  - reason: `missing_test_file`
+  - candidate tests:
+    - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping` (token_overlap)
+    - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage` (token_overlap)
+    - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage` (token_overlap)
+
+### Stale pytest mappings
+
+- `tests/test_backends_pytest_bdd.py::test_pytest_bdd_dedups_repeated_steps` -> `specs/behavior/features/backends/pytest-bdd.feature` `@bdd-backend-pytest-bdd-dedup` (missing_feature)
+- `tests/test_backends_pytest_bdd.py::test_pytest_bdd_collects_rule_scenarios` -> `specs/behavior/features/backends/pytest-bdd.feature` `@bdd-backend-pytest-bdd-rule-scenarios` (missing_feature)
+- `tests/test_backends_pytest_bdd.py::test_pytest_bdd_skeleton_shape` -> `specs/behavior/features/backends/pytest-bdd.feature` `@bdd-backend-pytest-bdd-skeleton` (missing_feature)
+- `tests/test_backends_pytest_bdd.py::test_pytest_bdd_uses_source_path_filename` -> `specs/behavior/features/backends/pytest-bdd.feature` `@bdd-backend-pytest-bdd-source-path` (missing_feature)
+- `tests/test_backends_pytest_bdd.py::test_backend_registry_contents` -> `specs/behavior/features/backends/pytest-bdd.feature` `@bdd-backend-registry` (missing_feature)
+- `tests/test_backends_pytest_bdd.py::test_unsupported_cucumber_backends_message` -> `specs/behavior/features/backends/pytest-bdd.feature` `@bdd-backend-unsupported` (missing_feature)
+- `tests/test_bdd_convert.py::test_and_but_steps_group_correctly` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-and-but-steps` (missing_feature)
+- `tests/test_bdd_convert.py::test_export_to_target_gherkin` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-export-to-gherkin` (missing_feature)
+- `tests/test_bdd_convert.py::test_json_round_trip` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-json-roundtrip` (missing_feature)
+- `tests/test_bdd_convert.py::test_json_to_feature_to_json_round_trip` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-json-to-feature-to-json` (missing_feature)
+- `tests/test_bdd_convert.py::test_multiple_ac_tags_and_extra_tags` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-multiple-ac` (missing_feature)
+- `tests/test_bdd_convert.py::test_round_trip_preserves_ids` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-roundtrip-ids` (missing_feature)
+- `tests/test_bdd_convert.py::test_top_level_examples_become_top_level_scenarios` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-top-level` (missing_feature)
+- `tests/test_behavior_autolink.py::test_autolink_reports_ambiguous_equal_score` -> `specs/behavior/features/behavior/autolink.feature` `@bdd-autolink-ambiguous-candidate` (missing_feature)
+- `tests/test_behavior_autolink.py::test_autolink_apply_writes_mapping_comments` -> `specs/behavior/features/behavior/autolink.feature` `@bdd-autolink-generated-id-apply` (missing_feature)
+- `tests/test_behavior_autolink.py::test_autolink_dry_run_does_not_write` -> `specs/behavior/features/behavior/autolink.feature` `@bdd-autolink-generated-id-dry-run` (missing_feature)
+- `tests/test_behavior_autolink.py::test_autolink_uses_config_paths` -> `specs/behavior/features/behavior/autolink.feature` `@bdd-autolink-refresh-wrapper` (missing_feature)
+- `tests/test_behavior_coverage.py::test_render_coverage_text_both_directions` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-both-directions-render` (missing_feature)
+- `tests/test_behavior_coverage.py::test_behavior_coverage_feature_md_bound_by_comment` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-bound-scenario` (missing_feature)
+- `tests/test_behavior_coverage.py::test_coverage_candidate_tests_are_hints_not_bindings` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-candidate-tests` (missing_feature)
+- `tests/test_behavior_coverage.py::test_coverage_matches_mapping_on_class_test_method` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-class-method-mapping` (missing_feature)
+- `tests/test_behavior_coverage.py::test_coverage_deprecated_paths` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-deprecated-paths` (missing_feature)
+- `tests/test_behavior_coverage.py::test_behavior_coverage_reports_forbidden_pytest_bdd_usage` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-forbidden-pytest-bdd` (missing_feature)
+- `tests/test_behavior_coverage.py::test_coverage_manual_scenario_skipped` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-manual-scenario` (missing_feature)
+- `tests/test_behavior_coverage.py::test_coverage_missing_test_file` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-missing-test-file` (missing_feature)
+- `tests/test_behavior_coverage.py::test_behavior_coverage_ignores_pytest_bdd_text` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-missing-test-file-reason` (missing_feature)
+- `tests/test_behavior_coverage.py::test_coverage_accepts_intentional_unmapped_pytest_tests` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-pytest-intentional-unmapped` (missing_feature)
+- `tests/test_behavior_coverage.py::test_coverage_accepts_intentional_unmapped_policy_file` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-pytest-intentional-unmapped-policy-file` (missing_feature)
+- `tests/test_behavior_coverage.py::test_coverage_marks_stale_pytest_test_in_reverse_inventory` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-pytest-stale` (missing_feature)
+- `tests/test_behavior_coverage.py::test_coverage_lists_unmapped_pytest_tests` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-pytest-unmapped` (missing_feature)
+- `tests/test_behavior_coverage.py::test_coverage_stale_feature_binding` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-stale-binding` (missing_feature)
+- `tests/test_behavior_coverage.py::test_behavior_coverage_reports_stale_markdown_mapping` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-stale-scenario` (missing_feature)
+- `tests/test_behavior_coverage.py::test_behavior_coverage_does_not_match_by_title` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-unbound-scenario` (missing_feature)
+- `tests/test_behavior_generation.py::test_generate_batch` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-batch` (missing_feature)
+- `tests/test_behavior_generation.py::test_generate_canonical_path` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-canonical-path` (missing_feature)
+- `tests/test_behavior_generation.py::test_generate_docstring` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-docstring` (missing_feature)
+- `tests/test_behavior_generation.py::test_generate_rules` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-rules` (missing_feature)
+- `tests/test_behavior_generation.py::test_generate_scenario_function` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-scenario-function` (missing_feature)
+- `tests/test_behavior_generation.py::test_generate_single_feature` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-single-feature` (missing_feature)
+- `tests/test_behavior_generation.py::test_generate_specweave_markers` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-specweave-markers` (missing_feature)
+- `tests/test_behavior_generation.py::test_generate_step_comments` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-step-comments` (missing_feature)
+- `tests/test_behavior_index.py::test_index_evidence_status` -> `specs/behavior/features/behavior/index.feature` `@bdd-index-evidence-status` (missing_feature)
+- `tests/test_behavior_index.py::test_index_generates_manifest` -> `specs/behavior/features/behavior/index.feature` `@bdd-index-generates-manifest` (missing_feature)
+- `tests/test_behavior_index.py::test_index_generates_markdown` -> `specs/behavior/features/behavior/index.feature` `@bdd-index-generates-markdown` (missing_feature)
+- `tests/test_behavior_index.py::test_index_rules` -> `specs/behavior/features/behavior/index.feature` `@bdd-index-rules` (missing_feature)
+- `tests/test_behavior_index.py::test_index_scenario_entries` -> `specs/behavior/features/behavior/index.feature` `@bdd-index-scenario-entries` (missing_feature)
+- `tests/test_behavior_index.py::test_index_unbound_scenario` -> `specs/behavior/features/behavior/index.feature` `@bdd-index-unbound-scenario` (missing_feature)
+- `tests/test_behavior_reporting.py::test_import_maps_by_function_name` -> `specs/behavior/features/behavior/reporting.feature` `@bdd-import-maps-by-function-name` (missing_feature)
+- `tests/test_behavior_reporting.py::test_import_maps_by_manifest` -> `specs/behavior/features/behavior/reporting.feature` `@bdd-import-maps-by-manifest` (missing_feature)
+- `tests/test_behavior_reporting.py::test_import_maps_by_nodeid` -> `specs/behavior/features/behavior/reporting.feature` `@bdd-import-maps-by-nodeid` (missing_feature)
+- `tests/test_behavior_reporting.py::test_import_unmapped_tests` -> `specs/behavior/features/behavior/reporting.feature` `@bdd-import-unmapped-tests` (missing_feature)
+- `tests/test_behavior_reporting.py::test_import_writes_evidence` -> `specs/behavior/features/behavior/reporting.feature` `@bdd-import-writes-evidence` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_bdd_check_alias` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-bdd-check-alias` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_bdd_index_alias` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-bdd-index-alias` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_behavior_check_accepts_canonical_feature` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-behavior-check` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_behavior_coverage_reports_bound_scenarios` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-behavior-coverage` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_behavior_coverage_view_test_json` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-behavior-coverage-view-test-json` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_behavior_generate_tests_creates_plain_pytest` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-behavior-generate-tests` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_behavior_import_report_maps_pytest_nodeid` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-behavior-import-report` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_behavior_index_writes_markdown_and_manifest` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-behavior-index` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_config_option` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-config-option` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_create_feature` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-create-feature` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_create_gherkin` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-create-gherkin` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_create_plan` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-create-plan` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_exit_check_errors` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-exit-check-errors` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_exit_doctor_failed` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-exit-doctor-failed` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_report_normalize_writes_json_and_exits_nonzero_on_failure` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-exit-normalize-failed` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_json_init` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-json-init` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_json_output` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-json-output` (missing_feature)
+- `tests/test_cli_cli_contract.py::test_review_coverage_both_directions_text` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-review-coverage-both-directions` (missing_feature)
+- `tests/test_common_behavior_helpers.py::TestCanonicalTestPath::test_derives_path` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-canonical-test-path` (missing_feature)
+- `tests/test_common_behavior_helpers.py::TestFeatureIdentity::test_from_path` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-feature-identity-from-path` (missing_feature)
+- `tests/test_common_behavior_helpers.py::TestFeatureIdentity::test_no_area` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-feature-identity-no-area` (missing_feature)
+- `tests/test_common_behavior_helpers.py::TestFeatureStem::test_classic_feature` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-feature-stem-classic` (missing_feature)
+- `tests/test_common_behavior_helpers.py::TestFeatureStem::test_feature_md` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-feature-stem-legacy-markdown` (missing_feature)
+- `tests/test_common_behavior_helpers.py::TestIterFeatureScenarios::test_yields_from_rules` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-iter-scenarios-in-rules` (missing_feature)
+- `tests/test_common_behavior_helpers.py::TestIterFeatureScenarios::test_yields_top_level` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-iter-scenarios-top-level` (missing_feature)
+- `tests/test_common_behavior_helpers.py::TestScenarioIdValue::test_returns_empty_when_no_bdd` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-scenario-id-missing` (missing_feature)
+- `tests/test_common_behavior_helpers.py::TestScenarioIdValue::test_returns_first_bdd_tag` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-scenario-id-value` (missing_feature)
+- `tests/test_common_behavior_helpers.py::TestSlugify::test_basic` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-slugify-basic` (missing_feature)
+- `tests/test_common_behavior_helpers.py::TestSlugify::test_empty` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-slugify-empty` (missing_feature)
+- `tests/test_common_behavior_helpers.py::TestSlugify::test_special_chars` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-slugify-special-chars` (missing_feature)
+- `tests/test_config_configuration.py::TestFindConfig::test_finds_hidden_config` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-discovery-finds-dotfile` (missing_feature)
+- `tests/test_config_configuration.py::TestFindConfig::test_prefers_explicit` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-discovery-finds-public` (missing_feature)
+- `tests/test_config_configuration.py::TestFindConfig::test_prefers_public_over_dotfile` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-discovery-prefers-public` (missing_feature)
+- `tests/test_config_configuration.py::TestFindConfig::test_returns_none_when_missing` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-discovery-returns-none` (missing_feature)
+- `tests/test_config_configuration.py::TestFindConfig::test_walks_up_directories` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-discovery-walks-parents` (missing_feature)
+- `tests/test_config_configuration.py::TestLoadConfig::test_defaults_when_missing` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-load-defaults` (missing_feature)
+- `tests/test_config_configuration.py::TestLoadConfig::test_normalizes_nested_behaviour_paths` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-load-from-file` (missing_feature)
+- `tests/test_config_configuration.py::TestLoadConfig::test_rejects_unsupported_schema` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-rejects-unsupported-schema` (missing_feature)
+- `tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_behavior` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-render-behavior` (missing_feature)
+- `tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_behaviour` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-render-behaviour` (missing_feature)
+- `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_detects_deprecated` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-deprecated-paths` (missing_feature)
+- `tests/test_doctor_diagnostics.py::TestDoctorReportsDuplicateBddTags::test_detects_duplicates` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-duplicate-bdd-tags` (missing_feature)
+- `tests/test_doctor_diagnostics.py::TestDoctorFix::test_fix_creates_missing_dirs` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-fix-creates-directories` (missing_feature)
+- `tests/test_doctor_diagnostics.py::TestDoctorReportsMissing::test_no_config_warning` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-missing-config` (missing_feature)
+- `tests/test_doctor_diagnostics.py::TestDoctorReportsMissing::test_reports_missing_features_dir` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-missing-directories` (missing_feature)
+- `tests/test_doctor_diagnostics.py::TestDoctorFix::test_unsupported_schema` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-unsupported-schema` (missing_feature)
+- `tests/test_doctor_diagnostics.py::TestDoctorPasses::test_passes_initialized_project` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-validates-features` (missing_feature)
+- `tests/test_exchange_schemas.py::test_archledger_schema_representative_payload_contract` -> `specs/behavior/features/exchange/schemas.feature` `@bdd-exchange-archledger-schema` (missing_feature)
+- `tests/test_exchange_schemas.py::test_trace_schema_representative_payload_contract` -> `specs/behavior/features/exchange/schemas.feature` `@bdd-exchange-combi-trace-schema` (missing_feature)
+- `tests/test_exchange_schemas.py::test_evidence_schema_representative_payload_contract` -> `specs/behavior/features/exchange/schemas.feature` `@bdd-exchange-evidence-schema` (missing_feature)
+- `tests/test_exchange_schemas.py::test_exchange_schemas_are_json_schema_documents` -> `specs/behavior/features/exchange/schemas.feature` `@bdd-exchange-schema-valid` (missing_feature)
+- `tests/test_exchange_schemas.py::test_taskledger_schema_representative_payload_contract` -> `specs/behavior/features/exchange/schemas.feature` `@bdd-exchange-taskledger-schema` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_area_subdirectory` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-area-subdirectory` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_canonical_path` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-canonical-path` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_deprecated_path` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-deprecated-path` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_duplicate_bdd_tags` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-duplicate-bdd-tags` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_empty_feature_title` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-empty-feature-title` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_empty_rule` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-empty-rule` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_empty_scenario_title` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-empty-scenario-title` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_missing_bdd_tag` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-missing-bdd-tag` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_missing_given_when_then` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-missing-given-when-then` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_multiple_feature_lines` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-single-feature` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_strict_unsupported` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-strict-unsupported` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_task_tags_discouraged` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-task-tags-discouraged` (missing_feature)
+- `tests/test_gherkin_lint.py::test_lint_rejects_markdown_feature_file` -> `specs/behavior/features/gherkin/markdown.feature` `@bdd-lint-rejects-markdown-file` (missing_feature)
+- `tests/test_gherkin_parser.py::test_parser_rejects_markdown_feature_path` -> `specs/behavior/features/gherkin/markdown.feature` `@bdd-markdown-parser-rejects-path` (missing_feature)
+- `tests/test_gherkin_validation.py::TestValidateMarkdownUnsupported::test_rejects_markdown_features` -> `specs/behavior/features/gherkin/markdown.feature` `@bdd-validation-rejects-markdown` (missing_feature)
+- `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_compile_pickles_smoke` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-compile-pickles` (missing_feature)
+- `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_empty_feature_tags` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-parse-no-tags` (missing_feature)
+- `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_parses_rule_and_scenario_tags` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-parse-rules` (missing_feature)
+- `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_parses_simple_feature` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-parse-simple` (missing_feature)
+- `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_preserves_description` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-preserve-description` (missing_feature)
+- `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_rejects_invalid_gherkin` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-reject-invalid` (missing_feature)
+- `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_accepts_source_path` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-source-path` (missing_feature)
+- `tests/test_gherkin_official.py::TestValidateClassicWithOfficial::test_validates_invalid` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-validate-invalid` (missing_feature)
+- `tests/test_gherkin_official.py::TestValidateClassicWithOfficial::test_validates_valid` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-validate-valid` (missing_feature)
+- `tests/test_gherkin_parser.py::test_parse_feature_description` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-classic-description` (missing_feature)
+- `tests/test_gherkin_parser.py::test_parse_simple_feature` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-classic-feature` (missing_feature)
+- `tests/test_gherkin_parser.py::test_parse_rule_block` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-classic-rules` (missing_feature)
+- `tests/test_gherkin_parser.py::test_parse_no_tags` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-classic-tags` (missing_feature)
+- `tests/test_gherkin_parser.py::test_top_level_scenario_before_rule_stays_top_level` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-classic-top-level-scenarios` (missing_feature)
+- `tests/test_gherkin_parser.py::test_parser_dispatch_classic_suffix` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-dispatch-classic` (missing_feature)
+- `tests/test_gherkin_parser.py::test_classic_parser_rejects_markdown_feature_path` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-rejects-markdown-path` (missing_feature)
+- `tests/test_gherkin_parser.py::test_parse_missing_feature_raises` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-requires-feature-line` (missing_feature)
+- `tests/test_gherkin_writer.py::test_writes_tags_feature_scenario_steps` -> `specs/behavior/features/gherkin/writer.feature` `@bdd-writer-basic-feature` (missing_feature)
+- `tests/test_gherkin_writer.py::test_feature_description_rendered` -> `specs/behavior/features/gherkin/writer.feature` `@bdd-writer-descriptions` (missing_feature)
+- `tests/test_gherkin_writer.py::test_rule_round_trips` -> `specs/behavior/features/gherkin/writer.feature` `@bdd-writer-roundtrip` (missing_feature)
+- `tests/test_gherkin_writer.py::test_writes_rule_block` -> `specs/behavior/features/gherkin/writer.feature` `@bdd-writer-rules` (missing_feature)
+- `tests/test_gherkin_writer.py::test_scenario_without_tags` -> `specs/behavior/features/gherkin/writer.feature` `@bdd-writer-tags` (missing_feature)
+- `tests/test_init_initialization.py::TestInitBritishSpelling::test_creates_behaviour_layout` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-british-spelling` (missing_feature)
+- `tests/test_init_initialization.py::TestInitCompatibility::test_hidden_config_path_still_works_when_explicit` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-creates-dotfile` (missing_feature)
+- `tests/test_init_initialization.py::TestInitDefault::test_creates_behaviour_paths` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-creates-gitkeep` (missing_feature)
+- `tests/test_init_initialization.py::TestInitDefault::test_creates_default_config_and_layout` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-creates-public-config` (missing_feature)
+- `tests/test_init_initialization.py::TestReadmeIsSpecweaveManaged::test_nonexistent` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-creates-readme` (missing_feature)
+- `tests/test_init_initialization.py::TestInitDryRun::test_writes_nothing` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-dry-run` (missing_feature)
+- `tests/test_init_initialization.py::TestInitForce::test_force_overwrites_generated_config_only` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-force-overwrites-readme` (missing_feature)
+- `tests/test_init_initialization.py::TestInitIdempotency::test_does_not_overwrite_existing_config` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-idempotent` (missing_feature)
+- `tests/test_init_initialization.py::TestInitIdempotency::test_does_not_overwrite_non_specweave_readme` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-refuses-overwrite-readme` (missing_feature)
+- `tests/test_init_initialization.py::TestInitIdempotency::test_reports_existing_directories` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-warns-existing-config` (missing_feature)
+- `tests/test_integrations_archledger.py::test_render_candidate_markdown` -> `specs/behavior/features/integrations/archledger.feature` `@bdd-archledger-candidate` (missing_feature)
+- `tests/test_integrations_archledger.py::test_write_candidate_file` -> `specs/behavior/features/integrations/archledger.feature` `@bdd-archledger-candidate-only` (missing_feature)
+- `tests/test_integrations_archledger.py::test_unknown_bdd_id_raises` -> `specs/behavior/features/integrations/archledger.feature` `@bdd-archledger-unknown-bdd` (missing_feature)
+- `tests/test_combi_check.py::test_combi_check_writes_json_and_human_diagnostics` -> `specs/behavior/features/integrations/combi.feature` `@bdd-combi-check-gaps` (missing_feature)
+- `tests/test_combi_check.py::test_combi_check_strict_fails_on_missing_bdd_id` -> `specs/behavior/features/integrations/combi.feature` `@bdd-combi-check-strict` (missing_feature)
+- `tests/test_integrations_taskledger.py::test_no_taskledger_import_required` -> `specs/behavior/features/integrations/taskledger.feature` `@bdd-taskledger-draft` (missing_feature)
+- `tests/test_integrations_taskledger.py::test_taskledger_draft_ac_mapping` -> `specs/behavior/features/integrations/taskledger.feature` `@bdd-taskledger-draft-ac-mapping` (missing_feature)
+- `tests/test_integrations_taskledger.py::test_task_id_from_report` -> `specs/behavior/features/integrations/taskledger.feature` `@bdd-taskledger-evidence` (missing_feature)
+- `tests/test_integrations_taskledger.py::test_load_rich_shape` -> `specs/behavior/features/integrations/taskledger.feature` `@bdd-taskledger-import` (missing_feature)
+- `tests/test_plan.py::TestCreatePlan::test_creates_plan_from_feature` -> `specs/behavior/features/planning/create-plan.feature` `@bdd-plan-create` (missing_feature)
+- `tests/test_plan.py::TestCreatePlan::test_plan_includes_scenario_steps` -> `specs/behavior/features/planning/create-plan.feature` `@bdd-plan-includes-scenario-steps` (missing_feature)
+- `tests/test_plan.py::TestCreatePlan::test_plan_includes_validation_commands` -> `specs/behavior/features/planning/create-plan.feature` `@bdd-plan-validation-commands` (missing_feature)
+- `tests/test_python_ast_reader.py::test_describe_assert_call` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-assert-call` (missing_feature)
+- `tests/test_python_ast_reader.py::test_describe_assert_equals` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-assert-equals` (missing_feature)
+- `tests/test_python_ast_reader.py::test_describe_assert_is_none` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-assert-is-none` (missing_feature)
+- `tests/test_python_ast_reader.py::test_describe_assert_truthy` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-assert-truthy` (missing_feature)
+- `tests/test_python_ast_reader.py::test_discover_specweave_comment_mapping` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-discover-comment` (missing_feature)
+- `tests/test_python_ast_reader.py::test_docstring_mapping_accepts_feature_md` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-discover-docstring` (missing_feature)
+- `tests/test_python_ast_reader.py::test_discover_pytest_tests_preserves_intentional_unmapped_waiver` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-discover-intentional-unmapped-waiver` (missing_feature)
+- `tests/test_python_ast_reader.py::test_discover_specweave_marker_mapping` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-discover-marker` (missing_feature)
+- `tests/test_python_ast_reader.py::test_extract_test_functions` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-extract-test-functions` (missing_feature)
+- `tests/test_python_ast_reader.py::test_extract_ignores_non_test_functions` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-ignores-non-test` (missing_feature)
+- `tests/test_reports_fail_closed.py::test_ambiguous_scenario_fails_criterion` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-ambiguous-scenario` (missing_feature)
+- `tests/test_reports_fail_closed.py::test_exit_code_not_used_as_evidence` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-exit-code-not-evidence` (missing_feature)
+- `tests/test_reports_fail_closed.py::test_failed_scenario_fails_criterion` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-failed-scenario` (missing_feature)
+- `tests/test_reports_fail_closed.py::test_criterion_fails_when_sibling_undefined` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-multiple-scenarios` (missing_feature)
+- `tests/test_reports_fail_closed.py::test_evidence_records_command_source_and_paths` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-passed-scenario` (missing_feature)
+- `tests/test_reports_fail_closed.py::test_pending_scenario_fails_criterion` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-pending-scenario` (missing_feature)
+- `tests/test_reports_fail_closed.py::test_skipped_scenario_fails_criterion` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-skipped-scenario` (missing_feature)
+- `tests/test_reports_fail_closed.py::test_criterion_requires_passing_native_result` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-undefined-scenario` (missing_feature)
+- `tests/test_reports_fail_closed.py::test_missing_expected_coverage_fails` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-unlinked-scenario` (missing_feature)
+- `tests/test_reports_mapping.py::test_summarize_fails_when_linked_scenario_failed` -> `specs/behavior/features/reports/mapping.feature` `@bdd-criteria-fail-closed` (missing_feature)
+- `tests/test_reports_mapping.py::test_require_expected_coverage_missing_fails` -> `specs/behavior/features/reports/mapping.feature` `@bdd-criteria-missing-coverage` (missing_feature)
+- `tests/test_reports_mapping.py::test_summarize_passes_when_linked_scenario_passed` -> `specs/behavior/features/reports/mapping.feature` `@bdd-criteria-summary` (missing_feature)
+- `tests/test_reports_mapping.py::test_extract_ac_ids_from_tags` -> `specs/behavior/features/reports/mapping.feature` `@bdd-tag-extraction-ac` (missing_feature)
+- `tests/test_reports_mapping.py::test_extract_ids_partitions_by_prefix` -> `specs/behavior/features/reports/mapping.feature` `@bdd-tag-extraction-bdd` (missing_feature)
+- `tests/test_reports_mapping.py::test_unlinked_scenarios_are_ignored` -> `specs/behavior/features/reports/mapping.feature` `@bdd-tag-extraction-empty` (missing_feature)
+- `tests/test_reports_normalization.py::test_normalize_ac_covered` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-ac-covered` (missing_feature)
+- `tests/test_reports_normalization.py::test_normalize_all_passed` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-all-passed` (missing_feature)
+- `tests/test_reports_normalization.py::test_normalize_allow_skipped` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-allow-skipped` (missing_feature)
+- `tests/test_reports_normalization.py::test_normalize_any_failed` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-any-failed` (missing_feature)
+- `tests/test_reports_normalization.py::test_normalize_cucumber_json` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-cucumber-json` (missing_feature)
+- `tests/test_reports_normalization.py::test_normalize_evidence_json` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-evidence-json` (missing_feature)
+- `tests/test_reports_normalization.py::test_normalize_junit_xml` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-junit-xml` (missing_feature)
+- `tests/test_reports_normalization.py::test_normalize_missing_ac_coverage` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-missing-ac-coverage` (missing_feature)
+- `tests/test_reports_normalization.py::test_normalize_skipped_fails_by_default` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-skipped-fails-by-default` (missing_feature)
+- `tests/test_reports_normalization.py::test_normalize_unsupported_format` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-unsupported-format` (missing_feature)
+- `tests/test_reports_parsers.py::test_cucumber_json_passing_scenario` -> `specs/behavior/features/reports/parsers.feature` `@bdd-cucumber-parse-scenarios` (missing_feature)
+- `tests/test_reports_parsers.py::test_behear_string_tags_and_inline_status` -> `specs/behavior/features/reports/parsers.feature` `@bdd-cucumber-parse-tags` (missing_feature)
+- `tests/test_reports_parsers.py::test_parse_junit_pass_fail_skip` -> `specs/behavior/features/reports/parsers.feature` `@bdd-junit-parse-cases` (missing_feature)
+- `tests/test_reports_parsers.py::test_junit_parse_duration` -> `specs/behavior/features/reports/parsers.feature` `@bdd-junit-parse-duration` (missing_feature)
+- `tests/test_reports_parsers.py::test_junit_error_counts_as_failed` -> `specs/behavior/features/reports/parsers.feature` `@bdd-junit-parse-statuses` (missing_feature)
+- `tests/test_review_spec_review.py::TestReviewReportsMissingBindings::test_no_features` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-counts` (missing_feature)
+- `tests/test_review_spec_review.py::test_review_summary_includes_pytest_reverse_counts` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-coverage-summary-both-directions` (missing_feature)
+- `tests/test_review_spec_review.py::TestReviewAggregatesCoverage::test_stale_mapping_causes_failed_review` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-deprecated-paths` (missing_feature)
+- `tests/test_review_spec_review.py::TestReviewAggregatesCoverage::test_forbidden_pytest_bdd` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-forbidden-pytest-bdd` (missing_feature)
+- `tests/test_review_spec_review.py::TestReviewAggregatesCoverage::test_lint_findings` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-lint-findings` (missing_feature)
+- `tests/test_review_spec_review.py::TestReviewReportsMissingBindings::test_feature_with_no_test` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-missing-bindings` (missing_feature)
+- `tests/test_review_spec_review.py::TestReviewReportsNeedsReview::test_needs_review_flagged` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-needs-review` (missing_feature)
+- `tests/test_review_spec_review.py::test_review_missing_binding_message_does_not_duplicate_scenario_id` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-warning-scenario-once` (missing_feature)
+- `tests/test_runner_command.py::test_run_captures_stdout_stderr` -> `specs/behavior/features/runners/command.feature` `@bdd-runner-capture` (missing_feature)
+- `tests/test_runner_command.py::test_run_failure` -> `specs/behavior/features/runners/command.feature` `@bdd-runner-failure` (missing_feature)
+- `tests/test_runner_command.py::test_run_not_found` -> `specs/behavior/features/runners/command.feature` `@bdd-runner-not-found` (missing_feature)
+- `tests/test_runner_command.py::test_run_success` -> `specs/behavior/features/runners/command.feature` `@bdd-runner-success` (missing_feature)
+- `tests/test_trace.py::test_trace_by_bdd_id_reports_mapping_and_missing_evidence_gap` -> `specs/behavior/features/trace/trace.feature` `@bdd-trace-by-id` (missing_feature)
+- `tests/test_trace.py::test_trace_rejects_markdown_feature_path` -> `specs/behavior/features/trace/trace.feature` `@bdd-trace-by-path` (missing_feature)
+- `tests/test_translation_pytest_to_gherkin.py::TestSlug::test_basic` -> `specs/behavior/features/translation/pytest-to-gherkin.feature` `@bdd-translate-discovers-tests` (missing_feature)
+- `tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinDryRun::test_writes_nothing` -> `specs/behavior/features/translation/pytest-to-gherkin.feature` `@bdd-translate-dry-run` (missing_feature)
+- `tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinJsonShape::test_force_overwrites_manual` -> `specs/behavior/features/translation/pytest-to-gherkin.feature` `@bdd-translate-force-overwrite` (missing_feature)
+- `tests/test_translation_pytest_to_gherkin.py::TestDeriveArea::test_simple` -> `specs/behavior/features/translation/pytest-to-gherkin.feature` `@bdd-translate-group-by-file` (missing_feature)
+- `tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinFromSinglePytestFile::test_marks_needs_review` -> `specs/behavior/features/translation/pytest-to-gherkin.feature` `@bdd-translate-marks-generated` (missing_feature)
+- `tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinPreservesExisting::test_skips_manual_file_without_force` -> `specs/behavior/features/translation/pytest-to-gherkin.feature` `@bdd-translate-preserve-manual` (missing_feature)
+- `tests/test_spec_to_code.py::test_bind_feature_creates_skeleton` -> `specs/behavior/features/translation/spec-to-code.feature` `@bdd-spec-to-code-bind-behave` (missing_feature)
+- `tests/test_backends_pytest_bdd.py::test_bind_feature_writes_pytest_bdd_file` -> `specs/behavior/features/translation/spec-to-code.feature` `@bdd-spec-to-code-bind-pytest-bdd` (missing_feature)
+- `tests/test_spec_to_code.py::test_bind_unsupported_backend_raises` -> `specs/behavior/features/translation/spec-to-code.feature` `@bdd-spec-to-code-bind-unsupported` (missing_feature)
+- `tests/test_spec_to_code.py::test_step_function_name_dedup` -> `specs/behavior/features/translation/spec-to-code.feature` `@bdd-spec-to-code-dedup` (missing_feature)
+- `tests/test_spec_to_code.py::test_draft_feature_creates_file` -> `specs/behavior/features/translation/spec-to-code.feature` `@bdd-spec-to-code-draft` (missing_feature)
+- `tests/test_spec_to_code.py::test_step_function_name_basic` -> `specs/behavior/features/translation/spec-to-code.feature` `@bdd-spec-to-code-step-name` (missing_feature)
+
+## Pytest -> features
+
+### Unmapped pytest tests
+
+- `tests/test_cli_cli_contract.py`
+  - `tests/test_cli_cli_contract.py::test_specifications_index_writes_markdown_and_manifest`
+  - `tests/test_cli_cli_contract.py::test_sdd_index_alias`
+- `tests/test_combi_check.py`
+  - `tests/test_combi_check.py::test_combi_check_includes_specification_requirements`
+- `tests/test_config_configuration.py`
+  - `tests/test_config_configuration.py::TestLoadConfig::test_preserves_flat_behavior_path_fields`
+  - `tests/test_config_configuration.py::TestLoadConfig::test_loads_specifications_paths`
+  - `tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_both_modes`
+- `tests/test_doctor_diagnostics.py`
+  - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_warns_for_deprecated_specs_behavior_layout`
+  - `tests/test_doctor_diagnostics.py::TestDoctorSpecifications::test_reports_missing_specifications_directories`
+- `tests/test_init_initialization.py`
+  - `tests/test_init_initialization.py::TestInitBritishSpelling::test_creates_legacy_behavior_layout_when_explicit`
+  - `tests/test_init_initialization.py::TestInitModes::test_mode_specifications_creates_specifications_layout`
+  - `tests/test_init_initialization.py::TestInitModes::test_mode_both_creates_both_layouts`
+  - `tests/test_init_initialization.py::TestInitModes::test_upgrade_layout_migrates_only_when_explicit`
+- `tests/test_integrations_archledger.py`
+  - `tests/test_integrations_archledger.py::test_render_requirement_candidate_markdown`
+- `tests/test_python_ast_reader.py`
+  - `tests/test_python_ast_reader.py::test_discover_specweave_requirement_comment_mapping`
+  - `tests/test_python_ast_reader.py::test_discover_specweave_marker_requirement_mapping`
+  - `tests/test_python_ast_reader.py::test_one_test_can_map_to_bdd_and_sdd`
+- `tests/test_specifications_coverage.py`
+  - `tests/test_specifications_coverage.py::test_requirement_bound_by_pytest_mapping_passes_coverage`
+  - `tests/test_specifications_coverage.py::test_missing_pytest_mapping_fails_coverage`
+  - `tests/test_specifications_coverage.py::test_stale_pytest_nodeid_fails_coverage`
+  - `tests/test_specifications_coverage.py::test_reverse_coverage_lists_unmapped_pytest_tests`
+  - `tests/test_specifications_coverage.py::test_intentional_unmapped_policy_waives_reverse_gap`
+- `tests/test_specifications_index.py`
+  - `tests/test_specifications_index.py::test_writes_manifest`
+  - `tests/test_specifications_index.py::test_includes_product_spec_capabilities_interfaces_and_integrations`
+  - `tests/test_specifications_index.py::test_includes_verification_refs`
+- `tests/test_specifications_lint.py`
+  - `tests/test_specifications_lint.py::test_duplicate_document_ids_fail`
+  - `tests/test_specifications_lint.py::test_duplicate_requirement_ids_fail`
+  - `tests/test_specifications_lint.py::test_missing_verification_fails_when_required`
+  - `tests/test_specifications_lint.py::test_weak_normative_language_warns`
+  - `tests/test_specifications_lint.py::test_unsupported_id_prefix_fails`
+- `tests/test_specifications_parser.py`
+  - `tests/test_specifications_parser.py::test_parses_front_matter`
+  - `tests/test_specifications_parser.py::test_parses_product_spec`
+  - `tests/test_specifications_parser.py::test_parses_requirement_headings`
+  - `tests/test_specifications_parser.py::test_parses_verification_lists`
+  - `tests/test_specifications_parser.py::test_preserves_line_numbers`
+- `tests/test_specifications_reporting.py`
+  - `tests/test_specifications_reporting.py::test_imports_junit_xml_to_requirement_evidence`
+  - `tests/test_specifications_reporting.py::test_fail_closed_status_blocks_requirement`
+  - `tests/test_specifications_reporting.py::test_passing_mapped_pytest_test_verifies_requirement`
+- `tests/test_specifications_review.py`
+  - `tests/test_specifications_review.py::test_review_specifications_aggregates_lint_and_coverage`
+  - `tests/test_specifications_review.py::test_review_specs_includes_both_modes`
+- `tests/test_trace.py`
+  - `tests/test_trace.py::test_trace_by_requirement_id_reports_mapping_and_missing_evidence_gap`
+
+### Stale pytest mappings
+
+- `tests/test_backends_pytest_bdd.py`
+  - `tests/test_backends_pytest_bdd.py::test_pytest_bdd_dedups_repeated_steps` -> `specs/behavior/features/backends/pytest-bdd.feature` `@bdd-backend-pytest-bdd-dedup` (missing_feature)
+  - `tests/test_backends_pytest_bdd.py::test_pytest_bdd_collects_rule_scenarios` -> `specs/behavior/features/backends/pytest-bdd.feature` `@bdd-backend-pytest-bdd-rule-scenarios` (missing_feature)
+  - `tests/test_backends_pytest_bdd.py::test_pytest_bdd_skeleton_shape` -> `specs/behavior/features/backends/pytest-bdd.feature` `@bdd-backend-pytest-bdd-skeleton` (missing_feature)
+  - `tests/test_backends_pytest_bdd.py::test_pytest_bdd_uses_source_path_filename` -> `specs/behavior/features/backends/pytest-bdd.feature` `@bdd-backend-pytest-bdd-source-path` (missing_feature)
+  - `tests/test_backends_pytest_bdd.py::test_backend_registry_contents` -> `specs/behavior/features/backends/pytest-bdd.feature` `@bdd-backend-registry` (missing_feature)
+  - `tests/test_backends_pytest_bdd.py::test_unsupported_cucumber_backends_message` -> `specs/behavior/features/backends/pytest-bdd.feature` `@bdd-backend-unsupported` (missing_feature)
+- `tests/test_bdd_convert.py`
+  - `tests/test_bdd_convert.py::test_and_but_steps_group_correctly` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-and-but-steps` (missing_feature)
+  - `tests/test_bdd_convert.py::test_export_to_target_gherkin` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-export-to-gherkin` (missing_feature)
+  - `tests/test_bdd_convert.py::test_json_round_trip` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-json-roundtrip` (missing_feature)
+  - `tests/test_bdd_convert.py::test_json_to_feature_to_json_round_trip` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-json-to-feature-to-json` (missing_feature)
+  - `tests/test_bdd_convert.py::test_multiple_ac_tags_and_extra_tags` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-multiple-ac` (missing_feature)
+  - `tests/test_bdd_convert.py::test_round_trip_preserves_ids` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-roundtrip-ids` (missing_feature)
+  - `tests/test_bdd_convert.py::test_top_level_examples_become_top_level_scenarios` -> `specs/behavior/features/bdd/convert.feature` `@bdd-bridge-top-level` (missing_feature)
+- `tests/test_behavior_autolink.py`
+  - `tests/test_behavior_autolink.py::test_autolink_reports_ambiguous_equal_score` -> `specs/behavior/features/behavior/autolink.feature` `@bdd-autolink-ambiguous-candidate` (missing_feature)
+  - `tests/test_behavior_autolink.py::test_autolink_apply_writes_mapping_comments` -> `specs/behavior/features/behavior/autolink.feature` `@bdd-autolink-generated-id-apply` (missing_feature)
+  - `tests/test_behavior_autolink.py::test_autolink_dry_run_does_not_write` -> `specs/behavior/features/behavior/autolink.feature` `@bdd-autolink-generated-id-dry-run` (missing_feature)
+  - `tests/test_behavior_autolink.py::test_autolink_uses_config_paths` -> `specs/behavior/features/behavior/autolink.feature` `@bdd-autolink-refresh-wrapper` (missing_feature)
+- `tests/test_behavior_coverage.py`
+  - `tests/test_behavior_coverage.py::test_render_coverage_text_both_directions` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-both-directions-render` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_behavior_coverage_feature_md_bound_by_comment` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-bound-scenario` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_coverage_candidate_tests_are_hints_not_bindings` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-candidate-tests` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_coverage_matches_mapping_on_class_test_method` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-class-method-mapping` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_coverage_deprecated_paths` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-deprecated-paths` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_behavior_coverage_reports_forbidden_pytest_bdd_usage` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-forbidden-pytest-bdd` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_coverage_manual_scenario_skipped` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-manual-scenario` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_coverage_missing_test_file` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-missing-test-file` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_behavior_coverage_ignores_pytest_bdd_text` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-missing-test-file-reason` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_coverage_accepts_intentional_unmapped_pytest_tests` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-pytest-intentional-unmapped` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_coverage_accepts_intentional_unmapped_policy_file` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-pytest-intentional-unmapped-policy-file` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_coverage_marks_stale_pytest_test_in_reverse_inventory` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-pytest-stale` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_coverage_lists_unmapped_pytest_tests` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-pytest-unmapped` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_coverage_stale_feature_binding` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-stale-binding` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_behavior_coverage_reports_stale_markdown_mapping` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-stale-scenario` (missing_feature)
+  - `tests/test_behavior_coverage.py::test_behavior_coverage_does_not_match_by_title` -> `specs/behavior/features/behavior/coverage.feature` `@bdd-coverage-unbound-scenario` (missing_feature)
+- `tests/test_behavior_generation.py`
+  - `tests/test_behavior_generation.py::test_generate_batch` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-batch` (missing_feature)
+  - `tests/test_behavior_generation.py::test_generate_canonical_path` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-canonical-path` (missing_feature)
+  - `tests/test_behavior_generation.py::test_generate_docstring` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-docstring` (missing_feature)
+  - `tests/test_behavior_generation.py::test_generate_rules` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-rules` (missing_feature)
+  - `tests/test_behavior_generation.py::test_generate_scenario_function` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-scenario-function` (missing_feature)
+  - `tests/test_behavior_generation.py::test_generate_single_feature` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-single-feature` (missing_feature)
+  - `tests/test_behavior_generation.py::test_generate_specweave_markers` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-specweave-markers` (missing_feature)
+  - `tests/test_behavior_generation.py::test_generate_step_comments` -> `specs/behavior/features/behavior/generation.feature` `@bdd-generate-step-comments` (missing_feature)
+- `tests/test_behavior_index.py`
+  - `tests/test_behavior_index.py::test_index_evidence_status` -> `specs/behavior/features/behavior/index.feature` `@bdd-index-evidence-status` (missing_feature)
+  - `tests/test_behavior_index.py::test_index_generates_manifest` -> `specs/behavior/features/behavior/index.feature` `@bdd-index-generates-manifest` (missing_feature)
+  - `tests/test_behavior_index.py::test_index_generates_markdown` -> `specs/behavior/features/behavior/index.feature` `@bdd-index-generates-markdown` (missing_feature)
+  - `tests/test_behavior_index.py::test_index_rules` -> `specs/behavior/features/behavior/index.feature` `@bdd-index-rules` (missing_feature)
+  - `tests/test_behavior_index.py::test_index_scenario_entries` -> `specs/behavior/features/behavior/index.feature` `@bdd-index-scenario-entries` (missing_feature)
+  - `tests/test_behavior_index.py::test_index_unbound_scenario` -> `specs/behavior/features/behavior/index.feature` `@bdd-index-unbound-scenario` (missing_feature)
+- `tests/test_behavior_reporting.py`
+  - `tests/test_behavior_reporting.py::test_import_maps_by_function_name` -> `specs/behavior/features/behavior/reporting.feature` `@bdd-import-maps-by-function-name` (missing_feature)
+  - `tests/test_behavior_reporting.py::test_import_maps_by_manifest` -> `specs/behavior/features/behavior/reporting.feature` `@bdd-import-maps-by-manifest` (missing_feature)
+  - `tests/test_behavior_reporting.py::test_import_maps_by_nodeid` -> `specs/behavior/features/behavior/reporting.feature` `@bdd-import-maps-by-nodeid` (missing_feature)
+  - `tests/test_behavior_reporting.py::test_import_unmapped_tests` -> `specs/behavior/features/behavior/reporting.feature` `@bdd-import-unmapped-tests` (missing_feature)
+  - `tests/test_behavior_reporting.py::test_import_writes_evidence` -> `specs/behavior/features/behavior/reporting.feature` `@bdd-import-writes-evidence` (missing_feature)
+- `tests/test_cli_cli_contract.py`
+  - `tests/test_cli_cli_contract.py::test_bdd_check_alias` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-bdd-check-alias` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_bdd_index_alias` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-bdd-index-alias` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_behavior_check_accepts_canonical_feature` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-behavior-check` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_behavior_coverage_reports_bound_scenarios` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-behavior-coverage` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_behavior_coverage_view_test_json` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-behavior-coverage-view-test-json` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_behavior_generate_tests_creates_plain_pytest` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-behavior-generate-tests` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_behavior_import_report_maps_pytest_nodeid` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-behavior-import-report` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_behavior_index_writes_markdown_and_manifest` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-behavior-index` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_config_option` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-config-option` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_create_feature` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-create-feature` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_create_gherkin` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-create-gherkin` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_create_plan` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-create-plan` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_exit_check_errors` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-exit-check-errors` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_exit_doctor_failed` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-exit-doctor-failed` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_report_normalize_writes_json_and_exits_nonzero_on_failure` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-exit-normalize-failed` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_json_init` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-json-init` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_json_output` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-json-output` (missing_feature)
+  - `tests/test_cli_cli_contract.py::test_review_coverage_both_directions_text` -> `specs/behavior/features/cli/cli-contract.feature` `@bdd-cli-review-coverage-both-directions` (missing_feature)
+- `tests/test_common_behavior_helpers.py`
+  - `tests/test_common_behavior_helpers.py::TestCanonicalTestPath::test_derives_path` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-canonical-test-path` (missing_feature)
+  - `tests/test_common_behavior_helpers.py::TestFeatureIdentity::test_from_path` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-feature-identity-from-path` (missing_feature)
+  - `tests/test_common_behavior_helpers.py::TestFeatureIdentity::test_no_area` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-feature-identity-no-area` (missing_feature)
+  - `tests/test_common_behavior_helpers.py::TestFeatureStem::test_classic_feature` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-feature-stem-classic` (missing_feature)
+  - `tests/test_common_behavior_helpers.py::TestFeatureStem::test_feature_md` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-feature-stem-legacy-markdown` (missing_feature)
+  - `tests/test_common_behavior_helpers.py::TestIterFeatureScenarios::test_yields_from_rules` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-iter-scenarios-in-rules` (missing_feature)
+  - `tests/test_common_behavior_helpers.py::TestIterFeatureScenarios::test_yields_top_level` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-iter-scenarios-top-level` (missing_feature)
+  - `tests/test_common_behavior_helpers.py::TestScenarioIdValue::test_returns_empty_when_no_bdd` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-scenario-id-missing` (missing_feature)
+  - `tests/test_common_behavior_helpers.py::TestScenarioIdValue::test_returns_first_bdd_tag` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-scenario-id-value` (missing_feature)
+  - `tests/test_common_behavior_helpers.py::TestSlugify::test_basic` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-slugify-basic` (missing_feature)
+  - `tests/test_common_behavior_helpers.py::TestSlugify::test_empty` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-slugify-empty` (missing_feature)
+  - `tests/test_common_behavior_helpers.py::TestSlugify::test_special_chars` -> `specs/behavior/features/common/behavior-helpers.feature` `@bdd-slugify-special-chars` (missing_feature)
+- `tests/test_config_configuration.py`
+  - `tests/test_config_configuration.py::TestFindConfig::test_finds_hidden_config` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-discovery-finds-dotfile` (missing_feature)
+  - `tests/test_config_configuration.py::TestFindConfig::test_prefers_explicit` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-discovery-finds-public` (missing_feature)
+  - `tests/test_config_configuration.py::TestFindConfig::test_prefers_public_over_dotfile` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-discovery-prefers-public` (missing_feature)
+  - `tests/test_config_configuration.py::TestFindConfig::test_returns_none_when_missing` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-discovery-returns-none` (missing_feature)
+  - `tests/test_config_configuration.py::TestFindConfig::test_walks_up_directories` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-discovery-walks-parents` (missing_feature)
+  - `tests/test_config_configuration.py::TestLoadConfig::test_defaults_when_missing` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-load-defaults` (missing_feature)
+  - `tests/test_config_configuration.py::TestLoadConfig::test_normalizes_nested_behaviour_paths` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-load-from-file` (missing_feature)
+  - `tests/test_config_configuration.py::TestLoadConfig::test_rejects_unsupported_schema` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-rejects-unsupported-schema` (missing_feature)
+  - `tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_behavior` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-render-behavior` (missing_feature)
+  - `tests/test_config_configuration.py::TestRenderDefaultConfig::test_renders_behaviour` -> `specs/behavior/features/config/configuration.feature` `@bdd-config-render-behaviour` (missing_feature)
+- `tests/test_doctor_diagnostics.py`
+  - `tests/test_doctor_diagnostics.py::TestDoctorReportsDeprecatedPaths::test_detects_deprecated` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-deprecated-paths` (missing_feature)
+  - `tests/test_doctor_diagnostics.py::TestDoctorReportsDuplicateBddTags::test_detects_duplicates` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-duplicate-bdd-tags` (missing_feature)
+  - `tests/test_doctor_diagnostics.py::TestDoctorFix::test_fix_creates_missing_dirs` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-fix-creates-directories` (missing_feature)
+  - `tests/test_doctor_diagnostics.py::TestDoctorReportsMissing::test_no_config_warning` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-missing-config` (missing_feature)
+  - `tests/test_doctor_diagnostics.py::TestDoctorReportsMissing::test_reports_missing_features_dir` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-missing-directories` (missing_feature)
+  - `tests/test_doctor_diagnostics.py::TestDoctorFix::test_unsupported_schema` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-unsupported-schema` (missing_feature)
+  - `tests/test_doctor_diagnostics.py::TestDoctorPasses::test_passes_initialized_project` -> `specs/behavior/features/doctor/diagnostics.feature` `@bdd-doctor-validates-features` (missing_feature)
+- `tests/test_exchange_schemas.py`
+  - `tests/test_exchange_schemas.py::test_archledger_schema_representative_payload_contract` -> `specs/behavior/features/exchange/schemas.feature` `@bdd-exchange-archledger-schema` (missing_feature)
+  - `tests/test_exchange_schemas.py::test_trace_schema_representative_payload_contract` -> `specs/behavior/features/exchange/schemas.feature` `@bdd-exchange-combi-trace-schema` (missing_feature)
+  - `tests/test_exchange_schemas.py::test_evidence_schema_representative_payload_contract` -> `specs/behavior/features/exchange/schemas.feature` `@bdd-exchange-evidence-schema` (missing_feature)
+  - `tests/test_exchange_schemas.py::test_exchange_schemas_are_json_schema_documents` -> `specs/behavior/features/exchange/schemas.feature` `@bdd-exchange-schema-valid` (missing_feature)
+  - `tests/test_exchange_schemas.py::test_taskledger_schema_representative_payload_contract` -> `specs/behavior/features/exchange/schemas.feature` `@bdd-exchange-taskledger-schema` (missing_feature)
+- `tests/test_gherkin_lint.py`
+  - `tests/test_gherkin_lint.py::test_lint_area_subdirectory` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-area-subdirectory` (missing_feature)
+  - `tests/test_gherkin_lint.py::test_lint_canonical_path` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-canonical-path` (missing_feature)
+  - `tests/test_gherkin_lint.py::test_lint_deprecated_path` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-deprecated-path` (missing_feature)
+  - `tests/test_gherkin_lint.py::test_lint_duplicate_bdd_tags` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-duplicate-bdd-tags` (missing_feature)
+  - `tests/test_gherkin_lint.py::test_lint_empty_feature_title` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-empty-feature-title` (missing_feature)
+  - `tests/test_gherkin_lint.py::test_lint_empty_rule` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-empty-rule` (missing_feature)
+  - `tests/test_gherkin_lint.py::test_lint_empty_scenario_title` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-empty-scenario-title` (missing_feature)
+  - `tests/test_gherkin_lint.py::test_lint_missing_bdd_tag` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-missing-bdd-tag` (missing_feature)
+  - `tests/test_gherkin_lint.py::test_lint_missing_given_when_then` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-missing-given-when-then` (missing_feature)
+  - `tests/test_gherkin_lint.py::test_lint_multiple_feature_lines` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-single-feature` (missing_feature)
+  - `tests/test_gherkin_lint.py::test_lint_strict_unsupported` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-strict-unsupported` (missing_feature)
+  - `tests/test_gherkin_lint.py::test_lint_task_tags_discouraged` -> `specs/behavior/features/gherkin/lint.feature` `@bdd-lint-task-tags-discouraged` (missing_feature)
+  - `tests/test_gherkin_lint.py::test_lint_rejects_markdown_feature_file` -> `specs/behavior/features/gherkin/markdown.feature` `@bdd-lint-rejects-markdown-file` (missing_feature)
+- `tests/test_gherkin_parser.py`
+  - `tests/test_gherkin_parser.py::test_parser_rejects_markdown_feature_path` -> `specs/behavior/features/gherkin/markdown.feature` `@bdd-markdown-parser-rejects-path` (missing_feature)
+- `tests/test_gherkin_validation.py`
+  - `tests/test_gherkin_validation.py::TestValidateMarkdownUnsupported::test_rejects_markdown_features` -> `specs/behavior/features/gherkin/markdown.feature` `@bdd-validation-rejects-markdown` (missing_feature)
+- `tests/test_gherkin_official.py`
+  - `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_compile_pickles_smoke` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-compile-pickles` (missing_feature)
+  - `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_empty_feature_tags` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-parse-no-tags` (missing_feature)
+  - `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_parses_rule_and_scenario_tags` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-parse-rules` (missing_feature)
+  - `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_parses_simple_feature` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-parse-simple` (missing_feature)
+  - `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_preserves_description` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-preserve-description` (missing_feature)
+  - `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_rejects_invalid_gherkin` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-reject-invalid` (missing_feature)
+  - `tests/test_gherkin_official.py::TestParseClassicWithOfficial::test_accepts_source_path` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-source-path` (missing_feature)
+  - `tests/test_gherkin_official.py::TestValidateClassicWithOfficial::test_validates_invalid` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-validate-invalid` (missing_feature)
+  - `tests/test_gherkin_official.py::TestValidateClassicWithOfficial::test_validates_valid` -> `specs/behavior/features/gherkin/official.feature` `@bdd-official-validate-valid` (missing_feature)
+- `tests/test_gherkin_parser.py`
+  - `tests/test_gherkin_parser.py::test_parse_feature_description` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-classic-description` (missing_feature)
+  - `tests/test_gherkin_parser.py::test_parse_simple_feature` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-classic-feature` (missing_feature)
+  - `tests/test_gherkin_parser.py::test_parse_rule_block` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-classic-rules` (missing_feature)
+  - `tests/test_gherkin_parser.py::test_parse_no_tags` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-classic-tags` (missing_feature)
+  - `tests/test_gherkin_parser.py::test_top_level_scenario_before_rule_stays_top_level` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-classic-top-level-scenarios` (missing_feature)
+  - `tests/test_gherkin_parser.py::test_parser_dispatch_classic_suffix` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-dispatch-classic` (missing_feature)
+  - `tests/test_gherkin_parser.py::test_classic_parser_rejects_markdown_feature_path` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-rejects-markdown-path` (missing_feature)
+  - `tests/test_gherkin_parser.py::test_parse_missing_feature_raises` -> `specs/behavior/features/gherkin/parser.feature` `@bdd-parser-requires-feature-line` (missing_feature)
+- `tests/test_gherkin_writer.py`
+  - `tests/test_gherkin_writer.py::test_writes_tags_feature_scenario_steps` -> `specs/behavior/features/gherkin/writer.feature` `@bdd-writer-basic-feature` (missing_feature)
+  - `tests/test_gherkin_writer.py::test_feature_description_rendered` -> `specs/behavior/features/gherkin/writer.feature` `@bdd-writer-descriptions` (missing_feature)
+  - `tests/test_gherkin_writer.py::test_rule_round_trips` -> `specs/behavior/features/gherkin/writer.feature` `@bdd-writer-roundtrip` (missing_feature)
+  - `tests/test_gherkin_writer.py::test_writes_rule_block` -> `specs/behavior/features/gherkin/writer.feature` `@bdd-writer-rules` (missing_feature)
+  - `tests/test_gherkin_writer.py::test_scenario_without_tags` -> `specs/behavior/features/gherkin/writer.feature` `@bdd-writer-tags` (missing_feature)
+- `tests/test_init_initialization.py`
+  - `tests/test_init_initialization.py::TestInitBritishSpelling::test_creates_behaviour_layout` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-british-spelling` (missing_feature)
+  - `tests/test_init_initialization.py::TestInitCompatibility::test_hidden_config_path_still_works_when_explicit` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-creates-dotfile` (missing_feature)
+  - `tests/test_init_initialization.py::TestInitDefault::test_creates_behaviour_paths` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-creates-gitkeep` (missing_feature)
+  - `tests/test_init_initialization.py::TestInitDefault::test_creates_default_config_and_layout` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-creates-public-config` (missing_feature)
+  - `tests/test_init_initialization.py::TestReadmeIsSpecweaveManaged::test_nonexistent` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-creates-readme` (missing_feature)
+  - `tests/test_init_initialization.py::TestInitDryRun::test_writes_nothing` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-dry-run` (missing_feature)
+  - `tests/test_init_initialization.py::TestInitForce::test_force_overwrites_generated_config_only` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-force-overwrites-readme` (missing_feature)
+  - `tests/test_init_initialization.py::TestInitIdempotency::test_does_not_overwrite_existing_config` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-idempotent` (missing_feature)
+  - `tests/test_init_initialization.py::TestInitIdempotency::test_does_not_overwrite_non_specweave_readme` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-refuses-overwrite-readme` (missing_feature)
+  - `tests/test_init_initialization.py::TestInitIdempotency::test_reports_existing_directories` -> `specs/behavior/features/init/initialization.feature` `@bdd-init-warns-existing-config` (missing_feature)
+- `tests/test_integrations_archledger.py`
+  - `tests/test_integrations_archledger.py::test_render_candidate_markdown` -> `specs/behavior/features/integrations/archledger.feature` `@bdd-archledger-candidate` (missing_feature)
+  - `tests/test_integrations_archledger.py::test_write_candidate_file` -> `specs/behavior/features/integrations/archledger.feature` `@bdd-archledger-candidate-only` (missing_feature)
+  - `tests/test_integrations_archledger.py::test_unknown_bdd_id_raises` -> `specs/behavior/features/integrations/archledger.feature` `@bdd-archledger-unknown-bdd` (missing_feature)
+- `tests/test_combi_check.py`
+  - `tests/test_combi_check.py::test_combi_check_writes_json_and_human_diagnostics` -> `specs/behavior/features/integrations/combi.feature` `@bdd-combi-check-gaps` (missing_feature)
+  - `tests/test_combi_check.py::test_combi_check_strict_fails_on_missing_bdd_id` -> `specs/behavior/features/integrations/combi.feature` `@bdd-combi-check-strict` (missing_feature)
+- `tests/test_integrations_taskledger.py`
+  - `tests/test_integrations_taskledger.py::test_no_taskledger_import_required` -> `specs/behavior/features/integrations/taskledger.feature` `@bdd-taskledger-draft` (missing_feature)
+  - `tests/test_integrations_taskledger.py::test_taskledger_draft_ac_mapping` -> `specs/behavior/features/integrations/taskledger.feature` `@bdd-taskledger-draft-ac-mapping` (missing_feature)
+  - `tests/test_integrations_taskledger.py::test_task_id_from_report` -> `specs/behavior/features/integrations/taskledger.feature` `@bdd-taskledger-evidence` (missing_feature)
+  - `tests/test_integrations_taskledger.py::test_load_rich_shape` -> `specs/behavior/features/integrations/taskledger.feature` `@bdd-taskledger-import` (missing_feature)
+- `tests/test_plan.py`
+  - `tests/test_plan.py::TestCreatePlan::test_creates_plan_from_feature` -> `specs/behavior/features/planning/create-plan.feature` `@bdd-plan-create` (missing_feature)
+  - `tests/test_plan.py::TestCreatePlan::test_plan_includes_scenario_steps` -> `specs/behavior/features/planning/create-plan.feature` `@bdd-plan-includes-scenario-steps` (missing_feature)
+  - `tests/test_plan.py::TestCreatePlan::test_plan_includes_validation_commands` -> `specs/behavior/features/planning/create-plan.feature` `@bdd-plan-validation-commands` (missing_feature)
+- `tests/test_python_ast_reader.py`
+  - `tests/test_python_ast_reader.py::test_describe_assert_call` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-assert-call` (missing_feature)
+  - `tests/test_python_ast_reader.py::test_describe_assert_equals` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-assert-equals` (missing_feature)
+  - `tests/test_python_ast_reader.py::test_describe_assert_is_none` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-assert-is-none` (missing_feature)
+  - `tests/test_python_ast_reader.py::test_describe_assert_truthy` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-assert-truthy` (missing_feature)
+  - `tests/test_python_ast_reader.py::test_discover_specweave_comment_mapping` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-discover-comment` (missing_feature)
+  - `tests/test_python_ast_reader.py::test_docstring_mapping_accepts_feature_md` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-discover-docstring` (missing_feature)
+  - `tests/test_python_ast_reader.py::test_discover_pytest_tests_preserves_intentional_unmapped_waiver` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-discover-intentional-unmapped-waiver` (missing_feature)
+  - `tests/test_python_ast_reader.py::test_discover_specweave_marker_mapping` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-discover-marker` (missing_feature)
+  - `tests/test_python_ast_reader.py::test_extract_test_functions` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-extract-test-functions` (missing_feature)
+  - `tests/test_python_ast_reader.py::test_extract_ignores_non_test_functions` -> `specs/behavior/features/python-inspect/ast-reader.feature` `@bdd-ast-ignores-non-test` (missing_feature)
+- `tests/test_reports_fail_closed.py`
+  - `tests/test_reports_fail_closed.py::test_ambiguous_scenario_fails_criterion` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-ambiguous-scenario` (missing_feature)
+  - `tests/test_reports_fail_closed.py::test_exit_code_not_used_as_evidence` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-exit-code-not-evidence` (missing_feature)
+  - `tests/test_reports_fail_closed.py::test_failed_scenario_fails_criterion` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-failed-scenario` (missing_feature)
+  - `tests/test_reports_fail_closed.py::test_criterion_fails_when_sibling_undefined` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-multiple-scenarios` (missing_feature)
+  - `tests/test_reports_fail_closed.py::test_evidence_records_command_source_and_paths` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-passed-scenario` (missing_feature)
+  - `tests/test_reports_fail_closed.py::test_pending_scenario_fails_criterion` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-pending-scenario` (missing_feature)
+  - `tests/test_reports_fail_closed.py::test_skipped_scenario_fails_criterion` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-skipped-scenario` (missing_feature)
+  - `tests/test_reports_fail_closed.py::test_criterion_requires_passing_native_result` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-undefined-scenario` (missing_feature)
+  - `tests/test_reports_fail_closed.py::test_missing_expected_coverage_fails` -> `specs/behavior/features/reports/fail-closed.feature` `@bdd-fail-closed-unlinked-scenario` (missing_feature)
+- `tests/test_reports_mapping.py`
+  - `tests/test_reports_mapping.py::test_summarize_fails_when_linked_scenario_failed` -> `specs/behavior/features/reports/mapping.feature` `@bdd-criteria-fail-closed` (missing_feature)
+  - `tests/test_reports_mapping.py::test_require_expected_coverage_missing_fails` -> `specs/behavior/features/reports/mapping.feature` `@bdd-criteria-missing-coverage` (missing_feature)
+  - `tests/test_reports_mapping.py::test_summarize_passes_when_linked_scenario_passed` -> `specs/behavior/features/reports/mapping.feature` `@bdd-criteria-summary` (missing_feature)
+  - `tests/test_reports_mapping.py::test_extract_ac_ids_from_tags` -> `specs/behavior/features/reports/mapping.feature` `@bdd-tag-extraction-ac` (missing_feature)
+  - `tests/test_reports_mapping.py::test_extract_ids_partitions_by_prefix` -> `specs/behavior/features/reports/mapping.feature` `@bdd-tag-extraction-bdd` (missing_feature)
+  - `tests/test_reports_mapping.py::test_unlinked_scenarios_are_ignored` -> `specs/behavior/features/reports/mapping.feature` `@bdd-tag-extraction-empty` (missing_feature)
+- `tests/test_reports_normalization.py`
+  - `tests/test_reports_normalization.py::test_normalize_ac_covered` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-ac-covered` (missing_feature)
+  - `tests/test_reports_normalization.py::test_normalize_all_passed` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-all-passed` (missing_feature)
+  - `tests/test_reports_normalization.py::test_normalize_allow_skipped` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-allow-skipped` (missing_feature)
+  - `tests/test_reports_normalization.py::test_normalize_any_failed` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-any-failed` (missing_feature)
+  - `tests/test_reports_normalization.py::test_normalize_cucumber_json` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-cucumber-json` (missing_feature)
+  - `tests/test_reports_normalization.py::test_normalize_evidence_json` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-evidence-json` (missing_feature)
+  - `tests/test_reports_normalization.py::test_normalize_junit_xml` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-junit-xml` (missing_feature)
+  - `tests/test_reports_normalization.py::test_normalize_missing_ac_coverage` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-missing-ac-coverage` (missing_feature)
+  - `tests/test_reports_normalization.py::test_normalize_skipped_fails_by_default` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-skipped-fails-by-default` (missing_feature)
+  - `tests/test_reports_normalization.py::test_normalize_unsupported_format` -> `specs/behavior/features/reports/normalization.feature` `@bdd-normalize-unsupported-format` (missing_feature)
+- `tests/test_reports_parsers.py`
+  - `tests/test_reports_parsers.py::test_cucumber_json_passing_scenario` -> `specs/behavior/features/reports/parsers.feature` `@bdd-cucumber-parse-scenarios` (missing_feature)
+  - `tests/test_reports_parsers.py::test_behear_string_tags_and_inline_status` -> `specs/behavior/features/reports/parsers.feature` `@bdd-cucumber-parse-tags` (missing_feature)
+  - `tests/test_reports_parsers.py::test_parse_junit_pass_fail_skip` -> `specs/behavior/features/reports/parsers.feature` `@bdd-junit-parse-cases` (missing_feature)
+  - `tests/test_reports_parsers.py::test_junit_parse_duration` -> `specs/behavior/features/reports/parsers.feature` `@bdd-junit-parse-duration` (missing_feature)
+  - `tests/test_reports_parsers.py::test_junit_error_counts_as_failed` -> `specs/behavior/features/reports/parsers.feature` `@bdd-junit-parse-statuses` (missing_feature)
+- `tests/test_review_spec_review.py`
+  - `tests/test_review_spec_review.py::TestReviewReportsMissingBindings::test_no_features` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-counts` (missing_feature)
+  - `tests/test_review_spec_review.py::test_review_summary_includes_pytest_reverse_counts` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-coverage-summary-both-directions` (missing_feature)
+  - `tests/test_review_spec_review.py::TestReviewAggregatesCoverage::test_stale_mapping_causes_failed_review` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-deprecated-paths` (missing_feature)
+  - `tests/test_review_spec_review.py::TestReviewAggregatesCoverage::test_forbidden_pytest_bdd` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-forbidden-pytest-bdd` (missing_feature)
+  - `tests/test_review_spec_review.py::TestReviewAggregatesCoverage::test_lint_findings` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-lint-findings` (missing_feature)
+  - `tests/test_review_spec_review.py::TestReviewReportsMissingBindings::test_feature_with_no_test` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-missing-bindings` (missing_feature)
+  - `tests/test_review_spec_review.py::TestReviewReportsNeedsReview::test_needs_review_flagged` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-needs-review` (missing_feature)
+  - `tests/test_review_spec_review.py::test_review_missing_binding_message_does_not_duplicate_scenario_id` -> `specs/behavior/features/review/spec-review.feature` `@bdd-review-warning-scenario-once` (missing_feature)
+- `tests/test_runner_command.py`
+  - `tests/test_runner_command.py::test_run_captures_stdout_stderr` -> `specs/behavior/features/runners/command.feature` `@bdd-runner-capture` (missing_feature)
+  - `tests/test_runner_command.py::test_run_failure` -> `specs/behavior/features/runners/command.feature` `@bdd-runner-failure` (missing_feature)
+  - `tests/test_runner_command.py::test_run_not_found` -> `specs/behavior/features/runners/command.feature` `@bdd-runner-not-found` (missing_feature)
+  - `tests/test_runner_command.py::test_run_success` -> `specs/behavior/features/runners/command.feature` `@bdd-runner-success` (missing_feature)
+- `tests/test_trace.py`
+  - `tests/test_trace.py::test_trace_by_bdd_id_reports_mapping_and_missing_evidence_gap` -> `specs/behavior/features/trace/trace.feature` `@bdd-trace-by-id` (missing_feature)
+  - `tests/test_trace.py::test_trace_rejects_markdown_feature_path` -> `specs/behavior/features/trace/trace.feature` `@bdd-trace-by-path` (missing_feature)
+- `tests/test_translation_pytest_to_gherkin.py`
+  - `tests/test_translation_pytest_to_gherkin.py::TestSlug::test_basic` -> `specs/behavior/features/translation/pytest-to-gherkin.feature` `@bdd-translate-discovers-tests` (missing_feature)
+  - `tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinDryRun::test_writes_nothing` -> `specs/behavior/features/translation/pytest-to-gherkin.feature` `@bdd-translate-dry-run` (missing_feature)
+  - `tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinJsonShape::test_force_overwrites_manual` -> `specs/behavior/features/translation/pytest-to-gherkin.feature` `@bdd-translate-force-overwrite` (missing_feature)
+  - `tests/test_translation_pytest_to_gherkin.py::TestDeriveArea::test_simple` -> `specs/behavior/features/translation/pytest-to-gherkin.feature` `@bdd-translate-group-by-file` (missing_feature)
+  - `tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinFromSinglePytestFile::test_marks_needs_review` -> `specs/behavior/features/translation/pytest-to-gherkin.feature` `@bdd-translate-marks-generated` (missing_feature)
+  - `tests/test_translation_pytest_to_gherkin.py::TestCreateGherkinPreservesExisting::test_skips_manual_file_without_force` -> `specs/behavior/features/translation/pytest-to-gherkin.feature` `@bdd-translate-preserve-manual` (missing_feature)
+- `tests/test_spec_to_code.py`
+  - `tests/test_spec_to_code.py::test_bind_feature_creates_skeleton` -> `specs/behavior/features/translation/spec-to-code.feature` `@bdd-spec-to-code-bind-behave` (missing_feature)
+- `tests/test_backends_pytest_bdd.py`
+  - `tests/test_backends_pytest_bdd.py::test_bind_feature_writes_pytest_bdd_file` -> `specs/behavior/features/translation/spec-to-code.feature` `@bdd-spec-to-code-bind-pytest-bdd` (missing_feature)
+- `tests/test_spec_to_code.py`
+  - `tests/test_spec_to_code.py::test_bind_unsupported_backend_raises` -> `specs/behavior/features/translation/spec-to-code.feature` `@bdd-spec-to-code-bind-unsupported` (missing_feature)
+  - `tests/test_spec_to_code.py::test_step_function_name_dedup` -> `specs/behavior/features/translation/spec-to-code.feature` `@bdd-spec-to-code-dedup` (missing_feature)
+  - `tests/test_spec_to_code.py::test_draft_feature_creates_file` -> `specs/behavior/features/translation/spec-to-code.feature` `@bdd-spec-to-code-draft` (missing_feature)
+  - `tests/test_spec_to_code.py::test_step_function_name_basic` -> `specs/behavior/features/translation/spec-to-code.feature` `@bdd-spec-to-code-step-name` (missing_feature)

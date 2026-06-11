@@ -3,15 +3,43 @@ project_root = "."
 spelling = "behavior"
 
 [paths]
-specs_root = "specs/behavior"
-features_dir = "specs/behavior/features"
-behavior_readme = "specs/behavior/README.md"
-manifest = "specs/behavior/manifest.json"
+specs_root = "specs"
 tests_dir = "tests"
-reports_dir = "specs/behavior/reports"
+
+[paths.behaviour]
+root = "specs/behavior"
+features_dir = "specs/behavior/features"
+readme = "specs/behavior/README.md"
+manifest = "specs/behavior/manifest.json"
+mappings_dir = "specs/behavior/mappings"
 evidence_dir = "specs/behavior/evidence"
+reports_dir = "specs/behavior/reports"
 reports_state_dir = "specs/behavior/reports/specweave"
-mapping_dir = "specs/behavior/mappings"
+
+[behaviour]
+require_bdd_ids = true
+default_scenario_keyword = "Example"
+generated_tag = "generated"
+needs_review_tag = "needs-review"
+
+[paths.specifications]
+root = "specs/specifications"
+product_spec = "specs/specifications/product.spec.md"
+readme = "specs/specifications/README.md"
+manifest = "specs/specifications/manifest.json"
+capabilities_dir = "specs/specifications/capabilities"
+interfaces_dir = "specs/specifications/interfaces"
+integrations_dir = "specs/specifications/integrations"
+mappings_dir = "specs/specifications/mappings"
+evidence_dir = "specs/specifications/evidence"
+reports_dir = "specs/specifications/reports"
+reports_state_dir = "specs/specifications/reports/specweave"
+
+[specifications]
+require_requirement_ids = true
+allowed_requirement_prefixes = ["REQ", "INV", "IF", "DATA", "NFR", "NGOAL", "RISK", "OPEN"]
+require_verification = true
+require_rationale = false
 
 gitkeep = true
 

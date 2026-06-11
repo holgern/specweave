@@ -9,7 +9,14 @@ import typer
 
 from specweave.cli_context import CliContext, build_cli_context
 
-app = typer.Typer(no_args_is_help=True)
+app = typer.Typer(
+    no_args_is_help=True,
+    help=(
+        "SpecWeave keeps product behavior readable and validates it with "
+        "plain pytest. Start with 'specweave review golden' for the "
+        "full agent-readable health check."
+    ),
+)
 
 
 @app.callback()
@@ -18,8 +25,13 @@ def main(
     config: Annotated[Path | None, typer.Option("--config")] = None,
     json_output: Annotated[bool, typer.Option("--json")] = False,
 ) -> None:
-    """SpecWeave CLI: translate between Python tests, Gherkin behavior
-    specs, and BDD execution evidence."""
+    """Translate product behavior, pytest mappings, and evidence.
+
+    Required input: run inside a SpecWeave project or pass --config.
+    Outputs: text by default, JSON with --json for supported commands.
+    Exit code: 0 means the requested check passed, 1 means gaps or invalid input.
+    Next step: run 'specweave review golden' to diagnose release readiness.
+    """
     ctx.obj = build_cli_context(config_path=config, json_output=json_output)
 
 
@@ -73,7 +85,13 @@ app.add_typer(combi_app, name="combi")
 
 @app.command()
 def explain(paths: list[Path]) -> None:
-    """Explain Python test files as candidate behavior specs."""
+    """Explain pytest files as candidate behavior specs.
+
+    Required input: one or more Python test files.
+    Output: candidate behavior text for authoring or mapping decisions.
+    Exit code: 0 means inputs were read, 1 means an input cannot be processed.
+    Next step: create or map product scenarios, then run review coverage both ways.
+    """
     from specweave.translate.code_to_spec import explain_tests
 
     explain_tests(paths)
@@ -210,7 +228,13 @@ def doctor(
     ctx: typer.Context,
     fix: Annotated[bool, typer.Option("--fix")] = False,
 ) -> None:
-    """Diagnose SpecWeave setup and convention problems."""
+    """Diagnose setup before behavior review.
+
+    Required input: a discovered config or --config path.
+    Output: setup findings, paths, and convention warnings.
+    Exit code: 0 means setup is usable, 1 means errors remain.
+    Next step: run with --fix for missing directories, then 'review golden'.
+    """
     from specweave.doctor import run_doctor
 
     cli_ctx: CliContext = ctx.obj
@@ -1345,6 +1369,23 @@ def _dump_json(data: object) -> str:
     return json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False)
 
 
+def _specification_coverage_summary(
+    coverage: dict[str, object] | None,
+) -> dict[str, object]:
+    if coverage is None:
+        return {"enabled": False}
+    return {
+        "enabled": True,
+        "documents": coverage.get("documents_total", 0),
+        "requirements": coverage.get("requirements_total", 0),
+        "bound": coverage.get("requirements_bound", 0),
+        "missing": len(coverage.get("missing_bindings", [])),
+        "pytest_tests": coverage.get("pytest_tests_total", 0),
+        "pytest_unmapped": len(coverage.get("unmapped_tests", [])),
+        "stale": coverage.get("pytest_mappings_stale", 0),
+    }
+
+
 def _task_id(report):  # type: ignore[no-untyped-def]
     from specweave.integrations.taskledger import task_id_from_report
 
@@ -1376,7 +1417,13 @@ def review_coverage(
         typer.Option("--suggestions/--no-suggestions"),
     ] = True,
 ) -> None:
-    """Browse detailed feature-to-pytest and pytest-to-feature coverage gaps."""
+    """Review bidirectional behavior coverage.
+
+    Required input: feature directory and tests directory, defaults come from config.
+    Output: feature to pytest gaps and pytest to feature gaps.
+    Exit code: 0 means no missing, stale, duplicate, or unmapped pytest gaps.
+    Next step: add explicit SpecWeave mappings or demote helper tests with waivers.
+    """
     from specweave.behavior.coverage import (
         build_behavior_coverage,
         render_coverage_markdown,
@@ -1455,11 +1502,167 @@ def review_coverage(
         raise typer.Exit(code=1)
 
 
+@review_app_cli.command("golden")
+def review_golden(
+    ctx: typer.Context,
+    out_dir: Annotated[
+        Path,
+        typer.Option("--out-dir", help="Directory for generated review artifacts."),
+    ] = Path("specs/behavior/reports/specweave"),
+) -> None:
+    """Run the golden-path agent review.
+
+    Aggregates doctor, behavior check, bidirectional coverage, pytest mappings,
+    and spec review. Required input: configured project with features and tests.
+    Outputs: coverage-gaps.md, mappings.json, review.json, and console summary.
+    Exit code: 0 means all gates passed, 1 means the reports contain next steps.
+    Next step: fix the first reported gap, then rerun this command.
+    """
+    from specweave.behavior.coverage import (
+        build_behavior_coverage,
+        render_coverage_markdown,
+    )
+    from specweave.behavior.coverage import build_behavior_mapping_inventory
+    from specweave.doctor import run_doctor
+    from specweave.gherkin.lint import collect_feature_files, lint_feature_files
+    from specweave.review import run_review
+    from specweave.specifications.coverage import (
+        build_specification_coverage,
+        render_specification_coverage_markdown,
+    )
+
+    cli_ctx: CliContext = ctx.obj
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    doctor_result = run_doctor(
+        config=cli_ctx.config,
+        config_path=cli_ctx.config_path,
+        fix=False,
+    )
+    feature_files = collect_feature_files((cli_ctx.config.paths.features_dir,))
+    lint_findings = lint_feature_files(feature_files, require_scenario_ids=True)
+    coverage = build_behavior_coverage(
+        features_dir=cli_ctx.config.paths.features_dir,
+        tests_dir=cli_ctx.config.paths.tests_dir,
+        mapping_dir=cli_ctx.config.paths.mapping_dir,
+    )
+    mappings = build_behavior_mapping_inventory(tests_dir=cli_ctx.config.paths.tests_dir)
+    review_result = run_review(config=cli_ctx.config, mode="both")
+    specifications_root = _specifications_root(cli_ctx)
+    specification_coverage = None
+    if specifications_root.exists():
+        specification_coverage = build_specification_coverage(
+            root=specifications_root,
+            tests_dir=cli_ctx.config.paths.tests_dir,
+            mapping_dir=_specifications_mapping_dir(cli_ctx),
+        )
+
+    coverage_path = out_dir / "coverage-gaps.md"
+    specification_coverage_path = out_dir / "specification-coverage-gaps.md"
+    mappings_path = out_dir / "mappings.json"
+    review_path = out_dir / "review.json"
+    coverage_path.write_text(
+        render_coverage_markdown(
+            coverage, view="both", show="gaps", suggestions=True
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    if specification_coverage is not None:
+        specification_coverage_path.write_text(
+            render_specification_coverage_markdown(
+                specification_coverage, view="both", show="gaps"
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+    mappings_path.write_text(_dump_json(mappings) + "\n", encoding="utf-8")
+    review_path.write_text(_dump_json(review_result) + "\n", encoding="utf-8")
+
+    errors = [finding for finding in lint_findings if finding.level == "error"]
+    failed = (
+        doctor_result["status"] != "passed"
+        or bool(errors)
+        or _coverage_failed(coverage, include_unmapped_tests=True)
+        or (
+            specification_coverage is not None
+            and specification_coverage["status"] != "passed"
+        )
+        or review_result["status"] != "passed"
+    )
+    if cli_ctx.json_output:
+        typer.echo(
+            _dump_json(
+                {
+                    "schema_version": 1,
+                    "command": "review golden",
+                    "status": "failed" if failed else "passed",
+                    "doctor": doctor_result,
+                    "behavior_check": {
+                        "errors": len(errors),
+                        "warnings": sum(
+                            1 for finding in lint_findings if finding.level == "warning"
+                        ),
+                    },
+                    "coverage": coverage.get("summary", {}),
+                    "mappings": {"mappings_total": mappings.get("mappings_total", 0)},
+                    "specification_coverage": _specification_coverage_summary(
+                        specification_coverage
+                    ),
+                    "review": review_result,
+                    "outputs": {
+                        "coverage": str(coverage_path),
+                        "mappings": str(mappings_path),
+                        "specification_coverage": str(specification_coverage_path),
+                        "review": str(review_path),
+                    },
+                }
+            )
+        )
+    else:
+        typer.echo("SpecWeave golden review: " + ("failed" if failed else "passed"))
+        typer.echo(f"doctor: {doctor_result['status']}")
+        typer.echo(f"behavior check: errors={len(errors)}")
+        typer.echo(
+            "coverage: "
+            f"scenarios={coverage.get('scenarios_total', 0)} "
+            f"missing={len(coverage.get('missing_bindings', []))} "
+            f"unmapped={len(coverage.get('unmapped_tests', []))} "
+            f"stale={coverage.get('pytest_mappings_stale', 0)}"
+        )
+        if specification_coverage is not None:
+            typer.echo(
+                "specification coverage: "
+                f"requirements={specification_coverage.get('requirements_total', 0)} "
+                f"missing={len(specification_coverage.get('missing_bindings', []))} "
+                f"unmapped={len(specification_coverage.get('unmapped_tests', []))} "
+                f"stale={specification_coverage.get('pytest_mappings_stale', 0)}"
+            )
+        typer.echo(
+            "mappings: "
+            f"{mappings.get('mappings_total', 0)} pytest mappings discovered"
+        )
+        typer.echo(f"spec review: {review_result['status']}")
+        typer.echo(
+            "outputs: "
+            f"{coverage_path}, {specification_coverage_path}, "
+            f"{mappings_path}, {review_path}"
+        )
+
+    if failed:
+        raise typer.Exit(code=1)
+
 @review_app_cli.command("specs")
 def review_specs(
     ctx: typer.Context,
 ) -> None:
-    """Review enabled specification modes for gaps and convention issues."""
+    """Review enabled behavior and specification modes.
+
+    Required input: configured SpecWeave project.
+    Output: aggregate counts, findings, and the detailed coverage command.
+    Exit code: 0 means no release-blocking gaps, 1 means findings need action.
+    Next step: run 'review coverage --view both --show gaps' for mapping detail.
+    """
     from specweave.review import run_review
 
     cli_ctx: CliContext = ctx.obj

@@ -9,9 +9,9 @@
   ],
   "exit_code": 0,
   "status": "passed",
-  "started_at": "2026-06-11T11:24:06.600385+00:00",
-  "finished_at": "2026-06-11T11:24:06.600385+00:00",
-  "duration_seconds": 0.10692268899583723,
+  "started_at": "2026-06-11T12:54:50.547681+00:00",
+  "finished_at": "2026-06-11T12:54:50.547681+00:00",
+  "duration_seconds": 0.09681621901108883,
   "scenarios": 0,
   "failed": 0,
   "evidence": [

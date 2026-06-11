@@ -41,23 +41,36 @@ layouts. New projects should use `specs/behaviour/...`.
 
 ## Behaviour and specifications workflow
 
+Use the golden review as the default coding-agent entry point:
+
+```bash
+specweave review golden
+```
+
+It aggregates doctor, behavior check, bidirectional coverage, mapping inventory,
+and spec review. It writes review artifacts under
+`specs/behaviour/reports/specweave` (or the configured behavior spelling).
+
+The default enforcement workflow is bidirectional and plain-pytest based:
+
 ```bash
 specweave init --mode both
 specweave doctor
 specweave create gherkin --from-tests tests --out specs/behaviour/features
-specweave review specs
 specweave review coverage --view both --show gaps
-specweave review specifications
+specweave behaviour mappings --tests tests --format json
+specweave review specs
 specweave behaviour autolink --strategy generated-id
 specweave behaviour autolink --strategy generated-id --apply
 specweave behaviour refresh --coverage --mappings --index
 specweave behaviour generate-tests --features specs/behaviour/features --tests-dir tests
 pytest --junitxml=specs/behaviour/reports/pytest-junit.xml
 specweave behaviour import-report specs/behaviour/reports/pytest-junit.xml --format junit-xml
-specweave specifications index
 specweave specifications coverage --view both --show gaps
-specweave specifications import-report build/reports/junit.xml --format junit-xml
 ```
+
+pytest-bdd and behave skeletons are optional adapters. They are not required for
+the default enforcement path.
 
 ## Classic Gherkin only
 

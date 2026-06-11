@@ -1,0 +1,4722 @@
+{
+  "command": "review specs",
+  "findings": [
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+      "scenario": "@bdd-create-feature-from-options"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+      "scenario": "@bdd-create-feature-from-json-draft"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+      "scenario": "@bdd-create-feature-refuses-overwrite"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+      "scenario": "@bdd-create-feature-dry-run"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+      "scenario": "@bdd-check-valid-feature"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+      "scenario": "@bdd-check-missing-bdd-id"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+      "scenario": "@bdd-check-missing-given-when-then"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+      "scenario": "@bdd-check-markdown-feature-rejected"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+      "scenario": "@bdd-gherkin-accepts-rules-and-examples"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+      "scenario": "@bdd-gherkin-accepts-and-but"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+      "scenario": "@bdd-gherkin-official-parser-optional"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+      "scenario": "@bdd-gherkin-rejects-background"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+      "scenario": "@bdd-gherkin-rejects-scenario-outline"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+      "scenario": "@bdd-gherkin-rejects-data-table"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+      "scenario": "@bdd-gherkin-rejects-doc-string"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/backends/step-skeleton-backends.feature",
+      "scenario": "@bdd-backend-registry"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/backends/step-skeleton-backends.feature",
+      "scenario": "@bdd-backend-behave-skeleton"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/backends/step-skeleton-backends.feature",
+      "scenario": "@bdd-backend-pytest-bdd-skeleton"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/backends/step-skeleton-backends.feature",
+      "scenario": "@bdd-backend-rule-scenarios-included"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature",
+      "scenario": "@bdd-generate-gherkin-from-tests"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature",
+      "scenario": "@bdd-generate-gherkin-groups-by-file"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature",
+      "scenario": "@bdd-generate-gherkin-marks-review-needed"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature",
+      "scenario": "@bdd-generate-gherkin-preserves-manual-files"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature",
+      "scenario": "@bdd-generate-gherkin-force-overwrites"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/cli/json-and-compatibility.feature",
+      "scenario": "@bdd-cli-global-json-version"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/cli/json-and-compatibility.feature",
+      "scenario": "@bdd-cli-create-feature-json"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/cli/json-and-compatibility.feature",
+      "scenario": "@bdd-cli-review-specs-json"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/cli/json-and-compatibility.feature",
+      "scenario": "@bdd-cli-bdd-check-alias"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/cli/json-and-compatibility.feature",
+      "scenario": "@bdd-cli-bdd-coverage-alias"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/cli/json-and-compatibility.feature",
+      "scenario": "@bdd-cli-update-alias"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+      "scenario": "@bdd-config-prefers-public-config"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+      "scenario": "@bdd-config-finds-hidden-config"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+      "scenario": "@bdd-config-walks-parent-directories"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+      "scenario": "@bdd-config-explicit-path"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+      "scenario": "@bdd-config-unsupported-schema-version"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+      "scenario": "@bdd-config-unsupported-generation-grouping"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+      "scenario": "@bdd-config-pickles-require-official-parser"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/enforcement/plain-pytest-generation.feature",
+      "scenario": "@bdd-generate-tests-single-feature"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/enforcement/plain-pytest-generation.feature",
+      "scenario": "@bdd-generate-tests-batch"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/enforcement/plain-pytest-generation.feature",
+      "scenario": "@bdd-generate-tests-stable-mapping-markers"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/enforcement/plain-pytest-generation.feature",
+      "scenario": "@bdd-generate-tests-docstrings-and-steps"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/enforcement/plain-pytest-generation.feature",
+      "scenario": "@bdd-generate-tests-avoids-long-lines"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/evidence/report-normalization.feature",
+      "scenario": "@bdd-report-normalize-junit"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/evidence/report-normalization.feature",
+      "scenario": "@bdd-report-normalize-cucumber"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/evidence/report-normalization.feature",
+      "scenario": "@bdd-report-normalize-rejects-unknown-format"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/evidence/report-normalization.feature",
+      "scenario": "@bdd-report-fail-closed-failed"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/evidence/report-normalization.feature",
+      "scenario": "@bdd-report-fail-closed-skipped"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/evidence/report-normalization.feature",
+      "scenario": "@bdd-report-expect-ac"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/evidence/report-normalization.feature",
+      "scenario": "@bdd-behavior-import-report-maps-tests"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/evidence/report-normalization.feature",
+      "scenario": "@bdd-behavior-import-report-unmapped-fails"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/execution/delegated-runner.feature",
+      "scenario": "@bdd-runner-success-summary"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/execution/delegated-runner.feature",
+      "scenario": "@bdd-runner-failure-summary"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/execution/delegated-runner.feature",
+      "scenario": "@bdd-runner-command-not-found"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/archledger-trace.feature",
+      "scenario": "@bdd-archledger-candidate"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/archledger-trace.feature",
+      "scenario": "@bdd-archledger-unknown-bdd"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/archledger-trace.feature",
+      "scenario": "@bdd-trace-by-bdd-id"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/archledger-trace.feature",
+      "scenario": "@bdd-trace-rejects-markdown-feature-path"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/combi-audit.feature",
+      "scenario": "@bdd-combi-reports-missing-pytest-mapping"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/combi-audit.feature",
+      "scenario": "@bdd-combi-reports-missing-evidence"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/combi-audit.feature",
+      "scenario": "@bdd-combi-strict-fails-missing-bdd-id"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/combi-audit.feature",
+      "scenario": "@bdd-combi-json-output"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/taskledger-exchange.feature",
+      "scenario": "@bdd-taskledger-import-feature"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/taskledger-exchange.feature",
+      "scenario": "@bdd-taskledger-import-legacy-shape"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/taskledger-exchange.feature",
+      "scenario": "@bdd-taskledger-bdd-round-trip"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/taskledger-exchange.feature",
+      "scenario": "@bdd-taskledger-draft-from-feature"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/integrations/taskledger-exchange.feature",
+      "scenario": "@bdd-taskledger-evidence-from-normalized-report"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/navigation/behavior-index-and-manifest.feature",
+      "scenario": "@bdd-index-readable-feature-list"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/navigation/behavior-index-and-manifest.feature",
+      "scenario": "@bdd-index-rules-and-scenarios"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/navigation/behavior-index-and-manifest.feature",
+      "scenario": "@bdd-index-evidence-status"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/navigation/behavior-index-and-manifest.feature",
+      "scenario": "@bdd-manifest-scenario-mappings"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/navigation/behavior-index-and-manifest.feature",
+      "scenario": "@bdd-manifest-unbound-scenario"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/navigation/behavior-index-and-manifest.feature",
+      "scenario": "@bdd-manifest-fails-on-lint-errors"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/planning/implementation-plans.feature",
+      "scenario": "@bdd-plan-includes-feature-context"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/planning/implementation-plans.feature",
+      "scenario": "@bdd-plan-includes-test-targets"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/planning/implementation-plans.feature",
+      "scenario": "@bdd-plan-includes-validation-commands"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/project-health-review.feature",
+      "scenario": "@bdd-doctor-passes-initialized-project"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/project-health-review.feature",
+      "scenario": "@bdd-doctor-fix-creates-missing-directories"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/project-health-review.feature",
+      "scenario": "@bdd-doctor-duplicate-bdd-tags"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/project-health-review.feature",
+      "scenario": "@bdd-review-specs-summary"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/project-health-review.feature",
+      "scenario": "@bdd-review-specs-needs-review"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/project-health-review.feature",
+      "scenario": "@bdd-refresh-common-artifacts"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/static-coverage-review.feature",
+      "scenario": "@bdd-coverage-feature-bound"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/static-coverage-review.feature",
+      "scenario": "@bdd-coverage-feature-missing"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/static-coverage-review.feature",
+      "scenario": "@bdd-coverage-stale-mapping"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/static-coverage-review.feature",
+      "scenario": "@bdd-coverage-duplicate-mapping"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/static-coverage-review.feature",
+      "scenario": "@bdd-coverage-test-unmapped"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/static-coverage-review.feature",
+      "scenario": "@bdd-coverage-test-waived"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/static-coverage-review.feature",
+      "scenario": "@bdd-coverage-both-directions"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/static-coverage-review.feature",
+      "scenario": "@bdd-coverage-deprecated-paths"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/review/static-coverage-review.feature",
+      "scenario": "@bdd-coverage-forbidden-pytest-bdd"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/setup/project-initialization.feature",
+      "scenario": "@bdd-init-default-layout"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/setup/project-initialization.feature",
+      "scenario": "@bdd-init-explicit-hidden-config"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/setup/project-initialization.feature",
+      "scenario": "@bdd-init-british-spelling"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/setup/project-initialization.feature",
+      "scenario": "@bdd-init-idempotent"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/setup/project-initialization.feature",
+      "scenario": "@bdd-init-preserves-non-managed-readme"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/setup/project-initialization.feature",
+      "scenario": "@bdd-init-force-overwrites-managed-config"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+      "scenario": "@bdd-mappings-from-comments"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+      "scenario": "@bdd-mappings-from-docstring"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+      "scenario": "@bdd-mappings-title-never-binds"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+      "scenario": "@bdd-autolink-dry-run"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+      "scenario": "@bdd-autolink-apply"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+      "scenario": "@bdd-autolink-ambiguous-match"
+    },
+    {
+      "code": "SWCOV001",
+      "level": "warning",
+      "message": "No bound pytest test found.",
+      "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+      "scenario": "@bdd-autolink-check-mode"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_backends_pytest_bdd.py",
+      "scenario": "@bdd-backend-pytest-bdd-dedup"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_backends_pytest_bdd.py",
+      "scenario": "@bdd-backend-pytest-bdd-rule-scenarios"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_backends_pytest_bdd.py",
+      "scenario": "@bdd-backend-pytest-bdd-skeleton"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_backends_pytest_bdd.py",
+      "scenario": "@bdd-backend-pytest-bdd-source-path"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_backends_pytest_bdd.py",
+      "scenario": "@bdd-backend-registry"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_backends_pytest_bdd.py",
+      "scenario": "@bdd-backend-unsupported"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_bdd_convert.py",
+      "scenario": "@bdd-bridge-and-but-steps"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_bdd_convert.py",
+      "scenario": "@bdd-bridge-export-to-gherkin"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_bdd_convert.py",
+      "scenario": "@bdd-bridge-json-roundtrip"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_bdd_convert.py",
+      "scenario": "@bdd-bridge-json-to-feature-to-json"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_bdd_convert.py",
+      "scenario": "@bdd-bridge-multiple-ac"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_bdd_convert.py",
+      "scenario": "@bdd-bridge-roundtrip-ids"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_bdd_convert.py",
+      "scenario": "@bdd-bridge-top-level"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_autolink.py",
+      "scenario": "@bdd-autolink-ambiguous-candidate"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_autolink.py",
+      "scenario": "@bdd-autolink-generated-id-apply"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_autolink.py",
+      "scenario": "@bdd-autolink-generated-id-dry-run"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_autolink.py",
+      "scenario": "@bdd-autolink-refresh-wrapper"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-both-directions-render"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-bound-scenario"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-candidate-tests"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-class-method-mapping"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-deprecated-paths"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-forbidden-pytest-bdd"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-manual-scenario"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-missing-test-file"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-missing-test-file-reason"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-pytest-intentional-unmapped"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-pytest-intentional-unmapped-policy-file"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-pytest-stale"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-pytest-unmapped"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-stale-binding"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-stale-scenario"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_coverage.py",
+      "scenario": "@bdd-coverage-unbound-scenario"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_generation.py",
+      "scenario": "@bdd-generate-batch"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_generation.py",
+      "scenario": "@bdd-generate-canonical-path"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_generation.py",
+      "scenario": "@bdd-generate-docstring"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_generation.py",
+      "scenario": "@bdd-generate-rules"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_generation.py",
+      "scenario": "@bdd-generate-scenario-function"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_generation.py",
+      "scenario": "@bdd-generate-single-feature"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_generation.py",
+      "scenario": "@bdd-generate-specweave-markers"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_generation.py",
+      "scenario": "@bdd-generate-step-comments"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_index.py",
+      "scenario": "@bdd-index-evidence-status"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_index.py",
+      "scenario": "@bdd-index-generates-manifest"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_index.py",
+      "scenario": "@bdd-index-generates-markdown"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_index.py",
+      "scenario": "@bdd-index-rules"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_index.py",
+      "scenario": "@bdd-index-scenario-entries"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_index.py",
+      "scenario": "@bdd-index-unbound-scenario"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_reporting.py",
+      "scenario": "@bdd-import-maps-by-function-name"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_reporting.py",
+      "scenario": "@bdd-import-maps-by-manifest"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_reporting.py",
+      "scenario": "@bdd-import-maps-by-nodeid"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_reporting.py",
+      "scenario": "@bdd-import-unmapped-tests"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_behavior_reporting.py",
+      "scenario": "@bdd-import-writes-evidence"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-bdd-check-alias"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-bdd-index-alias"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-behavior-check"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-behavior-coverage"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-behavior-coverage-view-test-json"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-behavior-generate-tests"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-behavior-import-report"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-behavior-index"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-config-option"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-create-feature"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-create-gherkin"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-create-plan"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-exit-check-errors"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-exit-doctor-failed"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-exit-normalize-failed"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-json-init"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-json-output"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_cli_cli_contract.py",
+      "scenario": "@bdd-cli-review-coverage-both-directions"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_common_behavior_helpers.py",
+      "scenario": "@bdd-canonical-test-path"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_common_behavior_helpers.py",
+      "scenario": "@bdd-feature-identity-from-path"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_common_behavior_helpers.py",
+      "scenario": "@bdd-feature-identity-no-area"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_common_behavior_helpers.py",
+      "scenario": "@bdd-feature-stem-classic"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_common_behavior_helpers.py",
+      "scenario": "@bdd-feature-stem-legacy-markdown"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_common_behavior_helpers.py",
+      "scenario": "@bdd-iter-scenarios-in-rules"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_common_behavior_helpers.py",
+      "scenario": "@bdd-iter-scenarios-top-level"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_common_behavior_helpers.py",
+      "scenario": "@bdd-scenario-id-missing"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_common_behavior_helpers.py",
+      "scenario": "@bdd-scenario-id-value"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_common_behavior_helpers.py",
+      "scenario": "@bdd-slugify-basic"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_common_behavior_helpers.py",
+      "scenario": "@bdd-slugify-empty"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_common_behavior_helpers.py",
+      "scenario": "@bdd-slugify-special-chars"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_config_configuration.py",
+      "scenario": "@bdd-config-discovery-finds-dotfile"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_config_configuration.py",
+      "scenario": "@bdd-config-discovery-finds-public"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_config_configuration.py",
+      "scenario": "@bdd-config-discovery-prefers-public"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_config_configuration.py",
+      "scenario": "@bdd-config-discovery-returns-none"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_config_configuration.py",
+      "scenario": "@bdd-config-discovery-walks-parents"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_config_configuration.py",
+      "scenario": "@bdd-config-load-defaults"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_config_configuration.py",
+      "scenario": "@bdd-config-load-from-file"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_config_configuration.py",
+      "scenario": "@bdd-config-rejects-unsupported-schema"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_config_configuration.py",
+      "scenario": "@bdd-config-render-behavior"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_config_configuration.py",
+      "scenario": "@bdd-config-render-behaviour"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_doctor_diagnostics.py",
+      "scenario": "@bdd-doctor-deprecated-paths"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_doctor_diagnostics.py",
+      "scenario": "@bdd-doctor-duplicate-bdd-tags"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_doctor_diagnostics.py",
+      "scenario": "@bdd-doctor-fix-creates-directories"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_doctor_diagnostics.py",
+      "scenario": "@bdd-doctor-missing-config"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_doctor_diagnostics.py",
+      "scenario": "@bdd-doctor-missing-directories"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_doctor_diagnostics.py",
+      "scenario": "@bdd-doctor-unsupported-schema"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_doctor_diagnostics.py",
+      "scenario": "@bdd-doctor-validates-features"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_exchange_schemas.py",
+      "scenario": "@bdd-exchange-archledger-schema"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_exchange_schemas.py",
+      "scenario": "@bdd-exchange-combi-trace-schema"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_exchange_schemas.py",
+      "scenario": "@bdd-exchange-evidence-schema"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_exchange_schemas.py",
+      "scenario": "@bdd-exchange-schema-valid"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_exchange_schemas.py",
+      "scenario": "@bdd-exchange-taskledger-schema"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-area-subdirectory"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-canonical-path"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-deprecated-path"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-duplicate-bdd-tags"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-empty-feature-title"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-empty-rule"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-empty-scenario-title"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-missing-bdd-tag"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-missing-given-when-then"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-single-feature"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-strict-unsupported"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-task-tags-discouraged"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_lint.py",
+      "scenario": "@bdd-lint-rejects-markdown-file"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_parser.py",
+      "scenario": "@bdd-markdown-parser-rejects-path"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_validation.py",
+      "scenario": "@bdd-validation-rejects-markdown"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_official.py",
+      "scenario": "@bdd-official-compile-pickles"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_official.py",
+      "scenario": "@bdd-official-parse-no-tags"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_official.py",
+      "scenario": "@bdd-official-parse-rules"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_official.py",
+      "scenario": "@bdd-official-parse-simple"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_official.py",
+      "scenario": "@bdd-official-preserve-description"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_official.py",
+      "scenario": "@bdd-official-reject-invalid"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_official.py",
+      "scenario": "@bdd-official-source-path"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_official.py",
+      "scenario": "@bdd-official-validate-invalid"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_official.py",
+      "scenario": "@bdd-official-validate-valid"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_parser.py",
+      "scenario": "@bdd-parser-classic-description"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_parser.py",
+      "scenario": "@bdd-parser-classic-feature"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_parser.py",
+      "scenario": "@bdd-parser-classic-rules"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_parser.py",
+      "scenario": "@bdd-parser-classic-tags"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_parser.py",
+      "scenario": "@bdd-parser-classic-top-level-scenarios"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_parser.py",
+      "scenario": "@bdd-parser-dispatch-classic"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_parser.py",
+      "scenario": "@bdd-parser-rejects-markdown-path"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_parser.py",
+      "scenario": "@bdd-parser-requires-feature-line"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_writer.py",
+      "scenario": "@bdd-writer-basic-feature"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_writer.py",
+      "scenario": "@bdd-writer-descriptions"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_writer.py",
+      "scenario": "@bdd-writer-roundtrip"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_writer.py",
+      "scenario": "@bdd-writer-rules"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_gherkin_writer.py",
+      "scenario": "@bdd-writer-tags"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_init_initialization.py",
+      "scenario": "@bdd-init-british-spelling"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_init_initialization.py",
+      "scenario": "@bdd-init-creates-dotfile"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_init_initialization.py",
+      "scenario": "@bdd-init-creates-gitkeep"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_init_initialization.py",
+      "scenario": "@bdd-init-creates-public-config"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_init_initialization.py",
+      "scenario": "@bdd-init-creates-readme"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_init_initialization.py",
+      "scenario": "@bdd-init-dry-run"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_init_initialization.py",
+      "scenario": "@bdd-init-force-overwrites-readme"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_init_initialization.py",
+      "scenario": "@bdd-init-idempotent"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_init_initialization.py",
+      "scenario": "@bdd-init-refuses-overwrite-readme"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_init_initialization.py",
+      "scenario": "@bdd-init-warns-existing-config"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_integrations_archledger.py",
+      "scenario": "@bdd-archledger-candidate"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_integrations_archledger.py",
+      "scenario": "@bdd-archledger-candidate-only"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_integrations_archledger.py",
+      "scenario": "@bdd-archledger-unknown-bdd"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_combi_check.py",
+      "scenario": "@bdd-combi-check-gaps"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_combi_check.py",
+      "scenario": "@bdd-combi-check-strict"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_integrations_taskledger.py",
+      "scenario": "@bdd-taskledger-draft"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_integrations_taskledger.py",
+      "scenario": "@bdd-taskledger-draft-ac-mapping"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_integrations_taskledger.py",
+      "scenario": "@bdd-taskledger-evidence"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_integrations_taskledger.py",
+      "scenario": "@bdd-taskledger-import"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_plan.py",
+      "scenario": "@bdd-plan-create"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_plan.py",
+      "scenario": "@bdd-plan-includes-scenario-steps"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_plan.py",
+      "scenario": "@bdd-plan-validation-commands"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_python_ast_reader.py",
+      "scenario": "@bdd-ast-assert-call"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_python_ast_reader.py",
+      "scenario": "@bdd-ast-assert-equals"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_python_ast_reader.py",
+      "scenario": "@bdd-ast-assert-is-none"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_python_ast_reader.py",
+      "scenario": "@bdd-ast-assert-truthy"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_python_ast_reader.py",
+      "scenario": "@bdd-ast-discover-comment"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_python_ast_reader.py",
+      "scenario": "@bdd-ast-discover-docstring"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_python_ast_reader.py",
+      "scenario": "@bdd-ast-discover-intentional-unmapped-waiver"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_python_ast_reader.py",
+      "scenario": "@bdd-ast-discover-marker"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_python_ast_reader.py",
+      "scenario": "@bdd-ast-extract-test-functions"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_python_ast_reader.py",
+      "scenario": "@bdd-ast-ignores-non-test"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_fail_closed.py",
+      "scenario": "@bdd-fail-closed-ambiguous-scenario"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_fail_closed.py",
+      "scenario": "@bdd-fail-closed-exit-code-not-evidence"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_fail_closed.py",
+      "scenario": "@bdd-fail-closed-failed-scenario"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_fail_closed.py",
+      "scenario": "@bdd-fail-closed-multiple-scenarios"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_fail_closed.py",
+      "scenario": "@bdd-fail-closed-passed-scenario"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_fail_closed.py",
+      "scenario": "@bdd-fail-closed-pending-scenario"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_fail_closed.py",
+      "scenario": "@bdd-fail-closed-skipped-scenario"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_fail_closed.py",
+      "scenario": "@bdd-fail-closed-undefined-scenario"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_fail_closed.py",
+      "scenario": "@bdd-fail-closed-unlinked-scenario"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_mapping.py",
+      "scenario": "@bdd-criteria-fail-closed"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_mapping.py",
+      "scenario": "@bdd-criteria-missing-coverage"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_mapping.py",
+      "scenario": "@bdd-criteria-summary"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_mapping.py",
+      "scenario": "@bdd-tag-extraction-ac"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_mapping.py",
+      "scenario": "@bdd-tag-extraction-bdd"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_mapping.py",
+      "scenario": "@bdd-tag-extraction-empty"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_normalization.py",
+      "scenario": "@bdd-normalize-ac-covered"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_normalization.py",
+      "scenario": "@bdd-normalize-all-passed"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_normalization.py",
+      "scenario": "@bdd-normalize-allow-skipped"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_normalization.py",
+      "scenario": "@bdd-normalize-any-failed"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_normalization.py",
+      "scenario": "@bdd-normalize-cucumber-json"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_normalization.py",
+      "scenario": "@bdd-normalize-evidence-json"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_normalization.py",
+      "scenario": "@bdd-normalize-junit-xml"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_normalization.py",
+      "scenario": "@bdd-normalize-missing-ac-coverage"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_normalization.py",
+      "scenario": "@bdd-normalize-skipped-fails-by-default"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_normalization.py",
+      "scenario": "@bdd-normalize-unsupported-format"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_parsers.py",
+      "scenario": "@bdd-cucumber-parse-scenarios"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_parsers.py",
+      "scenario": "@bdd-cucumber-parse-tags"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_parsers.py",
+      "scenario": "@bdd-junit-parse-cases"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_parsers.py",
+      "scenario": "@bdd-junit-parse-duration"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_reports_parsers.py",
+      "scenario": "@bdd-junit-parse-statuses"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_review_spec_review.py",
+      "scenario": "@bdd-review-counts"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_review_spec_review.py",
+      "scenario": "@bdd-review-coverage-summary-both-directions"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_review_spec_review.py",
+      "scenario": "@bdd-review-deprecated-paths"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_review_spec_review.py",
+      "scenario": "@bdd-review-forbidden-pytest-bdd"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_review_spec_review.py",
+      "scenario": "@bdd-review-lint-findings"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_review_spec_review.py",
+      "scenario": "@bdd-review-missing-bindings"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_review_spec_review.py",
+      "scenario": "@bdd-review-needs-review"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_review_spec_review.py",
+      "scenario": "@bdd-review-warning-scenario-once"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_runner_command.py",
+      "scenario": "@bdd-runner-capture"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_runner_command.py",
+      "scenario": "@bdd-runner-failure"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_runner_command.py",
+      "scenario": "@bdd-runner-not-found"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_runner_command.py",
+      "scenario": "@bdd-runner-success"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_trace.py",
+      "scenario": "@bdd-trace-by-id"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_trace.py",
+      "scenario": "@bdd-trace-by-path"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_translation_pytest_to_gherkin.py",
+      "scenario": "@bdd-translate-discovers-tests"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_translation_pytest_to_gherkin.py",
+      "scenario": "@bdd-translate-dry-run"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_translation_pytest_to_gherkin.py",
+      "scenario": "@bdd-translate-force-overwrite"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_translation_pytest_to_gherkin.py",
+      "scenario": "@bdd-translate-group-by-file"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_translation_pytest_to_gherkin.py",
+      "scenario": "@bdd-translate-marks-generated"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_translation_pytest_to_gherkin.py",
+      "scenario": "@bdd-translate-preserve-manual"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_spec_to_code.py",
+      "scenario": "@bdd-spec-to-code-bind-behave"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_backends_pytest_bdd.py",
+      "scenario": "@bdd-spec-to-code-bind-pytest-bdd"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_spec_to_code.py",
+      "scenario": "@bdd-spec-to-code-bind-unsupported"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_spec_to_code.py",
+      "scenario": "@bdd-spec-to-code-dedup"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_spec_to_code.py",
+      "scenario": "@bdd-spec-to-code-draft"
+    },
+    {
+      "code": "SWCOV002",
+      "level": "warning",
+      "message": "Stale pytest mapping points to a missing feature or scenario.",
+      "path": "tests/test_spec_to_code.py",
+      "scenario": "@bdd-spec-to-code-step-name"
+    }
+  ],
+  "modes": {
+    "behaviour": {
+      "command": "review behaviour",
+      "findings": [
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+          "scenario": "@bdd-create-feature-from-options"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+          "scenario": "@bdd-create-feature-from-json-draft"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+          "scenario": "@bdd-create-feature-refuses-overwrite"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+          "scenario": "@bdd-create-feature-dry-run"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+          "scenario": "@bdd-check-valid-feature"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+          "scenario": "@bdd-check-missing-bdd-id"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+          "scenario": "@bdd-check-missing-given-when-then"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/canonical-feature-authoring.feature",
+          "scenario": "@bdd-check-markdown-feature-rejected"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+          "scenario": "@bdd-gherkin-accepts-rules-and-examples"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+          "scenario": "@bdd-gherkin-accepts-and-but"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+          "scenario": "@bdd-gherkin-official-parser-optional"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+          "scenario": "@bdd-gherkin-rejects-background"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+          "scenario": "@bdd-gherkin-rejects-scenario-outline"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+          "scenario": "@bdd-gherkin-rejects-data-table"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/authoring/gherkin-subset.feature",
+          "scenario": "@bdd-gherkin-rejects-doc-string"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/backends/step-skeleton-backends.feature",
+          "scenario": "@bdd-backend-registry"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/backends/step-skeleton-backends.feature",
+          "scenario": "@bdd-backend-behave-skeleton"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/backends/step-skeleton-backends.feature",
+          "scenario": "@bdd-backend-pytest-bdd-skeleton"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/backends/step-skeleton-backends.feature",
+          "scenario": "@bdd-backend-rule-scenarios-included"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature",
+          "scenario": "@bdd-generate-gherkin-from-tests"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature",
+          "scenario": "@bdd-generate-gherkin-groups-by-file"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature",
+          "scenario": "@bdd-generate-gherkin-marks-review-needed"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature",
+          "scenario": "@bdd-generate-gherkin-preserves-manual-files"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/brownfield/pytest-to-gherkin-discovery.feature",
+          "scenario": "@bdd-generate-gherkin-force-overwrites"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/cli/json-and-compatibility.feature",
+          "scenario": "@bdd-cli-global-json-version"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/cli/json-and-compatibility.feature",
+          "scenario": "@bdd-cli-create-feature-json"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/cli/json-and-compatibility.feature",
+          "scenario": "@bdd-cli-review-specs-json"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/cli/json-and-compatibility.feature",
+          "scenario": "@bdd-cli-bdd-check-alias"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/cli/json-and-compatibility.feature",
+          "scenario": "@bdd-cli-bdd-coverage-alias"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/cli/json-and-compatibility.feature",
+          "scenario": "@bdd-cli-update-alias"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+          "scenario": "@bdd-config-prefers-public-config"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+          "scenario": "@bdd-config-finds-hidden-config"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+          "scenario": "@bdd-config-walks-parent-directories"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+          "scenario": "@bdd-config-explicit-path"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+          "scenario": "@bdd-config-unsupported-schema-version"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+          "scenario": "@bdd-config-unsupported-generation-grouping"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/configuration/configuration-resolution.feature",
+          "scenario": "@bdd-config-pickles-require-official-parser"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/enforcement/plain-pytest-generation.feature",
+          "scenario": "@bdd-generate-tests-single-feature"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/enforcement/plain-pytest-generation.feature",
+          "scenario": "@bdd-generate-tests-batch"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/enforcement/plain-pytest-generation.feature",
+          "scenario": "@bdd-generate-tests-stable-mapping-markers"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/enforcement/plain-pytest-generation.feature",
+          "scenario": "@bdd-generate-tests-docstrings-and-steps"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/enforcement/plain-pytest-generation.feature",
+          "scenario": "@bdd-generate-tests-avoids-long-lines"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/evidence/report-normalization.feature",
+          "scenario": "@bdd-report-normalize-junit"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/evidence/report-normalization.feature",
+          "scenario": "@bdd-report-normalize-cucumber"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/evidence/report-normalization.feature",
+          "scenario": "@bdd-report-normalize-rejects-unknown-format"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/evidence/report-normalization.feature",
+          "scenario": "@bdd-report-fail-closed-failed"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/evidence/report-normalization.feature",
+          "scenario": "@bdd-report-fail-closed-skipped"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/evidence/report-normalization.feature",
+          "scenario": "@bdd-report-expect-ac"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/evidence/report-normalization.feature",
+          "scenario": "@bdd-behavior-import-report-maps-tests"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/evidence/report-normalization.feature",
+          "scenario": "@bdd-behavior-import-report-unmapped-fails"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/execution/delegated-runner.feature",
+          "scenario": "@bdd-runner-success-summary"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/execution/delegated-runner.feature",
+          "scenario": "@bdd-runner-failure-summary"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/execution/delegated-runner.feature",
+          "scenario": "@bdd-runner-command-not-found"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/archledger-trace.feature",
+          "scenario": "@bdd-archledger-candidate"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/archledger-trace.feature",
+          "scenario": "@bdd-archledger-unknown-bdd"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/archledger-trace.feature",
+          "scenario": "@bdd-trace-by-bdd-id"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/archledger-trace.feature",
+          "scenario": "@bdd-trace-rejects-markdown-feature-path"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/combi-audit.feature",
+          "scenario": "@bdd-combi-reports-missing-pytest-mapping"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/combi-audit.feature",
+          "scenario": "@bdd-combi-reports-missing-evidence"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/combi-audit.feature",
+          "scenario": "@bdd-combi-strict-fails-missing-bdd-id"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/combi-audit.feature",
+          "scenario": "@bdd-combi-json-output"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/taskledger-exchange.feature",
+          "scenario": "@bdd-taskledger-import-feature"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/taskledger-exchange.feature",
+          "scenario": "@bdd-taskledger-import-legacy-shape"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/taskledger-exchange.feature",
+          "scenario": "@bdd-taskledger-bdd-round-trip"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/taskledger-exchange.feature",
+          "scenario": "@bdd-taskledger-draft-from-feature"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/integrations/taskledger-exchange.feature",
+          "scenario": "@bdd-taskledger-evidence-from-normalized-report"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/navigation/behavior-index-and-manifest.feature",
+          "scenario": "@bdd-index-readable-feature-list"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/navigation/behavior-index-and-manifest.feature",
+          "scenario": "@bdd-index-rules-and-scenarios"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/navigation/behavior-index-and-manifest.feature",
+          "scenario": "@bdd-index-evidence-status"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/navigation/behavior-index-and-manifest.feature",
+          "scenario": "@bdd-manifest-scenario-mappings"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/navigation/behavior-index-and-manifest.feature",
+          "scenario": "@bdd-manifest-unbound-scenario"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/navigation/behavior-index-and-manifest.feature",
+          "scenario": "@bdd-manifest-fails-on-lint-errors"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/planning/implementation-plans.feature",
+          "scenario": "@bdd-plan-includes-feature-context"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/planning/implementation-plans.feature",
+          "scenario": "@bdd-plan-includes-test-targets"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/planning/implementation-plans.feature",
+          "scenario": "@bdd-plan-includes-validation-commands"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/project-health-review.feature",
+          "scenario": "@bdd-doctor-passes-initialized-project"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/project-health-review.feature",
+          "scenario": "@bdd-doctor-fix-creates-missing-directories"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/project-health-review.feature",
+          "scenario": "@bdd-doctor-duplicate-bdd-tags"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/project-health-review.feature",
+          "scenario": "@bdd-review-specs-summary"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/project-health-review.feature",
+          "scenario": "@bdd-review-specs-needs-review"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/project-health-review.feature",
+          "scenario": "@bdd-refresh-common-artifacts"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/static-coverage-review.feature",
+          "scenario": "@bdd-coverage-feature-bound"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/static-coverage-review.feature",
+          "scenario": "@bdd-coverage-feature-missing"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/static-coverage-review.feature",
+          "scenario": "@bdd-coverage-stale-mapping"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/static-coverage-review.feature",
+          "scenario": "@bdd-coverage-duplicate-mapping"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/static-coverage-review.feature",
+          "scenario": "@bdd-coverage-test-unmapped"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/static-coverage-review.feature",
+          "scenario": "@bdd-coverage-test-waived"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/static-coverage-review.feature",
+          "scenario": "@bdd-coverage-both-directions"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/static-coverage-review.feature",
+          "scenario": "@bdd-coverage-deprecated-paths"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/review/static-coverage-review.feature",
+          "scenario": "@bdd-coverage-forbidden-pytest-bdd"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/setup/project-initialization.feature",
+          "scenario": "@bdd-init-default-layout"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/setup/project-initialization.feature",
+          "scenario": "@bdd-init-explicit-hidden-config"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/setup/project-initialization.feature",
+          "scenario": "@bdd-init-british-spelling"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/setup/project-initialization.feature",
+          "scenario": "@bdd-init-idempotent"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/setup/project-initialization.feature",
+          "scenario": "@bdd-init-preserves-non-managed-readme"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/setup/project-initialization.feature",
+          "scenario": "@bdd-init-force-overwrites-managed-config"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+          "scenario": "@bdd-mappings-from-comments"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+          "scenario": "@bdd-mappings-from-docstring"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+          "scenario": "@bdd-mappings-title-never-binds"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+          "scenario": "@bdd-autolink-dry-run"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+          "scenario": "@bdd-autolink-apply"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+          "scenario": "@bdd-autolink-ambiguous-match"
+        },
+        {
+          "code": "SWCOV001",
+          "level": "warning",
+          "message": "No bound pytest test found.",
+          "path": "specs/behavior/features/traceability/mapping-and-autolink.feature",
+          "scenario": "@bdd-autolink-check-mode"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_backends_pytest_bdd.py",
+          "scenario": "@bdd-backend-pytest-bdd-dedup"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_backends_pytest_bdd.py",
+          "scenario": "@bdd-backend-pytest-bdd-rule-scenarios"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_backends_pytest_bdd.py",
+          "scenario": "@bdd-backend-pytest-bdd-skeleton"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_backends_pytest_bdd.py",
+          "scenario": "@bdd-backend-pytest-bdd-source-path"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_backends_pytest_bdd.py",
+          "scenario": "@bdd-backend-registry"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_backends_pytest_bdd.py",
+          "scenario": "@bdd-backend-unsupported"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_bdd_convert.py",
+          "scenario": "@bdd-bridge-and-but-steps"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_bdd_convert.py",
+          "scenario": "@bdd-bridge-export-to-gherkin"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_bdd_convert.py",
+          "scenario": "@bdd-bridge-json-roundtrip"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_bdd_convert.py",
+          "scenario": "@bdd-bridge-json-to-feature-to-json"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_bdd_convert.py",
+          "scenario": "@bdd-bridge-multiple-ac"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_bdd_convert.py",
+          "scenario": "@bdd-bridge-roundtrip-ids"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_bdd_convert.py",
+          "scenario": "@bdd-bridge-top-level"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_autolink.py",
+          "scenario": "@bdd-autolink-ambiguous-candidate"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_autolink.py",
+          "scenario": "@bdd-autolink-generated-id-apply"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_autolink.py",
+          "scenario": "@bdd-autolink-generated-id-dry-run"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_autolink.py",
+          "scenario": "@bdd-autolink-refresh-wrapper"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-both-directions-render"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-bound-scenario"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-candidate-tests"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-class-method-mapping"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-deprecated-paths"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-forbidden-pytest-bdd"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-manual-scenario"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-missing-test-file"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-missing-test-file-reason"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-pytest-intentional-unmapped"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-pytest-intentional-unmapped-policy-file"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-pytest-stale"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-pytest-unmapped"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-stale-binding"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-stale-scenario"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_coverage.py",
+          "scenario": "@bdd-coverage-unbound-scenario"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_generation.py",
+          "scenario": "@bdd-generate-batch"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_generation.py",
+          "scenario": "@bdd-generate-canonical-path"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_generation.py",
+          "scenario": "@bdd-generate-docstring"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_generation.py",
+          "scenario": "@bdd-generate-rules"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_generation.py",
+          "scenario": "@bdd-generate-scenario-function"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_generation.py",
+          "scenario": "@bdd-generate-single-feature"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_generation.py",
+          "scenario": "@bdd-generate-specweave-markers"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_generation.py",
+          "scenario": "@bdd-generate-step-comments"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_index.py",
+          "scenario": "@bdd-index-evidence-status"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_index.py",
+          "scenario": "@bdd-index-generates-manifest"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_index.py",
+          "scenario": "@bdd-index-generates-markdown"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_index.py",
+          "scenario": "@bdd-index-rules"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_index.py",
+          "scenario": "@bdd-index-scenario-entries"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_index.py",
+          "scenario": "@bdd-index-unbound-scenario"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_reporting.py",
+          "scenario": "@bdd-import-maps-by-function-name"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_reporting.py",
+          "scenario": "@bdd-import-maps-by-manifest"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_reporting.py",
+          "scenario": "@bdd-import-maps-by-nodeid"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_reporting.py",
+          "scenario": "@bdd-import-unmapped-tests"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_behavior_reporting.py",
+          "scenario": "@bdd-import-writes-evidence"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-bdd-check-alias"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-bdd-index-alias"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-behavior-check"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-behavior-coverage"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-behavior-coverage-view-test-json"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-behavior-generate-tests"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-behavior-import-report"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-behavior-index"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-config-option"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-create-feature"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-create-gherkin"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-create-plan"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-exit-check-errors"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-exit-doctor-failed"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-exit-normalize-failed"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-json-init"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-json-output"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_cli_cli_contract.py",
+          "scenario": "@bdd-cli-review-coverage-both-directions"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_common_behavior_helpers.py",
+          "scenario": "@bdd-canonical-test-path"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_common_behavior_helpers.py",
+          "scenario": "@bdd-feature-identity-from-path"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_common_behavior_helpers.py",
+          "scenario": "@bdd-feature-identity-no-area"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_common_behavior_helpers.py",
+          "scenario": "@bdd-feature-stem-classic"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_common_behavior_helpers.py",
+          "scenario": "@bdd-feature-stem-legacy-markdown"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_common_behavior_helpers.py",
+          "scenario": "@bdd-iter-scenarios-in-rules"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_common_behavior_helpers.py",
+          "scenario": "@bdd-iter-scenarios-top-level"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_common_behavior_helpers.py",
+          "scenario": "@bdd-scenario-id-missing"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_common_behavior_helpers.py",
+          "scenario": "@bdd-scenario-id-value"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_common_behavior_helpers.py",
+          "scenario": "@bdd-slugify-basic"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_common_behavior_helpers.py",
+          "scenario": "@bdd-slugify-empty"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_common_behavior_helpers.py",
+          "scenario": "@bdd-slugify-special-chars"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_config_configuration.py",
+          "scenario": "@bdd-config-discovery-finds-dotfile"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_config_configuration.py",
+          "scenario": "@bdd-config-discovery-finds-public"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_config_configuration.py",
+          "scenario": "@bdd-config-discovery-prefers-public"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_config_configuration.py",
+          "scenario": "@bdd-config-discovery-returns-none"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_config_configuration.py",
+          "scenario": "@bdd-config-discovery-walks-parents"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_config_configuration.py",
+          "scenario": "@bdd-config-load-defaults"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_config_configuration.py",
+          "scenario": "@bdd-config-load-from-file"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_config_configuration.py",
+          "scenario": "@bdd-config-rejects-unsupported-schema"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_config_configuration.py",
+          "scenario": "@bdd-config-render-behavior"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_config_configuration.py",
+          "scenario": "@bdd-config-render-behaviour"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_doctor_diagnostics.py",
+          "scenario": "@bdd-doctor-deprecated-paths"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_doctor_diagnostics.py",
+          "scenario": "@bdd-doctor-duplicate-bdd-tags"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_doctor_diagnostics.py",
+          "scenario": "@bdd-doctor-fix-creates-directories"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_doctor_diagnostics.py",
+          "scenario": "@bdd-doctor-missing-config"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_doctor_diagnostics.py",
+          "scenario": "@bdd-doctor-missing-directories"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_doctor_diagnostics.py",
+          "scenario": "@bdd-doctor-unsupported-schema"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_doctor_diagnostics.py",
+          "scenario": "@bdd-doctor-validates-features"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_exchange_schemas.py",
+          "scenario": "@bdd-exchange-archledger-schema"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_exchange_schemas.py",
+          "scenario": "@bdd-exchange-combi-trace-schema"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_exchange_schemas.py",
+          "scenario": "@bdd-exchange-evidence-schema"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_exchange_schemas.py",
+          "scenario": "@bdd-exchange-schema-valid"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_exchange_schemas.py",
+          "scenario": "@bdd-exchange-taskledger-schema"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-area-subdirectory"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-canonical-path"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-deprecated-path"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-duplicate-bdd-tags"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-empty-feature-title"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-empty-rule"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-empty-scenario-title"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-missing-bdd-tag"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-missing-given-when-then"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-single-feature"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-strict-unsupported"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-task-tags-discouraged"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_lint.py",
+          "scenario": "@bdd-lint-rejects-markdown-file"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_parser.py",
+          "scenario": "@bdd-markdown-parser-rejects-path"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_validation.py",
+          "scenario": "@bdd-validation-rejects-markdown"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_official.py",
+          "scenario": "@bdd-official-compile-pickles"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_official.py",
+          "scenario": "@bdd-official-parse-no-tags"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_official.py",
+          "scenario": "@bdd-official-parse-rules"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_official.py",
+          "scenario": "@bdd-official-parse-simple"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_official.py",
+          "scenario": "@bdd-official-preserve-description"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_official.py",
+          "scenario": "@bdd-official-reject-invalid"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_official.py",
+          "scenario": "@bdd-official-source-path"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_official.py",
+          "scenario": "@bdd-official-validate-invalid"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_official.py",
+          "scenario": "@bdd-official-validate-valid"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_parser.py",
+          "scenario": "@bdd-parser-classic-description"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_parser.py",
+          "scenario": "@bdd-parser-classic-feature"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_parser.py",
+          "scenario": "@bdd-parser-classic-rules"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_parser.py",
+          "scenario": "@bdd-parser-classic-tags"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_parser.py",
+          "scenario": "@bdd-parser-classic-top-level-scenarios"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_parser.py",
+          "scenario": "@bdd-parser-dispatch-classic"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_parser.py",
+          "scenario": "@bdd-parser-rejects-markdown-path"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_parser.py",
+          "scenario": "@bdd-parser-requires-feature-line"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_writer.py",
+          "scenario": "@bdd-writer-basic-feature"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_writer.py",
+          "scenario": "@bdd-writer-descriptions"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_writer.py",
+          "scenario": "@bdd-writer-roundtrip"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_writer.py",
+          "scenario": "@bdd-writer-rules"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_gherkin_writer.py",
+          "scenario": "@bdd-writer-tags"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_init_initialization.py",
+          "scenario": "@bdd-init-british-spelling"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_init_initialization.py",
+          "scenario": "@bdd-init-creates-dotfile"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_init_initialization.py",
+          "scenario": "@bdd-init-creates-gitkeep"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_init_initialization.py",
+          "scenario": "@bdd-init-creates-public-config"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_init_initialization.py",
+          "scenario": "@bdd-init-creates-readme"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_init_initialization.py",
+          "scenario": "@bdd-init-dry-run"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_init_initialization.py",
+          "scenario": "@bdd-init-force-overwrites-readme"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_init_initialization.py",
+          "scenario": "@bdd-init-idempotent"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_init_initialization.py",
+          "scenario": "@bdd-init-refuses-overwrite-readme"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_init_initialization.py",
+          "scenario": "@bdd-init-warns-existing-config"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_integrations_archledger.py",
+          "scenario": "@bdd-archledger-candidate"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_integrations_archledger.py",
+          "scenario": "@bdd-archledger-candidate-only"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_integrations_archledger.py",
+          "scenario": "@bdd-archledger-unknown-bdd"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_combi_check.py",
+          "scenario": "@bdd-combi-check-gaps"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_combi_check.py",
+          "scenario": "@bdd-combi-check-strict"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_integrations_taskledger.py",
+          "scenario": "@bdd-taskledger-draft"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_integrations_taskledger.py",
+          "scenario": "@bdd-taskledger-draft-ac-mapping"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_integrations_taskledger.py",
+          "scenario": "@bdd-taskledger-evidence"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_integrations_taskledger.py",
+          "scenario": "@bdd-taskledger-import"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_plan.py",
+          "scenario": "@bdd-plan-create"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_plan.py",
+          "scenario": "@bdd-plan-includes-scenario-steps"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_plan.py",
+          "scenario": "@bdd-plan-validation-commands"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_python_ast_reader.py",
+          "scenario": "@bdd-ast-assert-call"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_python_ast_reader.py",
+          "scenario": "@bdd-ast-assert-equals"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_python_ast_reader.py",
+          "scenario": "@bdd-ast-assert-is-none"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_python_ast_reader.py",
+          "scenario": "@bdd-ast-assert-truthy"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_python_ast_reader.py",
+          "scenario": "@bdd-ast-discover-comment"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_python_ast_reader.py",
+          "scenario": "@bdd-ast-discover-docstring"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_python_ast_reader.py",
+          "scenario": "@bdd-ast-discover-intentional-unmapped-waiver"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_python_ast_reader.py",
+          "scenario": "@bdd-ast-discover-marker"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_python_ast_reader.py",
+          "scenario": "@bdd-ast-extract-test-functions"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_python_ast_reader.py",
+          "scenario": "@bdd-ast-ignores-non-test"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_fail_closed.py",
+          "scenario": "@bdd-fail-closed-ambiguous-scenario"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_fail_closed.py",
+          "scenario": "@bdd-fail-closed-exit-code-not-evidence"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_fail_closed.py",
+          "scenario": "@bdd-fail-closed-failed-scenario"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_fail_closed.py",
+          "scenario": "@bdd-fail-closed-multiple-scenarios"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_fail_closed.py",
+          "scenario": "@bdd-fail-closed-passed-scenario"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_fail_closed.py",
+          "scenario": "@bdd-fail-closed-pending-scenario"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_fail_closed.py",
+          "scenario": "@bdd-fail-closed-skipped-scenario"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_fail_closed.py",
+          "scenario": "@bdd-fail-closed-undefined-scenario"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_fail_closed.py",
+          "scenario": "@bdd-fail-closed-unlinked-scenario"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_mapping.py",
+          "scenario": "@bdd-criteria-fail-closed"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_mapping.py",
+          "scenario": "@bdd-criteria-missing-coverage"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_mapping.py",
+          "scenario": "@bdd-criteria-summary"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_mapping.py",
+          "scenario": "@bdd-tag-extraction-ac"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_mapping.py",
+          "scenario": "@bdd-tag-extraction-bdd"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_mapping.py",
+          "scenario": "@bdd-tag-extraction-empty"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_normalization.py",
+          "scenario": "@bdd-normalize-ac-covered"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_normalization.py",
+          "scenario": "@bdd-normalize-all-passed"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_normalization.py",
+          "scenario": "@bdd-normalize-allow-skipped"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_normalization.py",
+          "scenario": "@bdd-normalize-any-failed"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_normalization.py",
+          "scenario": "@bdd-normalize-cucumber-json"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_normalization.py",
+          "scenario": "@bdd-normalize-evidence-json"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_normalization.py",
+          "scenario": "@bdd-normalize-junit-xml"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_normalization.py",
+          "scenario": "@bdd-normalize-missing-ac-coverage"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_normalization.py",
+          "scenario": "@bdd-normalize-skipped-fails-by-default"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_normalization.py",
+          "scenario": "@bdd-normalize-unsupported-format"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_parsers.py",
+          "scenario": "@bdd-cucumber-parse-scenarios"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_parsers.py",
+          "scenario": "@bdd-cucumber-parse-tags"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_parsers.py",
+          "scenario": "@bdd-junit-parse-cases"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_parsers.py",
+          "scenario": "@bdd-junit-parse-duration"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_reports_parsers.py",
+          "scenario": "@bdd-junit-parse-statuses"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_review_spec_review.py",
+          "scenario": "@bdd-review-counts"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_review_spec_review.py",
+          "scenario": "@bdd-review-coverage-summary-both-directions"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_review_spec_review.py",
+          "scenario": "@bdd-review-deprecated-paths"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_review_spec_review.py",
+          "scenario": "@bdd-review-forbidden-pytest-bdd"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_review_spec_review.py",
+          "scenario": "@bdd-review-lint-findings"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_review_spec_review.py",
+          "scenario": "@bdd-review-missing-bindings"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_review_spec_review.py",
+          "scenario": "@bdd-review-needs-review"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_review_spec_review.py",
+          "scenario": "@bdd-review-warning-scenario-once"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_runner_command.py",
+          "scenario": "@bdd-runner-capture"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_runner_command.py",
+          "scenario": "@bdd-runner-failure"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_runner_command.py",
+          "scenario": "@bdd-runner-not-found"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_runner_command.py",
+          "scenario": "@bdd-runner-success"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_trace.py",
+          "scenario": "@bdd-trace-by-id"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_trace.py",
+          "scenario": "@bdd-trace-by-path"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_translation_pytest_to_gherkin.py",
+          "scenario": "@bdd-translate-discovers-tests"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_translation_pytest_to_gherkin.py",
+          "scenario": "@bdd-translate-dry-run"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_translation_pytest_to_gherkin.py",
+          "scenario": "@bdd-translate-force-overwrite"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_translation_pytest_to_gherkin.py",
+          "scenario": "@bdd-translate-group-by-file"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_translation_pytest_to_gherkin.py",
+          "scenario": "@bdd-translate-marks-generated"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_translation_pytest_to_gherkin.py",
+          "scenario": "@bdd-translate-preserve-manual"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_spec_to_code.py",
+          "scenario": "@bdd-spec-to-code-bind-behave"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_backends_pytest_bdd.py",
+          "scenario": "@bdd-spec-to-code-bind-pytest-bdd"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_spec_to_code.py",
+          "scenario": "@bdd-spec-to-code-bind-unsupported"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_spec_to_code.py",
+          "scenario": "@bdd-spec-to-code-dedup"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_spec_to_code.py",
+          "scenario": "@bdd-spec-to-code-draft"
+        },
+        {
+          "code": "SWCOV002",
+          "level": "warning",
+          "message": "Stale pytest mapping points to a missing feature or scenario.",
+          "path": "tests/test_spec_to_code.py",
+          "scenario": "@bdd-spec-to-code-step-name"
+        }
+      ],
+      "schema_version": 1,
+      "status": "failed",
+      "summary": {
+        "bound": 1,
+        "duplicate_bindings": 0,
+        "errors": 0,
+        "features": 18,
+        "missing_bindings": 103,
+        "needs_review": 0,
+        "pytest_mapped": 1,
+        "pytest_tests": 417,
+        "pytest_unmapped": 40,
+        "pytest_waived": 147,
+        "scenarios": 104,
+        "stale_bindings": 229,
+        "warnings": 332
+      }
+    },
+    "specifications": {
+      "command": "review specifications",
+      "findings": [],
+      "schema_version": 1,
+      "status": "passed",
+      "summary": {
+        "documents": 4,
+        "errors": 0,
+        "missing": 0,
+        "requirements": 431,
+        "reverse_gaps": 0,
+        "verified": 431,
+        "warnings": 0
+      }
+    }
+  },
+  "schema_version": 1,
+  "status": "failed",
+  "summary": {
+    "behaviour": {
+      "bound": 1,
+      "duplicate_bindings": 0,
+      "errors": 0,
+      "features": 18,
+      "missing_bindings": 103,
+      "needs_review": 0,
+      "pytest_mapped": 1,
+      "pytest_tests": 417,
+      "pytest_unmapped": 40,
+      "pytest_waived": 147,
+      "scenarios": 104,
+      "stale_bindings": 229,
+      "warnings": 332
+    },
+    "errors": 0,
+    "specifications": {
+      "documents": 4,
+      "errors": 0,
+      "missing": 0,
+      "requirements": 431,
+      "reverse_gaps": 0,
+      "verified": 431,
+      "warnings": 0
+    },
+    "warnings": 332
+  }
+}
